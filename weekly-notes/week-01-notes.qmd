@@ -5,7 +5,7 @@ date: "2025-09-08"
 
 ## Key Concepts Learned
 - Main Concepts ...
-  - *Combination of data science skills with public policy*.
+  - *Combination of data science skills with public policy*, the latter of which inherently possesses massive quantifiable and qualitative data, so data science concepts and tools are important to clean, wrangle, and make all the big data easier to understand for people who are familiar with the technical and political intricacies behind them, and especially for people who are unfamiliar with it all.
   - *Reproducible research is important*, which means consistent and concise documentation, relevant file and variable naming, pushing updates with change comments.
   - *Applying technical skills to public issues*, which not only means making details as transparent as possible, but also utilizing accessible and open-source software and other tools that many communities and individuals can use and add to.
 - Technical Skills ...
@@ -23,7 +23,7 @@ date: "2025-09-08"
 - Need more practice with understanding local and GitHub file structures and how they relate to one another as well as R functions. There's a basic understanding with coding syntax and semantics, but what complexities occur in the background with data storage and the abstractness of it?
 
 ## Connections to Policy
-- There's a great potential for using predictive analytics to provide useful information and turn it into public-serving action, but they're also tools that can be purposefully or unintentially misused to exacerbate biases and existing social stratification, like predictive analytics for crime and policing.
+- There's a great potential for using predictive analytics to provide useful information and turn it into public-serving action, but they're also tools that can be purposefully or unintentionally misused to exacerbate biases and existing social stratification, like predictive analytics for crime and policing.
 - Data science is useful for cleaning raw data, which will inevitably be collected in massive numbers due to the inherently large nature of cities and people.
 
 ## Reflection
