@@ -39,21 +39,21 @@
     "href": "weekly-notes/week-01-notes.html",
     "title": "WEEK 1 NOTES - COURSE INTRODUCTION",
     "section": "",
-    "text": "Main Concepts\n\nCombination of data science skills with public policy, the latter of which inherently possesses massive quantifiable and qualitative data, so data science concepts and tools are important to clean, wrangle, and make all the big data easier to understand for people who are familiar with the technical and political intricacies behind them, and especially for people who are unfamiliar with it all.\nReproducible research is important, which means consistent and concise documentation, relevant file and variable naming, pushing updates with change comments.\nApplying technical skills to public issues, which not only means making details as transparent as possible, but also utilizing accessible and open-source software and other tools that many communities and individuals can use and add to.\n\nTechnical Skills\n\nSyntax and semantic familiarity with R and YAML.\nKeeping track of folder paths for organization.\nConsistent notation in script files for documentation.\nCrafting relevant and readable variable names for external audiences."
+    "text": "Main Concepts\n\nData science skills and public policy knowledge are often used in tandem, the latter of which inherently possesses massive quantifiable and qualitative data, so data science concepts and tools are important to clean, wrangle, and make all the big data easier to understand for people who are familiar with the technical and political intricacies behind them, and especially for people who are unfamiliar with it all. Communicating this crossover is crucial to inform constituents and government representatives on existing or creating local, state, and/or federal legislation.\nReproducible research is important, which means consistent and concise documentation, relevant file and variable naming, pushing updates with change comments. A little goes a long way, commit little changes constantly to avoid large commits that take time to look through and debug.\nApplying technical skills to public issues, which not only means making details as transparent as possible, but also utilizing accessible and open-source software and other tools that many communities and individuals can use and pull from.\n\nTechnical Skills\n\nSyntax and semantic familiarity with R and Markdown\nKeeping track of folder paths for organization.\nConsistent notation in script files for documentation.\nCrafting relevant and readable variable names for external audiences.\nRepitition is the mother of learning for programming languages."
   },
   {
     "objectID": "weekly-notes/week-01-notes.html#key-concepts-learned",
     "href": "weekly-notes/week-01-notes.html#key-concepts-learned",
     "title": "WEEK 1 NOTES - COURSE INTRODUCTION",
     "section": "",
-    "text": "Main Concepts\n\nCombination of data science skills with public policy, the latter of which inherently possesses massive quantifiable and qualitative data, so data science concepts and tools are important to clean, wrangle, and make all the big data easier to understand for people who are familiar with the technical and political intricacies behind them, and especially for people who are unfamiliar with it all.\nReproducible research is important, which means consistent and concise documentation, relevant file and variable naming, pushing updates with change comments.\nApplying technical skills to public issues, which not only means making details as transparent as possible, but also utilizing accessible and open-source software and other tools that many communities and individuals can use and add to.\n\nTechnical Skills\n\nSyntax and semantic familiarity with R and YAML.\nKeeping track of folder paths for organization.\nConsistent notation in script files for documentation.\nCrafting relevant and readable variable names for external audiences."
+    "text": "Main Concepts\n\nData science skills and public policy knowledge are often used in tandem, the latter of which inherently possesses massive quantifiable and qualitative data, so data science concepts and tools are important to clean, wrangle, and make all the big data easier to understand for people who are familiar with the technical and political intricacies behind them, and especially for people who are unfamiliar with it all. Communicating this crossover is crucial to inform constituents and government representatives on existing or creating local, state, and/or federal legislation.\nReproducible research is important, which means consistent and concise documentation, relevant file and variable naming, pushing updates with change comments. A little goes a long way, commit little changes constantly to avoid large commits that take time to look through and debug.\nApplying technical skills to public issues, which not only means making details as transparent as possible, but also utilizing accessible and open-source software and other tools that many communities and individuals can use and pull from.\n\nTechnical Skills\n\nSyntax and semantic familiarity with R and Markdown\nKeeping track of folder paths for organization.\nConsistent notation in script files for documentation.\nCrafting relevant and readable variable names for external audiences.\nRepitition is the mother of learning for programming languages."
   },
   {
     "objectID": "weekly-notes/week-01-notes.html#coding-techniques",
     "href": "weekly-notes/week-01-notes.html#coding-techniques",
     "title": "WEEK 1 NOTES - COURSE INTRODUCTION",
     "section": "CODING TECHNIQUES",
-    "text": "CODING TECHNIQUES\n\n“group_by()” and “summarize()” functions go hand-in-hand to essentially isolate specific pockets of data within the tables and derive certain calculations from them, like averages, medians, standard deviations, etc.\nQuarto combines multiple languages and makes it readable, so familiarity with using Markdown to format websites and communicate visualization and data is important."
+    "text": "CODING TECHNIQUES\n\n“group_by()” and “summarize()” functions go hand-in-hand to essentially isolate specific pockets of data within the tables and derive certain calculations from them, like averages, medians, standard deviations, etc.\n“select()” and “filter()” functions are for columns and rows, respectively, and are inverted in ArcGIS.\n“mutate()” function is used to create new variables, specifically new columns or modifying existing columns in data frames.\nQuarto combines multiple languages and makes it readable, so familiarity with using Markdown to format websites and communicate visualization and data is important. Don’t shy away from playing with bold, italics, embedding links and images, etc. to refine portfolio design."
   },
   {
     "objectID": "weekly-notes/week-01-notes.html#questions-challenges",
@@ -74,7 +74,7 @@
     "href": "weekly-notes/week-01-notes.html#reflection",
     "title": "WEEK 1 NOTES - COURSE INTRODUCTION",
     "section": "REFLECTION",
-    "text": "REFLECTION\n\nThe most interesting part was adjusting and troubleshooting conflicts and errors encountered with GitHub, R, and Markdown, which is integral to real-life circumstances using data science tools.\nIndividually using GitHub will provide the skills to collaboratively work on it with others, because applying these skills is often done in a group due to the collective nature of public and urban policy, and if not in a group, it will inevitably be shared with an audience."
+    "text": "REFLECTION\n\nThe most interesting part was adjusting and troubleshooting conflicts and errors encountered with GitHub, R, and Markdown, which is integral to real-life circumstances using data science tools.\nIndividually using GitHub will provide the skills to collaboratively work on it with others, because applying these skills is often done in a group due to the collective nature of public and urban policy, and if not in a group, it will inevitably be shared with an audience.\nTrial and error is central to learning programming languages and holistically understanding how different data, files, and functions tie-in and work together. When coming across issues with getting the notes page to publish and show, much of the journey was adjusting file locations and syntax around the .qmd and .yml files."
   },
   {
     "objectID": "weekly-notes/weekly-notes.html",
@@ -95,14 +95,14 @@
     "href": "weekly-notes.html",
     "title": "WEEKLY NOTES",
     "section": "",
-    "text": "09-08-2025 Notes"
+    "text": "09-08-2025 Notes: Course Introduction"
   },
   {
     "objectID": "weekly-notes.html#week-1",
     "href": "weekly-notes.html#week-1",
     "title": "WEEKLY NOTES",
     "section": "",
-    "text": "09-08-2025 Notes"
+    "text": "09-08-2025 Notes: Course Introduction"
   },
   {
     "objectID": "weekly-notes/week-02-notes.html",
@@ -180,5 +180,40 @@
     "title": "FINAL PROJECT",
     "section": "",
     "text": "TBA"
+  },
+  {
+    "objectID": "final-project.html",
+    "href": "final-project.html",
+    "title": "FINAL PROJECT",
+    "section": "",
+    "text": "TBA"
+  },
+  {
+    "objectID": "final-project.html#final-project",
+    "href": "final-project.html#final-project",
+    "title": "FINAL PROJECT",
+    "section": "",
+    "text": "TBA"
+  },
+  {
+    "objectID": "labs.html",
+    "href": "labs.html",
+    "title": "LABS",
+    "section": "",
+    "text": "TBA"
+  },
+  {
+    "objectID": "labs.html#labs",
+    "href": "labs.html#labs",
+    "title": "LABS",
+    "section": "",
+    "text": "TBA"
+  },
+  {
+    "objectID": "weekly-notes.html#week-2",
+    "href": "weekly-notes.html#week-2",
+    "title": "WEEKLY NOTES",
+    "section": "WEEK 2",
+    "text": "WEEK 2\n09/15/2025 Notes: TBA"
   }
 ]
