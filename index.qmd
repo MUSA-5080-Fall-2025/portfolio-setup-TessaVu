@@ -15,8 +15,8 @@ Advanced spatial analysis and data science for urban planning and public policy.
 - **Final Project:** Capstone modeling challenge
 
 ## About Me
-[Students will customize this section]
+Analytically driven and adaptable with 2 years of research and 4 years of professional GIS experience primarily in vector data. Applied and academic knowledge in surveying project sites, remote sensing, drone navigation, and photogrammetry methods. Experience with Java, Python, and R for OOP, data science, geocomputation, spatial analysis, web-mapping, app development, and visualization. As a result of my education and work history I have a deep interest in urban prototyping and instrumentation to record cities, deploying IoT sensors to collect real-time data for research in urban science, transportation, and environmental issues. Extending from that curiosity underlies a steadfast belief in everyone's rights to privacy and security in a world that constantly wants to monitor, police, and sell our data coercively and unconsensually—this fundamental foundation takes precedence to deploying any sensing device.
 
 ## Contact
-- Email: [your.email@upenn.edu]
-- GitHub: [@your-username]
+- Email: tessavu@upenn.edu
+- GitHub: TessaVu
