@@ -4,20 +4,26 @@ date: "2025-09-08"
 ---
 
 ## Key Concepts Learned
-- [List main concepts from lecture]
-- [Technical skills covered]
+- Main Concepts ...
+  - *Combination of data science skills with public policy*.
+  - *Reproducible research is important*, which means consistent and concise documentation, relevant file and variable naming, pushing updates with change comments.
+  - *Applying technical skills to public issues*, which not only means making details as transparent as possible, but also utilizing accessible and open-source software and other tools that many communities and individuals can use and add to.
+- Technical Skills ...
+  - Syntax and semantic familiarity with R and YAML.
+  - Keeping track of folder paths for organization.
+  - Consistent notation in script files for documentation.
+  - Crafting relevant and readable variable names for external audiences.
 
 ## Coding Techniques
-- [New R functions or approaches]
-- [Quarto features learned]
+- "group_by()" and "summarize()" functions go hand-in-hand to essentially isolate specific pockets of data within the tables and derive certain calculations from them, like averages, medians, standard deviations, etc.
+- Quarto combines multiple languages and makes it readable, so 
 
 ## Questions & Challenges
-- [What I didn't fully understand]
-- [Areas needing more practice]
+- What happens in the background when rendering in Quarto, why can't the website be deployed just from the GitHub website? Is it to establish the "docs" folder when doing it locally, because there was an error where the folder didn't exist when trying to publish the portfolio just from the website.
+- Need more practice with understanding local and GitHub file structures and how they relate to one another as well as R functions. There's a basic understanding with coding syntax and semantics, but what complexities occur in the background with data storage and the abstractness of it?
 
 ## Connections to Policy
-- [How this week's content applies to real policy work]
+- There's a great potential for using predictive analytics to provide useful information and turn it into public-serving action, but they're also tools that can be purposefully or unintentially misused to exacerbate biases and existing social stratification, like predictive analytics for crime and policing.
 
 ## Reflection
-- [What was most interesting]
-- [How I'll apply this knowledge]
+- The most interesting part was adjusting and troubleshooting conflicts and errors encountered with GitHub, R, and Markdown, which is integral to real-life circumstances using data science tools.
