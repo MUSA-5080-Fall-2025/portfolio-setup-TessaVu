@@ -15,9 +15,9 @@ website:
           text: WEEK 1
         - href: weekly-notes/week-02-notes.qmd
           text: WEEK 2
-      - href: labs/
+      - href: labs/labs.qmd
         text: LABS
-      - href: final-project/
+      - href: final-project/final-project.qmd
         text: FINAL PROJECT
 
 format:
