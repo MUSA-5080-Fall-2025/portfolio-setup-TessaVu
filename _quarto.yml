@@ -8,8 +8,10 @@ website:
     left:
       - href: index.qmd
         text: HOME
-      - href: weekly-notes/weekly-notes.qmd
-        text: WEEKLY NOTES
+      - text: WEEKLY NOTES
+        menu:
+        - href: weekly-notes/week-01-notes.qmd
+          text: WEEK 1
       - href: labs/
         text: LABS
 
