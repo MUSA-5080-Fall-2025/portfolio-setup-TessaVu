@@ -10,15 +10,15 @@ website:
         text: HOME
       - text: WEEKLY NOTES
         menu:
-        - href: weekly-notes/weekly-notes.qmd
+        - href: weekly-notes.qmd
           text: ALL NOTES
         - href: weekly-notes/week-01-notes.qmd
           text: WEEK 1
         - href: weekly-notes/week-02-notes.qmd
           text: WEEK 2
-      - href: labs/labs.qmd
+      - href: labs.qmd
         text: LABS
-      - href: final-project/final-project.qmd
+      - href: final-project.qmd
         text: FINAL PROJECT
 
 format:
