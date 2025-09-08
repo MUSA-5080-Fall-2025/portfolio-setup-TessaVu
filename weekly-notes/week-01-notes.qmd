@@ -1,31 +1,31 @@
 ---
-title: "Week 1 Notes - Course Introduction"
+title: "WEEK 1 NOTES - COURSE INTRODUCTION"
 date: "2025-09-08"
 ---
 
-## Key Concepts Learned
-- Main Concepts ...
+## KEY CONCEPTS LEARNED
+- **Main Concepts**
   - *Combination of data science skills with public policy*, the latter of which inherently possesses massive quantifiable and qualitative data, so data science concepts and tools are important to clean, wrangle, and make all the big data easier to understand for people who are familiar with the technical and political intricacies behind them, and especially for people who are unfamiliar with it all.
   - *Reproducible research is important*, which means consistent and concise documentation, relevant file and variable naming, pushing updates with change comments.
   - *Applying technical skills to public issues*, which not only means making details as transparent as possible, but also utilizing accessible and open-source software and other tools that many communities and individuals can use and add to.
-- Technical Skills ...
+- **Technical Skills**
   - Syntax and semantic familiarity with R and YAML.
   - Keeping track of folder paths for organization.
   - Consistent notation in script files for documentation.
   - Crafting relevant and readable variable names for external audiences.
 
-## Coding Techniques
+## CODING TECHNIQUES
 - "group_by()" and "summarize()" functions go hand-in-hand to essentially isolate specific pockets of data within the tables and derive certain calculations from them, like averages, medians, standard deviations, etc.
 - Quarto combines multiple languages and makes it readable, so familiarity with using Markdown to format websites and communicate visualization and data is important.
 
-## Questions & Challenges
+## QUESTIONS & CHALLENGES
 - What happens in the background when rendering in Quarto, why can't the website be deployed just from the GitHub website? Is it to establish the "docs" folder when doing it locally, because there was an error where the folder didn't exist when trying to publish the portfolio just from the website.
 - Need more practice with understanding local and GitHub file structures and how they relate to one another as well as R functions. There's a basic understanding with coding syntax and semantics, but what complexities occur in the background with data storage and the abstractness of it?
 
-## Connections to Policy
+## CONNECTIONS TO POLICY
 - There's a great potential for using predictive analytics to provide useful information and turn it into public-serving action, but they're also tools that can be purposefully or unintentionally misused to exacerbate biases and existing social stratification, like predictive analytics for crime and policing.
 - Data science is useful for cleaning raw data, which will inevitably be collected in massive numbers due to the inherently large nature of cities and people.
 
-## Reflection
+## REFLECTION
 - The most interesting part was adjusting and troubleshooting conflicts and errors encountered with GitHub, R, and Markdown, which is integral to real-life circumstances using data science tools.
 - Individually using GitHub will provide the skills to collaboratively work on it with others, because applying these skills is often done in a group due to the collective nature of public and urban policy, and if not in a group, it will inevitably be shared with an audience.
