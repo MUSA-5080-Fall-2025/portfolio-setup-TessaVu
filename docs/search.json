@@ -53,7 +53,7 @@
     "href": "weekly-notes/week-01-notes.html#coding-techniques",
     "title": "Week 1 Notes - Course Introduction",
     "section": "Coding Techniques",
-    "text": "Coding Techniques\n\n“group_by()” and “summarize()” functions go hand-in-hand to essentially isolate specific pockets of data within the tables and derive certain calculations from them, like averages, medians, standard deviations, etc.\nQuarto combines multiple languages and makes it readable, so"
+    "text": "Coding Techniques\n\n“group_by()” and “summarize()” functions go hand-in-hand to essentially isolate specific pockets of data within the tables and derive certain calculations from them, like averages, medians, standard deviations, etc.\nQuarto combines multiple languages and makes it readable, so familiarity with using Markdown to format websites and communicate visualization and data is important."
   },
   {
     "objectID": "weekly-notes/week-01-notes.html#questions-challenges",
@@ -75,5 +75,19 @@
     "title": "Week 1 Notes - Course Introduction",
     "section": "Reflection",
     "text": "Reflection\n\nThe most interesting part was adjusting and troubleshooting conflicts and errors encountered with GitHub, R, and Markdown, which is integral to real-life circumstances using data science tools.\nIndividually using GitHub will provide the skills to collaboratively work on it with others, because applying these skills is often done in a group due to the collective nature of public and urban policy, and if not in a group, it will inevitably be shared with an audience."
+  },
+  {
+    "objectID": "weekly-notes/weekly-notes.html",
+    "href": "weekly-notes/weekly-notes.html",
+    "title": "Weekly Notes",
+    "section": "",
+    "text": "09-08-2025 Notes"
+  },
+  {
+    "objectID": "weekly-notes/weekly-notes.html#week-1",
+    "href": "weekly-notes/weekly-notes.html#week-1",
+    "title": "Weekly Notes",
+    "section": "",
+    "text": "09-08-2025 Notes"
   }
 ]

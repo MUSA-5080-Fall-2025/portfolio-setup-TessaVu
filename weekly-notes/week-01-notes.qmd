@@ -16,7 +16,7 @@ date: "2025-09-08"
 
 ## Coding Techniques
 - "group_by()" and "summarize()" functions go hand-in-hand to essentially isolate specific pockets of data within the tables and derive certain calculations from them, like averages, medians, standard deviations, etc.
-- Quarto combines multiple languages and makes it readable, so 
+- Quarto combines multiple languages and makes it readable, so familiarity with using Markdown to format websites and communicate visualization and data is important.
 
 ## Questions & Challenges
 - What happens in the background when rendering in Quarto, why can't the website be deployed just from the GitHub website? Is it to establish the "docs" folder when doing it locally, because there was an error where the folder didn't exist when trying to publish the portfolio just from the website.
