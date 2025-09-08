@@ -17,6 +17,8 @@ website:
           text: WEEK 2
       - href: labs/
         text: LABS
+      - href: final-project/
+        text: FINAL PROJECT
 
 format:
   html:
