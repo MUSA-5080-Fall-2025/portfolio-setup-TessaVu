@@ -24,6 +24,8 @@ date: "2025-09-08"
 
 ## Connections to Policy
 - There's a great potential for using predictive analytics to provide useful information and turn it into public-serving action, but they're also tools that can be purposefully or unintentially misused to exacerbate biases and existing social stratification, like predictive analytics for crime and policing.
+- Data science is useful for cleaning raw data, which will inevitably be collected in massive numbers due to the inherently large nature of cities and people.
 
 ## Reflection
 - The most interesting part was adjusting and troubleshooting conflicts and errors encountered with GitHub, R, and Markdown, which is integral to real-life circumstances using data science tools.
+- Individually using GitHub will provide the skills to collaboratively work on it with others, because applying these skills is often done in a group due to the collective nature of public and urban policy, and if not in a group, it will inevitably be shared with an audience.
