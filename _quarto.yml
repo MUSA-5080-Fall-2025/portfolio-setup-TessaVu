@@ -3,13 +3,15 @@ project:
   output-dir: docs
 
 website:
-  title: "Tess Vu - MUSA 5080 Portfolio"
+  title: "TESS VU - MUSA 5080 PORTFOLIO"
   navbar:
     left:
       - href: index.qmd
-        text: Home
-      - href: weekly-notes.qmd
-        text: Weekly Notes
+        text: HOME
+      - href: weekly-notes/
+        text: WEEKLY NOTES
+      - href: labs/
+        text: LABS
 
 format:
   html:
