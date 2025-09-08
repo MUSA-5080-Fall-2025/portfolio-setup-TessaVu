@@ -2,5 +2,7 @@
 title: "LABS"
 ---
 
+*Completed assignments and analyses.*
+
 ## LABS
 TBA

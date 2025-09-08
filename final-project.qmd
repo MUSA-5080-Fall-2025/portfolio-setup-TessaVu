@@ -2,5 +2,7 @@
 title: "FINAL PROJECT"
 ---
 
+*Capstone modeling challenge.*
+
 ## FINAL PROJECT
 TBA
