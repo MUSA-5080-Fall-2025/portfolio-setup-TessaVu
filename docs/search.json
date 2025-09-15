@@ -107,42 +107,42 @@
   {
     "objectID": "weekly-notes/week-02-notes.html",
     "href": "weekly-notes/week-02-notes.html",
-    "title": "WEEK 2 NOTES - TBA",
+    "title": "WEEK 2 NOTES - DYPLR BASICS AND CENSUS DATA",
     "section": "",
     "text": "Main Concepts\n\nTBA\n\nTechnical Skills\n\nTBA"
   },
   {
     "objectID": "weekly-notes/week-02-notes.html#key-concepts-learned",
     "href": "weekly-notes/week-02-notes.html#key-concepts-learned",
-    "title": "WEEK 2 NOTES - TBA",
+    "title": "WEEK 2 NOTES - DYPLR BASICS AND CENSUS DATA",
     "section": "",
     "text": "Main Concepts\n\nTBA\n\nTechnical Skills\n\nTBA"
   },
   {
     "objectID": "weekly-notes/week-02-notes.html#coding-techniques",
     "href": "weekly-notes/week-02-notes.html#coding-techniques",
-    "title": "WEEK 2 NOTES - TBA",
+    "title": "WEEK 2 NOTES - DYPLR BASICS AND CENSUS DATA",
     "section": "CODING TECHNIQUES",
     "text": "CODING TECHNIQUES\n\nTBA"
   },
   {
     "objectID": "weekly-notes/week-02-notes.html#questions-challenges",
     "href": "weekly-notes/week-02-notes.html#questions-challenges",
-    "title": "WEEK 2 NOTES - TBA",
+    "title": "WEEK 2 NOTES - DYPLR BASICS AND CENSUS DATA",
     "section": "QUESTIONS & CHALLENGES",
     "text": "QUESTIONS & CHALLENGES\n\nTBA"
   },
   {
     "objectID": "weekly-notes/week-02-notes.html#connections-to-policy",
     "href": "weekly-notes/week-02-notes.html#connections-to-policy",
-    "title": "WEEK 2 NOTES - TBA",
+    "title": "WEEK 2 NOTES - DYPLR BASICS AND CENSUS DATA",
     "section": "CONNECTIONS TO POLICY",
     "text": "CONNECTIONS TO POLICY\n\nTBA"
   },
   {
     "objectID": "weekly-notes/week-02-notes.html#reflection",
     "href": "weekly-notes/week-02-notes.html#reflection",
-    "title": "WEEK 2 NOTES - TBA",
+    "title": "WEEK 2 NOTES - DYPLR BASICS AND CENSUS DATA",
     "section": "REFLECTION",
     "text": "REFLECTION\n\nTBA"
   },
@@ -214,7 +214,7 @@
     "href": "weekly-notes.html#week-2",
     "title": "WEEKLY NOTES",
     "section": "WEEK 2",
-    "text": "WEEK 2\n09/15/2025 Notes: TBA"
+    "text": "WEEK 2\n09/15/2025 Notes: dplyr Basics and Census Data"
   },
   {
     "objectID": "labs.html#lab-0",
@@ -383,5 +383,145 @@
     "title": "Portfolio Setup Instructions",
     "section": "",
     "text": "Before submitting, make sure you’ve: - [ ] Customized _quarto.yml with your name - [ ] Updated index.qmd with your information - [ ] Completed Week 1 notes - [ ] Enabled GitHub Pages - [ ] Verified your website loads correctly - [ ] Submitted your URL to Canvas\n\nNeed help? Don’t struggle alone - reach out during office hours (mine + TAs) or in class!"
+  },
+  {
+    "objectID": "labs.html#lab-0-dplyr-basics",
+    "href": "labs.html#lab-0-dplyr-basics",
+    "title": "LABS",
+    "section": "LAB 0: DPLYR BASICS",
+    "text": "LAB 0: DPLYR BASICS\n09-15-2025 Lab: dplyr Basics"
+  },
+  {
+    "objectID": "labs.html#lab-1-census-data",
+    "href": "labs.html#lab-1-census-data",
+    "title": "LABS",
+    "section": "LAB 1: CENSUS DATA",
+    "text": "LAB 1: CENSUS DATA\n09-15-2025 Lab: Census Data"
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html",
+    "href": "labs/lab-1/lab-1.html",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "",
+    "text": "You are a data analyst for the [Your State] Department of Human Services. The department is considering implementing an algorithmic system to identify communities that should receive priority for social service funding and outreach programs. Your supervisor has asked you to evaluate the quality and reliability of available census data to inform this decision.\nDrawing on our Week 2 discussion of algorithmic bias, you need to assess not just what the data shows, but how reliable it is and what communities might be affected by data quality issues.\n\n\n\n\nApply dplyr functions to real census data for policy analysis\nEvaluate data quality using margins of error\nConnect technical analysis to algorithmic decision-making\nIdentify potential equity implications of data reliability issues\nCreate professional documentation for policy stakeholders\n\n\n\n\nSubmit by posting your updated portfolio link on Canvas. Your assignment should be accessible at your-portfolio-url/assignments/assignment_1/\nMake sure to update your _quarto.yml navigation to include this assignment under an “Assignments” menu."
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#scenario",
+    "href": "labs/lab-1/lab-1.html#scenario",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "",
+    "text": "You are a data analyst for the [Your State] Department of Human Services. The department is considering implementing an algorithmic system to identify communities that should receive priority for social service funding and outreach programs. Your supervisor has asked you to evaluate the quality and reliability of available census data to inform this decision.\nDrawing on our Week 2 discussion of algorithmic bias, you need to assess not just what the data shows, but how reliable it is and what communities might be affected by data quality issues."
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#learning-objectives",
+    "href": "labs/lab-1/lab-1.html#learning-objectives",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "",
+    "text": "Apply dplyr functions to real census data for policy analysis\nEvaluate data quality using margins of error\nConnect technical analysis to algorithmic decision-making\nIdentify potential equity implications of data reliability issues\nCreate professional documentation for policy stakeholders"
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#submission-instructions",
+    "href": "labs/lab-1/lab-1.html#submission-instructions",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "",
+    "text": "Submit by posting your updated portfolio link on Canvas. Your assignment should be accessible at your-portfolio-url/assignments/assignment_1/\nMake sure to update your _quarto.yml navigation to include this assignment under an “Assignments” menu."
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#data-retrieval",
+    "href": "labs/lab-1/lab-1.html#data-retrieval",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "2.1 Data Retrieval",
+    "text": "2.1 Data Retrieval\nYour Task: Use get_acs() to retrieve county-level data for your chosen state.\nRequirements: - Geography: county level - Variables: median household income (B19013_001) and total population (B01003_001)\n- Year: 2022 - Survey: acs5 - Output format: wide\nHint: Remember to give your variables descriptive names using the variables = c(name = \"code\") syntax.\n\n# Write your get_acs() code here\n\n# Clean the county names to remove state name and \"County\" \n# Hint: use mutate() with str_remove()\n\n# Display the first few rows"
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#data-quality-assessment",
+    "href": "labs/lab-1/lab-1.html#data-quality-assessment",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "2.2 Data Quality Assessment",
+    "text": "2.2 Data Quality Assessment\nYour Task: Calculate margin of error percentages and create reliability categories.\nRequirements: - Calculate MOE percentage: (margin of error / estimate) * 100 - Create reliability categories: - High Confidence: MOE &lt; 5% - Moderate Confidence: MOE 5-10%\n- Low Confidence: MOE &gt; 10% - Create a flag for unreliable estimates (MOE &gt; 10%)\nHint: Use mutate() with case_when() for the categories.\n\n# Calculate MOE percentage and reliability categories using mutate()\n\n# Create a summary showing count of counties in each reliability category\n# Hint: use count() and mutate() to add percentages"
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#high-uncertainty-counties",
+    "href": "labs/lab-1/lab-1.html#high-uncertainty-counties",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "2.3 High Uncertainty Counties",
+    "text": "2.3 High Uncertainty Counties\nYour Task: Identify the 5 counties with the highest MOE percentages.\nRequirements: - Sort by MOE percentage (highest first) - Select the top 5 counties - Display: county name, median income, margin of error, MOE percentage, reliability category - Format as a professional table using kable()\nHint: Use arrange(), slice(), and select() functions.\n\n# Create table of top 5 counties by MOE percentage\n\n# Format as table with kable() - include appropriate column names and caption\n\nData Quality Commentary:\n[Write 2-3 sentences explaining what these results mean for algorithmic decision-making. Consider: Which counties might be poorly served by algorithms that rely on this income data? What factors might contribute to higher uncertainty?]"
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#focus-area-selection",
+    "href": "labs/lab-1/lab-1.html#focus-area-selection",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "3.1 Focus Area Selection",
+    "text": "3.1 Focus Area Selection\nYour Task: Select 2-3 counties from your reliability analysis for detailed tract-level study.\nStrategy: Choose counties that represent different reliability levels (e.g., 1 high confidence, 1 moderate, 1 low confidence) to compare how data quality varies.\n\n# Use filter() to select 2-3 counties from your county_reliability data\n# Store the selected counties in a variable called selected_counties\n\n# Display the selected counties with their key characteristics\n# Show: county name, median income, MOE percentage, reliability category\n\nComment on the output: [write something :)]"
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#tract-level-demographics",
+    "href": "labs/lab-1/lab-1.html#tract-level-demographics",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "3.2 Tract-Level Demographics",
+    "text": "3.2 Tract-Level Demographics\nYour Task: Get demographic data for census tracts in your selected counties.\nRequirements: - Geography: tract level - Variables: white alone (B03002_003), Black/African American (B03002_004), Hispanic/Latino (B03002_012), total population (B03002_001) - Use the same state and year as before - Output format: wide - Challenge: You’ll need county codes, not names. Look at the GEOID patterns in your county data for hints.\n\n# Define your race/ethnicity variables with descriptive names\n\n# Use get_acs() to retrieve tract-level data\n# Hint: You may need to specify county codes in the county parameter\n\n# Calculate percentage of each group using mutate()\n# Create percentages for white, Black, and Hispanic populations\n\n# Add readable tract and county name columns using str_extract() or similar"
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#demographic-analysis",
+    "href": "labs/lab-1/lab-1.html#demographic-analysis",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "3.3 Demographic Analysis",
+    "text": "3.3 Demographic Analysis\nYour Task: Analyze the demographic patterns in your selected areas.\n\n# Find the tract with the highest percentage of Hispanic/Latino residents\n# Hint: use arrange() and slice() to get the top tract\n\n# Calculate average demographics by county using group_by() and summarize()\n# Show: number of tracts, average percentage for each racial/ethnic group\n\n# Create a nicely formatted table of your results using kable()"
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#moe-analysis-for-demographic-variables",
+    "href": "labs/lab-1/lab-1.html#moe-analysis-for-demographic-variables",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "4.1 MOE Analysis for Demographic Variables",
+    "text": "4.1 MOE Analysis for Demographic Variables\nYour Task: Examine margins of error for demographic variables to see if some communities have less reliable data.\nRequirements: - Calculate MOE percentages for each demographic variable - Flag tracts where any demographic variable has MOE &gt; 15% - Create summary statistics\n\n# Calculate MOE percentages for white, Black, and Hispanic variables\n# Hint: use the same formula as before (margin/estimate * 100)\n\n# Create a flag for tracts with high MOE on any demographic variable\n# Use logical operators (| for OR) in an ifelse() statement\n\n# Create summary statistics showing how many tracts have data quality issues"
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#pattern-analysis",
+    "href": "labs/lab-1/lab-1.html#pattern-analysis",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "4.2 Pattern Analysis",
+    "text": "4.2 Pattern Analysis\nYour Task: Investigate whether data quality problems are randomly distributed or concentrated in certain types of communities.\n\n# Group tracts by whether they have high MOE issues\n# Calculate average characteristics for each group:\n# - population size, demographic percentages\n\n# Use group_by() and summarize() to create this comparison\n# Create a professional table showing the patterns\n\nPattern Analysis: [Describe any patterns you observe. Do certain types of communities have less reliable data? What might explain this?]"
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#analysis-integration-and-professional-summary",
+    "href": "labs/lab-1/lab-1.html#analysis-integration-and-professional-summary",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "5.1 Analysis Integration and Professional Summary",
+    "text": "5.1 Analysis Integration and Professional Summary\nYour Task: Write an executive summary that integrates findings from all four analyses.\nExecutive Summary Requirements: 1. Overall Pattern Identification: What are the systematic patterns across all your analyses? 2. Equity Assessment: Which communities face the greatest risk of algorithmic bias based on your findings? 3. Root Cause Analysis: What underlying factors drive both data quality issues and bias risk? 4. Strategic Recommendations: What should the Department implement to address these systematic issues?\nExecutive Summary:\n[Your integrated 4-paragraph summary here]"
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#specific-recommendations",
+    "href": "labs/lab-1/lab-1.html#specific-recommendations",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "6.3 Specific Recommendations",
+    "text": "6.3 Specific Recommendations\nYour Task: Create a decision framework for algorithm implementation.\n\n# Create a summary table using your county reliability data\n# Include: county name, median income, MOE percentage, reliability category\n\n# Add a new column with algorithm recommendations using case_when():\n# - High Confidence: \"Safe for algorithmic decisions\"\n# - Moderate Confidence: \"Use with caution - monitor outcomes\"  \n# - Low Confidence: \"Requires manual review or additional data\"\n\n# Format as a professional table with kable()\n\nKey Recommendations:\nYour Task: Use your analysis results to provide specific guidance to the department.\n\nCounties suitable for immediate algorithmic implementation: [List counties with high confidence data and explain why they’re appropriate]\nCounties requiring additional oversight: [List counties with moderate confidence data and describe what kind of monitoring would be needed]\nCounties needing alternative approaches: [List counties with low confidence data and suggest specific alternatives - manual review, additional surveys, etc.]"
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#questions-for-further-investigation",
+    "href": "labs/lab-1/lab-1.html#questions-for-further-investigation",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "Questions for Further Investigation",
+    "text": "Questions for Further Investigation\n[List 2-3 questions that your analysis raised that you’d like to explore further in future assignments. Consider questions about spatial patterns, time trends, or other demographic factors.]"
+  },
+  {
+    "objectID": "labs/lab-1/lab-1.html#submission-checklist",
+    "href": "labs/lab-1/lab-1.html#submission-checklist",
+    "title": "Assignment 1: Census Data Quality for Policy Decisions",
+    "section": "Submission Checklist",
+    "text": "Submission Checklist\nBefore submitting your portfolio link on Canvas:\n\nAll code chunks run without errors\nAll “[Fill this in]” prompts have been completed\nTables are properly formatted and readable\nExecutive summary addresses all four required components\nPortfolio navigation includes this assignment\nCensus API key is properly set\nDocument renders correctly to HTML\n\nRemember: Submit your portfolio URL on Canvas, not the file itself. Your assignment should be accessible at your-portfolio-url/assignments/assignment_1/your_file_name.html"
+  },
+  {
+    "objectID": "weekly-notes.html#week-1-course-introduction",
+    "href": "weekly-notes.html#week-1-course-introduction",
+    "title": "WEEKLY NOTES",
+    "section": "WEEK 1: COURSE INTRODUCTION",
+    "text": "WEEK 1: COURSE INTRODUCTION\n09-08-2025 Notes: Course Introduction"
+  },
+  {
+    "objectID": "weekly-notes.html#week-2-dplyr-basics-and-census-data",
+    "href": "weekly-notes.html#week-2-dplyr-basics-and-census-data",
+    "title": "WEEKLY NOTES",
+    "section": "WEEK 2: DPLYR BASICS AND CENSUS DATA",
+    "text": "WEEK 2: DPLYR BASICS AND CENSUS DATA\n09/15/2025 Notes: dplyr Basics and Census Data"
   }
 ]

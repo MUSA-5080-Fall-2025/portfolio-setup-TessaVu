@@ -2,7 +2,7 @@
 title: "Lab 0: Getting Started with dplyr"
 subtitle: "First Data Analysis"
 author: "Tessa Vu"
-date: 09/14/2025
+date: 2025-09-08
 format: 
   html:
     code-fold: false

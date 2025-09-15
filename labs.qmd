@@ -4,5 +4,8 @@ title: "LABS"
 
 *Completed assignments and analyses.*
 
-## LAB 0
-[09-08-2025 Lab: Course Introduction](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-0/lab-0)
+## LAB 0: DPLYR BASICS
+[09-15-2025 Lab: dplyr Basics](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-0/lab-0)
+
+## LAB 1: CENSUS DATA
+[09-15-2025 Lab: Census Data](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-1/lab-1)

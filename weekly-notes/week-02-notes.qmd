@@ -1,5 +1,5 @@
 ---
-title: "WEEK 2 NOTES - TBA"
+title: "WEEK 2 NOTES - DYPLR BASICS AND CENSUS DATA"
 date: "2025-09-15"
 ---
 

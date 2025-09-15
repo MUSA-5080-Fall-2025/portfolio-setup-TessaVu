@@ -13,15 +13,17 @@ website:
         - href: weekly-notes.qmd
           text: ALL NOTES
         - href: weekly-notes/week-01-notes.qmd
-          text: WEEK 1
+          text: "WEEK 1: COURSE INTRO"
         - href: weekly-notes/week-02-notes.qmd
-          text: WEEK 2
+          text: "WEEK 2: DYPLR BASICS"
       - text: LABS
         menu:
         - href: labs.qmd
           text: ALL LABS
         - href: labs/lab-0/lab-0.qmd
-          text: LAB 0
+          text: "LAB 0: DPLYR BASICS"
+        - href: labs/lab-1/lab-1.qmd
+          text: "LAB 1: CENSUS DATA"
       - href: final-project.qmd
         text: FINAL PROJECT
 
