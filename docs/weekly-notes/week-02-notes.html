@@ -195,36 +195,75 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><strong>Main Concepts</strong>
 <ul>
-<li>TBA</li>
+<li><em>Algorithms are a set of instructions or rules for solving a problem or completing a task</em>.</li>
+<li><em>Algorithms may provide efficiency, consistency, objectivity, and cost-savings in certain scenarios, but they aren’t infallible</em>, especially since the data that is fed to them could be collected in a biased manner.</li>
+<li><em>Algorithms can help with decision-making, but at the end of the day, it’s humans that make the decisions</em>. The many choices behind creating algorithms and making predictions embed human values and biases.</li>
+<li><em>Data Science</em>: Computer science/engineering focus on algorithms and methods.</li>
+<li><em>Data Analytics</em>: Application of data science methods to other disciplines.</li>
+<li><em>Machine Learning</em>: Algorithms for classification &amp; prediction that learn from data.</li>
+<li><em>AI</em>: Algorithms that adjust and improve across iterations (neural networks, etc.)</li>
+<li>Algorithmic Decision Making: Understanding why your analysis matters for real policy decisions.</li>
+<li><em>Data Subjectivity</em>: Why we emphasize transparent, reproducible methods in this class.</li>
+<li><em>Census Data</em>: The foundation for most urban planning and policy analysis.</li>
+<li><em>R Skills</em>: The tools to do this work professionally and ethically.</li>
 </ul></li>
 <li><strong>Technical Skills</strong>
 <ul>
-<li>TBA</li>
+<li>Census data is publicly accessible.</li>
+<li>County level data is used for state and regional planning. Census tract level data is used for neighborhood analysis. Block group level is used for very local analysis, but there’s large margins of error.</li>
+<li>Data de-indentification by adding mathematical “noise” in the data to preserve patterns, but maintain privacy. Created impossible results like people living underwater, so be wary.</li>
+<li>Can use R packages to access data like tidycensus package, so there’s always the latest data. This makes it easier to create reproducible workflows, provide automatic geographic boundaries, and there’s built-in error handling.</li>
+<li>Large MOE relative to estimate = less reliable. Small MOE relative to estimate = more reliable. Always report MOE alongside estimates. Be cautious comparing estimates with overlapping error margins. <em>Consider using 5-year estimates for greater reliability</em>.</li>
+<li><em>Census Summary Tables</em>: Pre-calculated statistics by geography. Median income, percent college-educated, etc. Good for mapping and comparing places.</li>
+<li><em>PUMS, or Individual Records</em>: Anonymous individual/household responses. Good for custom analysis and regression models. More complex, but more flexible.</li>
 </ul></li>
 </ul>
 </section>
 <section id="coding-techniques" class="level2">
 <h2 class="anchored" data-anchor-id="coding-techniques">CODING TECHNIQUES</h2>
 <ul>
-<li>TBA</li>
+<li>Piping %&gt;% is used to stack different functions, think of it as a replacement for “and then” or as a replacement equivalent to nesting functions.</li>
+<li>get_acs() used to grab ACS survey data.</li>
+<li>str_remove() used to remove a string.</li>
+<li>str_extract() used to extract a string.</li>
+<li>str_replace() used to replace a string.</li>
+<li>case_when() for categories, MOE calculations.</li>
+<li>kable() for professional formatting.</li>
 </ul>
 </section>
 <section id="questions-challenges" class="level2">
 <h2 class="anchored" data-anchor-id="questions-challenges">QUESTIONS &amp; CHALLENGES</h2>
 <ul>
-<li>TBA</li>
+<li>Using algorithms to completely replace human decision-makers is problematic, because computers and algorithms, no matter how complex they can be programmed, can’t perfectly mimic the messiness of everyday human life.</li>
+<li>Using historical data to inform policy is a challenge, because very biased policies against different races, genders, incomes, and more created socio-economic disadvantages that persist today. Like trying to geographically predict crime would clearly target disinvested and oppressed communities that haven’t had a chance or will likely not have a chance to recover within a lifetime or more.</li>
+<li>Algorithms can fail because of people, because humans are behind data cleaning decisions, data coding or classification, data collection like use of imperfect proxies, how results are interpreted, what variables are put in the model.</li>
+<li>Many real life examples of biased algorithms harming historically minoritized communities.</li>
 </ul>
 </section>
 <section id="connections-to-policy" class="level2">
 <h2 class="anchored" data-anchor-id="connections-to-policy">CONNECTIONS TO POLICY</h2>
 <ul>
-<li>TBA</li>
+<li>“Algorithmic decision-making is used in government to assist or replace human decision-makers”.</li>
+<li>Using historical data to inform policy and decision-makers by predicting the future as precisely as possible. There are applications in housing, finance, healthcare, crime, etc.</li>
+<li>Governments have limited budgets and need to serve everyone to optimizing and being cost-effective means using algorithmic decision making. Proponents argue in favor that it provides efficiency, consistency, objectivity, and cost-savings, but this isn’t always the case in real life.</li>
+<li>Decennial census is 9 questions for the entire US.</li>
+<li>American Community Survey (ACS) is a survey of 3% households annually with detailed questions.</li>
+<li><em>Algorithmic Fairness</em>: Unreliable data can bias automated decisions.</li>
+<li><em>Resource Allocation</em>: Know which areas need extra attention.</li>
+<li><em>Equity Analysis</em>: Some communities may be systematically under-counted.</li>
+<li><em>Professional Credibility</em>: Always assess your data quality.</li>
 </ul>
 </section>
 <section id="reflection" class="level2">
 <h2 class="anchored" data-anchor-id="reflection">REFLECTION</h2>
 <ul>
-<li>TBA</li>
+<li>Census data is used for understanding community demographics, allocating government resources, and tracking neighborhood change, but the census itself has had a biased and racist history.</li>
+<li>ACS 1-Year Estimates (areas &gt; 65,000 people) has the most current data and is the smallest sample. ACS 5-Year Estimates include all areas including census tracts and is the most reliable data and largest sample of the ACS. It does have a margin of error, but is pretty robust for data analysis.</li>
+<li>Even “objective” data involves subjective choices about privacy vs.&nbsp;accuracy (e.g.&nbsp;202 Decennial Census).</li>
+<li>What assumptions am I making in my data choices?</li>
+<li>Who might be excluded from my analysis?</li>
+<li>How could my findings be misused if taken out of context?</li>
+<li>What would I want policymakers to understand about my methods?</li>
 </ul>
 
 
