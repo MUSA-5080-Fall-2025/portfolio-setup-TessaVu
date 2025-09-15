@@ -29,7 +29,7 @@ website:
 
 format:
   html:
-    theme: simplex
+    theme: lux
     toc: true
     code-fold: true
 
