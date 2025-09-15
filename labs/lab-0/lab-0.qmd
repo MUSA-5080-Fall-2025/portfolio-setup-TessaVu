@@ -81,7 +81,7 @@ car_df
 
 **Question:** What differences do you notice in how they print?
 
-**Your answer:** They look very similar except for the top left saying it's a "tibble" or a "df".
+**Your answer:** Tibble only shows the first few lines of data and the data frame is printing the entirety of the data.
 
 # Exercise 2: Basic Column Operations
 
