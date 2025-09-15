@@ -25,5 +25,11 @@
   },
   "labs.qmd": {
     "labs.html": "1a93a5cd"
+  },
+  "labs/lab-0/lab-0.qmd": {
+    "lab-0.html": "d6d14b47"
+  },
+  "instructions_week1.md": {
+    "instructions_week1.html": "648dfa5b"
   }
 }

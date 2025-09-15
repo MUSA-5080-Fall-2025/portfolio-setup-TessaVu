@@ -4,5 +4,5 @@ title: "LABS"
 
 *Completed assignments and analyses.*
 
-## LABS
-TBA
+## LAB 0
+[09-08-2025 Lab: Course Introduction](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-0/lab-0)
