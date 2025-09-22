@@ -1,7 +1,7 @@
 ---
-title: "Week 3 In-Class Lab: Data Visualization and EDA"
+title: "WEEK 3 IN-CLASS LAB: EXPLORATORY DATA VISUALIZATION (EDA) & VISUALIZATION"
 author: "Elizabeth Delmelle"
-date: 2205-09-22
+date: 2025-09-22
 format: 
   html:
     code-fold: false

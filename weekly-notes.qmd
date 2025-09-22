@@ -9,3 +9,6 @@ title: "WEEKLY NOTES"
 
 ## WEEK 2: DPLYR BASICS AND CENSUS DATA
 [09/15/2025 Notes: dplyr Basics and Census Data](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/weekly-notes/week-02-notes)
+
+## WEEK 3: EXPLORATORY DATA ANALYSIS (EDA) & VISUALIZATION
+[09/22/2025 Notes: Exploratory Data Analysis (EDA) & Visualization](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/weekly-notes/week-03-notes)
