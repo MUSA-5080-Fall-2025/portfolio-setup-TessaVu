@@ -18,7 +18,7 @@ execute:
 
 ## Scenario
 
-You are a data analyst for the **[Your State] Department of Human Services**. The department is considering implementing an algorithmic system to identify communities that should receive priority for social service funding and outreach programs. Your supervisor has asked you to evaluate the quality and reliability of available census data to inform this decision.
+You are a data analyst for the **Utah Department of Human Services**. The department is considering implementing an algorithmic system to identify communities that should receive priority for social service funding and outreach programs. Your supervisor has asked you to evaluate the quality and reliability of available census data to inform this decision.
 
 Drawing on our Week 2 discussion of algorithmic bias, you need to assess not just what the data shows, but how reliable it is and what communities might be affected by data quality issues.
 
@@ -52,13 +52,19 @@ If there is a special character like comma, you need use double quote mark so th
 
 ```{r setup}
 # Load required packages (hint: you need tidycensus, tidyverse, and knitr)
+library(tidycensus)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
 
 # Set your Census API key
+census_api_key("3aaee31789e10b674a531e9f236c35d5394b19ed")
 
 # Choose your state for analysis - assign it to a variable called my_state
+my_state = "Utah"
 ```
 
-**State Selection:** I have chosen **[Your State Name]** for this analysis because: [Brief explanation of why you chose this state]
+**State Selection:** I've chosen **Utah** for this analysis because: It's my hometown and I grew up around Salt Lake valley area in different neighborhoods and would like to explore the data behind my memories and maybe how things have changed since I was last living there around 3 years ago.
 
 # Part 2: County-Level Resource Assessment
 
@@ -77,11 +83,22 @@ If there is a special character like comma, you need use double quote mark so th
 
 ```{r county-data}
 # Write your get_acs() code here
+utah_inc_ppl <- get_acs(
+  geography = "county",
+  state = my_state,
+  # Median household income and total population.
+  variables = c(median_inc = "B19013_001", total_pop = "B01003_001"),
+  year = 2022,
+  survey = "acs5",
+  output = "wide"
+)
 
 # Clean the county names to remove state name and "County" 
 # Hint: use mutate() with str_remove()
+utah_inc_ppl <- mutate(utah_inc_ppl, NAME = str_remove(NAME, " County, Utah"))
 
 # Display the first few rows
+glimpse(utah_inc_ppl)
 ```
 
 ## 2.2 Data Quality Assessment
@@ -100,9 +117,25 @@ If there is a special character like comma, you need use double quote mark so th
 
 ```{r income-reliability}
 # Calculate MOE percentage and reliability categories using mutate()
+utah_inc_ppl <- mutate(utah_inc_ppl, MOE_percent = (median_incM / median_incE) * 100) %>%
+                mutate(utah_inc_ppl, reliability_cat =
+                         case_when(
+                           MOE_percent < 5 ~ "High Confidence",
+                           MOE_percent <= 10 ~ "Moderate Confidence",
+                           MOE_percent > 10 ~ "Low Confidence"
+                           )) %>%
+                mutate(utah_inc_ppl, low_flag = reliability_cat == "Low Confidence")
 
 # Create a summary showing count of counties in each reliability category
 # Hint: use count() and mutate() to add percentages
+
+count_summary <- utah_inc_ppl %>%
+  group_by(reliability_cat) %>%
+  summarize(frequency = n()) %>%
+  mutate(frequency = frequency) %>%
+  mutate(percent_counties = frequency / sum(frequency))
+
+count_summary
 ```
 
 ## 2.3 High Uncertainty Counties
@@ -119,13 +152,32 @@ If there is a special character like comma, you need use double quote mark so th
 
 ```{r high-uncertainty}
 # Create table of top 5 counties by MOE percentage
+top_5 <- data.frame()
+
+top_5 <- utah_inc_ppl %>%
+  arrange(desc(MOE_percent)) %>%
+  slice(0:5) %>%
+  select(2:8)
+top_5
 
 # Format as table with kable() - include appropriate column names and caption
+kable(
+  top_5,
+  col.names = c("County", "Median Income", "Median Income MOE", "Total Population", "Total Population MOE", "Percent MOE", "MOE Confidence"),
+  digit = 2,
+  caption = "<b>TOP 5 UTAH COUNTIES: HIGHEST MEDIAN INCOME MARGIN-OF-ERROR</b>"
+) %>%
+  kable_styling(latex_options = "striped") %>%
+  column_spec(1, bold = TRUE) %>%
+  row_spec(0, color = "white", background = "black")
+  
 ```
 
 **Data Quality Commentary:**
 
 [Write 2-3 sentences explaining what these results mean for algorithmic decision-making. Consider: Which counties might be poorly served by algorithms that rely on this income data? What factors might contribute to higher uncertainty?]
+
+The top five counties with the highest MOEs are rural—Piute, Wayne, Daggett, and Kane counties lack a major interstate highway in a state with cities that rely on car-transport within urban areas as well as within the vast swaths of undeveloped desert land. Beaver county at fifth does have the I-15 freeway. Another factor is the environmental topography that could influence towns' infrastructure expansion as well as travel, all five counties' are mountainous regions for the majority of their landscape, making it difficult and expensive to develop.
 
 # Part 3: Neighborhood-Level Analysis
 
@@ -217,7 +269,6 @@ If there is a special character like comma, you need use double quote mark so th
 ```
 
 **Pattern Analysis:** [Describe any patterns you observe. Do certain types of communities have less reliable data? What might explain this?]
-
 
 # Part 5: Policy Recommendations
 

@@ -16,6 +16,8 @@ website:
           text: "WEEK 1: COURSE INTRO"
         - href: weekly-notes/week-02-notes.qmd
           text: "WEEK 2: DYPLR BASICS"
+        - href: weekly-notes/week-03-notes.qmd
+          text: "WEEK 3: EXPLORATORY DATA ANALYSIS (EDA) & VISUALIZATION"
       - text: LABS
         menu:
         - href: labs.qmd
