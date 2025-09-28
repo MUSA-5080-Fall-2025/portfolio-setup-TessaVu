@@ -25,7 +25,7 @@ library(tidycensus)
 library(scales)
 library(RColorBrewer)
 # Set your Census API key if you haven't already
-census_api_key(Sys.getenv("CENSUS_API_KEY"))
+census_api_key(Sys.getenv("3aaee31789e10b674a531e9f236c35d5394b19ed"))
 
 # We'll use Pennsylvania data for consistency with previous weeks
 state_choice <- "PA"
@@ -108,7 +108,19 @@ head(income_concept)
 
 **Your Task:** Find median age variables.
 
-\[write the code below - first add a code chunk\]
+```{r}
+# Search for median income
+age_vars <- acs_vars_2022 %>%
+  filter(str_detect(label, "[Mm]edian.*age"))
+
+head(age_vars, 10)
+
+# Alternative: search by concept
+age_concept <- acs_vars_2022 %>%
+  filter(str_detect(concept, "Age"))
+
+head(age_concept, 10)
+```
 
 ### 0.5 Advanced Search Techniques
 
@@ -238,7 +250,7 @@ county_data <- get_acs(
 
 # Clean county names
 county_data <- county_data %>%
-  mutate(county_name = str_remove(NAME, paste0(", ", state_choice)))
+  mutate(county_name = str_remove(NAME, paste(", ", state_choice)))
 
 # Basic inspection
 glimpse(county_data)
@@ -308,6 +320,44 @@ and identify outliers.
 -   Create a boxplot to identify population outliers
 -   Find and list the 3 most populous and 3 least populous counties
 
+```{r}
+# Create histogram of median income
+ggplot(county_data) +
+  aes(x = total_popE) +
+  geom_histogram(bins = 15, fill = "darkgreen", alpha = 0.7) +
+  labs(
+    title = "Distribution of Median Population",
+    x = "Median Population",
+    y = "Number of Counties"
+  ) +
+  theme_minimal() +
+  scale_x_continuous(labels = comma)
+
+# Box plot to see outliers clearly
+ggplot(county_data) +
+  aes(y = total_popE) +
+  geom_boxplot(fill = "lightgreen", width = 0.5) +
+  labs(
+    title = "Median Population Distribution with Outliers",
+    y = "Median Population"
+  ) +
+  theme_minimal() +
+  scale_y_continuous(labels = comma)
+
+# Identify the outlier counties
+income_outliers <- county_data %>%
+  mutate(
+    Q1 = quantile(total_popE, 0.25, na.rm = TRUE),
+    Q3 = quantile(total_popE, 0.75, na.rm = TRUE),
+    IQR = Q3 - Q1,
+    outlier = total_popE < (Q1 - 1.5 * IQR) | total_popE > (Q3 + 1.5 * IQR)
+  ) %>%
+  filter(outlier) %>%
+  select(county_name, total_popE)
+
+print("Outlier counties:")
+income_outliers
+```
 ------------------------------------------------------------------------
 
 ## Exercise 2: Two Variable Relationships
@@ -397,6 +447,27 @@ income using different visualization techniques.
 -   Format the y-axis with dollar signs
 -   Add a title that mentions both variables
 
+```{r}
+# Enhanced scatter plot with trend line
+ggplot(county_data) +
+  aes(x = median_ageE, y = median_incomeE) +
+  geom_point(, color = "red", alpha = 0.5) +
+  geom_smooth(method = "loess", se = TRUE, color = "darkgreen") +
+  labs(
+    title = "Median Age vs Median Income in Pennsylvania Counties",
+    subtitle = "2018-2022 ACS 5-Year Estimates",
+    x = "Median Age",
+    y = "Median Household Income ($)",
+    caption = "Source: U.S. Census Bureau"
+  ) +
+  theme_dark() +
+  scale_x_continuous(labels = comma) +
+  scale_y_continuous(labels = dollar)
+
+# Calculate correlation
+correlation <- cor(county_data$median_ageE, county_data$median_incomeE, use = "complete.obs")
+print(paste("Correlation coefficient:", round(correlation, 3)))
+```
 ------------------------------------------------------------------------
 
 ## Exercise 3: Data Quality Visualization 
@@ -417,7 +488,9 @@ county_reliability <- county_data %>%
       TRUE ~ "Large (200K+)"
     )
   )
+```
 
+```{r}
 # MOE by population size
 ggplot(county_reliability) +
   aes(x = total_popE, y = income_moe_pct) +
@@ -469,6 +542,45 @@ population vs age MOE percentage
 using `geom_hline()` with a blue dashed line 
 - Use `theme_classic()`instead of `theme_minimal()` 
 - Create a boxplot comparing age MOE across the three population categories
+
+```{r}
+# Calculate MOE percentages
+county_reliability <- county_data %>%
+  mutate(
+    age_moe_pct = (median_ageM / median_ageE) * 100,
+    pop_category = case_when(
+      total_popE < 50000 ~ "Small (<50K)",
+      total_popE < 200000 ~ "Medium (50K-200K)",
+      TRUE ~ "Large (200K+)"
+    )
+  )
+
+# MOE by population size
+ggplot(county_reliability) +
+  aes(x = total_popE, y = age_moe_pct) +
+  geom_point(color = "purple", size = 2, alpha = 0.7) +
+  geom_hline(yintercept = 5, color = "blue", linetype = "dashed") +
+  labs(
+    title = "Data Reliability Decreases with Median Age",
+    x = "Median Age",
+    y = "Margin of Error (%)",
+    caption = "Blue Line = 5% Reliability Threshold"
+  ) +
+  theme_classic()
+
+# Box plots by population category
+ggplot(county_reliability) +
+  aes(x = pop_category, y = age_moe_pct, fill = pop_category) +
+  geom_boxplot() +
+  labs(
+    title = "Data Reliability by Age MOE",
+    x = "Population Category",
+    y = "Margin of Error (%)"
+  ) +
+  theme_classic() +
+  theme(legend.position = "none")  # Remove legend since x-axis is clear
+
+```
 
 ------------------------------------------------------------------------
 
@@ -691,6 +803,10 @@ p1 <- ggplot(full_data) +
   scale_x_continuous(labels = dollar) +
   theme_minimal()
 
+p1
+```
+
+```{r}
 # Plot 2: Education vs Income
 p2 <- ggplot(full_data) +
   aes(x = pct_college, y = median_incomeE) +
@@ -701,6 +817,10 @@ p2 <- ggplot(full_data) +
   scale_y_continuous(labels = dollar) +
   theme_minimal()
 
+p2
+```
+
+```{r}
 # Plot 3: Housing affordability by income category
 p3 <- ggplot(full_data) +
   aes(x = income_category, y = rent_to_income, fill = income_category) +
@@ -710,7 +830,12 @@ p3 <- ggplot(full_data) +
   theme_minimal() +
   theme(legend.position = "none")
 
+p3
+```
+
+```{r}
 # Plot 4: Data reliability by population
+county_reliability
 p4 <- ggplot(county_reliability) +
   aes(x = total_popE, y = income_moe_pct) +
   geom_point(alpha = 0.7) +
@@ -720,12 +845,17 @@ p4 <- ggplot(county_reliability) +
   scale_x_continuous(labels = comma) +
   theme_minimal()
 
+#p4
+```
+
+```{r}
 # Combine all plots
-combined_plot <- (p1 | p2) / (p3 | p4)
-combined_plot + plot_annotation(
-  title = "Pennsylvania County Analysis: Income, Education, and Housing Patterns",
-  caption = "Source: American Community Survey 2018-2022"
-)
+#combined_plot <- (p1 | p2) / (p3 | p4)
+
+#combined_plot + plot_annotation(
+#  title = "Pennsylvania County Analysis: Income, Education, and Housing Patterns",
+#  caption = "Source: American Community Survey 2018-2022"
+#)
 ```
 
 ## Exercise 7: Ethical Data Communication - Implementing Research Recommendations
