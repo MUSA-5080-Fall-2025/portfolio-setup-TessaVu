@@ -19,15 +19,15 @@ website:
         - href: weekly-notes/week-03/week-03-notes.qmd
           text: "WEEK 3: EXPLORATORY DATA ANALYSIS (EDA) & VISUALIZATION"
         - href: weekly-notes/week-03/week-03-class-lab.qmd
-          text: "IN-CLASS LAB 3: EXPLORATORY DATA ANALYSIS (EDA) & VISUALIZATION"
+          text: "IN-CLASS LAB 3"
         - href: weekly-notes/week-04/week-04-notes.qmd
           text: "WEEK 4: SPATIAL DATA & GIS OPERATIONS IN R"
         - href: weekly-notes/week-04/week-04-class-lab.qmd
-          text: "IN-CLASS LAB 4: SPATIAL DATA & GIS OPERATIONS IN R"
+          text: "IN-CLASS LAB 4"
         - href: weekly-notes/week-05/week-05-notes.qmd
           text: "WEEK 5: PREDICTIVE MODELING WITH LINEAR REGRESSION"
         - href: weekly-notes/week-05/week-05-class-lab.qmd
-          text: "IN-CLASS LAB 5: PREDICTIVE MODELING WITH LINEAR REGRESSION"
+          text: "IN-CLASS LAB 5"
       - text: LABS
         menu:
         - href: labs.qmd
