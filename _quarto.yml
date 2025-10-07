@@ -12,20 +12,32 @@ website:
         menu:
         - href: weekly-notes.qmd
           text: ALL NOTES
-        - href: weekly-notes/week-01-notes.qmd
+        - href: weekly-notes/week-01/week-01-notes.qmd
           text: "WEEK 1: COURSE INTRO"
-        - href: weekly-notes/week-02-notes.qmd
+        - href: weekly-notes/week-02/week-02-notes.qmd
           text: "WEEK 2: DYPLR BASICS"
-        - href: weekly-notes/week-03-notes.qmd
+        - href: weekly-notes/week-03/week-03-notes.qmd
           text: "WEEK 3: EXPLORATORY DATA ANALYSIS (EDA) & VISUALIZATION"
+        - href: weekly-notes/week-03/week-03-class-lab.qmd
+          text: "IN-CLASS LAB 3: EXPLORATORY DATA ANALYSIS (EDA) & VISUALIZATION"
+        - href: weekly-notes/week-04/week-04-notes.qmd
+          text: "WEEK 4: SPATIAL DATA & GIS OPERATIONS IN R"
+        - href: weekly-notes/week-04/week-04-class-lab.qmd
+          text: "IN-CLASS LAB 4: SPATIAL DATA & GIS OPERATIONS IN R"
+        - href: weekly-notes/week-05/week-05-notes.qmd
+          text: "WEEK 5: PREDICTIVE MODELING WITH LINEAR REGRESSION"
+        - href: weekly-notes/week-05/week-05-class-lab.qmd
+          text: "IN-CLASS LAB 5: PREDICTIVE MODELING WITH LINEAR REGRESSION"
       - text: LABS
         menu:
         - href: labs.qmd
           text: ALL LABS
         - href: labs/lab-0/lab-0.qmd
-          text: "LAB 0: DPLYR BASICS"
+          text: "IN-CLASS LAB 0: DPLYR BASICS"
         - href: labs/lab-1/lab-1.qmd
           text: "LAB 1: CENSUS DATA"
+        - href: labs/lab-2/lab-2.qmd
+          text: "LAB 1: HEALTHCARE ACCESS AND EQUITY"
       - href: final-project.qmd
         text: FINAL PROJECT
 

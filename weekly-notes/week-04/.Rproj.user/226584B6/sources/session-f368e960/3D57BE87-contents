@@ -1,0 +1,376 @@
+---
+title: "OLS_Regression"
+format: html
+editor: visual
+---
+
+# OLS REGRESSION
+
+## 1. EXPLORATORY DATA ANALYSIS
+
+Import the file RegressionData.csv into R using the `read.csv` command.
+
+```{r}
+# Import relevant libraries.
+library(dplyr)
+library(ggplot2)
+library(patchwork)
+library(cowplot)
+library(sf)
+
+# No scientific notation.
+options(scipen = 999)
+
+# Read .csv file and store.
+regress_data <- read.csv("RegressionData.csv")
+
+# Turn to tibble.
+regress_data <- as_tibble(regress_data)
+
+regress_data <- regress_data %>%
+  mutate(across(c(MEDHVAL, PCTBACHMOR, MEDHHINC, PCTVACANT, PCTSINGLES, NBELPOV100),
+                ~ifelse(. == 0, 0.0001, .)))
+
+regress_data
+```
+
+**1a.** Using the `hist`, `mean`, and `sd` commands in R, examine the distribution of the dependent variable, **MEDHVAL**, and predictors **PCTBACHMORE**, **NBELPOV100**, **PCTVACANT**, and **PCTSINGLES**, and calculate the mean and standard deviation of each of these variables.
+
+```{r}
+# Histogram, mean, and standard deviation of median household value.
+hist(regress_data[["MEDHVAL"]],
+     main = "Histogram of Median Household Value",
+     xlab = "Median Household Value (Dollars, $)")
+
+mean_MEDHVAL <- mean(regress_data[["MEDHVAL"]])
+mean_MEDHVAL
+
+sd_MEDHVAL <- sd(regress_data[["MEDHVAL"]])
+sd_MEDHVAL
+```
+
+```{r}
+# Histogram, mean, and standard deviation of percent bachelor's degrees.
+hist(regress_data[["PCTBACHMOR"]],
+     main = "Histogram of Percent Bachelor's Degrees",
+     xlab = "Bachelor's Degrees (Percent, %)")
+
+mean_PCTBACHMOR <- mean(regress_data[["PCTBACHMOR"]])
+mean_PCTBACHMOR
+
+sd_PCTBACHMOR <- sd(regress_data[["PCTBACHMOR"]])
+sd_PCTBACHMOR
+```
+
+```{r}
+# Histogram, mean, and standard deviation of number households in poverty.
+hist(regress_data[["NBELPOV100"]],
+     main = "Histogram of Percent Households in Poverty",
+     xlab = "Households in Poverty (Percent, %)")
+
+mean_NBELPOV100 <- mean(regress_data[["NBELPOV100"]])
+mean_NBELPOV100
+
+sd_NBELPOV100 <- sd(regress_data[["NBELPOV100"]])
+sd_NBELPOV100
+```
+
+```{r}
+# Histogram, mean, and standard deviation of percent vacant units.
+hist(regress_data[["PCTVACANT"]],
+     main = "Histogram of Percent Vacant Units",
+     xlab = "Vacant Units (Percent, %)")
+
+mean_PCTVACANT <- mean(regress_data[["PCTVACANT"]])
+mean_PCTVACANT
+
+sd_PCTVACANT <- sd(regress_data[["PCTVACANT"]])
+sd_PCTVACANT
+```
+
+```{r}
+# Histogram, mean, and standard deviation of percent detached single-family homes.
+hist(regress_data[["PCTSINGLES"]],
+     main = "Histogram of Percent Detached Single-Family Homes",
+     xlab = "Detached Single-Family Homes (Percent, %)")
+
+mean_PCTSINGLES <- mean(regress_data[["PCTSINGLES"]])
+mean_PCTSINGLES
+
+sd_PCTSINGLES <- sd(regress_data[["PCTSINGLES"]])
+sd_PCTSINGLES
+```
+
+**Observations:** All the variables' means and standard deviations are close together, with the bachelor's degree variable having a standard deviation higher than the mean. The data could be very inconsistent, because the standard deviations are as high or higher than the means this indicates the values fluctuate; this suggests there's a significant disparity in house values in the area. The average is influenced by outliers, so the data is dispersed far from the mean, it could be that the median would be best representative of the typical value in the area. It's possible the distribution *might not* be a normal, symmetrical bell curve.
+
+**1ai.** Using the results you obtain, present the summary statistics (i.e., mean and standard deviation) of each of the variables in a table.
+
+```{r}
+# Median house value.
+regress_data %>% summarize(
+  mean_MEDHVAL = mean_MEDHVAL,
+  median_MEDHVAL = median(regress_data[["MEDHVAL"]]),
+  sd_MEDHVAL = sd_MEDHVAL,
+  min_MEDHVAL = min(regress_data[["MEDHVAL"]]),
+  max_MEDHVAL = max(regress_data[["MEDHVAL"]])
+  )
+```
+
+```{r}
+# Percent bachelor's degrees.
+regress_data %>% summarize(
+  mean_PCTBACHMOR = mean_PCTBACHMOR,
+  median_PCTBACHMOR = median(regress_data[["PCTBACHMOR"]]),
+  sd_PCTBACHMOR = sd_PCTBACHMOR,
+  min_PCTBACHMOR = min(regress_data[["PCTBACHMOR"]]),
+  max_PCTBACHMOR = max(regress_data[["PCTBACHMOR"]])
+  )
+```
+
+```{r}
+# Number households in poverty.
+regress_data %>% summarize(
+  mean_NBELPOV100 = mean_NBELPOV100,
+  median_NBELPOV100 = median(regress_data[["NBELPOV100"]]),
+  sd_NBELPOV100 = sd_NBELPOV100,
+  min_NBELPOV100 = min(regress_data[["NBELPOV100"]]),
+  max_NBELPOV100 = max(regress_data[["NBELPOV100"]])
+  )
+```
+
+```{r}
+# Percent vacant units.
+regress_data %>% summarize(
+  mean_PCTVACANT = mean_PCTVACANT,
+  median_PCTVACANT = median(regress_data[["PCTVACANT"]]),
+  sd_PCTVACANT = sd_PCTVACANT,
+  min_PCTVACANT = min(regress_data[["PCTVACANT"]]),
+  max_PCTVACANT = max(regress_data[["PCTVACANT"]])
+  )
+```
+
+```{r}
+# Percent detached single-family homes.
+regress_data %>% summarize(
+  mean_PCTSINGLES = mean_PCTSINGLES,
+  median_PCTSINGLES = median(regress_data[["PCTSINGLES"]]),
+  sd_PCTSINGLES = sd_PCTSINGLES,
+  min_PCTSINGLES = min(regress_data[["PCTSINGLES"]]),
+  max_PCTSINGLES = max(regress_data[["PCTSINGLES"]])
+  )
+```
+
+**1aii.** Also, observe from the histograms that none of the variables looks normal. This being the case, examine whether a logarithmic transformation of the variable helps achieve a normal distribution. In R, use the `log` command to create 5 new variables called **LNMEDHVAL**, **LNPCTBACHMORE**, **LNNBELPOV100**, **LNPCTVACANT**, and **LNPCTSINGLES**, which are the natural logs of **MEDHVAL**, **PCBACHMORE**, **NBELPOV100**, **PCTVACANT**, and **PCTSINGLES**, respectively.
+
+```{r}
+regress_data <- regress_data %>%
+  mutate(
+    "LNMEDHVAL" = log(MEDHVAL),
+    "LNPCTBACHMORE" = log(PCTBACHMOR),
+    "LNNBELPOV100" = log(NBELPOV100),
+    "LNPCTVACANT" = log(PCTVACANT),
+    "LNPCTSINGLES" = log(PCTSINGLES)
+  )
+
+regress_data
+```
+
+**1b.** Look at whether the relationship between the dependent variable and each of the predictors is linear. To do so, create four scatter plots – one for each predictor using the `plot` command (or any other command in R that yields a scatter plot).
+
+```{r}
+plot_LNPCTBACHMORE <- ggplot(regress_data, aes(x = LNPCTBACHMORE, y = LNMEDHVAL)) + 
+  geom_point(size = 2, alpha = 0.3, color = "midnightblue") + # Customize point size and shape
+  labs(title = "Percent Bachelor's Degree vs. Median House Value", 
+       x = "Percent Bachelor's Degree", 
+       y = "Median House Value") +
+  theme_gray() # Apply a minimal theme
+
+plot_LNPCTBACHMORE
+```
+
+```{r}
+plot_LNNBELPOV100 <- ggplot(regress_data, aes(x = LNNBELPOV100, y = LNMEDHVAL)) + 
+  geom_point(size = 2, alpha = 0.3, color = "midnightblue") + # Customize point size and shape
+  labs(title = "Number Households in Poverty vs. Median House Value", 
+       x = "Number Households in Poverty", 
+       y = "Median House Value") +
+  theme_gray() # Apply a minimal theme
+
+plot_LNNBELPOV100
+```
+
+```{r}
+plot_LNPCTVACANT <- ggplot(regress_data, aes(x = LNPCTVACANT, y = LNMEDHVAL)) + 
+  geom_point(size = 2, alpha = 0.3, color = "midnightblue") + # Customize point size and shape
+  labs(title = "Percent Vacant Units vs. Median House Value", 
+       x = "Percent Vacant Units", 
+       y = "Median House Value") +
+  theme_gray() # Apply a minimal theme
+
+plot_LNPCTVACANT
+```
+
+```{r}
+plot_LNPCTSINGLES <- ggplot(regress_data, aes(x = LNPCTSINGLES, y = LNMEDHVAL)) + 
+  geom_point(size = 2, alpha = 0.3, color = "midnightblue") + # Customize point size and shape
+  labs(title = "Percent Detached Single-Family Homes vs. Median House Value", 
+       x = "Percent Detached Single-Family Homes", 
+       y = "Median House Value") +
+  theme_gray() # Apply a minimal theme
+
+plot_LNPCTSINGLES
+```
+
+**1bi.** In your report, you will be expected to present all four scatter plots as a single figure.
+
+```{r}
+plots_combined <- plot_grid(plot_LNPCTBACHMORE, plot_LNNBELPOV100, plot_LNPCTVACANT, plot_LNPCTSINGLES, ncol = 2, nrow = 2)
+
+plots_combined + plot_annotation(
+  title = "Median House Value Predictors",
+  subtitle = "Using % Bachelor's Degrees, # Households Below Poverty,\n% Vacant Units, % Detached Single-Family Homes"
+  )
+```
+
+**1c.** Look at the Pearson correlations between all the predictors you will be including in your model, listed below. Use the `cor` command or another command in R that computes Pearson correlations.
+
+Again, you may simply print the screen (Ctrl + Prt Scrn), and paste it into MS Paint. Then, you may cut out the relevant part (i.e., the correlation matrix) and paste it into your report.
+
+Note whether you observe severe multicollinearity, and whether it’s appropriate to include all 4 variables as predictors.
+
+Keep in mind that when you look at multicollinearity, you shouldn’t be including the dependent variable in the correlation matrix – that is, in a good predictive model, you want the correlation between each predictor and the dependent variable to be strong, and that’s not an issue.
+
+```{r}
+pearson_LNPCTBACHMORE <- cor(regress_data$LNPCTBACHMORE, regress_data$LNMEDHVAL, use = "everything", method = "pearson")
+
+pearson_LNPCTBACHMORE
+```
+
+```{r}
+pearson_LNNBELPOV100 <- cor(regress_data$LNNBELPOV100, regress_data$LNMEDHVAL, use = "everything", method = "pearson")
+
+pearson_LNNBELPOV100
+```
+
+```{r}
+pearson_LNPCTVACANT <- cor(regress_data$LNPCTVACANT, regress_data$LNMEDHVAL, use = "everything", method = "pearson")
+
+pearson_LNPCTVACANT
+```
+
+```{r}
+pearson_LNPCTSINGLES <- cor(regress_data$LNPCTSINGLES, regress_data$LNMEDHVAL, use = "everything", method = "pearson")
+
+pearson_LNPCTSINGLES
+```
+
+**Observations:**
+
+-   LNPCTBACHMORE = 0.4818251 (percent bachelor's degrees have a weak positive correlation with median household value)
+
+-   LNNBELPOV100 = -0.3255461 (number households in poverty have a weak negative correlation with median household value)
+
+-   LNPCTVACANT = -0.3205985 (percent vacant units have a weak negative correlation with median household value)
+
+-   LNPCTSINGLES = 0.01660472 (percent detached single-family homes have a weak positive correlation with median household value).
+
+0 ≤ \| r \| ≤ ±0.5: weak correlation
+
+±0.5 \< \| r \| \< ±0.8: moderate correlation
+
+±0.8 ≤ \| r \| \< ±1: strong correlation
+
+Above categories taken from class material "Lecture 3 - Hypothesis Testing - A Review".
+
+**1d.** Now use the `readOGR` command in the `rgdal` library in R (or another command in another R library of your choice) to import the shapefile and create choropleth maps of the following variables: **LNMEDHVAL**, **PCTVACANT**, **PCTSINGLES**, **PCTBACHMOR**, **LNNBELPOV100**.
+
+In your report, present the map of LNMEDHVAL as a single figure, and then combine the maps of the four predictors into a single figure (i.e., all 4 maps should be smaller and fit on 1 page as a single figure). Please use any color/classification scheme you see fit, as long as it is consistent for these five maps, and the remaining maps in the report.
+
+```{r}
+shapefile <- st_read("Lecture_1_RegressionData.shp/RegressionData.shp")
+
+choropleth_LNMEDHVAL <- ggplot() +
+  geom_sf(data = shapefile, aes(fill = LNMEDHVAL), color = "cornsilk2") +
+  scale_fill_viridis_c() +
+  labs(title = "Philadelphia Tracts: Log of Median House Value", fill = "Log of Median House Value") +
+  theme_void()
+
+choropleth_LNMEDHVAL
+```
+
+```{r}
+choropleth_PCTVACANT <- ggplot() +
+  geom_sf(data = shapefile, aes(fill = PCTVACANT), color = "cornsilk2") +
+  scale_fill_viridis_c() +
+  labs(title = "Philadelphia Tracts: % Vacant Units", fill = "% Vacant Units") +
+  theme_void()
+
+choropleth_PCTVACANT
+```
+
+```{r}
+choropleth_PCTSINGLES <- ggplot() +
+  geom_sf(data = shapefile, aes(fill = PCTSINGLES), color = "cornsilk2") +
+  scale_fill_viridis_c() +
+  labs(title = "Philadelphia Tracts: % Detached Single-Family Homes", fill = "% Detached Single-Family Homes") +
+  theme_void()
+
+choropleth_PCTSINGLES
+```
+
+```{r}
+choropleth_PCTBACHMOR <- ggplot() +
+  geom_sf(data = shapefile, aes(fill = PCTBACHMOR), color = "cornsilk2") +
+  scale_fill_viridis_c() +
+  labs(title = "Philadelphia Tracts: % Bachelor's Degrees", fill = "% Bachelor's Degrees") +
+  theme_void()
+
+choropleth_PCTBACHMOR
+```
+
+```{r}
+choropleth_LNNBELPOV100 <- ggplot() +
+  geom_sf(data = shapefile, aes(fill = LNNBELPOV), color = "black") +
+  scale_fill_viridis_c() +
+  labs(title = "Philadelphia Tracts: Households in Poverty", fill = "Households in Poverty") +
+  theme_void()
+
+choropleth_LNNBELPOV100
+```
+
+```{r}
+plots_combined <- plot_grid(choropleth_PCTVACANT, choropleth_PCTSINGLES, choropleth_PCTBACHMOR, choropleth_LNNBELPOV100, ncol = 2, nrow = 2)
+
+plots_combined + plot_annotation(
+  title = "Median House Value Predictors",
+  subtitle = "Using % Bachelor's Degrees, # Households Below Poverty,\n% Vacant Units, % Detached Single-Family Homes"
+  )
+```
+
+## 2. REGRESSION ANALYSIS
+
+You are now done with the *exploratory analysis* of the data for this assignment. Note that here, you received data that have been cleaned. Typically, when you work with data, you need to make sure that you examine the variables for outliers and incorrectly coded/entered values. But now, you’re ready for regression analysis.
+
+**2a.** Assuming there’s no severe multicollinearity, use the `lm` command to run the regression where **LNMEDHVAL** is the dependent variable and **PCTVACANT**, **PCTSINGLES**, **PCTBACHMOR**, and **LNNBELPOV100** are predictors.
+
+**2b.** In your report, be sure to present the summary of the fit as well as the ANOVA table containing the regression and error sum of squares (use the `summary` and `anova` commands). The only thing you should be looking at in the output from the `anova` command is the error sum of squares, and not any of the p-values.
+
+**2c.** Use the `fitted`, `residuals`, and `rstandard` commands to save the predicted values, residuals and standardized residuals, respectively.
+
+**2d.** Create a scatter plot with *Standardized Residuals* on the y-axis and *Predicted Values* on the x-axis. You will be asked to present this scatter plot in your report, so take a screenshot of it if you plan to use MS Word.
+
+## 3. STEPWISE REGRESSION
+
+Use the `step` and `step$anova` commands in the `MASS` library to run stepwise regression and determine the best model based on the Akaike Information Criterion. Take a screenshot of the `step$anova` output if you plan to use MS Word.
+
+## 4. K-FOLD CROSS VALIDATION
+
+Perform k-fold cross-validation (in which k = 5) using the `CVlm` command in the `DAAG` library and calculate the root mean square error (RMSE). Then re-run the regression model only using **PCTVACANT** and **MEDHHINC** as predictors, and again perform k-fold cross-validation in which k = 5. You will be asked to present the RMSE of both this model and the original model in your report.
+
+## 5. VISUALIZATIONS
+
+Create a histogram and a choropleth map of standardized regression residuals that you saved using the `rstandard` command earlier. Use the same classification/color scheme as in your earlier maps.
+
+### 5a. Histogram
+
+### 5b. Choropleth

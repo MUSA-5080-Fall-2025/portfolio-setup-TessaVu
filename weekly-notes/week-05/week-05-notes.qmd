@@ -1,0 +1,24 @@
+---
+title: "WEEK 5 NOTES: PREDICTIVE MODELING WITH LINEAR REGRESSION"
+date: "2025-10-06"
+---
+
+## Key Concepts Learned
+
+TBA
+
+## Coding Techniques
+
+TBA
+
+## Questions & Challenges
+
+TBA
+
+## Connections to Policy
+
+TBA
+
+## Reflection
+
+TBA

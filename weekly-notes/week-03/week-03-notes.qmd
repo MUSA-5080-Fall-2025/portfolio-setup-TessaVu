@@ -1,0 +1,53 @@
+---
+title: "WEEK 3 NOTES: EXPLORATORY DATA ANALYSIS (EDA) & VISUALIZATION"
+date: "2025-09-22"
+---
+
+## Key Concepts Learned
+- Different data with the exact same summary statistics can visualize differently and have very different spatial patterns.
+- Visualization in a policy context is especially valuable due to working with real lives and geographical areas, so taking data at face-value in tabular form is different than seeing it aggregated via census tracts.
+- It's important to report margins-of-error, many planners and data scientists forget this key aspect and implement policy changes with low-confidence data.
+- Not just bad data, but bad visualization can have consequences as well, especially hidden or ignored uncertainty being the main issue.
+- EDA mindset is detective work with five questions:
+    - What does the data look like?
+    - What patterns exist?
+    - What's unusual?
+    - What questions does this raise?
+    - How reliable is this data?
+- EDA workflow with data quality focus:
+    - Load and inspect.
+    - Assess reliability.
+    - Visualize distributions.
+    - Explore relationships.
+    - Identify patterns.
+    - Question anomolies.
+    - Document limitations.
+
+## Coding Techniques
+- ggplot2 library's graphics grammar starts with Data -> Aesthetics -> Geometris -> Visuals
+- Basic structure: ggplot(data = your_data) + aes(x = variable1, y = variable2) + geom_something() + additional_layers()
+- The plus sign adds layers.
+- Tabular data joins:
+    - left_join() keeps all rows from left dataset. Most common.
+    - right_join() keeps all rows from right dataset.
+    - inner_join() keeps only rows that match in both.
+    - full_join() keeps all rows from both datasets.
+
+## Questions & Challenges
+- EDA is an important concept, but sometimes working in public policy, or especially private companies, don't allow the space for that initial experimentation.
+
+## Connections to Policy
+- Summary statistics can hide critical patterns.
+- Outliers my represent important communities.
+- Relationships aren't always linear.
+- Visual inspection reveals data quality issues.
+- Good practices are ethical requirements under AICP Code of Ethics.
+
+## Reflection
+- The goal is to understand the data being worked on before making decisions or building models.
+- Research-based recommendations for public policy and planning:
+    - Report corresponding MOEs of ACS estimates.
+    - Include footnote when not reporting MOEs.
+    - Provide context for (un)reliability.
+    - Reduce statistical uncertainty.
+    - Always conduct statistical significance tests.

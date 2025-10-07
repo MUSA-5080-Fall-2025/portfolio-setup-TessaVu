@@ -1,0 +1,98 @@
+---
+title: "WEEK 4 NOTES: SPATIAL DATA & GIS OPERATIONS IN R"
+date: "2025-09-29"
+---
+
+## Key Concepts Learned
+
+-   Each feature has geometry, which has shape and location, and attributes, which are data about that feature like population or income.
+-   **st_intersects():** Any overlap at all.
+-   **st_touches():** Share boundary, no interior overlap.
+-   **st_within():** Completely inside.
+-   **st_contains():** Completely contains.
+-   **st_overlaps():** Partial overlap.
+-   **st_disjoint():** No spatial relationship.
+-   Area calculations depend on coordinate reference system.
+-   **(.):** The dot is a placeholder that represents data being passed through pipe.
+    -   pa_counties \<- pa_counties %\>% mutate(area_sqkm = as.numeric(st_area(.)) / 1000000)
+        -   (.) refers to pa_counties, the data frame being passed through the pipe.
+        -   Equivalent to pa_counties \<- pa_counties %\>% mutate(area_sqkm = as.numeric(st_area(pa_counties)) / 1000000)
+-   Union operations combine multiple features into one.
+-   Spatial aggregation summarizes data across spatial boundaries.
+-   Projections matter because we can't preserve area, distance, and angles simultaneously, one has to give.
+-   Different projections optimize different properties.
+-   Wrong projects can lead to wrong analysis results.
+-   Geographic Coordinate Systems (GCS):
+    -   Latitude/longitude coordinates.
+    -   Units in decimal degrees.
+    -   Good for global datasets and web mapping.
+    -   Bad for area/distance calculations.
+-   Projected Coordinate Systems (PCS):
+    -   X/Y coordinates on a flat plane.
+    -   Units in meters, feet, etc.
+    -   Good for local analysis and accurate measurements.
+    -   Bad for large areas and global datasets.
+-   Common CRS:
+    -   WGS84 (EPSG:4326): GPS standard, geographic.
+    -   Web Mercator (EPSG:3857): Web mapping standard, projected, heavily distorts near poles.
+    -   State Plane / UTM Zones: Local accuracy, different zones for different regions, optimized for specific geographic areas.
+    -   Albers Equal Area: Preserves area and good for demographic/statistical analysis.
+-   Transform CRS when:
+    -   Calculating areas or distances.
+    -   Creating buffers.
+    -   Doing geometric operations.
+    -   Working with local/regional data.
+
+## Coding Techniques
+
+-   Vector data:
+    -   **Points:** Locations like schools, hospitals, or crime incidents.
+    -   **Lines:** Linear features like roads, rivers, or transit routes.
+    -   **Polygons:** Areas like census tracts, neighborhoods, or service areas.
+-   sf package is a spatial package that integrates with tidyverse workflows, follows international standards, and is fast and reliable.
+    -   Spatial data is data.frame + geometry column.
+-   Spatial data formats:
+    -   Shapefiles (.shp)
+    -   GeoJSON (.geojson)
+    -   KML/KMZ (Google Earth)
+    -   Database Connections (PostGIS)
+-   Spatial Subsetting: Extract features based on spatial relationships.
+    -   st_filter(), st_intersects(), st_touches, st_within()
+        -   "Which counties border Allegheny?" Use st_touches.
+        -   "Which tracts are in Allegheny?" Use st_within.
+        -   "Which tracts overlap a metro area?" Use st_intersects.
+    -   .predicate parameter tells st_filter() what spatial relationship to look for.
+        -   st_filter(data_to_filter, reference_geometry, .predicate = relationship)
+        -   If no .predicate is specified, it uses st_intersects.
+-   st_filter with predicates selects complete features (keeps or removes entire rows).
+    -   st_intersection() and st_union() modifies geometries (creates new shapes).
+    -   st_filter() when we want to select/identify features based on location, need complete features with original boundaries, or counting.
+    -   st_intersection() when we need to calculate areas, populations, or other measures within specific boundaries, doing spatial overlay analysis, or need to clip data to a study area.
+-   st_crs(data) checks current CRS.
+-   data \<- st_set_crs(data, 4326) sets the CRS ONLY if missing.
+-   Albers Equal Area CRS is good for area calculations.
+
+## Questions & Challenges
+
+-   Training data may under-represent certain areas.
+-   Spatial autocorrelation violates independence assumptions.
+-   Service delivery algorithms may reinforce geographic inequities.
+
+## Connections to Policy
+
+-   Real policy questions need spatial answers.
+    -   Which communities have the lowest income? Are they clustered? Isolated? Near resources?
+    -   Where should we locate a new health clinic? How do we optimize access for underserved populations?
+    -   How do school districts compare? How do we account for geographic boundaries and spillovers?
+    -   Is there an environmental justice concern? Do pollution sources cluster near vulnerable communities?
+
+## Reflection
+
+-   Policy analysis workflow for spatial analysis:
+    -   Load data, get spatial boundaries and attribute data.
+    -   Check projections, transform to appropriate CRS.
+    -   Join datasets, combine spatial and non-spatial data.
+    -   Spatial operations, include buffers, intersections, distance calculations, etc.
+    -   Aggregation, summarize across sptial units.
+    -   Visualization, maps and charts.
+    -   Interpretation, policy recommendations.
