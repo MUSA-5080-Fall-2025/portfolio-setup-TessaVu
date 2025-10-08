@@ -11,4 +11,4 @@ title: "LABS"
 [09-15-2025 Lab: Census Data](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-1/lab-1)
 
 ## LAB 2: HEALTHCARE ACCESS AND EQUITY IN PENNSYLVANIA
-[10-06-2025 Lab: Healthcare Access and Equity in Pennsylvania](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-2/lab-2)
+[10-06-2025 Lab: Healthcare Access and Equity in Pennsylvania](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-2/Vu_Tessa_Assignment2)

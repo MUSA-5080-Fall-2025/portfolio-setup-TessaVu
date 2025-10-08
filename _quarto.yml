@@ -36,7 +36,7 @@ website:
           text: "IN-CLASS LAB 0: DPLYR BASICS"
         - href: labs/lab-1/lab-1.qmd
           text: "LAB 1: CENSUS DATA"
-        - href: labs/lab-2/lab-2.qmd
+        - href: labs/lab-2/Vu_Tessa_Assignment2.qmd
           text: "LAB 2: HEALTHCARE ACCESS AND EQUITY"
       - href: final-project.qmd
         text: FINAL PROJECT
