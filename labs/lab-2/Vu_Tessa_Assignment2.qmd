@@ -287,6 +287,8 @@ kable(
 
     -   Approximately 33.44% of PA's census tracts are considered
         vulnerable.
+        
+- **NOTE:** There are 60 NA tracts with age population data, but no income data, and it would've been misleading to label the median income as $0 when there's a lack of data. The NA category is necessary, not lumping the tracts in with vulnerable nor non-vulnerable tracts.
 
 ------------------------------------------------------------------------
 
@@ -1496,5 +1498,5 @@ This quick look at resource distribution has policy relevance to community inves
 ## Finally - A few comments about your incorporation of feedback!
 
 - I removed a lot of the extra instruction text in this write-up to make the report more concise and straightforward.
-- Any printouts and summaries created outside of kable were commented our or removed to give the report more clarity and not fill it with extra text or numbers.
+- Any printouts and summaries created outside of kable were commented out or removed to give the report more clarity and not fill it with extra text or numbers.
 - I broke up long paragraphs when making any comments or analyses and shortened figure titles for readability.
