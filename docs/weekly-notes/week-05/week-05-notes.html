@@ -220,23 +220,332 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="key-concepts-learned" class="level2">
 <h2 class="anchored" data-anchor-id="key-concepts-learned">Key Concepts Learned</h2>
-<p>TBA</p>
+<ol type="1">
+<li><p>STATISTICAL LEARNING FRAMEWORK</p>
+<ul>
+<li><p><strong>Statistical Learning:</strong> Set of approaches for estimating relationships.</p></li>
+<li><p>Formalizing relationships, where:</p>
+<ul>
+<li><p><em>Y = f(X) + ε</em></p></li>
+<li><p><strong>f:</strong> The systematic information X provides about Y.</p></li>
+<li><p><strong>ε:</strong> Random error (irreducible).</p></li>
+</ul></li>
+<li><p><strong>f represents the TRUE relationship between predictors and outcome.</strong></p>
+<ul>
+<li><p>It’s <strong>FIXED</strong> but <strong>UNKNOWN</strong>.</p></li>
+<li><p>It’s what people try to estimate.</p></li>
+<li><p>Different X values produce different Y values through f.</p></li>
+</ul></li>
+<li><p>Two reasons to estimate f:</p>
+<ol type="1">
+<li><p><strong>Prediction</strong></p>
+<ul>
+<li><p>Estimate Y for new observations.</p></li>
+<li><p>Don’t necessarily care about the exact form of f.</p></li>
+<li><p><strong>Focus is on accuracy of predictions.</strong></p></li>
+</ul></li>
+<li><p><strong>Inference</strong></p>
+<ul>
+<li><p>Understand how X affects Y.</p></li>
+<li><p><em>Which predictions matter?</em></p></li>
+<li><p><em>What is the nature of the relationship?</em></p></li>
+<li><p><strong>Focus is on interpreting the model.</strong></p></li>
+</ul></li>
+</ol></li>
+<li><p>How to estimate f? With two broad approaches:</p>
+<ul>
+<li><p><strong>Parametric Methods</strong></p>
+<ul>
+<li><p>Make an assumption about functional form (e.g.&nbsp;linear).</p></li>
+<li><p>Reduces problem to estimating a few parameters.</p></li>
+<li><p>Easier to interpret.</p></li>
+<li><p>More common.</p></li>
+</ul></li>
+<li><p><strong>Non-Parametric Methods</strong></p>
+<ul>
+<li><p>Don’t assume a specific form.</p></li>
+<li><p>More flexible.</p></li>
+<li><p>Requires more data.</p></li>
+<li><p>Harder to interpret.</p></li>
+</ul></li>
+<li><p><strong>KEY DIFFERENCE:</strong> In <em>parametric</em> we assume f is linear, then estimate β₀ and β₁, etc. In <em>non-parametric</em> we let the data determine the shape of f.</p>
+<ul>
+<li><strong>Deep Learning:</strong> Neural networks are technically <em>parametric</em> (millions of parameters), but achieve flexibility through parameter quantity rather than assuming a rigid form.</li>
+</ul></li>
+<li><p><strong>Linear Regression: Parametric</strong></p>
+<ul>
+<li><p><strong>Assumption:</strong> Relationship between X and Y is linear.</p></li>
+<li><p><strong>Task:</strong> Estimate the β coefficients using sample data.</p></li>
+<li><p><strong>Method:</strong> Ordinary Least Squares (OLS).</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li><p>Simple and interpretable.</p></li>
+<li><p>Well-understood properties.</p></li>
+<li><p>Works remarkably well for many problems.</p></li>
+<li><p>Foundation for more complex methods.</p></li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li><p>Assumes linearity.</p></li>
+<li><p>Sensitive to outliers.</p></li>
+<li><p>Makes several assumptions.</p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>TWO GOALS</p></li>
+</ol>
+<ul>
+<li><p>Understanding Relationships vs.&nbsp;Making Predictions: Same model serves different purposes.</p>
+<ul>
+<li><p><strong>Inference</strong></p>
+<ul>
+<li><p>“Does education affect income?”</p></li>
+<li><p>Focus on coefficients.</p></li>
+<li><p>Statistical significance matters.</p></li>
+<li><p>Understand mechanisms and what the coefficients, or predictors, tell us.</p></li>
+</ul></li>
+<li><p><strong>Prediction</strong></p>
+<ul>
+<li><p>“What’s county Y’s income?”</p></li>
+<li><p>Focus on accuracy.</p></li>
+<li><p>Prediction intervals matter.</p></li>
+<li><p>Don’t need to understand why certain relationships exist.</p></li>
+</ul></li>
+</ul></li>
+</ul>
+<ol start="3" type="1">
+<li>MODEL BUILDING</li>
+</ol>
+<ul>
+<li><p>Considerable scatter can generally mean the relationships aren’t deterministic, but rather more probablistic or stochastic.</p></li>
+<li><p>Interpreting coefficients example:</p>
+<ul>
+<li><p>Intercept (β₀) = $62,855</p>
+<ul>
+<li><p>Expected income when population = 0.</p></li>
+<li><p>Not usually meaningful in practice.</p></li>
+</ul></li>
+<li><p>Slope (β₁) = $0.02</p>
+<ul>
+<li><p>For each additional person, income increases by $0.02.</p></li>
+<li><p>This is more useful, because for every 1,000 people, income increases by $20.</p></li>
+</ul></li>
+<li><p>p-value &lt;0.001 means it’s very unlikely to see this if true, when β₁ = 0.</p></li>
+<li><p>Can reject the null hypothesis.</p></li>
+</ul></li>
+<li><p><strong>Holy Grail Concept:</strong> Estimates are just estimates of the true unknown parameters.</p></li>
+<li><p>Different samples produce different linear regression lines, but no matter how many samples and statistical tests, the true relationship is unknowable.</p></li>
+<li><p>Standard errors quantify the above uncertainty.</p></li>
+<li><p>Statistical significance:</p>
+<ol type="1">
+<li><p><strong>Null Hypothesis (H₀):</strong> β₁ = 0 (no relationship).</p></li>
+<li><p><strong>Our Estimate:</strong> β₁ = 0.02.</p></li>
+<li><p><strong>Question:</strong> Could we get $0.02 just by chance if H₀ is true?</p></li>
+</ol>
+<ul>
+<li><p><strong>t-statistic:</strong> How many standard errors away from 0?</p>
+<ul>
+<li><strong>Bigger |t| means more confidence that the relationship is real.</strong></li>
+</ul></li>
+<li><p><strong>p-value:</strong> Probability of seeing our estimate if H₀ is true.</p>
+<ul>
+<li><p><strong>Small p, reject H₀, conclude relationship exists.</strong></p></li>
+<li><p><strong>Large p, fail to reject H₀, conclude that there’s a possibility no relationship exists.</strong></p></li>
+</ul></li>
+</ul></li>
+</ul>
+<ol start="4" type="1">
+<li>MODEL EVALUATION</li>
+</ol>
+<ul>
+<li><p>Two key questions:</p>
+<ol type="1">
+<li><p><strong>How well does the data used fit?</strong> (in-sample fit)</p></li>
+<li><p><strong>How well would it predict new data?</strong> (out-of-sample performance)</p></li>
+</ol>
+<ul>
+<li><p>NOT THE SAME.</p></li>
+<li><p><strong>In-Simple Fit: R^2</strong></p>
+<ul>
+<li><p>R^2 = 0.208 means “21% of variation in income is explained by population.”</p></li>
+<li><p><strong>Is this good? It depends on the goal. For prediction, it’s moderately good. For inference, it shows population matters, but other factors exist.</strong></p></li>
+<li><p><strong>R^2 alone doesn’t tell if the model is trustworthy.</strong></p></li>
+</ul></li>
+<li><p><strong>Overfitting Problem</strong></p>
+<ol type="1">
+<li><p><strong>Underfitting:</strong> Model is too simple (high bias).</p></li>
+<li><p><strong>Good Fit:</strong> Captures pattern without noise.</p></li>
+<li><p><strong>Overfitting:</strong> Memorizes training data (high variance).</p></li>
+</ol>
+<ul>
+<li><p><strong>DANGER: High R^2 doesn’t mean good predictions!</strong></p></li>
+<li><p>Overfit regression means it can’t be applied to other samples and is too aligned with the data samples it was tested and derived from.</p></li>
+<li><p>70% training, so fit on training data only. 30% testing, so predict on test data after getting the fit on the training data.</p></li>
+</ul></li>
+<li><p><strong>RMSE:</strong> A number of 9,536 means that on new data (test set), predictions are off by ~$9,500 on average. Is this level of error acceptable for policy decisions?</p></li>
+<li><p><strong>Cross-Validation:</strong> A better approach doing multiple training and testing splits that gives more stable estimate of true prediction performance. Average the multiple RMSEs.</p></li>
+</ul></li>
+</ul>
+<ol start="5" type="1">
+<li>CHECKING ASSUMPTIONS</li>
+</ol>
+<ul>
+<li><p>Linear regression makes assumptions, if violated:</p>
+<ul>
+<li><p>Coefficients may be biased.</p></li>
+<li><p>Standard errors are wrong.</p></li>
+<li><p>Predictions unreliable.</p></li>
+<li><p><strong>Check diagnostics before trusting any model.</strong></p></li>
+</ul></li>
+<li><p>Assumption 1: Linearity.</p>
+<ul>
+<li><p>Assume relationship is linear.</p></li>
+<li><p>Check with residual plot.</p>
+<ul>
+<li><p>Good plot will have random scatter, points around 0, and constant spread.</p></li>
+<li><p>Bad plot will have curved pattern (parabolic relationship), model is missing something, predictions are biased.</p></li>
+<li><p>Linearity violations hurt predictions, not just inference:</p>
+<ul>
+<li><p>If the true relationship is curved and a straight line is fitted, there will be a systematic underprediction in some regions and overprediction in otherss.</p></li>
+<li><p>Biased predictions in predictable ways (not random errors).</p></li>
+<li><p>Residual plots should show random scatter, any pattern means the model is missing something systematic.</p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>Assumption 2: Constant Variance.</p>
+<ul>
+<li><p><strong>Heteroskedasticity:</strong> Variance changes across X.</p></li>
+<li><p><strong>Impact:</strong> Standard errors are wrong, so p-values are misleading.</p></li>
+<li><p>Heteroskedasticity is often a sympton of model misspecification.</p>
+<ul>
+<li><p>Model fits well for some values, but poorly for other values (aggregation matters).</p></li>
+<li><p>May indicate missing variables that matter more at certain X values.</p></li>
+<li><p>Ask what’s different about observations with large residuals.</p></li>
+<li><p>Example: Population alone predicts income well in rural counties, but large urban counties need additional variables (education, industry) to predict accurately.</p></li>
+</ul></li>
+<li><p>Key Insight: Large counties vary widely in income because some have high education and others have low education. Adding education as a predictor accounts for variation.</p></li>
+<li><p>Key Insight: Adding the right predictor can fix heteroskedasticity.</p></li>
+</ul></li>
+<li><p>Formal Test: Breusch-Pagan</p>
+<ul>
+<li><p>p &gt; 0.05 means constant variance assumption is okay.</p></li>
+<li><p>p &lt; 0.05 means there’s evidence of heteroskedasticity.</p></li>
+<li><p>Solutions for heteroskedasticity:</p>
+<ol type="1">
+<li><p>Transform Y (like log(income)).</p></li>
+<li><p>Robust standard errors.</p></li>
+<li><p>Add missing variables.</p></li>
+<li><p>Accept it (point predictions are still okay for prediction goals).</p></li>
+</ol></li>
+</ul></li>
+<li><p>Assumption 3: Normality of Residuals.</p>
+<ul>
+<li><p>Assume residuals are normally distributed.</p></li>
+<li><p>Matters because it’s less critical for point predictions (unbiased regardless). It’s important for confidence intervals and prediction intervals. It’s needed for valid hypothesis tests (t-tests, F-tests).</p></li>
+<li><p>Q-Q (Quantile-Quantile) plot of residuals to check.</p>
+<ul>
+<li>Theoretical Quantiles on x and Sample Quantiles on y.</li>
+</ul></li>
+</ul></li>
+<li><p>Assumption 4: No Multicollinearity.</p>
+<ul>
+<li><p>For multiple regression, predictors shouldn’t be too correlated.</p></li>
+<li><p>It matters because coefficients become unstable, and difficult to interpret.</p></li>
+</ul></li>
+<li><p>Assumption 5: No Influential Outliers.</p>
+<ul>
+<li><p><strong>Not all outliers are problems, only those with high leverage AND large residuals.</strong></p>
+<ul>
+<li>Pulls regression line.</li>
+</ul></li>
+<li><p>Dealing with influential points:</p>
+<ol type="1">
+<li><p><strong>Investigate</strong> why this observation is unusual. Is it a data error or truly unique?</p></li>
+<li><p><strong>Report</strong> the influential observations in analysis.</p></li>
+<li><p><strong>Sensitivity check.</strong> Refit the model without the outlier(s), do the conclusions change?</p></li>
+<li><p><strong>Don’t automatically remove outliers,</strong> they might represent real, important cases.</p></li>
+</ol>
+<p>For policy, an influential county might need special attention, <em>NOT</em> exclusion.</p></li>
+</ul></li>
+</ul>
+<ol start="6" type="1">
+<li>IMPROVING PREDICTIONS</li>
+</ol>
+<ul>
+<li><p>If a relationship is curved, try log transformations.</p>
+<ul>
+<li>Log models show percentage relationships.</li>
+</ul></li>
+<li><p>Categorical variables, R creates dummy variables automatically.</p></li>
+</ul>
+<p>SUMMARY OF REGRESSION WORKFLOW</p>
+<pre><code>1. **Understand the framework.** What's f? What's the goal?
+
+2. **Visualize first.** Does a linear model make sense?
+
+3. **Fit the model.** Estimate coefficients.
+
+4. **Evaluate performance.** Train/test split, cross-validation.
+
+5. **Check assumptions.** Residual plots, VIF, outliers.
+
+6. **Improve if needed.** Transformations, more variables.
+
+7. **Consider ethics.** Who could be harmed by this model?</code></pre>
 </section>
 <section id="coding-techniques" class="level2">
 <h2 class="anchored" data-anchor-id="coding-techniques">Coding Techniques</h2>
-<p>TBA</p>
+<ul>
+<li><p><strong>Train/Test Split</strong></p></li>
+<li><p><strong>Evaluate Predictions</strong></p></li>
+<li><p><strong>Cross-Validation</strong></p></li>
+<li><p><strong>Residual Plot</strong></p></li>
+<li><p><strong>Breusch-Pagan Formal Test</strong></p></li>
+<li><p><strong>Multicollinearity</strong></p></li>
+<li><p><strong>Log Transformations</strong></p></li>
+<li><p><strong>Categorical Variables</strong></p></li>
+</ul>
 </section>
 <section id="questions-challenges" class="level2">
 <h2 class="anchored" data-anchor-id="questions-challenges">Questions &amp; Challenges</h2>
-<p>TBA</p>
+<ul>
+<li>Public policy is very much a balancing act between technically and statistically good models vs.&nbsp;actually applying them to real-world policy without the regression causing any ethical consequences.</li>
+</ul>
 </section>
 <section id="connections-to-policy" class="level2">
 <h2 class="anchored" data-anchor-id="connections-to-policy">Connections to Policy</h2>
-<p>TBA</p>
+<ul>
+<li><p>Real-life healthcare algorithm model discriminated despite being technically good with good R^2 and low prediction error with a good fit. Ethically this ended up amplifying existing discrimination. <strong>A model can be statistically “good” while being ethically terrible for decision-making.</strong></p></li>
+<li><p>Influential points, or outliers, have connections to algorithmic bias. High-influence observations could represent marginalized communities or unique populations. Removing them can erase important populations from analysis and lead to biased policy decisions.</p></li>
+<li><p><strong>ALWAYS INVESTIGATE OUTLIERS BEFORE REMOVING.</strong></p></li>
+</ul>
 </section>
 <section id="reflection" class="level2">
 <h2 class="anchored" data-anchor-id="reflection">Reflection</h2>
-<p>TBA</p>
+<p>KEY TAKEAWAYS</p>
+<ul>
+<li><p>Statistical Learning:</p>
+<ul>
+<li><p>Estimating f(X), the systematic relationship.</p></li>
+<li><p>Parametric methods assume a form (most choose linear).</p></li>
+</ul></li>
+<li><p>Two Purposes:</p>
+<ul>
+<li><p><em>Inference:</em> Understand relationships.</p></li>
+<li><p><em>Prediction:</em> Forecast new values.</p></li>
+</ul></li>
+<li><p>Model Evaluation:</p>
+<ul>
+<li><p>In-sample fit is NOT equivalent to out-of-sample performance.</p></li>
+<li><p>Beware of overfitting!</p></li>
+</ul></li>
+<li><p>Diagnostics Matter:</p>
+<ul>
+<li><p>Always check assumptions.</p></li>
+<li><p>Plots reveal what R^2 hides.</p></li>
+</ul></li>
+</ul>
 
 
 </section>

@@ -5,20 +5,482 @@ date: "2025-10-06"
 
 ## Key Concepts Learned
 
-TBA
+1.  STATISTICAL LEARNING FRAMEWORK
+
+    -   **Statistical Learning:** Set of approaches for estimating relationships.
+
+    -   Formalizing relationships, where:
+
+        -   *Y = f(X) + ε*
+
+        -   **f:** The systematic information X provides about Y.
+
+        -   **ε:** Random error (irreducible).
+
+    -   **f represents the TRUE relationship between predictors and outcome.**
+
+        -   It's **FIXED** but **UNKNOWN**.
+
+        -   It's what people try to estimate.
+
+        -   Different X values produce different Y values through f.
+
+    -   Two reasons to estimate f:
+
+        1.  **Prediction**
+
+            -   Estimate Y for new observations.
+
+            -   Don't necessarily care about the exact form of f.
+
+            -   **Focus is on accuracy of predictions.**
+
+        2.  **Inference**
+
+            -   Understand how X affects Y.
+
+            -   *Which predictions matter?*
+
+            -   *What is the nature of the relationship?*
+
+            -   **Focus is on interpreting the model.**
+
+    -   How to estimate f? With two broad approaches:
+
+        -   **Parametric Methods**
+
+            -   Make an assumption about functional form (e.g. linear).
+
+            -   Reduces problem to estimating a few parameters.
+
+            -   Easier to interpret.
+
+            -   More common.
+
+        -   **Non-Parametric Methods**
+
+            -   Don't assume a specific form.
+
+            -   More flexible.
+
+            -   Requires more data.
+
+            -   Harder to interpret.
+
+        -   **KEY DIFFERENCE:** In *parametric* we assume f is linear, then estimate β₀ and β₁, etc. In *non-parametric* we let the data determine the shape of f.
+
+            -   **Deep Learning:** Neural networks are technically *parametric* (millions of parameters), but achieve flexibility through parameter quantity rather than assuming a rigid form.
+
+        -   **Linear Regression: Parametric**
+
+            -   **Assumption:** Relationship between X and Y is linear.
+
+            -   **Task:** Estimate the β coefficients using sample data.
+
+            -   **Method:** Ordinary Least Squares (OLS).
+
+            -   **Advantages:**
+
+                -   Simple and interpretable.
+
+                -   Well-understood properties.
+
+                -   Works remarkably well for many problems.
+
+                -   Foundation for more complex methods.
+
+            -   **Disadvantages:**
+
+                -   Assumes linearity.
+
+                -   Sensitive to outliers.
+
+                -   Makes several assumptions.
+
+2.  TWO GOALS
+
+-   Understanding Relationships vs. Making Predictions: Same model serves different purposes.
+
+    -   **Inference**
+
+        -   "Does education affect income?"
+
+        -   Focus on coefficients.
+
+        -   Statistical significance matters.
+
+        -   Understand mechanisms and what the coefficients, or predictors, tell us.
+
+    -   **Prediction**
+
+        -   "What's county Y's income?"
+
+        -   Focus on accuracy.
+
+        -   Prediction intervals matter.
+
+        -   Don't need to understand why certain relationships exist.
+
+3.  MODEL BUILDING
+
+-   Considerable scatter can generally mean the relationships aren't deterministic, but rather more probablistic or stochastic.
+
+-   Interpreting coefficients example:
+
+    -   Intercept (β₀) = \$62,855
+
+        -   Expected income when population = 0.
+
+        -   Not usually meaningful in practice.
+
+    -   Slope (β₁) = \$0.02
+
+        -   For each additional person, income increases by \$0.02.
+
+        -   This is more useful, because for every 1,000 people, income increases by \$20.
+
+    -   p-value \<0.001 means it's very unlikely to see this if true, when β₁ = 0.
+
+    -   Can reject the null hypothesis.
+
+-   **Holy Grail Concept:** Estimates are just estimates of the true unknown parameters.
+
+-   Different samples produce different linear regression lines, but no matter how many samples and statistical tests, the true relationship is unknowable.
+
+-   Standard errors quantify the above uncertainty.
+
+-   Statistical significance:
+
+    1.  **Null Hypothesis (H₀):** β₁ = 0 (no relationship).
+
+    2.  **Our Estimate:** β₁ = 0.02.
+
+    3.  **Question:** Could we get \$0.02 just by chance if H₀ is true?
+
+    -   **t-statistic:** How many standard errors away from 0?
+
+        -   **Bigger \|t\| means more confidence that the relationship is real.**
+
+    -   **p-value:** Probability of seeing our estimate if H₀ is true.
+
+        -   **Small p, reject H₀, conclude relationship exists.**
+
+        -   **Large p, fail to reject H₀, conclude that there's a possibility no relationship exists.**
+
+4.  MODEL EVALUATION
+
+-   Two key questions:
+
+    1.  **How well does the data used fit?** (in-sample fit)
+
+    2.  **How well would it predict new data?** (out-of-sample performance)
+
+    -   NOT THE SAME.
+
+    -   **In-Simple Fit: R\^2**
+
+        -   R\^2 = 0.208 means "21% of variation in income is explained by population."
+
+        -   **Is this good? It depends on the goal. For prediction, it's moderately good. For inference, it shows population matters, but other factors exist.**
+
+        -   **R\^2 alone doesn't tell if the model is trustworthy.**
+
+    -   **Overfitting Problem**
+
+        1.  **Underfitting:** Model is too simple (high bias).
+
+        2.  **Good Fit:** Captures pattern without noise.
+
+        3.  **Overfitting:** Memorizes training data (high variance).
+
+        -   **DANGER: High R\^2 doesn't mean good predictions!**
+
+        -   Overfit regression means it can't be applied to other samples and is too aligned with the data samples it was tested and derived from.
+
+        -   70% training, so fit on training data only. 30% testing, so predict on test data after getting the fit on the training data.
+
+    -   **RMSE:** A number of 9,536 means that on new data (test set), predictions are off by \~\$9,500 on average. Is this level of error acceptable for policy decisions?
+
+    -   **Cross-Validation:** A better approach doing multiple training and testing splits that gives more stable estimate of true prediction performance. Average the multiple RMSEs.
+
+5.  CHECKING ASSUMPTIONS
+
+-   Linear regression makes assumptions, if violated:
+
+    -   Coefficients may be biased.
+
+    -   Standard errors are wrong.
+
+    -   Predictions unreliable.
+
+    -   **Check diagnostics before trusting any model.**
+
+-   Assumption 1: Linearity.
+
+    -   Assume relationship is linear.
+
+    -   Check with residual plot.
+
+        -   Good plot will have random scatter, points around 0, and constant spread.
+
+        -   Bad plot will have curved pattern (parabolic relationship), model is missing something, predictions are biased.
+
+        -   Linearity violations hurt predictions, not just inference:
+
+            -   If the true relationship is curved and a straight line is fitted, there will be a systematic underprediction in some regions and overprediction in otherss.
+
+            -   Biased predictions in predictable ways (not random errors).
+
+            -   Residual plots should show random scatter, any pattern means the model is missing something systematic.
+
+-   Assumption 2: Constant Variance.
+
+    -   **Heteroskedasticity:** Variance changes across X.
+
+    -   **Impact:** Standard errors are wrong, so p-values are misleading.
+
+    -   Heteroskedasticity is often a sympton of model misspecification.
+
+        -   Model fits well for some values, but poorly for other values (aggregation matters).
+
+        -   May indicate missing variables that matter more at certain X values.
+
+        -   Ask what's different about observations with large residuals.
+
+        -   Example: Population alone predicts income well in rural counties, but large urban counties need additional variables (education, industry) to predict accurately.
+
+    -   Key Insight: Large counties vary widely in income because some have high education and others have low education. Adding education as a predictor accounts for variation.
+
+    -   Key Insight: Adding the right predictor can fix heteroskedasticity.
+
+-   Formal Test: Breusch-Pagan
+
+    -   p \> 0.05 means constant variance assumption is okay.
+
+    -   p \< 0.05 means there's evidence of heteroskedasticity.
+
+    -   Solutions for heteroskedasticity:
+
+        1.  Transform Y (like log(income)).
+
+        2.  Robust standard errors.
+
+        3.  Add missing variables.
+
+        4.  Accept it (point predictions are still okay for prediction goals).
+
+-   Assumption 3: Normality of Residuals.
+
+    -   Assume residuals are normally distributed.
+
+    -   Matters because it's less critical for point predictions (unbiased regardless). It's important for confidence intervals and prediction intervals. It's needed for valid hypothesis tests (t-tests, F-tests).
+
+    -   Q-Q (Quantile-Quantile) plot of residuals to check.
+
+        -   Theoretical Quantiles on x and Sample Quantiles on y.
+
+-   Assumption 4: No Multicollinearity.
+
+    -   For multiple regression, predictors shouldn't be too correlated.
+
+    -   It matters because coefficients become unstable, and difficult to interpret.
+
+-   Assumption 5: No Influential Outliers.
+
+    -   **Not all outliers are problems, only those with high leverage AND large residuals.**
+
+        -   Pulls regression line.
+
+    -   Dealing with influential points:
+
+        1.  **Investigate** why this observation is unusual. Is it a data error or truly unique?
+
+        2.  **Report** the influential observations in analysis.
+
+        3.  **Sensitivity check.** Refit the model without the outlier(s), do the conclusions change?
+
+        4.  **Don't automatically remove outliers,** they might represent real, important cases.
+
+        For policy, an influential county might need special attention, *NOT* exclusion.
+
+6.  IMPROVING PREDICTIONS
+
+-   If a relationship is curved, try log transformations.
+
+    -   Log models show percentage relationships.
+
+-   Categorical variables, R creates dummy variables automatically.
+
+SUMMARY OF REGRESSION WORKFLOW
+
+```         
+1. **Understand the framework.** What's f? What's the goal?
+
+2. **Visualize first.** Does a linear model make sense?
+
+3. **Fit the model.** Estimate coefficients.
+
+4. **Evaluate performance.** Train/test split, cross-validation.
+
+5. **Check assumptions.** Residual plots, VIF, outliers.
+
+6. **Improve if needed.** Transformations, more variables.
+
+7. **Consider ethics.** Who could be harmed by this model?
+```
 
 ## Coding Techniques
 
-TBA
+-   **Train/Test Split**
+
+```{r}
+#| eval: false
+#| include: false
+
+set.seed(123)
+n <- nrow(pa_data)
+
+# 70% training, 30% testing
+train_indices <- sample(1:n, size = 0.7 * n)
+train_data <- pa_data[train_indices, ]
+test_data <- pa_data[-train_indices, ]
+
+# Fit on training data only
+model_train <- lm(median_incomeE ~ total_popE, data = train_data)
+
+# Predict on test data
+test_predictions <- predict(model_train, newdata = test_data)
+```
+
+-   **Evaluate Predictions**
+
+```{r}
+#| eval: false
+#| include: false
+# Calculate prediction error (RMSE)
+rmse_test <- sqrt(mean((test_data$median_incomeE - test_predictions)^2))
+rmse_train <- summary(model_train)$sigma
+
+cat("Training RMSE:", round(rmse_train, 0), "\n")
+
+cat("Test RMSE:", round(rmse_test, 0), "\n")
+```
+
+-   **Cross-Validation**
+
+```{r}
+#| eval: false
+#| include: false
+library(caret)
+
+# 10-fold cross-validation
+train_control <- trainControl(method = "cv", number = 10)
+
+cv_model <- train(median_incomeE ~ total_popE,
+                  data = pa_data,
+                  method = "lm",
+                  trControl = train_control)
+
+cv_model$results
+```
+
+-   **Residual Plot**
+
+```{r}
+#| eval: false
+#| include: false
+pa_data$residuals <- residuals(model1)
+pa_data$fitted <- fitted(model1)
+
+ggplot(pa_data, aes(x = fitted, y = residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
+  labs(title = "Residual Plot", x = "Fitted Values", y = "Residuals") +
+  theme_minimal()
+```
+
+-   **Breusch-Pagan Formal Test**
+
+```{r}
+#| eval: false
+#| include: false
+library(lmtest)
+bptest(model1)
+```
+
+-   **Multicollinearity**
+
+```{r}
+#| eval: false
+#| include: false
+library(car)
+vif(model1)  # Variance Inflation Factor
+
+# Rule of thumb: VIF > 10 suggests problems
+# Not relevant with only 1 predictor!
+```
+
+-   **Log Transformations**
+
+```{r}
+#| eval: false
+#| include: false
+# Compare linear vs log
+model_linear <- lm(median_incomeE ~ total_popE, data = pa_data)
+model_log <- lm(median_incomeE ~ log(total_popE), data = pa_data)
+
+summary(model_log)
+```
+
+-   **Categorical Variables**
+
+```{r}
+#| eval: false
+#| include: false
+# Create metro/non-metro indicator
+pa_data <- pa_data %>%
+  mutate(metro = ifelse(total_popE > 500000, 1, 0))
+
+model3 <- lm(median_incomeE ~ total_popE + metro, data = pa_data)
+summary(model3)
+```
 
 ## Questions & Challenges
 
-TBA
+-   Public policy is very much a balancing act between technically and statistically good models vs. actually applying them to real-world policy without the regression causing any ethical consequences.
 
 ## Connections to Policy
 
-TBA
+-   Real-life healthcare algorithm model discriminated despite being technically good with good R\^2 and low prediction error with a good fit. Ethically this ended up amplifying existing discrimination. **A model can be statistically "good" while being ethically terrible for decision-making.**
+
+-   Influential points, or outliers, have connections to algorithmic bias. High-influence observations could represent marginalized communities or unique populations. Removing them can erase important populations from analysis and lead to biased policy decisions.
+
+-   **ALWAYS INVESTIGATE OUTLIERS BEFORE REMOVING.**
 
 ## Reflection
 
-TBA
+KEY TAKEAWAYS
+
+-   Statistical Learning:
+
+    -   Estimating f(X), the systematic relationship.
+
+    -   Parametric methods assume a form (most choose linear).
+
+-   Two Purposes:
+
+    -   *Inference:* Understand relationships.
+
+    -   *Prediction:* Forecast new values.
+
+-   Model Evaluation:
+
+    -   In-sample fit is NOT equivalent to out-of-sample performance.
+
+    -   Beware of overfitting!
+
+-   Diagnostics Matter:
+
+    -   Always check assumptions.
+
+    -   Plots reveal what R\^2 hides.
