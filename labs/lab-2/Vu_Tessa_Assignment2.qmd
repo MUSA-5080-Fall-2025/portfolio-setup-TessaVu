@@ -804,13 +804,8 @@ faceted_plot <-
     axis.title.x = element_text(margin = margin(t = 10, unit = "pt")),
     axis.title.y = element_text(margin = margin(r = 10, unit = "pt"))
   ))
-```
 
-```{r fig.height=12, fig.width=8, dpi=300}
-#| message: false
-#| warning: false
 # Display faceted plot.
-# Axis label units not needed because axes data are dimensionless or are counts.
 faceted_plot
 ```
 
