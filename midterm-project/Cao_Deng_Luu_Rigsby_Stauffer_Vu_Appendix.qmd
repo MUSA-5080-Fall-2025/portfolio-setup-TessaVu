@@ -1280,6 +1280,124 @@ University City is the hardest to predict, Penn owns a lot of property that does
 
 ## 10-Fold Cross-Validation
 
+### Logged Price Response Variable
+
+```{r}
+library(caret)
+# 10-fold cross-validation
+# first model
+set.seed(0)
+
+train_control <- trainControl(method = "cv", number = 10, savePredictions="final")
+
+cv_log_1 <- train(ln_sale_price ~ ln_square_feet + bath_num + # Structural.
+                    ac_binary + fireplace_num + story_num + garage_num + # Structural.
+                    basement_type + fuel_type + # Categorical structural.
+                    age + I(age^2), # Age polynomial.
+                    data = final_data,
+                    method = "lm",
+                    trControl = train_control)
+
+cv_log_1$results
+```
+
+```{r}
+library(caret)
+# 10-fold cross-validation
+# second model
+set.seed(0)
+
+train_control <- trainControl(method = "cv", number = 10, savePredictions="final")
+
+cv_log_2 <- train(ln_sale_price ~ ln_square_feet + bath_num + # Structural.
+                    ac_binary + fireplace_num + story_num + garage_num + # Structural.
+                    basement_type + fuel_type + # Categorical structural.
+                    age + I(age^2) + # Age polynomial.
+                    medhhinc + pct_vacant + pct_single_family, # census
+                    data = final_data,
+                    method = "lm",
+                    trControl = train_control)
+
+cv_log_2$results
+```
+
+```{r}
+library(caret)
+# 10-fold cross-validation
+# third model
+set.seed(0)
+
+train_control <- trainControl(method = "cv", number = 10, savePredictions="final")
+
+cv_log_3 <- train(ln_sale_price ~ ln_square_feet + bath_num + # Structural.
+                    ac_binary + fireplace_num + story_num + garage_num + # Structural.
+                    basement_type + fuel_type + # Categorical structural.
+                    age + I(age^2) + # Age polynomial.
+                    medhhinc + pct_vacant + pct_single_family +
+                    city_dist_mi + septa_half_mi + ln_park_dist + knn_amenity_mi, # Spatial
+                    data = final_data,
+                    method = "lm",
+                    trControl = train_control)
+
+cv_log_3$results
+```
+
+```{r}
+library(caret)
+# 10-fold cross-validation
+# third model
+set.seed(0)
+
+train_control <- trainControl(method = "cv", number = 10, savePredictions="final")
+
+cv_log_4 <- train(ln_sale_price ~ ln_square_feet + bath_num + # Structural.
+                    ac_binary + fireplace_num + story_num + garage_num + # Structural.
+                    basement_type + fuel_type + # Categorical structural.
+                    age + I(age^2) + # Age polynomial.
+                    medhhinc + pct_vacant + pct_single_family +
+                    city_dist_mi + septa_half_mi + ln_park_dist + knn_amenity_mi + # Spatial
+                    knn_amenity_mi * city_dist_mi + septa_half_mi * city_dist_mi + # Interaction between amenities and downtown distance.
+                    neighborhood_fe, # Fixed effect  
+                    data = final_data,
+                    method = "lm",
+                    trControl = train_control)
+
+cv_log_4$results
+```
+
+```{r}
+# Compare all 4 models
+
+## Combine four models：cv_model_1, cv_model_2, cv_model_3, cv_model_4
+log_compare <- bind_rows(
+  cv_log_1$results %>% 
+    mutate(Model = "Model 1: Structural"),
+  cv_log_2$results %>% 
+    mutate(Model = "Model 2: Structural + Census"),
+  cv_log_3$results %>% 
+    mutate(Model = "Model 3: Structural + Census + Spatial"),
+  cv_log_4$results %>% 
+    mutate(Model = "Model 4: Final Model")
+) %>%
+  select(Model, RMSE, Rsquared, MAE) %>% 
+  mutate(across(c(RMSE, Rsquared, MAE), round, 3))
+
+## Plot
+log_kable <- kable(log_compare,
+                     col.names = c("Model", "RMSE", "R²", "MAE"),
+                     caption = "Log Model Performance Comparison (10-Fold Cross-Validation)",
+                     digits = 4,
+                     format.args = list(big.mark = ",")
+) %>%
+  kable_styling(latex_options = "striped", full_width = FALSE) %>%
+  column_spec(1, bold = TRUE, width = "10cm") %>%
+  row_spec(0, color = "#f5f4f0", background = "#ff4100")
+
+log_kable
+```
+
+### Unlogged Price Response Variable
+
 ```{r}
 library(caret)
 # 10-fold cross-validation
