@@ -50,6 +50,8 @@ website:
             text: "MIDTERM APPENDIX"
       - href: final-project.qmd
         text: FINAL PROJECT
+      - href: map-challenge.qmd
+        text: 30-DAY MAP CHALLENGE
 
 format:
   html:
