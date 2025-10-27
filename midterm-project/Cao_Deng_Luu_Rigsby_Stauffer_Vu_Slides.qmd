@@ -127,3 +127,5 @@ Improving the Office of Property Assessment's Automated Valuation Model (AVM) ca
 - Separate rural modeling can be helpful too.
 
 # Thank you, questions?
+
+[Technical Appendix Link](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Appendix)

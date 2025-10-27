@@ -1584,3 +1584,5 @@ We grossly underpredicted for University City, and a decent amount for Fairmount
 - Claude: For code debugging in data cleaning and visualizations.
 
 - Chat GPT: For code debugging in data cleaning and visualizations.
+
+### [Slides Link](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Slides#/title-slide)
