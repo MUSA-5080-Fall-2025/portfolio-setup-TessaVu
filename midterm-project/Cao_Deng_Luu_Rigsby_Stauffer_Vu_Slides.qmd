@@ -18,9 +18,8 @@ format:
 
 **The Motivation:** Philadelphia is a city of more than 1.5 million people and growing, we need properties to be accurately assessed.
 
-## The Problem & The Goal
 
-### Why This Matters
+## Why This Matters to the Office of Property Assessment
 
 Improving the Office of Property Assessment's Automated Valuation Model (AVM) can potentially:
 
@@ -54,11 +53,11 @@ Improving the Office of Property Assessment's Automated Valuation Model (AVM) ca
 
 [Open Data Philly](https://opendataphilly.org/)
 
-- **Neighborhood Boundaries** *(n = 159; 2025)*, **Philadelphia 2020 Census Tract Boundaries** *(n = 3,446; 2020)*, **SEPTA Transit Stations** *(n = 13,884; 2025)*
+- **Neighborhood Boundaries** *(n = 159; 2025)*, **Parks** *(n = 15; 2025)*, **Philadelphia 2020 Census Tract Boundaries** *(n = 3,446; 2020)*, **SEPTA Transit Stations** *(n = 13,884; 2025)*
 
 [Open Street Maps](https://cran.r-project.org/web/packages/osmdata/vignettes/osmdata.html)
 
-- **Points of Interest:** Convenience and Food-Related Amenities *(n = 18,413; 2025)*, **Parks** *(n = 15; 2025)*, 
+- **Points of Interest:** Convenience and Food-Related Amenities *(n = 18,413; 2025)*
 
 ## Where Are Expensive Homes?
 
@@ -88,7 +87,14 @@ Improving the Office of Property Assessment's Automated Valuation Model (AVM) ca
 
 ## Model Comparison & Performance
 
-![](slide_images\kable-model.png){width=40%}
+
+::: {.column width = "45%"}
+![](slide_images\log-model.png)
+:::
+
+::: {.column width = "46%"}
+![](slide_images\kable-model.png)
+:::
 
 - **RMSE = 138,279.40** → Predicted sale price differs by about ± $138,279 from actual market sale price.
 
@@ -116,16 +122,14 @@ Improving the Office of Property Assessment's Automated Valuation Model (AVM) ca
 
 **Limitations / Ethical Concerns:**
 
-- Undervalues some disinvested neighborhoods and overvalues wealthier ones.
+- Overvalues some disinvested neighborhoods and undervalues wealthier ones.
 
 - Areas with residents depend more on personal vehicles, this model is predicting on public transit, not highways.
 
 **Future Potential:**
 
-- Incorporate additional categorical variables after consideration.
+- Incorporate additional categorical variables after consideration, like land use and employment for university areas.
 
 - Separate rural modeling can be helpful too.
 
 # Thank you, questions?
-
-[Technical Appendix Link](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Appendix)

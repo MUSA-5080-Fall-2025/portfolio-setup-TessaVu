@@ -145,16 +145,15 @@
 <p><strong>The Question:</strong> What data do we have on property, the Census, and built environment that can help predict housing prices?</p>
 <p><strong>The Motivation:</strong> Philadelphia is a city of more than 1.5 million people and growing, we need properties to be accurately assessed.</p>
 </section>
-<section id="the-problem-the-goal" class="slide level2">
-<h2>The Problem &amp; The Goal</h2>
-<h3 id="why-this-matters">Why This Matters</h3>
+<section id="why-this-matters-to-the-office-of-property-assessment" class="slide level2">
+<h2>Why This Matters to the Office of Property Assessment</h2>
 <p>Improving the Office of Property Assessment’s Automated Valuation Model (AVM) can potentially:</p>
 <ul>
 <li><p><strong>More stable values aligned with market rates</strong> for properties being sold.</p></li>
 <li><p><strong>Alleviate burden from gentrification</strong> in previously disinvested neighborhoods.</p></li>
 </ul>
 </section>
-<section id="the-problem-the-goal-1" class="slide level2">
+<section id="the-problem-the-goal" class="slide level2">
 <h2>The Problem &amp; The Goal</h2>
 <h3 id="what-we-want">What We Want</h3>
 <ul>
@@ -180,11 +179,11 @@
 <h1>Data Overview</h1>
 <p><a href="https://opendataphilly.org/">Open Data Philly</a></p>
 <ul>
-<li><strong>Neighborhood Boundaries</strong> <em>(n = 159; 2025)</em>, <strong>Philadelphia 2020 Census Tract Boundaries</strong> <em>(n = 3,446; 2020)</em>, <strong>SEPTA Transit Stations</strong> <em>(n = 13,884; 2025)</em></li>
+<li><strong>Neighborhood Boundaries</strong> <em>(n = 159; 2025)</em>, <strong>Parks</strong> <em>(n = 15; 2025)</em>, <strong>Philadelphia 2020 Census Tract Boundaries</strong> <em>(n = 3,446; 2020)</em>, <strong>SEPTA Transit Stations</strong> <em>(n = 13,884; 2025)</em></li>
 </ul>
 <p><a href="https://cran.r-project.org/web/packages/osmdata/vignettes/osmdata.html">Open Street Maps</a></p>
 <ul>
-<li><strong>Points of Interest:</strong> Convenience and Food-Related Amenities <em>(n = 18,413; 2025)</em>, <strong>Parks</strong> <em>(n = 15; 2025)</em>,</li>
+<li><strong>Points of Interest:</strong> Convenience and Food-Related Amenities <em>(n = 18,413; 2025)</em></li>
 </ul>
 </section>
 <section id="where-are-expensive-homes" class="slide level2">
@@ -212,8 +211,11 @@
 </section>
 <section id="model-comparison-performance" class="slide level2">
 <h2>Model Comparison &amp; Performance</h2>
-
-<img data-src="slide_images\kable-model.png" style="width:40.0%" class="r-stretch"><ul>
+<div class="column" style="width:45%;">
+<p><img data-src="slide_images\log-model.png"></p>
+</div><div class="column" style="width:46%;">
+<p><img data-src="slide_images\kable-model.png"></p>
+</div><ul>
 <li><p><strong>RMSE = 138,279.40</strong> → Predicted sale price differs by about ± $138,279 from actual market sale price.</p></li>
 <li><p><strong>R² = 0.746</strong> → Explains 75% of variance in home prices.</p></li>
 </ul>
@@ -242,19 +244,18 @@
 <h1>Limitations &amp; Next Steps</h1>
 <p><strong>Limitations / Ethical Concerns:</strong></p>
 <ul>
-<li><p>Undervalues some disinvested neighborhoods and overvalues wealthier ones.</p></li>
+<li><p>Overvalues some disinvested neighborhoods and undervalues wealthier ones.</p></li>
 <li><p>Areas with residents depend more on personal vehicles, this model is predicting on public transit, not highways.</p></li>
 </ul>
 <p><strong>Future Potential:</strong></p>
 <ul>
-<li><p>Incorporate additional categorical variables after consideration.</p></li>
+<li><p>Incorporate additional categorical variables after consideration, like land use and employment for university areas.</p></li>
 <li><p>Separate rural modeling can be helpful too.</p></li>
 </ul>
 </section>
 
 <section id="thank-you-questions" class="title-slide slide level1 center">
 <h1>Thank you, questions?</h1>
-<p><a href="https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Appendix">Technical Appendix Link</a></p>
 
 
 </section>

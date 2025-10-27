@@ -309,7 +309,6 @@ window.Quarto = {
   <li><a href="#downloads" id="toc-downloads" class="nav-link" data-scroll-target="#downloads">Downloads</a></li>
   <li><a href="#relevant-readings" id="toc-relevant-readings" class="nav-link" data-scroll-target="#relevant-readings">Relevant Readings</a></li>
   <li><a href="#artificial-intelligence" id="toc-artificial-intelligence" class="nav-link" data-scroll-target="#artificial-intelligence">Artificial Intelligence</a></li>
-  <li><a href="#slides-link" id="toc-slides-link" class="nav-link" data-scroll-target="#slides-link">Slides Link</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -439,7 +438,11 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop prices that are less than $10,000 as a catch-all (might not be as reflective for rural areas). Avoiding dropping prices based on percent of assessed value since property assessments can be biased against minoritized communities. Ideal drop would add deed type to drop any family or forced transfers.</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>residential_prop <span class="ot">&lt;-</span> residential_prop <span class="sc">%&gt;%</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sale_price <span class="sc">&gt;</span> <span class="dv">10000</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         square_feet <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         square_feet <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">price_per_sqft =</span> sale_price <span class="sc">/</span> square_feet) <span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>         price_per_sqft <span class="sc">&gt;</span> <span class="fu">quantile</span>(price_per_sqft, <span class="fl">0.05</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div class="cell">
@@ -565,8 +568,8 @@ Geodetic CRS:  NAD83</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>           used  (Mb) gc trigger   (Mb)  max used   (Mb)
-Ncells  8658003 462.4   12871181  687.4  12503055  667.8
-Vcells 73514280 560.9  139011519 1060.6 139011490 1060.6</code></pre>
+Ncells  8660751 462.6   12561545  670.9  11778424  629.1
+Vcells 73530435 561.0  138440631 1056.3 138440119 1056.3</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1068,20 +1071,20 @@ Geodetic CRS:  WGS 84</code></pre>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Rows</td>
 <td style="text-align: right;">559,322</td>
-<td style="text-align: right;">26,344</td>
-<td style="text-align: right;">13,884</td>
+<td style="text-align: right;">25,026</td>
+<td style="text-align: right;">13,743</td>
 <td style="text-align: right;">28,261</td>
 <td style="text-align: right;">3,446</td>
-<td style="text-align: right;">13,883</td>
+<td style="text-align: right;">13,742</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">Columns</td>
 <td style="text-align: right;">79</td>
-<td style="text-align: right;">16</td>
-<td style="text-align: right;">33</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">34</td>
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">7</td>
-<td style="text-align: right;">28</td>
+<td style="text-align: right;">29</td>
 </tr>
 </tbody>
 </table>
@@ -1146,7 +1149,7 @@ Geodetic CRS:  WGS 84</code></pre>
 <span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">palette =</span> <span class="st">"YlOrRd"</span>,</span>
 <span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.05</span>,</span>
 <span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">style =</span> <span class="st">"quantile"</span>,</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">title =</span> <span class="st">"Sale Price ($)"</span>) <span class="sc">+</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">col.title =</span> <span class="st">"Sale Price ($)"</span>) <span class="sc">+</span></span>
 <span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">"Geographic Distribution of Sale Prices"</span>,</span>
 <span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">main.title.position =</span> <span class="st">"center"</span>,</span>
 <span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">main.title.size =</span> <span class="fl">1.2</span>,</span>
@@ -1833,17 +1836,17 @@ Geodetic CRS:  WGS 84</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     GVIF Df GVIF^(1/(2*Df))
-ln_square_feet   2.135764  1        1.461425
-bath_num         1.898126  1        1.377725
-ac_binary        1.326611  1        1.151786
-fireplace_num    1.254647  1        1.120110
-story_num        1.480500  1        1.216758
-garage_num       2.278251  1        1.509387
-ln_septa_half_mi 3.022487  1        1.738530
-ln_park_dist     1.042356  1        1.020958
-ln_city_dist     3.366197  1        1.834720
-basement_type    3.098173 10        1.058170
-fuel_type        1.050158  3        1.008190</code></pre>
+ln_square_feet   2.141293  1        1.463316
+bath_num         1.898869  1        1.377995
+ac_binary        1.321625  1        1.149619
+fireplace_num    1.255247  1        1.120378
+story_num        1.484250  1        1.218298
+garage_num       2.278772  1        1.509560
+ln_septa_half_mi 3.027921  1        1.740092
+ln_park_dist     1.042800  1        1.021176
+ln_city_dist     3.375708  1        1.837310
+basement_type    3.090736 10        1.058042
+fuel_type        1.049685  3        1.008114</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1869,32 +1872,32 @@ lm(formula = sale_price ~ ln_square_feet + bath_num + ac_binary +
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--948550  -77612  -12427   56061 4967680 
+-946748  -77732  -12797   55389 4964714 
 
 Coefficients:
                                           Estimate    Std. Error t value
-(Intercept)                          -1573115.2430    47184.2963 -33.340
-ln_square_feet                         265324.4547     6777.4520  39.148
-bath_num                                50976.0380     2850.5451  17.883
-ac_binary                               93358.6805     3519.3817  26.527
-fireplace_num                          139754.2587     4574.3312  30.552
-story_num                               36185.3161     3367.8324  10.744
-garage_num                              73507.4314     4149.3241  17.716
-basement_typeFull Finished             -53619.3219    10227.7625  -5.243
-basement_typeFull Semi-Finished        -64747.7385    11812.4468  -5.481
-basement_typeFull Unfinished           -69284.7145    10632.8706  -6.516
-basement_typeFull Unknown Finish       -85987.4342    10988.0644  -7.826
-basement_typePartial Finished         -119781.8006    10844.6785 -11.045
-basement_typePartial Semi-Finished    -130192.6848    11305.7582 -11.516
-basement_typePartial Unfinished       -124518.1899    13722.2343  -9.074
-basement_typePartial Unknown Finish   -131660.7994    13342.8310  -9.868
-basement_typeUnknown Size Finished      64719.7760    49966.7638   1.295
-basement_typeUnknown Size Unfinished   -25066.6493    38151.1732  -0.657
-fuel_typeElectric                      -10365.3404    10223.5159  -1.014
-fuel_typeOil Heat                       -2321.1682    20691.7649  -0.112
-fuel_typeOther                         261307.5132    62624.4546   4.173
-age                                     -4531.8642      146.4668 -30.941
-I(age^2)                                   26.6178        0.8083  32.929
+(Intercept)                          -1600341.5644    47253.3429 -33.867
+ln_square_feet                         269653.6615     6788.7652  39.721
+bath_num                                50882.9698     2849.4691  17.857
+ac_binary                               92503.4518     3521.1431  26.271
+fireplace_num                          139112.9209     4562.8499  30.488
+story_num                               35580.0358     3368.1737  10.564
+garage_num                              73100.2236     4143.2172  17.643
+basement_typeFull Finished             -56656.4572    10210.3683  -5.549
+basement_typeFull Semi-Finished        -68695.6797    11788.3042  -5.827
+basement_typeFull Unfinished           -71544.1253    10619.4100  -6.737
+basement_typeFull Unknown Finish       -85234.6422    10988.6228  -7.757
+basement_typePartial Finished         -123696.2917    10824.4574 -11.427
+basement_typePartial Semi-Finished    -134365.3131    11283.6000 -11.908
+basement_typePartial Unfinished       -128970.6719    13686.9805  -9.423
+basement_typePartial Unknown Finish   -135902.6994    13315.8037 -10.206
+basement_typeUnknown Size Finished      58578.8098    49757.4371   1.177
+basement_typeUnknown Size Unfinished   -25344.9839    38787.2223  -0.653
+fuel_typeElectric                       -9301.9858    10307.7869  -0.902
+fuel_typeOil Heat                        -540.2228    20885.3920  -0.026
+fuel_typeOther                         257792.1255    62355.3517   4.134
+age                                     -4478.8377      145.9713 -30.683
+I(age^2)                                   26.3993        0.8056  32.769
                                                  Pr(&gt;|t|)    
 (Intercept)                          &lt; 0.0000000000000002 ***
 ln_square_feet                       &lt; 0.0000000000000002 ***
@@ -1903,27 +1906,27 @@ ac_binary                            &lt; 0.0000000000000002 ***
 fireplace_num                        &lt; 0.0000000000000002 ***
 story_num                            &lt; 0.0000000000000002 ***
 garage_num                           &lt; 0.0000000000000002 ***
-basement_typeFull Finished            0.00000016071883817 ***
-basement_typeFull Semi-Finished       0.00000004295551073 ***
-basement_typeFull Unfinished          0.00000000007465800 ***
-basement_typeFull Unknown Finish      0.00000000000000542 ***
+basement_typeFull Finished            0.00000002927742725 ***
+basement_typeFull Semi-Finished       0.00000000575462653 ***
+basement_typeFull Unfinished          0.00000000001680098 ***
+basement_typeFull Unknown Finish      0.00000000000000933 ***
 basement_typePartial Finished        &lt; 0.0000000000000002 ***
 basement_typePartial Semi-Finished   &lt; 0.0000000000000002 ***
 basement_typePartial Unfinished      &lt; 0.0000000000000002 ***
 basement_typePartial Unknown Finish  &lt; 0.0000000000000002 ***
-basement_typeUnknown Size Finished                  0.195    
-basement_typeUnknown Size Unfinished                0.511    
-fuel_typeElectric                                   0.311    
-fuel_typeOil Heat                                   0.911    
-fuel_typeOther                        0.00003029641753816 ***
+basement_typeUnknown Size Finished                  0.239    
+basement_typeUnknown Size Unfinished                0.513    
+fuel_typeElectric                                   0.367    
+fuel_typeOil Heat                                   0.979    
+fuel_typeOther                        0.00003582455204890 ***
 age                                  &lt; 0.0000000000000002 ***
 I(age^2)                             &lt; 0.0000000000000002 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 176400 on 13861 degrees of freedom
-Multiple R-squared:  0.5896,    Adjusted R-squared:  0.5889 
-F-statistic: 948.1 on 21 and 13861 DF,  p-value: &lt; 0.00000000000000022</code></pre>
+Residual standard error: 175600 on 13720 degrees of freedom
+Multiple R-squared:  0.5926,    Adjusted R-squared:  0.592 
+F-statistic: 950.5 on 21 and 13720 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1951,67 +1954,67 @@ lm(formula = sale_price ~ ln_square_feet + bath_num + ac_binary +
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--988077  -66190   -4479   51392 5089350 
+-986519  -66233   -4791   50723 5083386 
 
 Coefficients:
                                            Estimate     Std. Error t value
-(Intercept)                          -1631653.69177    43478.62618 -37.528
-ln_square_feet                         249024.29196     6287.93299  39.604
-bath_num                                57294.02210     2625.66512  21.821
-ac_binary                               51858.97037     3354.26227  15.461
-fireplace_num                          123699.62363     4248.12112  29.119
-story_num                                8121.18745     3187.48631   2.548
-garage_num                              78147.86081     3858.85587  20.252
-basement_typeFull Finished             -11441.07419     9433.38338  -1.213
-basement_typeFull Semi-Finished        -28190.97570    10881.72867  -2.591
-basement_typeFull Unfinished           -26373.93425     9803.25374  -2.690
-basement_typeFull Unknown Finish       -35981.99248    10140.98926  -3.548
-basement_typePartial Finished          -81503.33848    10010.20710  -8.142
-basement_typePartial Semi-Finished     -80042.76840    10459.75246  -7.652
-basement_typePartial Unfinished        -73358.61614    12658.62517  -5.795
-basement_typePartial Unknown Finish    -84936.85419    12306.96737  -6.902
-basement_typeUnknown Size Finished     100022.70014    45911.66164   2.179
-basement_typeUnknown Size Unfinished    18865.34248    35068.79357   0.538
-fuel_typeElectric                        3565.49288     9416.44401   0.379
-fuel_typeOil Heat                       -9369.15017    19014.09219  -0.493
-fuel_typeOther                         149197.56776    57590.28952   2.591
-age                                     -3249.53619      137.00469 -23.718
-I(age^2)                                   20.10269        0.75712  26.552
-medhhinc                                    2.64611        0.05506  48.061
-pct_vacant                                383.54766      219.97666   1.744
-pct_single_family                       -1835.25686      167.77302 -10.939
+(Intercept)                          -1657315.06881    43605.53969 -38.007
+ln_square_feet                         253118.55357     6307.84302  40.128
+bath_num                                57006.19468     2628.26335  21.690
+ac_binary                               51835.01737     3358.99340  15.432
+fireplace_num                          123565.08573     4242.29279  29.127
+story_num                                7968.41354     3192.54360   2.496
+garage_num                              78214.57757     3858.22989  20.272
+basement_typeFull Finished             -14732.49113     9430.76150  -1.562
+basement_typeFull Semi-Finished        -32016.37282    10875.01516  -2.944
+basement_typeFull Unfinished           -29578.12515     9803.78380  -3.017
+basement_typeFull Unknown Finish       -37097.04187    10153.08951  -3.654
+basement_typePartial Finished          -85338.66669    10006.30270  -8.528
+basement_typePartial Semi-Finished     -84103.05213    10454.72829  -8.044
+basement_typePartial Unfinished        -77849.36109    12644.21848  -6.157
+basement_typePartial Unknown Finish    -89193.51530    12299.71498  -7.252
+basement_typeUnknown Size Finished      94023.39096    45782.49895   2.054
+basement_typeUnknown Size Unfinished    17742.27294    35702.54782   0.497
+fuel_typeElectric                        4024.94651     9509.01594   0.423
+fuel_typeOil Heat                       -8357.59723    19218.43367  -0.435
+fuel_typeOther                         146353.99212    57422.32275   2.549
+age                                     -3216.68050      136.72500 -23.527
+I(age^2)                                   19.96630        0.75560  26.424
+medhhinc                                    2.62135        0.05512  47.556
+pct_vacant                                506.82584      221.43981   2.289
+pct_single_family                       -1820.98270      167.65022 -10.862
                                                  Pr(&gt;|t|)    
 (Intercept)                          &lt; 0.0000000000000002 ***
 ln_square_feet                       &lt; 0.0000000000000002 ***
 bath_num                             &lt; 0.0000000000000002 ***
 ac_binary                            &lt; 0.0000000000000002 ***
 fireplace_num                        &lt; 0.0000000000000002 ***
-story_num                                        0.010850 *  
+story_num                                        0.012574 *  
 garage_num                           &lt; 0.0000000000000002 ***
-basement_typeFull Finished                       0.225216    
-basement_typeFull Semi-Finished                  0.009589 ** 
-basement_typeFull Unfinished                     0.007147 ** 
-basement_typeFull Unknown Finish                 0.000389 ***
-basement_typePartial Finished        0.000000000000000422 ***
-basement_typePartial Semi-Finished   0.000000000000021017 ***
-basement_typePartial Unfinished      0.000000006974481709 ***
-basement_typePartial Unknown Finish  0.000000000005368236 ***
-basement_typeUnknown Size Finished               0.029379 *  
-basement_typeUnknown Size Unfinished             0.590619    
-fuel_typeElectric                                0.704957    
-fuel_typeOil Heat                                0.622199    
-fuel_typeOther                                   0.009589 ** 
+basement_typeFull Finished                       0.118270    
+basement_typeFull Semi-Finished                  0.003245 ** 
+basement_typeFull Unfinished                     0.002557 ** 
+basement_typeFull Unknown Finish                 0.000259 ***
+basement_typePartial Finished        &lt; 0.0000000000000002 ***
+basement_typePartial Semi-Finished   0.000000000000000937 ***
+basement_typePartial Unfinished      0.000000000762449291 ***
+basement_typePartial Unknown Finish  0.000000000000433699 ***
+basement_typeUnknown Size Finished               0.040024 *  
+basement_typeUnknown Size Unfinished             0.619234    
+fuel_typeElectric                                0.672100    
+fuel_typeOil Heat                                0.663661    
+fuel_typeOther                                   0.010822 *  
 age                                  &lt; 0.0000000000000002 ***
 I(age^2)                             &lt; 0.0000000000000002 ***
 medhhinc                             &lt; 0.0000000000000002 ***
-pct_vacant                                       0.081254 .  
+pct_vacant                                       0.022108 *  
 pct_single_family                    &lt; 0.0000000000000002 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 162000 on 13858 degrees of freedom
-Multiple R-squared:  0.6538,    Adjusted R-squared:  0.6532 
-F-statistic:  1091 on 24 and 13858 DF,  p-value: &lt; 0.00000000000000022</code></pre>
+Residual standard error: 161500 on 13717 degrees of freedom
+Multiple R-squared:  0.6555,    Adjusted R-squared:  0.6549 
+F-statistic:  1087 on 24 and 13717 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -2041,75 +2044,75 @@ lm(formula = sale_price ~ ln_square_feet + bath_num + ac_binary +
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--817667  -62638   -2348   51585 5096901 
+-816942  -62918   -2847   50974 5091643 
 
 Coefficients:
-                                          Estimate    Std. Error t value
-(Intercept)                          -1755937.2954    42209.8105 -41.600
-ln_square_feet                         259188.8862     6030.4108  42.980
-bath_num                                51003.1282     2524.1100  20.206
-ac_binary                               46002.9566     3224.9122  14.265
-fireplace_num                          127882.4271     4065.5162  31.455
-story_num                               -3293.9735     3080.5023  -1.069
-garage_num                              87635.7897     3702.7940  23.667
-basement_typeFull Finished               9025.2270     9060.4446   0.996
-basement_typeFull Semi-Finished          -655.1732    10446.8183  -0.063
-basement_typeFull Unfinished            -6175.5266     9422.9158  -0.655
-basement_typeFull Unknown Finish       -15053.7679     9744.2956  -1.545
-basement_typePartial Finished          -37741.0741     9667.9264  -3.904
-basement_typePartial Semi-Finished     -34526.5862    10142.6823  -3.404
-basement_typePartial Unfinished        -43195.2313    12139.1172  -3.558
-basement_typePartial Unknown Finish    -52068.7616    11806.6007  -4.410
-basement_typeUnknown Size Finished     125455.6640    43907.0332   2.857
-basement_typeUnknown Size Unfinished    36845.8296    33537.6606   1.099
-fuel_typeElectric                        2967.6188     9004.5144   0.330
-fuel_typeOil Heat                        -796.3198    18184.1313  -0.044
-fuel_typeOther                         104285.2749    55084.8694   1.893
-age                                     -2593.0061      132.4070 -19.584
-I(age^2)                                   14.7489        0.7398  19.935
-medhhinc                                    2.1122        0.0560  37.717
-pct_vacant                              -1163.6035      224.4922  -5.183
-pct_single_family                         724.0007      182.9895   3.957
-city_dist_mi                            -2507.4907      766.2599  -3.272
-septa_half_mi                            1848.1046       70.2789  26.297
-ln_park_dist                           -16888.4011     2091.3400  -8.075
-knn_amenity_mi                         -12260.4575     8546.2417  -1.435
+                                           Estimate     Std. Error t value
+(Intercept)                          -1781195.80963    42334.56160 -42.074
+ln_square_feet                         263309.01771     6049.05829  43.529
+bath_num                                50713.57098     2526.41632  20.073
+ac_binary                               46036.50868     3229.25216  14.256
+fireplace_num                          127678.22421     4059.52596  31.452
+story_num                               -3447.03355     3085.21586  -1.117
+garage_num                              87656.05910     3701.77217  23.679
+basement_typeFull Finished               5895.68799     9057.10484   0.651
+basement_typeFull Semi-Finished         -4392.18676    10439.57843  -0.421
+basement_typeFull Unfinished            -9094.58940     9422.68066  -0.965
+basement_typeFull Unknown Finish       -16102.64276     9754.15342  -1.651
+basement_typePartial Finished          -41565.01250     9663.05277  -4.301
+basement_typePartial Semi-Finished     -38554.36301    10136.29140  -3.804
+basement_typePartial Unfinished        -47551.21985    12124.43903  -3.922
+basement_typePartial Unknown Finish    -56260.00839    11798.54030  -4.768
+basement_typeUnknown Size Finished     119709.84911    43779.33316   2.734
+basement_typeUnknown Size Unfinished    36743.10664    34139.64024   1.076
+fuel_typeElectric                        3252.26875     9092.12397   0.358
+fuel_typeOil Heat                        1068.57062    18378.08170   0.058
+fuel_typeOther                         101957.26849    54918.42690   1.857
+age                                     -2566.18573      132.11722 -19.424
+I(age^2)                                   14.65461        0.73820  19.852
+medhhinc                                    2.08972        0.05605  37.282
+pct_vacant                              -1064.56769      225.95522  -4.711
+pct_single_family                         721.85615      182.79866   3.949
+city_dist_mi                            -2525.63513      765.79341  -3.298
+septa_half_mi                            1838.63667       70.22731  26.181
+ln_park_dist                           -16813.69954     2091.60942  -8.039
+knn_amenity_mi                         -11750.98383     8566.09770  -1.372
                                                  Pr(&gt;|t|)    
 (Intercept)                          &lt; 0.0000000000000002 ***
 ln_square_feet                       &lt; 0.0000000000000002 ***
 bath_num                             &lt; 0.0000000000000002 ***
 ac_binary                            &lt; 0.0000000000000002 ***
 fireplace_num                        &lt; 0.0000000000000002 ***
-story_num                                        0.284954    
+story_num                                        0.263896    
 garage_num                           &lt; 0.0000000000000002 ***
-basement_typeFull Finished                       0.319213    
-basement_typeFull Semi-Finished                  0.949994    
-basement_typeFull Unfinished                     0.512238    
-basement_typeFull Unknown Finish                 0.122398    
-basement_typePartial Finished        0.000095166072865724 ***
-basement_typePartial Semi-Finished               0.000666 ***
-basement_typePartial Unfinished                  0.000374 ***
-basement_typePartial Unknown Finish  0.000010408240366615 ***
-basement_typeUnknown Size Finished               0.004279 ** 
-basement_typeUnknown Size Unfinished             0.271944    
-fuel_typeElectric                                0.741730    
-fuel_typeOil Heat                                0.965071    
-fuel_typeOther                                   0.058355 .  
+basement_typeFull Finished                       0.515092    
+basement_typeFull Semi-Finished                  0.673963    
+basement_typeFull Unfinished                     0.334471    
+basement_typeFull Unknown Finish                 0.098792 .  
+basement_typePartial Finished        0.000017086847334551 ***
+basement_typePartial Semi-Finished               0.000143 ***
+basement_typePartial Unfinished      0.000088269793253619 ***
+basement_typePartial Unknown Finish  0.000001876161074540 ***
+basement_typeUnknown Size Finished               0.006258 ** 
+basement_typeUnknown Size Unfinished             0.281830    
+fuel_typeElectric                                0.720572    
+fuel_typeOil Heat                                0.953635    
+fuel_typeOther                                   0.063401 .  
 age                                  &lt; 0.0000000000000002 ***
 I(age^2)                             &lt; 0.0000000000000002 ***
 medhhinc                             &lt; 0.0000000000000002 ***
-pct_vacant                           0.000000221096385096 ***
-pct_single_family                    0.000076430420795547 ***
-city_dist_mi                                     0.001069 ** 
+pct_vacant                           0.000002484237299472 ***
+pct_single_family                    0.000078899018066142 ***
+city_dist_mi                                     0.000976 ***
 septa_half_mi                        &lt; 0.0000000000000002 ***
-ln_park_dist                         0.000000000000000728 ***
-knn_amenity_mi                                   0.151423    
+ln_park_dist                         0.000000000000000982 ***
+knn_amenity_mi                                   0.170148    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 154900 on 13854 degrees of freedom
-Multiple R-squared:  0.6837,    Adjusted R-squared:  0.6831 
-F-statistic:  1069 on 28 and 13854 DF,  p-value: &lt; 0.00000000000000022</code></pre>
+Residual standard error: 154400 on 13713 degrees of freedom
+Multiple R-squared:  0.6853,    Adjusted R-squared:  0.6846 
+F-statistic:  1066 on 28 and 13713 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -2143,337 +2146,337 @@ lm(formula = sale_price ~ ln_square_feet + bath_num + ac_binary +
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--798051  -47316    2231   44345 5123884 
+-797069  -47661    1774   44023 5122998 
 
 Coefficients:
                                                  Estimate     Std. Error
-(Intercept)                                -1657940.22470    45493.46650
-ln_square_feet                               261653.15436     5664.41060
-bath_num                                      43843.65408     2308.64344
-ac_binary                                     38117.05447     3019.61163
-fireplace_num                                 88491.39266     3861.20497
-story_num                                     -3914.30380     2936.48610
-garage_num                                    77030.43653     3411.56673
-basement_typeFull Finished                   101483.65131     8830.21379
-basement_typeFull Semi-Finished               92361.27832     9993.78345
-basement_typeFull Unfinished                  81610.24126     9130.96925
-basement_typeFull Unknown Finish              72063.11376     9381.23915
-basement_typePartial Finished                 49757.63088     9336.90901
-basement_typePartial Semi-Finished            45706.97947     9840.50165
-basement_typePartial Unfinished               38542.17995    11431.04311
-basement_typePartial Unknown Finish           32484.57614    11155.03267
-basement_typeUnknown Size Finished           168383.76890    39699.41756
-basement_typeUnknown Size Unfinished         130060.38774    30365.34179
-fuel_typeElectric                             -9782.82669     8165.97207
-fuel_typeOil Heat                              3778.65607    16324.04269
-fuel_typeOther                                 8483.98198    49580.06057
-age                                           -1482.81195      130.24128
-I(age^2)                                          5.87768        0.74553
-medhhinc                                          0.62950        0.08448
-pct_vacant                                    -1005.64567      291.81015
-pct_single_family                               219.33928      214.90003
-city_dist_mi                                  -4819.21361     3219.40481
-septa_half_mi                                  1424.38286      194.01801
-ln_park_dist                                  -6234.17054     4838.09208
-knn_amenity_mi                               -20833.95786    24021.24910
-neighborhood_feAcademy Gardens                37183.75011    29063.24192
-neighborhood_feAllegheny West                -81178.66645    19747.80365
-neighborhood_feAndorra                       -36899.86992    30639.87807
-neighborhood_feAston-Woodbridge               37471.10986    33193.50178
-neighborhood_feBella Vista                    90030.05119    24534.03655
-neighborhood_feBelmont                       -73260.20102    41183.35267
-neighborhood_feBrewerytown                   -70887.58170    18851.85190
-neighborhood_feBridesburg                      8200.62849    22173.10061
-neighborhood_feBurholme                      -11020.59219    36141.98192
-neighborhood_feBustleton                      26845.36972    24665.90193
-neighborhood_feCarroll Park                  -79485.63764    20533.40133
-neighborhood_feCedar Park                     50903.74805    21594.31513
-neighborhood_feCedarbrook                    -18733.12094    23527.99233
-neighborhood_feChestnut Hill                 405617.68702    20989.45599
-neighborhood_feClearview                     -84924.33030    32006.87846
-neighborhood_feCobbs Creek                   -77562.70250    16239.01668
-neighborhood_feDickinson Narrows             -46228.73425    20672.82929
-neighborhood_feDunlap                       -149077.53577    34850.29349
-neighborhood_feEast Germantown               -55725.61363    22284.70084
-neighborhood_feEast Kensington               -24931.83758    18649.97574
-neighborhood_feEast Mount Airy               -39672.38823    18326.30068
-neighborhood_feEast Oak Lane                -110720.66613    29189.26470
-neighborhood_feEast Parkside                 -96875.29736    43009.02090
-neighborhood_feEast Passyunk                  18548.68326    19771.17863
-neighborhood_feEastwick                      -65187.86687    34422.87528
-neighborhood_feElmwood                       -65408.97379    18135.99045
-neighborhood_feFairhill                      -71704.26714    37417.40279
-neighborhood_feFairmount                      79935.76169    18138.51850
-neighborhood_feFeltonville                   -64193.35248    19842.10485
-neighborhood_feFern Rock                     -80858.30468    34391.53574
-neighborhood_feFishtown - Lower Kensington     9753.74777    15479.96362
-neighborhood_feFitler Square                 433898.63083    30666.44346
-neighborhood_feFox Chase                      -1191.12744    21434.30138
-neighborhood_feFrancisville                  -55199.70458    23448.72689
-neighborhood_feFrankford                     -65752.33751    18632.41316
-neighborhood_feFranklinville                -135326.00022    29388.65347
-neighborhood_feGermantown - Morton           -73568.42918    26505.05993
-neighborhood_feGermantown - Penn Knox       -136518.39681    44353.19600
-neighborhood_feGermantown - Westside         -98563.13632    39334.28353
-neighborhood_feGermany Hill                   10231.17331    26115.45737
-neighborhood_feGirard Estates                -30603.49061    18939.42860
-neighborhood_feGlenwood                     -119474.06331    28556.83370
-neighborhood_feGraduate Hospital              97520.93433    19973.04887
-neighborhood_feGrays Ferry                   -75481.41036    17444.55221
-neighborhood_feGreenwich                     -64175.19929    25230.25907
-neighborhood_feHaddington                    -91270.64590    18398.19928
-neighborhood_feHarrowgate                    -62121.18902    18977.91421
-neighborhood_feHartranft                    -131582.73560    22639.15057
-neighborhood_feHawthorne                      13169.95713    28842.84687
-neighborhood_feHolmesburg                    -17670.00910    20551.32095
-neighborhood_feHunting Park                  -53147.58934    22061.51403
-neighborhood_feJuniata Park                  -49408.97887    17918.47259
-neighborhood_feKingsessing                  -100245.71687    17213.22477
-neighborhood_feLawndale                      -38945.07939    17685.32938
-neighborhood_feLexington Park                 23243.39571    28523.99591
-neighborhood_feLogan                        -102555.05340    19864.76119
-neighborhood_feLogan Square                  379046.61233    30173.19574
-neighborhood_feLower Moyamensing             -65365.63965    17491.07739
-neighborhood_feManayunk                       28356.63404    18199.96310
-neighborhood_feMantua                        -92910.84396    27416.06170
-neighborhood_feMayfair                       -11299.33352    18328.17970
-neighborhood_feMelrose Park Gardens          -68278.66749    32017.80130
-neighborhood_feMill Creek                   -108864.06595    26183.51708
-neighborhood_feMillbrook                      15534.97223    30551.88468
-neighborhood_feModena                         55854.04856    28537.16201
-neighborhood_feMorrell Park                   25251.89869    27932.79846
-neighborhood_feNewbold                       -54636.97578    21808.17215
-neighborhood_feNicetown                      -66893.42947    36298.67571
-neighborhood_feNormandy Village              155197.36009    49122.79282
-neighborhood_feNorth Central                -101900.04242    22183.92696
-neighborhood_feNorthern Liberties              2692.49730    19255.79096
-neighborhood_feNorthwood                     -96763.98083    23348.68911
-neighborhood_feOgontz                        -38842.22862    20138.09837
-neighborhood_feOld City                      443334.48569    45204.28297
-neighborhood_feOld Kensington                -46454.88136    20353.62973
-neighborhood_feOlney                         -68389.05352    17153.25904
-neighborhood_feOverbrook                     -93077.05144    16987.27692
-neighborhood_feOxford Circle                 -22701.66053    17820.65848
-neighborhood_fePacker Park                     9689.89314    25692.21263
-neighborhood_feParkwood Manor                 51865.84423    29534.39315
-neighborhood_fePaschall                      -77498.68652    19758.48273
-neighborhood_fePassyunk Square                 4243.48331    20608.82553
-neighborhood_fePennsport                     -32232.31694    19668.11315
-neighborhood_fePennypack                       -229.17130    23906.35132
-neighborhood_fePennypack Woods                10601.67627    46721.77819
-neighborhood_fePenrose                       -58590.52553    30805.52778
-neighborhood_fePoint Breeze                  -63076.08386    17718.03825
-neighborhood_feQueen Village                 110051.36389    21297.63346
-neighborhood_feRhawnhurst                     13210.76897    21751.53460
-neighborhood_feRichmond                      -28186.33567    15369.92197
-neighborhood_feRittenhouse                   428527.90443    26394.39500
-neighborhood_feRoxborough                     10264.37966    16135.89529
-neighborhood_feRoxborough Park               -33966.75004    32811.40721
-neighborhood_feSharswood                     -96773.71513    41275.66768
-neighborhood_feSociety Hill                  350959.85928    26133.87223
-neighborhood_feSomerton                       57933.82996    29085.20858
-neighborhood_feSouthwest Germantown         -105279.23491    24716.20835
-neighborhood_feSouthwest Schuylkill          -90431.06270    20983.94325
-neighborhood_feSpring Garden                 178866.21603    25856.32707
-neighborhood_feSpruce Hill                   134662.38807    30063.65847
-neighborhood_feStadium District              -23294.11604    21985.18636
-neighborhood_feStanton                      -147735.64393    20701.69637
-neighborhood_feStrawberry Mansion           -107463.96962    20368.92240
-neighborhood_feSummerdale                    -40151.90279    21740.17259
-neighborhood_feTacony                        -38167.86864    19893.82475
-neighborhood_feTioga                        -119532.35201    23356.75045
-neighborhood_feTorresdale                    -23879.53124    27055.42084
-neighborhood_feUpper Kensington              -95731.86958    18344.45529
-neighborhood_feUpper Roxborough              -38230.35488    20207.99113
-neighborhood_feWalnut Hill                   -59138.01438    30653.12012
-neighborhood_feWashington Square West         88690.10153    29937.37012
-neighborhood_feWest Central Germantown        16807.75200    27884.51013
-neighborhood_feWest Kensington               -68127.87269    20317.08101
-neighborhood_feWest Mount Airy                38179.51090    18510.39444
-neighborhood_feWest Oak Lane                 -45315.59922    18269.26015
-neighborhood_feWest Passyunk                 -79646.98859    19772.56079
-neighborhood_feWest Poplar                  -110299.67792    43554.69769
-neighborhood_feWest Powelton                -104040.85024    34399.77899
-neighborhood_feWhitman                       -42920.67535    18272.47676
-neighborhood_feWinchester Park                38808.93027    34718.30402
-neighborhood_feWissahickon                    -5389.48604    20201.84628
-neighborhood_feWissahickon Hills              12442.07991    32378.82072
-neighborhood_feWissinoming                   -23043.18919    18367.46550
-neighborhood_feWister                        -68117.95065    31454.19955
-neighborhood_feWynnefield                    -99224.93028    20126.46981
-neighborhood_feSmall Neighborhoods           -26240.56901    19047.76223
-quarters_fe2                                   3325.18036     3378.65124
-quarters_fe3                                   4564.25634     3438.64092
-quarters_fe4                                   5216.49275     3566.47726
-city_dist_mi:knn_amenity_mi                    1654.98301     2642.51941
-city_dist_mi:septa_half_mi                     -332.55888       41.45544
+(Intercept)                                -1680423.17837    45558.65141
+ln_square_feet                               265937.03690     5681.37118
+bath_num                                      43663.93044     2310.00232
+ac_binary                                     38464.17499     3023.18590
+fireplace_num                                 88608.64257     3853.51007
+story_num                                     -4144.06972     2940.58826
+garage_num                                    77189.41047     3409.24428
+basement_typeFull Finished                    98525.27985     8828.49735
+basement_typeFull Semi-Finished               88799.65176     9987.28877
+basement_typeFull Unfinished                  78498.57361     9132.28816
+basement_typeFull Unknown Finish              70571.65644     9388.12707
+basement_typePartial Finished                 45806.43683     9334.39091
+basement_typePartial Semi-Finished            42102.78827     9834.77606
+basement_typePartial Unfinished               34619.35768    11416.85091
+basement_typePartial Unknown Finish           28615.58029    11146.88289
+basement_typeUnknown Size Finished           164012.01649    39570.27927
+basement_typeUnknown Size Unfinished         129088.32440    30905.12976
+fuel_typeElectric                            -10424.55766     8245.32392
+fuel_typeOil Heat                              4650.15056    16495.40912
+fuel_typeOther                                 5774.27149    49418.05374
+age                                           -1460.87062      129.89087
+I(age^2)                                          5.81812        0.74348
+medhhinc                                          0.60322        0.08449
+pct_vacant                                     -965.50624      293.85463
+pct_single_family                               212.09860      214.62153
+city_dist_mi                                  -4553.57975     3216.84114
+septa_half_mi                                  1424.35076      193.72573
+ln_park_dist                                  -6814.18834     4839.55248
+knn_amenity_mi                               -18870.06231    24171.57110
+neighborhood_feAcademy Gardens                30669.64847    29014.63400
+neighborhood_feAllegheny West                -84326.20368    19908.73956
+neighborhood_feAndorra                       -43018.51128    30565.19587
+neighborhood_feAston-Woodbridge               29590.48833    33122.43202
+neighborhood_feBella Vista                    85541.46383    24484.74222
+neighborhood_feBelmont                       -81778.48637    41082.96239
+neighborhood_feBrewerytown                   -77421.65693    18824.34153
+neighborhood_feBridesburg                      1710.91055    22154.76396
+neighborhood_feBurholme                      -18606.61082    36054.50784
+neighborhood_feBustleton                      22257.51027    24641.24298
+neighborhood_feCarroll Park                  -84704.42396    20556.02393
+neighborhood_feCedar Park                     42867.20752    21553.82620
+neighborhood_feCedarbrook                    -25188.42562    23491.31873
+neighborhood_feChestnut Hill                 397454.21064    20963.48914
+neighborhood_feClearview                     -91779.28146    31929.38435
+neighborhood_feCobbs Creek                   -84903.74356    16233.31855
+neighborhood_feDickinson Narrows             -51551.39712    20637.84635
+neighborhood_feDunlap                       -156952.79384    34756.05799
+neighborhood_feEast Germantown               -60417.36691    22418.31503
+neighborhood_feEast Kensington               -30367.71927    18619.09940
+neighborhood_feEast Mount Airy               -47517.28192    18313.99912
+neighborhood_feEast Oak Lane                -119250.18458    29126.52029
+neighborhood_feEast Parkside                -105116.02099    42890.08173
+neighborhood_feEast Passyunk                  17261.48248    19775.56206
+neighborhood_feEastwick                      -72554.39138    34336.10964
+neighborhood_feElmwood                       -69789.44000    18216.99419
+neighborhood_feFairhill                      -77286.29111    39526.22758
+neighborhood_feFairmount                      74788.51989    18110.38937
+neighborhood_feFeltonville                   -68221.00791    19970.91688
+neighborhood_feFern Rock                     -88213.88974    34310.11295
+neighborhood_feFishtown - Lower Kensington     6642.75225    15468.02532
+neighborhood_feFitler Square                 428945.20103    30583.16380
+neighborhood_feFox Chase                      -8172.98510    21418.40111
+neighborhood_feFrancisville                  -60922.30928    23396.55254
+neighborhood_feFrankford                     -68727.49076    18721.31012
+neighborhood_feFranklinville                -135336.58871    30074.41651
+neighborhood_feGermantown - Morton           -75339.08463    26885.42269
+neighborhood_feGermantown - Penn Knox       -147182.95037    44224.89002
+neighborhood_feGermantown - Westside        -106892.87655    39218.96860
+neighborhood_feGermany Hill                    3641.09771    26058.81120
+neighborhood_feGirard Estates                -36298.68952    18908.17503
+neighborhood_feGlenwood                     -124379.12793    29176.82389
+neighborhood_feGraduate Hospital              92492.11696    19943.72065
+neighborhood_feGrays Ferry                   -81372.93890    17428.02925
+neighborhood_feGreenwich                     -69478.31525    25173.77597
+neighborhood_feHaddington                    -92703.28897    18515.45588
+neighborhood_feHarrowgate                    -61400.43416    19376.40807
+neighborhood_feHartranft                    -136237.57343    23155.29187
+neighborhood_feHawthorne                       8354.36976    28773.97721
+neighborhood_feHolmesburg                    -24162.62772    20540.88797
+neighborhood_feHunting Park                  -60762.49980    22033.99309
+neighborhood_feJuniata Park                  -54461.67540    17926.20525
+neighborhood_feKingsessing                  -105736.34718    17253.09686
+neighborhood_feLawndale                      -45643.13310    17679.63001
+neighborhood_feLexington Park                 16746.99936    28470.63535
+neighborhood_feLogan                        -104336.51091    19993.43638
+neighborhood_feLogan Square                  371677.31683    30110.85397
+neighborhood_feLower Moyamensing             -70518.79528    17469.14127
+neighborhood_feManayunk                       20785.71956    18185.41191
+neighborhood_feMantua                        -97200.81354    27624.82311
+neighborhood_feMayfair                       -18012.86446    18324.60681
+neighborhood_feMelrose Park Gardens          -74349.82030    31937.39166
+neighborhood_feMill Creek                   -113008.50944    26822.82923
+neighborhood_feMillbrook                      13044.88706    30535.35647
+neighborhood_feModena                         49978.90381    28499.29876
+neighborhood_feMorrell Park                   18289.30618    27895.75298
+neighborhood_feNewbold                       -60272.32918    21772.58513
+neighborhood_feNicetown                      -69814.36099    37978.26098
+neighborhood_feNormandy Village              145245.77189    48998.78581
+neighborhood_feNorth Central                -109392.15757    22147.45990
+neighborhood_feNorthern Liberties             -1915.64772    19218.85306
+neighborhood_feNorthwood                    -104643.74889    23314.18573
+neighborhood_feOgontz                        -44603.99265    20151.94816
+neighborhood_feOld City                      437057.82858    45068.46756
+neighborhood_feOld Kensington                -51347.96127    20313.31020
+neighborhood_feOlney                         -75360.46915    17148.17482
+neighborhood_feOverbrook                     -97468.82258    17000.26405
+neighborhood_feOxford Circle                 -29216.20323    17815.62113
+neighborhood_fePacker Park                     1168.47197    25642.00121
+neighborhood_feParkwood Manor                 45962.04911    29491.33784
+neighborhood_fePaschall                      -76314.27498    20125.58805
+neighborhood_fePassyunk Square                 2240.73919    20602.82391
+neighborhood_fePennsport                     -37485.73218    19633.51732
+neighborhood_fePennypack                      -5582.98462    23874.93182
+neighborhood_fePennypack Woods                 4576.00314    46592.25036
+neighborhood_fePenrose                       -64836.46208    30724.87105
+neighborhood_fePoint Breeze                  -68957.41738    17701.03102
+neighborhood_feQueen Village                 105488.47678    21255.03813
+neighborhood_feRhawnhurst                      6640.73399    21732.57021
+neighborhood_feRichmond                      -32075.32706    15378.83550
+neighborhood_feRittenhouse                   421722.17051    26352.16981
+neighborhood_feRoxborough                      3864.67594    16120.16569
+neighborhood_feRoxborough Park               -41303.84099    32727.00509
+neighborhood_feSharswood                    -102909.47871    41154.89517
+neighborhood_feSociety Hill                  345350.83459    26079.97038
+neighborhood_feSomerton                       51084.57008    29047.05728
+neighborhood_feSouthwest Germantown         -107776.18251    24831.28612
+neighborhood_feSouthwest Schuylkill          -95017.78116    21103.31136
+neighborhood_feSpring Garden                 171517.01973    25804.63563
+neighborhood_feSpruce Hill                   126748.28677    29987.02426
+neighborhood_feStadium District              -28456.95502    21938.05783
+neighborhood_feStanton                      -140258.86393    21511.75897
+neighborhood_feStrawberry Mansion           -106030.57131    20726.83784
+neighborhood_feSummerdale                    -46187.87741    21709.89629
+neighborhood_feTacony                        -45600.58731    19886.66084
+neighborhood_feTioga                        -119468.81468    23729.82915
+neighborhood_feTorresdale                    -31364.19737    27023.70486
+neighborhood_feUpper Kensington              -93034.31125    18906.66383
+neighborhood_feUpper Roxborough              -37494.05482    20256.00247
+neighborhood_feWalnut Hill                   -67122.45328    30574.74421
+neighborhood_feWashington Square West         82800.69308    29877.55848
+neighborhood_feWest Central Germantown         6813.01484    27821.74276
+neighborhood_feWest Kensington               -74065.89375    20281.89566
+neighborhood_feWest Mount Airy                29317.91211    18493.81852
+neighborhood_feWest Oak Lane                 -52354.37842    18262.99934
+neighborhood_feWest Passyunk                 -83846.34957    19776.57784
+neighborhood_feWest Poplar                  -117546.61586    43427.12409
+neighborhood_feWest Powelton                -110672.71114    34305.38079
+neighborhood_feWhitman                       -48110.26150    18243.17836
+neighborhood_feWinchester Park                32508.21786    34632.32742
+neighborhood_feWissahickon                    -3310.11898    20232.93473
+neighborhood_feWissahickon Hills               6748.29913    32288.28238
+neighborhood_feWissinoming                   -29898.14143    18379.86906
+neighborhood_feWister                        -77071.61727    31383.32050
+neighborhood_feWynnefield                   -106313.16098    20099.54235
+neighborhood_feSmall Neighborhoods           -33519.28313    19019.55028
+quarters_fe2                                   3266.17711     3382.86756
+quarters_fe3                                   4915.70677     3441.82750
+quarters_fe4                                   5563.97881     3572.92555
+city_dist_mi:knn_amenity_mi                    1442.35933     2651.46269
+city_dist_mi:septa_half_mi                     -332.87956       41.37260
                                            t value             Pr(&gt;|t|)    
-(Intercept)                                -36.443 &lt; 0.0000000000000002 ***
-ln_square_feet                              46.192 &lt; 0.0000000000000002 ***
-bath_num                                    18.991 &lt; 0.0000000000000002 ***
-ac_binary                                   12.623 &lt; 0.0000000000000002 ***
-fireplace_num                               22.918 &lt; 0.0000000000000002 ***
-story_num                                   -1.333             0.182558    
-garage_num                                  22.579 &lt; 0.0000000000000002 ***
-basement_typeFull Finished                  11.493 &lt; 0.0000000000000002 ***
-basement_typeFull Semi-Finished              9.242 &lt; 0.0000000000000002 ***
-basement_typeFull Unfinished                 8.938 &lt; 0.0000000000000002 ***
-basement_typeFull Unknown Finish             7.682  0.00000000000001677 ***
-basement_typePartial Finished                5.329  0.00000010024344867 ***
-basement_typePartial Semi-Finished           4.645  0.00000343597723092 ***
-basement_typePartial Unfinished              3.372             0.000749 ***
-basement_typePartial Unknown Finish          2.912             0.003596 ** 
-basement_typeUnknown Size Finished           4.241  0.00002235191311615 ***
-basement_typeUnknown Size Unfinished         4.283  0.00001854901682208 ***
-fuel_typeElectric                           -1.198             0.230938    
-fuel_typeOil Heat                            0.231             0.816947    
-fuel_typeOther                               0.171             0.864134    
-age                                        -11.385 &lt; 0.0000000000000002 ***
-I(age^2)                                     7.884  0.00000000000000341 ***
-medhhinc                                     7.452  0.00000000000009754 ***
-pct_vacant                                  -3.446             0.000570 ***
-pct_single_family                            1.021             0.307435    
-city_dist_mi                                -1.497             0.134435    
-septa_half_mi                                7.341  0.00000000000022310 ***
-ln_park_dist                                -1.289             0.197573    
-knn_amenity_mi                              -0.867             0.385785    
-neighborhood_feAcademy Gardens               1.279             0.200775    
-neighborhood_feAllegheny West               -4.111  0.00003966371497639 ***
-neighborhood_feAndorra                      -1.204             0.228491    
-neighborhood_feAston-Woodbridge              1.129             0.258973    
-neighborhood_feBella Vista                   3.670             0.000244 ***
-neighborhood_feBelmont                      -1.779             0.075282 .  
-neighborhood_feBrewerytown                  -3.760             0.000170 ***
-neighborhood_feBridesburg                    0.370             0.711503    
-neighborhood_feBurholme                     -0.305             0.760428    
-neighborhood_feBustleton                     1.088             0.276456    
-neighborhood_feCarroll Park                 -3.871             0.000109 ***
-neighborhood_feCedar Park                    2.357             0.018424 *  
-neighborhood_feCedarbrook                   -0.796             0.425926    
-neighborhood_feChestnut Hill                19.325 &lt; 0.0000000000000002 ***
-neighborhood_feClearview                    -2.653             0.007980 ** 
-neighborhood_feCobbs Creek                  -4.776  0.00000180380477018 ***
-neighborhood_feDickinson Narrows            -2.236             0.025354 *  
-neighborhood_feDunlap                       -4.278  0.00001901511843808 ***
-neighborhood_feEast Germantown              -2.501             0.012409 *  
-neighborhood_feEast Kensington              -1.337             0.181300    
-neighborhood_feEast Mount Airy              -2.165             0.030422 *  
-neighborhood_feEast Oak Lane                -3.793             0.000149 ***
-neighborhood_feEast Parkside                -2.252             0.024310 *  
-neighborhood_feEast Passyunk                 0.938             0.348175    
-neighborhood_feEastwick                     -1.894             0.058281 .  
-neighborhood_feElmwood                      -3.607             0.000311 ***
-neighborhood_feFairhill                     -1.916             0.055343 .  
-neighborhood_feFairmount                     4.407  0.00001056260193704 ***
-neighborhood_feFeltonville                  -3.235             0.001218 ** 
-neighborhood_feFern Rock                    -2.351             0.018732 *  
-neighborhood_feFishtown - Lower Kensington   0.630             0.528647    
-neighborhood_feFitler Square                14.149 &lt; 0.0000000000000002 ***
-neighborhood_feFox Chase                    -0.056             0.955684    
-neighborhood_feFrancisville                 -2.354             0.018584 *  
-neighborhood_feFrankford                    -3.529             0.000419 ***
-neighborhood_feFranklinville                -4.605  0.00000416765856661 ***
-neighborhood_feGermantown - Morton          -2.776             0.005517 ** 
-neighborhood_feGermantown - Penn Knox       -3.078             0.002088 ** 
-neighborhood_feGermantown - Westside        -2.506             0.012230 *  
-neighborhood_feGermany Hill                  0.392             0.695236    
-neighborhood_feGirard Estates               -1.616             0.106147    
-neighborhood_feGlenwood                     -4.184  0.00002885494372713 ***
-neighborhood_feGraduate Hospital             4.883  0.00000105860760820 ***
-neighborhood_feGrays Ferry                  -4.327  0.00001522694286549 ***
-neighborhood_feGreenwich                    -2.544             0.010983 *  
-neighborhood_feHaddington                   -4.961  0.00000071026962559 ***
-neighborhood_feHarrowgate                   -3.273             0.001065 ** 
-neighborhood_feHartranft                    -5.812  0.00000000630356266 ***
-neighborhood_feHawthorne                     0.457             0.647958    
-neighborhood_feHolmesburg                   -0.860             0.389915    
-neighborhood_feHunting Park                 -2.409             0.016007 *  
-neighborhood_feJuniata Park                 -2.757             0.005833 ** 
-neighborhood_feKingsessing                  -5.824  0.00000000588257898 ***
-neighborhood_feLawndale                     -2.202             0.027674 *  
-neighborhood_feLexington Park                0.815             0.415160    
-neighborhood_feLogan                        -5.163  0.00000024686521012 ***
-neighborhood_feLogan Square                 12.562 &lt; 0.0000000000000002 ***
-neighborhood_feLower Moyamensing            -3.737             0.000187 ***
-neighborhood_feManayunk                      1.558             0.119242    
-neighborhood_feMantua                       -3.389             0.000704 ***
-neighborhood_feMayfair                      -0.617             0.537574    
-neighborhood_feMelrose Park Gardens         -2.133             0.032982 *  
-neighborhood_feMill Creek                   -4.158  0.00003233743685558 ***
-neighborhood_feMillbrook                     0.508             0.611126    
-neighborhood_feModena                        1.957             0.050340 .  
-neighborhood_feMorrell Park                  0.904             0.365999    
-neighborhood_feNewbold                      -2.505             0.012245 *  
-neighborhood_feNicetown                     -1.843             0.065371 .  
-neighborhood_feNormandy Village              3.159             0.001585 ** 
-neighborhood_feNorth Central                -4.593  0.00000439924270724 ***
-neighborhood_feNorthern Liberties            0.140             0.888798    
-neighborhood_feNorthwood                    -4.144  0.00003428980342820 ***
-neighborhood_feOgontz                       -1.929             0.053777 .  
-neighborhood_feOld City                      9.807 &lt; 0.0000000000000002 ***
-neighborhood_feOld Kensington               -2.282             0.022482 *  
-neighborhood_feOlney                        -3.987  0.00006727698685700 ***
-neighborhood_feOverbrook                    -5.479  0.00000004347320880 ***
-neighborhood_feOxford Circle                -1.274             0.202722    
-neighborhood_fePacker Park                   0.377             0.706066    
-neighborhood_feParkwood Manor                1.756             0.079091 .  
-neighborhood_fePaschall                     -3.922  0.00008813490635269 ***
-neighborhood_fePassyunk Square               0.206             0.836867    
-neighborhood_fePennsport                    -1.639             0.101276    
-neighborhood_fePennypack                    -0.010             0.992352    
-neighborhood_fePennypack Woods               0.227             0.820496    
-neighborhood_fePenrose                      -1.902             0.057199 .  
-neighborhood_fePoint Breeze                 -3.560             0.000372 ***
-neighborhood_feQueen Village                 5.167  0.00000024082503649 ***
-neighborhood_feRhawnhurst                    0.607             0.543629    
-neighborhood_feRichmond                     -1.834             0.066696 .  
-neighborhood_feRittenhouse                  16.236 &lt; 0.0000000000000002 ***
-neighborhood_feRoxborough                    0.636             0.524708    
-neighborhood_feRoxborough Park              -1.035             0.300588    
-neighborhood_feSharswood                    -2.345             0.019063 *  
-neighborhood_feSociety Hill                 13.429 &lt; 0.0000000000000002 ***
-neighborhood_feSomerton                      1.992             0.046406 *  
-neighborhood_feSouthwest Germantown         -4.260  0.00002062292616807 ***
-neighborhood_feSouthwest Schuylkill         -4.310  0.00001647368688246 ***
-neighborhood_feSpring Garden                 6.918  0.00000000000479383 ***
-neighborhood_feSpruce Hill                   4.479  0.00000755137153481 ***
-neighborhood_feStadium District             -1.060             0.289374    
-neighborhood_feStanton                      -7.136  0.00000000000100613 ***
-neighborhood_feStrawberry Mansion           -5.276  0.00000013413070739 ***
-neighborhood_feSummerdale                   -1.847             0.064783 .  
-neighborhood_feTacony                       -1.919             0.055058 .  
-neighborhood_feTioga                        -5.118  0.00000031349740898 ***
-neighborhood_feTorresdale                   -0.883             0.377460    
-neighborhood_feUpper Kensington             -5.219  0.00000018293556101 ***
-neighborhood_feUpper Roxborough             -1.892             0.058533 .  
-neighborhood_feWalnut Hill                  -1.929             0.053718 .  
-neighborhood_feWashington Square West        2.963             0.003057 ** 
-neighborhood_feWest Central Germantown       0.603             0.546676    
-neighborhood_feWest Kensington              -3.353             0.000801 ***
-neighborhood_feWest Mount Airy               2.063             0.039170 *  
-neighborhood_feWest Oak Lane                -2.480             0.013134 *  
-neighborhood_feWest Passyunk                -4.028  0.00005651845672809 ***
-neighborhood_feWest Poplar                  -2.532             0.011338 *  
-neighborhood_feWest Powelton                -3.024             0.002495 ** 
-neighborhood_feWhitman                      -2.349             0.018842 *  
-neighborhood_feWinchester Park               1.118             0.263662    
-neighborhood_feWissahickon                  -0.267             0.789641    
-neighborhood_feWissahickon Hills             0.384             0.700787    
-neighborhood_feWissinoming                  -1.255             0.209658    
-neighborhood_feWister                       -2.166             0.030357 *  
-neighborhood_feWynnefield                   -4.930  0.00000083160419737 ***
-neighborhood_feSmall Neighborhoods          -1.378             0.168343    
-quarters_fe2                                 0.984             0.325047    
-quarters_fe3                                 1.327             0.184417    
-quarters_fe4                                 1.463             0.143587    
-city_dist_mi:knn_amenity_mi                  0.626             0.531135    
-city_dist_mi:septa_half_mi                  -8.022  0.00000000000000112 ***
+(Intercept)                                -36.885 &lt; 0.0000000000000002 ***
+ln_square_feet                              46.809 &lt; 0.0000000000000002 ***
+bath_num                                    18.902 &lt; 0.0000000000000002 ***
+ac_binary                                   12.723 &lt; 0.0000000000000002 ***
+fireplace_num                               22.994 &lt; 0.0000000000000002 ***
+story_num                                   -1.409             0.158780    
+garage_num                                  22.641 &lt; 0.0000000000000002 ***
+basement_typeFull Finished                  11.160 &lt; 0.0000000000000002 ***
+basement_typeFull Semi-Finished              8.891 &lt; 0.0000000000000002 ***
+basement_typeFull Unfinished                 8.596 &lt; 0.0000000000000002 ***
+basement_typeFull Unknown Finish             7.517 0.000000000000059500 ***
+basement_typePartial Finished                4.907 0.000000934211114953 ***
+basement_typePartial Semi-Finished           4.281 0.000018732246351384 ***
+basement_typePartial Unfinished              3.032             0.002432 ** 
+basement_typePartial Unknown Finish          2.567             0.010265 *  
+basement_typeUnknown Size Finished           4.145 0.000034213112365352 ***
+basement_typeUnknown Size Unfinished         4.177 0.000029732574826675 ***
+fuel_typeElectric                           -1.264             0.206144    
+fuel_typeOil Heat                            0.282             0.778020    
+fuel_typeOther                               0.117             0.906984    
+age                                        -11.247 &lt; 0.0000000000000002 ***
+I(age^2)                                     7.825 0.000000000000005429 ***
+medhhinc                                     7.139 0.000000000000985048 ***
+pct_vacant                                  -3.286             0.001020 ** 
+pct_single_family                            0.988             0.323050    
+city_dist_mi                                -1.416             0.156932    
+septa_half_mi                                7.352 0.000000000000205800 ***
+ln_park_dist                                -1.408             0.159148    
+knn_amenity_mi                              -0.781             0.435009    
+neighborhood_feAcademy Gardens               1.057             0.290512    
+neighborhood_feAllegheny West               -4.236 0.000022940570064266 ***
+neighborhood_feAndorra                      -1.407             0.159321    
+neighborhood_feAston-Woodbridge              0.893             0.371676    
+neighborhood_feBella Vista                   3.494             0.000478 ***
+neighborhood_feBelmont                      -1.991             0.046548 *  
+neighborhood_feBrewerytown                  -4.113 0.000039310930860351 ***
+neighborhood_feBridesburg                    0.077             0.938445    
+neighborhood_feBurholme                     -0.516             0.605815    
+neighborhood_feBustleton                     0.903             0.366403    
+neighborhood_feCarroll Park                 -4.121 0.000038002669715311 ***
+neighborhood_feCedar Park                    1.989             0.046738 *  
+neighborhood_feCedarbrook                   -1.072             0.283630    
+neighborhood_feChestnut Hill                18.959 &lt; 0.0000000000000002 ***
+neighborhood_feClearview                    -2.874             0.004054 ** 
+neighborhood_feCobbs Creek                  -5.230 0.000000171828553487 ***
+neighborhood_feDickinson Narrows            -2.498             0.012505 *  
+neighborhood_feDunlap                       -4.516 0.000006359727437564 ***
+neighborhood_feEast Germantown              -2.695             0.007048 ** 
+neighborhood_feEast Kensington              -1.631             0.102914    
+neighborhood_feEast Mount Airy              -2.595             0.009481 ** 
+neighborhood_feEast Oak Lane                -4.094 0.000042605651448194 ***
+neighborhood_feEast Parkside                -2.451             0.014265 *  
+neighborhood_feEast Passyunk                 0.873             0.382750    
+neighborhood_feEastwick                     -2.113             0.034613 *  
+neighborhood_feElmwood                      -3.831             0.000128 ***
+neighborhood_feFairhill                     -1.955             0.050566 .  
+neighborhood_feFairmount                     4.130 0.000036558118918651 ***
+neighborhood_feFeltonville                  -3.416             0.000637 ***
+neighborhood_feFern Rock                    -2.571             0.010149 *  
+neighborhood_feFishtown - Lower Kensington   0.429             0.667602    
+neighborhood_feFitler Square                14.026 &lt; 0.0000000000000002 ***
+neighborhood_feFox Chase                    -0.382             0.702774    
+neighborhood_feFrancisville                 -2.604             0.009227 ** 
+neighborhood_feFrankford                    -3.671             0.000242 ***
+neighborhood_feFranklinville                -4.500 0.000006849957506002 ***
+neighborhood_feGermantown - Morton          -2.802             0.005082 ** 
+neighborhood_feGermantown - Penn Knox       -3.328             0.000877 ***
+neighborhood_feGermantown - Westside        -2.726             0.006428 ** 
+neighborhood_feGermany Hill                  0.140             0.888878    
+neighborhood_feGirard Estates               -1.920             0.054912 .  
+neighborhood_feGlenwood                     -4.263 0.000020311449479471 ***
+neighborhood_feGraduate Hospital             4.638 0.000003556691191596 ***
+neighborhood_feGrays Ferry                  -4.669 0.000003054412626027 ***
+neighborhood_feGreenwich                    -2.760             0.005789 ** 
+neighborhood_feHaddington                   -5.007 0.000000560346626112 ***
+neighborhood_feHarrowgate                   -3.169             0.001534 ** 
+neighborhood_feHartranft                    -5.884 0.000000004107739554 ***
+neighborhood_feHawthorne                     0.290             0.771557    
+neighborhood_feHolmesburg                   -1.176             0.239488    
+neighborhood_feHunting Park                 -2.758             0.005829 ** 
+neighborhood_feJuniata Park                 -3.038             0.002385 ** 
+neighborhood_feKingsessing                  -6.129 0.000000000911404708 ***
+neighborhood_feLawndale                     -2.582             0.009842 ** 
+neighborhood_feLexington Park                0.588             0.556394    
+neighborhood_feLogan                        -5.219 0.000000182996833996 ***
+neighborhood_feLogan Square                 12.344 &lt; 0.0000000000000002 ***
+neighborhood_feLower Moyamensing            -4.037 0.000054490920980685 ***
+neighborhood_feManayunk                      1.143             0.253063    
+neighborhood_feMantua                       -3.519             0.000435 ***
+neighborhood_feMayfair                      -0.983             0.325631    
+neighborhood_feMelrose Park Gardens         -2.328             0.019927 *  
+neighborhood_feMill Creek                   -4.213 0.000025346340673632 ***
+neighborhood_feMillbrook                     0.427             0.669236    
+neighborhood_feModena                        1.754             0.079506 .  
+neighborhood_feMorrell Park                  0.656             0.512073    
+neighborhood_feNewbold                      -2.768             0.005643 ** 
+neighborhood_feNicetown                     -1.838             0.066044 .  
+neighborhood_feNormandy Village              2.964             0.003039 ** 
+neighborhood_feNorth Central                -4.939 0.000000793507275168 ***
+neighborhood_feNorthern Liberties           -0.100             0.920603    
+neighborhood_feNorthwood                    -4.488 0.000007234509435205 ***
+neighborhood_feOgontz                       -2.213             0.026888 *  
+neighborhood_feOld City                      9.698 &lt; 0.0000000000000002 ***
+neighborhood_feOld Kensington               -2.528             0.011489 *  
+neighborhood_feOlney                        -4.395 0.000011178568619381 ***
+neighborhood_feOverbrook                    -5.733 0.000000010054841725 ***
+neighborhood_feOxford Circle                -1.640             0.101045    
+neighborhood_fePacker Park                   0.046             0.963655    
+neighborhood_feParkwood Manor                1.558             0.119140    
+neighborhood_fePaschall                     -3.792             0.000150 ***
+neighborhood_fePassyunk Square               0.109             0.913395    
+neighborhood_fePennsport                    -1.909             0.056248 .  
+neighborhood_fePennypack                    -0.234             0.815110    
+neighborhood_fePennypack Woods               0.098             0.921764    
+neighborhood_fePenrose                      -2.110             0.034857 *  
+neighborhood_fePoint Breeze                 -3.896 0.000098396171956079 ***
+neighborhood_feQueen Village                 4.963 0.000000702585015746 ***
+neighborhood_feRhawnhurst                    0.306             0.759940    
+neighborhood_feRichmond                     -2.086             0.037026 *  
+neighborhood_feRittenhouse                  16.003 &lt; 0.0000000000000002 ***
+neighborhood_feRoxborough                    0.240             0.810534    
+neighborhood_feRoxborough Park              -1.262             0.206945    
+neighborhood_feSharswood                    -2.501             0.012412 *  
+neighborhood_feSociety Hill                 13.242 &lt; 0.0000000000000002 ***
+neighborhood_feSomerton                      1.759             0.078654 .  
+neighborhood_feSouthwest Germantown         -4.340 0.000014329244783269 ***
+neighborhood_feSouthwest Schuylkill         -4.503 0.000006771596548580 ***
+neighborhood_feSpring Garden                 6.647 0.000000000031106684 ***
+neighborhood_feSpruce Hill                   4.227 0.000023861807553049 ***
+neighborhood_feStadium District             -1.297             0.194602    
+neighborhood_feStanton                      -6.520 0.000000000072743521 ***
+neighborhood_feStrawberry Mansion           -5.116 0.000000316978788212 ***
+neighborhood_feSummerdale                   -2.128             0.033396 *  
+neighborhood_feTacony                       -2.293             0.021862 *  
+neighborhood_feTioga                        -5.035 0.000000485129454051 ***
+neighborhood_feTorresdale                   -1.161             0.245818    
+neighborhood_feUpper Kensington             -4.921 0.000000872393876726 ***
+neighborhood_feUpper Roxborough             -1.851             0.064190 .  
+neighborhood_feWalnut Hill                  -2.195             0.028155 *  
+neighborhood_feWashington Square West        2.771             0.005590 ** 
+neighborhood_feWest Central Germantown       0.245             0.806552    
+neighborhood_feWest Kensington              -3.652             0.000261 ***
+neighborhood_feWest Mount Airy               1.585             0.112926    
+neighborhood_feWest Oak Lane                -2.867             0.004154 ** 
+neighborhood_feWest Passyunk                -4.240 0.000022531934561275 ***
+neighborhood_feWest Poplar                  -2.707             0.006803 ** 
+neighborhood_feWest Powelton                -3.226             0.001258 ** 
+neighborhood_feWhitman                      -2.637             0.008370 ** 
+neighborhood_feWinchester Park               0.939             0.347919    
+neighborhood_feWissahickon                  -0.164             0.870048    
+neighborhood_feWissahickon Hills             0.209             0.834450    
+neighborhood_feWissinoming                  -1.627             0.103829    
+neighborhood_feWister                       -2.456             0.014069 *  
+neighborhood_feWynnefield                   -5.289 0.000000124669047179 ***
+neighborhood_feSmall Neighborhoods          -1.762             0.078031 .  
+quarters_fe2                                 0.966             0.334309    
+quarters_fe3                                 1.428             0.153250    
+quarters_fe4                                 1.557             0.119432    
+city_dist_mi:knn_amenity_mi                  0.544             0.586460    
+city_dist_mi:septa_half_mi                  -8.046 0.000000000000000927 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 138300 on 13723 degrees of freedom
-Multiple R-squared:  0.7501,    Adjusted R-squared:  0.7472 
-F-statistic:   259 on 159 and 13723 DF,  p-value: &lt; 0.00000000000000022</code></pre>
+Residual standard error: 137800 on 13582 degrees of freedom
+Multiple R-squared:  0.7515,    Adjusted R-squared:  0.7486 
+F-statistic: 258.3 on 159 and 13582 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -2483,7 +2486,7 @@ F-statistic:   259 on 159 and 13723 DF,  p-value: &lt; 0.00000000000000022</code
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>step_model <span class="ot">&lt;-</span> <span class="fu">step</span>(final_model, <span class="at">direction =</span> <span class="st">"both"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Start:  AIC=328831.2
+<pre><code>Start:  AIC=325399.2
 sale_price ~ ln_square_feet + bath_num + ac_binary + fireplace_num + 
     story_num + garage_num + basement_type + fuel_type + age + 
     I(age^2) + medhhinc + pct_vacant + pct_single_family + city_dist_mi + 
@@ -2492,27 +2495,27 @@ sale_price ~ ln_square_feet + bath_num + ac_binary + fireplace_num +
     quarters_fe
 
                                Df      Sum of Sq             RSS    AIC
-- fuel_type                     3    29291306230 262526956909507 328827
-- quarters_fe                   3    48687286101 262546352889378 328828
-- city_dist_mi:knn_amenity_mi   1     7502864212 262505168467489 328830
-- pct_single_family             1    19926739927 262517592343204 328830
-- ln_park_dist                  1    31760364605 262529425967882 328831
-- story_num                     1    33988307880 262531653911157 328831
-&lt;none&gt;                                           262497665603277 328831
-- pct_vacant                    1   227177637523 262724843240800 328841
-- medhhinc                      1  1062196974143 263559862577420 328885
-- I(age^2)                      1  1188920399920 263686586003196 328892
-- city_dist_mi:septa_half_mi    1  1230978421267 263728644024543 328894
-- age                           1  2479426316334 264977091919610 328960
-- ac_binary                     1  3047985297556 265545650900832 328990
-- basement_type                10  5090476653267 267588142256544 329078
-- bath_num                      1  6898841085908 269396506689184 329189
-- garage_num                    1  9751992536383 272249658139660 329336
-- fireplace_num                 1 10046915002573 272544580605849 329351
-- ln_square_feet                1 40814913228775 303312578832052 330836
-- neighborhood_fe             126 54479351260673 316977016863950 331197
+- fuel_type                     3    32389297317 258062730389632 325395
+- quarters_fe                   3    55701981498 258086043073814 325396
+- city_dist_mi:knn_amenity_mi   1     5621897811 258035962990126 325397
+- pct_single_family             1    18553936107 258048895028423 325398
+&lt;none&gt;                                           258030341092316 325399
+- ln_park_dist                  1    37663867116 258068004959431 325399
+- story_num                     1    37730513689 258068071606004 325399
+- pct_vacant                    1   205093618832 258235434711147 325408
+- medhhinc                      1   968344699087 258998685791402 325449
+- I(age^2)                      1  1163402365725 259193743458040 325459
+- city_dist_mi:septa_half_mi    1  1229859942648 259260201034963 325463
+- age                           1  2403108130952 260433449223268 325525
+- ac_binary                     1  3075319104067 261105660196382 325560
+- basement_type                10  4972830458159 263003171550474 325642
+- bath_num                      1  6787781798786 264818122891102 325754
+- garage_num                    1  9738818198436 267769159290752 325906
+- fireplace_num                 1 10044913943096 268075255035411 325922
+- ln_square_feet                1 41625395516378 299655736608694 327452
+- neighborhood_fe             126 53653286818295 311683627910610 327743
 
-Step:  AIC=328826.8
+Step:  AIC=325394.9
 sale_price ~ ln_square_feet + bath_num + ac_binary + fireplace_num + 
     story_num + garage_num + basement_type + age + I(age^2) + 
     medhhinc + pct_vacant + pct_single_family + city_dist_mi + 
@@ -2520,27 +2523,27 @@ sale_price ~ ln_square_feet + bath_num + ac_binary + fireplace_num +
     quarters_fe + city_dist_mi:knn_amenity_mi + city_dist_mi:septa_half_mi
 
                                Df      Sum of Sq             RSS    AIC
-- quarters_fe                   3    47663097716 262574620007222 328823
-- city_dist_mi:knn_amenity_mi   1     7728079582 262534684989088 328825
-- pct_single_family             1    19707606054 262546664515561 328826
-- ln_park_dist                  1    32231192502 262559188102009 328827
-- story_num                     1    33640799011 262560597708518 328827
-&lt;none&gt;                                           262526956909507 328827
-+ fuel_type                     3    29291306230 262497665603277 328831
-- pct_vacant                    1   231494066009 262758450975516 328837
-- medhhinc                      1  1068136777060 263595093686567 328881
-- I(age^2)                      1  1187398099796 263714355009303 328887
-- city_dist_mi:septa_half_mi    1  1235288890463 263762245799970 328890
-- age                           1  2473620812909 265000577722415 328955
-- ac_binary                     1  3111535277414 265638492186920 328988
-- basement_type                10  5116255704022 267643212613528 329075
-- bath_num                      1  6880305741509 269407262651016 329184
-- garage_num                    1  9775449552879 272302406462386 329332
-- fireplace_num                 1 10086445343028 272613402252535 329348
-- ln_square_feet                1 41033877166244 303560834075751 330841
-- neighborhood_fe             126 54518512496951 317045469406457 331194
+- quarters_fe                   3    54387890031 258117118279664 325392
+- city_dist_mi:knn_amenity_mi   1     5819486123 258068549875755 325393
+- pct_single_family             1    18231861940 258080962251573 325394
+- story_num                     1    37234777160 258099965166792 325395
+&lt;none&gt;                                           258062730389632 325395
+- ln_park_dist                  1    38176077779 258100906467411 325395
++ fuel_type                     3    32389297317 258030341092316 325399
+- pct_vacant                    1   209675335538 258272405725170 325404
+- medhhinc                      1   973197176055 259035927565687 325445
+- I(age^2)                      1  1162088500866 259224818890498 325455
+- city_dist_mi:septa_half_mi    1  1233833768960 259296564158592 325458
+- age                           1  2396993729867 260459724119499 325520
+- ac_binary                     1  3139018476709 261201748866342 325559
+- basement_type                10  4999114710757 263061845100389 325639
+- bath_num                      1  6766976732963 264829707122595 325749
+- garage_num                    1  9763652361538 267826382751170 325903
+- fireplace_num                 1 10088592404525 268151322794158 325920
+- ln_square_feet                1 41849100885222 299911831274855 327458
+- neighborhood_fe             126 53686799108094 311749529497726 327740
 
-Step:  AIC=328823.3
+Step:  AIC=325391.8
 sale_price ~ ln_square_feet + bath_num + ac_binary + fireplace_num + 
     story_num + garage_num + basement_type + age + I(age^2) + 
     medhhinc + pct_vacant + pct_single_family + city_dist_mi + 
@@ -2548,27 +2551,27 @@ sale_price ~ ln_square_feet + bath_num + ac_binary + fireplace_num +
     city_dist_mi:knn_amenity_mi + city_dist_mi:septa_half_mi
 
                                Df      Sum of Sq             RSS    AIC
-- city_dist_mi:knn_amenity_mi   1     7640688841 262582260696063 328822
-- pct_single_family             1    20067833883 262594687841105 328822
-- ln_park_dist                  1    32005690287 262606625697509 328823
-- story_num                     1    33899752615 262608519759837 328823
-&lt;none&gt;                                           262574620007222 328823
-+ quarters_fe                   3    47663097716 262526956909507 328827
-+ fuel_type                     3    28267117845 262546352889378 328828
-- pct_vacant                    1   232781450230 262807401457452 328834
-- medhhinc                      1  1070794141050 263645414148272 328878
-- I(age^2)                      1  1188059138702 263762679145925 328884
-- city_dist_mi:septa_half_mi    1  1240320543243 263814940550465 328887
-- age                           1  2476861470042 265051481477264 328952
-- ac_binary                     1  3114048174200 265688668181422 328985
-- basement_type                10  5101378305872 267675998313094 329070
-- bath_num                      1  6879515547403 269454135554626 329180
-- garage_num                    1  9761217229099 272335837236321 329328
-- fireplace_num                 1 10086091959024 272660711966246 329345
-- ln_square_feet                1 41027723058193 303602343065415 330837
-- neighborhood_fe             126 54533360011621 317107980018843 331191
+- city_dist_mi:knn_amenity_mi   1     5756830841 258122875110505 325390
+- pct_single_family             1    18658730034 258135777009698 325391
+- story_num                     1    37488545765 258154606825428 325392
+&lt;none&gt;                                           258117118279664 325392
+- ln_park_dist                  1    37878814136 258154997093800 325392
++ quarters_fe                   3    54387890031 258062730389632 325395
++ fuel_type                     3    31075205850 258086043073814 325396
+- pct_vacant                    1   210823644869 258327941924533 325401
+- medhhinc                      1   976133373250 259093251652914 325442
+- I(age^2)                      1  1162551659566 259279669939229 325452
+- city_dist_mi:septa_half_mi    1  1238796793796 259355915073460 325456
+- age                           1  2400177602981 260517295882645 325517
+- ac_binary                     1  3141691617156 261258809896819 325556
+- basement_type                10  4983295308254 263100413587918 325635
+- bath_num                      1  6765462169116 264882580448780 325745
+- garage_num                    1  9748721063405 267865839343068 325899
+- fireplace_num                 1 10088185393881 268205303673545 325917
+- ln_square_feet                1 41841680242931 299958798522595 327454
+- neighborhood_fe             126 53699881267112 311816999546776 327737
 
-Step:  AIC=328821.7
+Step:  AIC=325390.1
 sale_price ~ ln_square_feet + bath_num + ac_binary + fireplace_num + 
     story_num + garage_num + basement_type + age + I(age^2) + 
     medhhinc + pct_vacant + pct_single_family + city_dist_mi + 
@@ -2576,134 +2579,80 @@ sale_price ~ ln_square_feet + bath_num + ac_binary + fireplace_num +
     city_dist_mi:septa_half_mi
 
                                Df      Sum of Sq             RSS    AIC
-- knn_amenity_mi                1    10258397228 262592519093292 328820
-- pct_single_family             1    19589044073 262601849740136 328821
-- ln_park_dist                  1    31831658301 262614092354365 328821
-- story_num                     1    32448748354 262614709444417 328821
-&lt;none&gt;                                           262582260696063 328822
-+ city_dist_mi:knn_amenity_mi   1     7640688841 262574620007222 328823
-+ quarters_fe                   3    47575706975 262534684989088 328825
-+ fuel_type                     3    28489340452 262553771355611 328826
-- pct_vacant                    1   228890973776 262811151669839 328832
-- medhhinc                      1  1123486534387 263705747230451 328879
-- I(age^2)                      1  1189659359701 263771920055764 328882
-- city_dist_mi:septa_half_mi    1  1431158316586 264013419012649 328895
-- age                           1  2484992093025 265067252789089 328950
-- ac_binary                     1  3117445785849 265699706481912 328984
-- basement_type                10  5100919334738 267683180030801 329069
-- bath_num                      1  6872409243178 269454669939241 329178
-- garage_num                    1  9754485171728 272336745867792 329326
-- fireplace_num                 1 10078758344826 272661019040889 329343
-- ln_square_feet                1 41039873091006 303622133787069 330836
-- neighborhood_fe             126 54611581815584 317193842511647 331193
+- knn_amenity_mi                1     9463957017 258132339067522 325389
+- pct_single_family             1    18204884533 258141079995038 325389
+- story_num                     1    36181431648 258159056542153 325390
+&lt;none&gt;                                           258122875110505 325390
+- ln_park_dist                  1    37697065101 258160572175606 325390
++ city_dist_mi:knn_amenity_mi   1     5756830841 258117118279664 325392
++ quarters_fe                   3    54325234750 258068549875755 325393
++ fuel_type                     3    31271022938 258091604087567 325394
+- pct_vacant                    1   207829810082 258330704920587 325399
+- medhhinc                      1  1022223082224 259145098192729 325442
+- I(age^2)                      1  1163915248969 259286790359474 325450
+- city_dist_mi:septa_half_mi    1  1421034201138 259543909311643 325464
+- age                           1  2407286229613 260530161340118 325516
+- ac_binary                     1  3144162873201 261267037983706 325554
+- basement_type                10  4982909989261 263105785099766 325633
+- bath_num                      1  6759835661550 264882710772054 325743
+- garage_num                    1  9743273533387 267866148643892 325897
+- fireplace_num                 1 10082458826585 268205333937090 325915
+- ln_square_feet                1 41852960908266 299975836018771 327453
+- neighborhood_fe             126 53791205940811 311914081051316 327739
 
-Step:  AIC=328820.3
+Step:  AIC=325388.6
 sale_price ~ ln_square_feet + bath_num + ac_binary + fireplace_num + 
     story_num + garage_num + basement_type + age + I(age^2) + 
     medhhinc + pct_vacant + pct_single_family + city_dist_mi + 
     septa_half_mi + ln_park_dist + neighborhood_fe + city_dist_mi:septa_half_mi
 
                               Df      Sum of Sq             RSS    AIC
-- pct_single_family            1    17516329942 262610035423233 328819
-- story_num                    1    31989214042 262624508307333 328820
-- ln_park_dist                 1    33881262942 262626400356233 328820
-&lt;none&gt;                                          262592519093292 328820
-+ knn_amenity_mi               1    10258397228 262582260696063 328822
-+ quarters_fe                  3    47914194039 262544604899253 328824
-+ fuel_type                    3    28552031911 262563967061380 328825
-- pct_vacant                   1   228071955219 262820591048511 328830
-- medhhinc                     1  1154301728799 263746820822091 328879
-- I(age^2)                     1  1187867988165 263780387081456 328881
-- city_dist_mi:septa_half_mi   1  1428441824517 264020960917808 328894
-- age                          1  2483425354156 265075944447448 328949
-- ac_binary                    1  3115319852620 265707838945911 328982
-- basement_type               10  5093400845586 267685919938877 329067
-- bath_num                     1  6873267530482 269465786623774 329177
-- garage_num                   1  9744591721973 272337110815265 329324
-- fireplace_num                1 10068500036056 272661019129347 329341
-- ln_square_feet               1 41051759221484 303644278314775 330835
-- neighborhood_fe            126 54934695719999 317527214813290 331205
+- pct_single_family            1    16233695937 258148572763459 325387
+- story_num                    1    35745374109 258168084441630 325389
+&lt;none&gt;                                          258132339067522 325389
+- ln_park_dist                 1    39838604645 258172177672167 325389
++ knn_amenity_mi               1     9463957017 258122875110505 325390
++ quarters_fe                  3    54712085454 258077626982068 325392
++ fuel_type                    3    31263319772 258101075747749 325393
+- pct_vacant                   1   207377729293 258339716796815 325398
+- medhhinc                     1  1050183340159 259182522407681 325442
+- I(age^2)                     1  1162132948696 259294472016217 325448
+- city_dist_mi:septa_half_mi   1  1419954455139 259552293522660 325462
+- age                          1  2405621060553 260537960128075 325514
+- ac_binary                    1  3141565383491 261273904451013 325553
+- basement_type               10  4975328891408 263107667958929 325631
+- bath_num                     1  6760798186702 264893137254224 325742
+- garage_num                   1  9734395002015 267866734069537 325895
+- fireplace_num                1 10073002006327 268205341073849 325913
+- ln_square_feet               1 41865500824052 299997839891573 327452
+- neighborhood_fe            126 54107035645834 312239374713356 327752
 
-Step:  AIC=328819.2
+Step:  AIC=325387.5
 sale_price ~ ln_square_feet + bath_num + ac_binary + fireplace_num + 
     story_num + garage_num + basement_type + age + I(age^2) + 
     medhhinc + pct_vacant + city_dist_mi + septa_half_mi + ln_park_dist + 
     neighborhood_fe + city_dist_mi:septa_half_mi
 
                               Df      Sum of Sq             RSS    AIC
-- story_num                    1    33952275751 262643987698984 328819
-- ln_park_dist                 1    35780677027 262645816100260 328819
-&lt;none&gt;                                          262610035423233 328819
-+ pct_single_family            1    17516329942 262592519093292 328820
-+ knn_amenity_mi               1     8185683097 262601849740136 328821
-+ quarters_fe                  3    48218416368 262561817006865 328823
-+ fuel_type                    3    28307547225 262581727876008 328824
-- pct_vacant                   1   225660530490 262835695953723 328829
-- I(age^2)                     1  1189715385678 263799750808911 328880
-- medhhinc                     1  1212143043197 263822178466430 328881
-- city_dist_mi:septa_half_mi   1  1465288887215 264075324310448 328894
-- age                          1  2483423804818 265093459228052 328948
-- ac_binary                    1  3125197709254 265735233132488 328981
-- basement_type               10  5157061941754 267767097364987 329069
-- bath_num                     1  6886217998672 269496253421905 329177
-- garage_num                   1  9861971915501 272472007338734 329329
-- fireplace_num                1 10154625988422 272764661411656 329344
-- ln_square_feet               1 41239244968238 303849280391471 330842
-- neighborhood_fe            126 54917360702734 317527396125968 331203
-
-Step:  AIC=328819
-sale_price ~ ln_square_feet + bath_num + ac_binary + fireplace_num + 
-    garage_num + basement_type + age + I(age^2) + medhhinc + 
-    pct_vacant + city_dist_mi + septa_half_mi + ln_park_dist + 
-    neighborhood_fe + city_dist_mi:septa_half_mi
-
-                              Df      Sum of Sq             RSS    AIC
-- ln_park_dist                 1    37088779964 262681076478948 328819
-&lt;none&gt;                                          262643987698984 328819
-+ story_num                    1    33952275751 262610035423233 328819
-+ pct_single_family            1    19479391651 262624508307333 328820
-+ knn_amenity_mi               1     7661975952 262636325723033 328821
-+ quarters_fe                  3    48485012070 262595502686914 328822
-+ fuel_type                    3    27891291636 262616096407348 328824
-- pct_vacant                   1   223078062952 262867065761936 328829
-- I(age^2)                     1  1171351745449 263815339444434 328879
-- medhhinc                     1  1206630741698 263850618440683 328881
-- city_dist_mi:septa_half_mi   1  1487117530887 264131105229872 328895
-- age                          1  2478986749323 265122974448307 328947
-- ac_binary                    1  3116812315900 265760800014885 328981
-- basement_type               10  5124404684650 267768392383634 329067
-- bath_num                     1  6865474227828 269509461926812 329175
-- garage_num                   1 10077721127271 272721708826255 329340
-- fireplace_num                1 10194706863620 272838694562604 329346
-- ln_square_feet               1 46784996837845 309428984536830 331093
-- neighborhood_fe            126 54884887831956 317528875530940 331202
-
-Step:  AIC=328819
-sale_price ~ ln_square_feet + bath_num + ac_binary + fireplace_num + 
-    garage_num + basement_type + age + I(age^2) + medhhinc + 
-    pct_vacant + city_dist_mi + septa_half_mi + neighborhood_fe + 
-    city_dist_mi:septa_half_mi
-
-                              Df      Sum of Sq             RSS    AIC
-&lt;none&gt;                                          262681076478948 328819
-+ ln_park_dist                 1    37088779964 262643987698984 328819
-+ story_num                    1    35260378688 262645816100260 328819
-+ pct_single_family            1    21554786315 262659521692633 328820
-+ knn_amenity_mi               1     9414440263 262671662038685 328820
-+ quarters_fe                  3    48291130287 262632785348661 328822
-+ fuel_type                    3    28384069019 262652692409930 328823
-- pct_vacant                   1   233928798083 262915005277031 328829
-- I(age^2)                     1  1166982321537 263848058800485 328878
-- medhhinc                     1  1199519985435 263880596464384 328880
-- city_dist_mi:septa_half_mi   1  1547382207846 264228458686795 328898
-- age                          1  2471158435449 265152234914397 328947
-- ac_binary                    1  3093083166434 265774159645382 328979
-- basement_type               10  5119477792449 267800554271397 329067
-- bath_num                     1  6862714567634 269543791046582 329175
-- garage_num                   1 10067293974161 272748370453110 329339
-- fireplace_num                1 10167733347582 272848809826531 329344
-- ln_square_feet               1 46823860752575 309504937231523 331094
-- neighborhood_fe            126 56125236061007 318806312539955 331255</code></pre>
+&lt;none&gt;                                          258148572763459 325387
+- story_num                    1    37761781537 258186334544996 325387
+- ln_park_dist                 1    41799094387 258190371857846 325388
++ pct_single_family            1    16233695937 258132339067522 325389
++ knn_amenity_mi               1     7492768421 258141079995038 325389
++ quarters_fe                  3    55072283882 258093500479577 325391
++ fuel_type                    3    30929437123 258117643326336 325392
+- pct_vacant                   1   205244039646 258353816803105 325396
+- medhhinc                     1  1103136857618 259251709621077 325444
+- I(age^2)                     1  1163894619328 259312467382787 325447
+- city_dist_mi:septa_half_mi   1  1455527337792 259604100101251 325463
+- age                          1  2405567874956 260554140638415 325513
+- ac_binary                    1  3151173792145 261299746555604 325552
+- basement_type               10  5036635022541 263185207786000 325633
+- bath_num                     1  6773444710630 264922017474089 325741
+- garage_num                   1  9848790936982 267997363700441 325900
+- fireplace_num                1 10157075517463 268305648280922 325916
+- ln_square_feet               1 42052380950189 300200953713648 327459
+- neighborhood_fe            126 54090902485293 312239475248752 327750</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -2726,11 +2675,11 @@ sale_price ~ ln_square_feet + bath_num + ac_binary + fireplace_num +
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                           term    Df   delta_R2
-ln_square_feet   ln_square_feet     1 0.40682553
-Residuals             Residuals 13734 0.25010793
-neighborhood_fe neighborhood_fe   126 0.06662910
-medhhinc               medhhinc     1 0.06411606
-bath_num               bath_num     1 0.05055231</code></pre>
+ln_square_feet   ln_square_feet     1 0.41253629
+Residuals             Residuals 13591 0.24860274
+neighborhood_fe neighborhood_fe   126 0.06520037
+medhhinc               medhhinc     1 0.05979506
+bath_num               bath_num     1 0.04972568</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -2833,8 +2782,8 @@ bath_num               bath_num     1 0.05055231</code></pre>
 <span id="cb85-16"><a href="#cb85-16" aria-hidden="true" tabindex="-1"></a>cv_log_1<span class="sc">$</span>results</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>  intercept      RMSE  Rsquared       MAE      RMSESD  RsquaredSD       MAESD
-1      TRUE 0.4155534 0.5775606 0.3037167 0.005840741 0.007099066 0.004524254</code></pre>
+<pre><code>  intercept      RMSE  Rsquared       MAE      RMSESD RsquaredSD       MAESD
+1      TRUE 0.3816682 0.6094278 0.2897425 0.009088709 0.01740783 0.004395093</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -2860,7 +2809,7 @@ bath_num               bath_num     1 0.05055231</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  intercept      RMSE  Rsquared       MAE     RMSESD RsquaredSD       MAESD
-1      TRUE 0.3439329 0.7108162 0.2432055 0.01002661 0.01197928 0.004981254</code></pre>
+1      TRUE 0.3102648 0.7419939 0.2299054 0.01217619 0.01899135 0.005887415</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -2887,7 +2836,7 @@ bath_num               bath_num     1 0.05055231</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  intercept      RMSE  Rsquared       MAE     RMSESD RsquaredSD       MAESD
-1      TRUE 0.3298712 0.7339455 0.2311302 0.01037016 0.01242474 0.004006271</code></pre>
+1      TRUE 0.2952488 0.7662942 0.2176894 0.01067494 0.01599652 0.005499245</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -2915,8 +2864,8 @@ bath_num               bath_num     1 0.05055231</code></pre>
 <span id="cb91-20"><a href="#cb91-20" aria-hidden="true" tabindex="-1"></a>cv_log_4<span class="sc">$</span>results</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>  intercept      RMSE  Rsquared      MAE     RMSESD RsquaredSD       MAESD
-1      TRUE 0.2890608 0.7955765 0.193469 0.01314438 0.01571413 0.004562659</code></pre>
+<pre><code>  intercept      RMSE  Rsquared       MAE     RMSESD RsquaredSD       MAESD
+1      TRUE 0.2551879 0.8253801 0.1815212 0.01267003 0.01652301 0.004692818</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -2965,27 +2914,27 @@ bath_num               bath_num     1 0.05055231</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left; width: 10cm; font-weight: bold;">Model 1: Structural</td>
-<td style="text-align: right;">0.416</td>
-<td style="text-align: right;">0.578</td>
-<td style="text-align: right;">0.304</td>
+<td style="text-align: right;">0.382</td>
+<td style="text-align: right;">0.609</td>
+<td style="text-align: right;">0.290</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; width: 10cm; font-weight: bold;">Model 2: Structural + Census</td>
-<td style="text-align: right;">0.344</td>
-<td style="text-align: right;">0.711</td>
-<td style="text-align: right;">0.243</td>
+<td style="text-align: right;">0.310</td>
+<td style="text-align: right;">0.742</td>
+<td style="text-align: right;">0.230</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; width: 10cm; font-weight: bold;">Model 3: Structural + Census + Spatial</td>
-<td style="text-align: right;">0.330</td>
-<td style="text-align: right;">0.734</td>
-<td style="text-align: right;">0.231</td>
+<td style="text-align: right;">0.295</td>
+<td style="text-align: right;">0.766</td>
+<td style="text-align: right;">0.218</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; width: 10cm; font-weight: bold;">Model 4: Final Model</td>
-<td style="text-align: right;">0.289</td>
-<td style="text-align: right;">0.796</td>
-<td style="text-align: right;">0.193</td>
+<td style="text-align: right;">0.255</td>
+<td style="text-align: right;">0.825</td>
+<td style="text-align: right;">0.182</td>
 </tr>
 </tbody>
 </table>
@@ -3016,7 +2965,7 @@ bath_num               bath_num     1 0.05055231</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  intercept     RMSE  Rsquared      MAE   RMSESD RsquaredSD    MAESD
-1      TRUE 176344.9 0.5890063 102820.4 17348.48 0.04466116 3386.644</code></pre>
+1      TRUE 174881.3 0.5946383 102296.6 25555.15 0.06642462 3870.938</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -3041,8 +2990,8 @@ bath_num               bath_num     1 0.05055231</code></pre>
 <span id="cb96-17"><a href="#cb96-17" aria-hidden="true" tabindex="-1"></a>cv_model_2<span class="sc">$</span>results</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>  intercept     RMSE  Rsquared      MAE  RMSESD RsquaredSD    MAESD
-1      TRUE 161630.5 0.6544361 88848.47 20418.2 0.05751453 3576.953</code></pre>
+<pre><code>  intercept     RMSE  Rsquared     MAE   RMSESD RsquaredSD    MAESD
+1      TRUE 160396.3 0.6588349 88635.4 28556.53 0.07587715 3803.434</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -3069,7 +3018,7 @@ bath_num               bath_num     1 0.05055231</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  intercept     RMSE  Rsquared      MAE   RMSESD RsquaredSD    MAESD
-1      TRUE 154443.5 0.6843236 84936.68 20818.25 0.05820868 3103.814</code></pre>
+1      TRUE 153234.2 0.6884576 84701.65 28578.51 0.07398629 4072.517</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -3098,7 +3047,7 @@ bath_num               bath_num     1 0.05055231</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  intercept     RMSE  Rsquared      MAE   RMSESD RsquaredSD    MAESD
-1      TRUE 138279.4 0.7459614 72567.76 22998.06 0.06401242 2898.615</code></pre>
+1      TRUE 137218.3 0.7496165 72327.67 29554.89 0.07463082 3804.496</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -3147,27 +3096,27 @@ bath_num               bath_num     1 0.05055231</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left; width: 10cm; font-weight: bold;">Model 1: Structural</td>
-<td style="text-align: right;">176,344.9</td>
-<td style="text-align: right;">0.589</td>
-<td style="text-align: right;">102,820.38</td>
+<td style="text-align: right;">174,881.3</td>
+<td style="text-align: right;">0.595</td>
+<td style="text-align: right;">102,296.64</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; width: 10cm; font-weight: bold;">Model 2: Structural + Census</td>
-<td style="text-align: right;">161,630.5</td>
-<td style="text-align: right;">0.654</td>
-<td style="text-align: right;">88,848.47</td>
+<td style="text-align: right;">160,396.3</td>
+<td style="text-align: right;">0.659</td>
+<td style="text-align: right;">88,635.40</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; width: 10cm; font-weight: bold;">Model 3: Structural + Census + Spatial</td>
-<td style="text-align: right;">154,443.5</td>
-<td style="text-align: right;">0.684</td>
-<td style="text-align: right;">84,936.68</td>
+<td style="text-align: right;">153,234.2</td>
+<td style="text-align: right;">0.688</td>
+<td style="text-align: right;">84,701.65</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; width: 10cm; font-weight: bold;">Model 4: Final Model</td>
-<td style="text-align: right;">138,279.4</td>
-<td style="text-align: right;">0.746</td>
-<td style="text-align: right;">72,567.76</td>
+<td style="text-align: right;">137,218.3</td>
+<td style="text-align: right;">0.750</td>
+<td style="text-align: right;">72,327.67</td>
 </tr>
 </tbody>
 </table>
@@ -3358,16 +3307,16 @@ bath_num               bath_num     1 0.05055231</code></pre>
 <pre><code># A tibble: 10 × 4
    row_in_model row_in_data sale_price cooks_distance
           &lt;int&gt;       &lt;int&gt;      &lt;dbl&gt;          &lt;dbl&gt;
- 1         6113        6113    3600000         0.197 
- 2         6383        6383    5477901         0.129 
- 3          198         198    3330400         0.0459
- 4         8210        8211     480000         0.0454
- 5         2496        2496    3995000         0.0395
- 6        10469       10470     281000         0.0356
- 7         7913        7914     330000         0.0325
- 8         2620        2620    3000000         0.0283
- 9         1921        1921     170000         0.0240
-10         5439        5439    3850000         0.0233</code></pre>
+ 1         6038        6038    3600000         0.199 
+ 2         6307        6307    5477901         0.130 
+ 3          194         194    3330400         0.0463
+ 4         8119        8120     480000         0.0457
+ 5         2467        2467    3995000         0.0400
+ 6        10355       10356     281000         0.0358
+ 7         7825        7826     330000         0.0326
+ 8         2590        2590    3000000         0.0284
+ 9         1896        1896     170000         0.0238
+10         5371        5371    3850000         0.0235</code></pre>
 </div>
 </div>
 <p><strong>Cook’s Distance:</strong></p>
@@ -3376,8 +3325,8 @@ bath_num               bath_num     1 0.05055231</code></pre>
 </section>
 <section id="detailed-discussion" class="level1">
 <h1>Detailed Discussion</h1>
-<p>Our final model achieves a cross-validated R² of 0.746, explaining approximately 75% of the variance in Philadelphia residential sale prices. The Mean Absolute Error (MAE) of 72,299 USD indicates that, on average, predicted sale prices deviate from actual prices by roughly 29% of the median home price (250,000 USD). However, the Root Mean Squared Error (RMSE) of 138,257USD—nearly double the MAE—reveals that the model struggles disproportionately with high-value properties. This discrepancy, combined with residuals ranging from -817,701 USD to +5.1 million USD, reflects the outsized influence of luxury homes on overall error. Diagnostic plots confirm these patterns: the Q-Q plot shows deviation from normality in both tails (especially the upper tail), while the residuals vs.&nbsp;fitted values plot exhibits a funnel-shaped pattern indicating heteroskedasticity—prediction error variance increases systematically for higher-priced properties. Despite these issues, the median residual of 2,339 USD (near zero) suggests the model’s predictions are generally unbiased for typical homes, and Cook’s distance values remain well below concerning thresholds, indicating no single observation dominates the model.</p>
-<p>The model’s minimum and maximum residuals range from -817,701 USD to +5.1 million USD, reflecting the outlier influence from luxury properties. While simultaneously referencing the QQ Plot, the model reflects two tails in the plot, but more in the positive region, indicating the model is not 100% normal. However, the residual distribution with the median residual of 2,339 USD is fairly close to 0, meaning the model predictions are generally centered about sale prices with limited bias in sale prediction. It is imperative to keep in mind that in the residuals vs fitted values plot, the increase of observations fanning-out as the predicted sale price value increases indicates the existence of heteroskedasticity between some variables.</p>
+<p>Our final model achieves a cross-validated R² of 0.825, explaining approximately 83% of the variance in Philadelphia residential sale prices. The Mean Absolute Error (MAE) of 72,327.67 USD indicates that, on average, predicted sale prices deviate from actual prices by roughly 17% of the median home price. However, the Root Mean Squared Error (RMSE) of 137,218.70USD—nearly double the MAE—reveals that the model struggles disproportionately with high-value properties. This discrepancy, combined with residuals ranging from about -800,000 USD to +5 million USD, reflects the outsized influence of luxury homes on overall error. Diagnostic plots confirm these patterns: the Q-Q plot shows deviation from normality in both tails (especially the upper tail), while the residuals vs.&nbsp;fitted values plot exhibits a funnel-shaped pattern indicating heteroskedasticity—prediction error variance increases systematically for higher-priced properties. Despite these issues, the median residual of 2,339 USD (near zero) suggests the model’s predictions are generally unbiased for typical homes, and Cook’s distance values remain well below concerning thresholds, indicating no single observation dominates the model.</p>
+<p>The model’s minimum and maximum residuals range from about -800,000 USD to +5 million USD, reflecting the outlier influence from luxury properties. While simultaneously referencing the QQ Plot, the model reflects two tails in the plot, but more in the positive region, indicating the model is not 100% normal. However, the residual distribution with the median residual of ~2,300 USD is somewhat marginal in the broader aspect, meaning the model predictions are generally centered about sale prices with limited bias in sale prediction. It is imperative to keep in mind that in the residuals vs fitted values plot, the increase of observations fanning-out as the predicted sale price value increases indicates the existence of heteroskedasticity between some variables.</p>
 <p>We have concluded that ln_square_feet, neighborhood fixed effects, median household income, number of bathrooms and number of fireplaces as the most significant variables in our model. We calculated this by doing a stepwise regression, and these five yield the highest <span class="math inline">\(R^2\)</span>.</p>
 <p>We grossly underpredicted for University City, and a decent amount for Fairmount. This model struggles to accurately predict rural areas and overpredicted uninvested neighborhoods. The severe underprediction of University City may be due to the existence and proximity to Drexel University and the University of Pennsylvania.</p>
 </section>
@@ -3409,9 +3358,6 @@ bath_num               bath_num     1 0.05055231</code></pre>
 <li><p>Claude: For code debugging in data cleaning and visualizations.</p></li>
 <li><p>Chat GPT: For code debugging in data cleaning and visualizations.</p></li>
 </ul>
-</section>
-<section id="slides-link" class="level3">
-<h3 class="anchored" data-anchor-id="slides-link"><a href="https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Slides#/title-slide">Slides Link</a></h3>
 
 
 </section>
