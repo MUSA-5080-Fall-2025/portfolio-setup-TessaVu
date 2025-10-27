@@ -1,0 +1,6 @@
+data/philly_properties_data_dictionary.csv
+data/philly_properties.csv
+.RData
+.RDataTmp*
+.Rhistory
+.Rproj.user/

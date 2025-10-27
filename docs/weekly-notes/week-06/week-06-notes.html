@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-10-13">
+
+<title>WEEK 6 NOTES: SPATIAL MACHINE LEARNING &amp; ADVANCED REGRESSION – TESS VU - MUSA 5080 PORTFOLIO</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-cc1d64809b8ed731f92ea1275fe9f05b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">TESS VU - MUSA 5080 PORTFOLIO</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">HOME</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-weekly-notes" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">WEEKLY NOTES</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-weekly-notes">    
+        <li>
+    <a class="dropdown-item" href="../../weekly-notes.html">
+ <span class="dropdown-text">ALL NOTES</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../weekly-notes/week-01/week-01-notes.html">
+ <span class="dropdown-text">WEEK 1: COURSE INTRO</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../weekly-notes/week-02/week-02-notes.html">
+ <span class="dropdown-text">WEEK 2: DYPLR BASICS</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../weekly-notes/week-03/week-03-notes.html">
+ <span class="dropdown-text">WEEK 3: EXPLORATORY DATA ANALYSIS (EDA) &amp; VISUALIZATION</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../weekly-notes/week-03/week-03-class-lab.html">
+ <span class="dropdown-text">IN-CLASS LAB 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../weekly-notes/week-04/week-04-notes.html">
+ <span class="dropdown-text">WEEK 4: SPATIAL DATA &amp; GIS OPERATIONS IN R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../weekly-notes/week-04/week-04-class-lab.html">
+ <span class="dropdown-text">IN-CLASS LAB 4</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../weekly-notes/week-05/week-05-notes.html">
+ <span class="dropdown-text">WEEK 5: PREDICTIVE MODELING WITH LINEAR REGRESSION</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../weekly-notes/week-05/week-05-class-lab.html">
+ <span class="dropdown-text">IN-CLASS LAB 5</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../weekly-notes/week-06/week-06-notes.html">
+ <span class="dropdown-text">WEEK 6: SPATIAL MACHINE LEARNING &amp; ADVANCED REGRESSION</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-labs" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">LABS</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-labs">    
+        <li>
+    <a class="dropdown-item" href="../../labs.html">
+ <span class="dropdown-text">ALL LABS</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../labs/lab-0/lab-0.html">
+ <span class="dropdown-text">IN-CLASS LAB 0: DPLYR BASICS</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../labs/lab-1/lab-1.html">
+ <span class="dropdown-text">LAB 1: CENSUS DATA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../labs/lab-2/Vu_Tessa_Assignment2.html">
+ <span class="dropdown-text">LAB 2: HEALTHCARE ACCESS AND EQUITY</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-midterm-project" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">MIDTERM PROJECT</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-midterm-project">    
+        <li>
+    <a class="dropdown-item" href="../../midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Slides.html">
+ <span class="dropdown-text">MIDTERM SLIDES</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Appendix.html">
+ <span class="dropdown-text">MIDTERM APPENDIX</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../final-project.html"> 
+<span class="menu-text">FINAL PROJECT</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#key-concepts-learned" id="toc-key-concepts-learned" class="nav-link active" data-scroll-target="#key-concepts-learned">Key Concepts Learned</a>
+  <ul class="collapse">
+  <li><a href="#baseline-model" id="toc-baseline-model" class="nav-link" data-scroll-target="#baseline-model">Baseline Model</a></li>
+  <li><a href="#part-1-expanding-toolkit" id="toc-part-1-expanding-toolkit" class="nav-link" data-scroll-target="#part-1-expanding-toolkit">Part 1: Expanding Toolkit</a></li>
+  <li><a href="#part-2-why-space-matters" id="toc-part-2-why-space-matters" class="nav-link" data-scroll-target="#part-2-why-space-matters">Part 2: Why Space Matters</a></li>
+  <li><a href="#part-3-creating-spatial-features" id="toc-part-3-creating-spatial-features" class="nav-link" data-scroll-target="#part-3-creating-spatial-features">Part 3: Creating Spatial Features</a></li>
+  <li><a href="#part-4-fixed-effects" id="toc-part-4-fixed-effects" class="nav-link" data-scroll-target="#part-4-fixed-effects">Part 4: Fixed Effects</a></li>
+  <li><a href="#part-5-cross-validation-with-categorical-variables" id="toc-part-5-cross-validation-with-categorical-variables" class="nav-link" data-scroll-target="#part-5-cross-validation-with-categorical-variables">Part 5: Cross-Validation with Categorical Variables</a></li>
+  </ul></li>
+  <li><a href="#coding-techniques" id="toc-coding-techniques" class="nav-link" data-scroll-target="#coding-techniques">Coding Techniques</a></li>
+  <li><a href="#questions-challenges" id="toc-questions-challenges" class="nav-link" data-scroll-target="#questions-challenges">Questions &amp; Challenges</a></li>
+  <li><a href="#connections-to-policy" id="toc-connections-to-policy" class="nav-link" data-scroll-target="#connections-to-policy">Connections to Policy</a></li>
+  <li><a href="#reflection" id="toc-reflection" class="nav-link" data-scroll-target="#reflection">Reflection</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">WEEK 6 NOTES: SPATIAL MACHINE LEARNING &amp; ADVANCED REGRESSION</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 13, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="key-concepts-learned" class="level2">
+<h2 class="anchored" data-anchor-id="key-concepts-learned">Key Concepts Learned</h2>
+<section id="baseline-model" class="level3">
+<h3 class="anchored" data-anchor-id="baseline-model">Baseline Model</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.2     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.1.0     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
+Linking to GEOS 3.13.1, GDAL 3.11.0, PROJ 9.6.0; sf_use_s2() is TRUE
+
+here() starts at C:/Users/Tess/Documents/GitHub/portfolio-setup-TessaVu/weekly-notes/week-06
+
+New names:
+Rows: 1485 Columns: 24
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (8): Style, R_AC, LU, OWN_OCC, R_BLDG_STY, R_ROOF_TYP, R_EXT_FIN, R_HEA...
+dbl (16): ...1, Parcel_No, SalePrice, PricePerSq, LivingArea, GROSS_AREA, NU...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,485
+Columns: 24
+$ ...1       &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, …
+$ Parcel_No  &lt;dbl&gt; 100032000, 100058000, 100073000, 100112000, 100137000, 1001…
+$ SalePrice  &lt;dbl&gt; 450000, 600000, 450000, 670000, 260000, 355000, 665000, 355…
+$ PricePerSq &lt;dbl&gt; 228.89, 164.34, 105.98, 291.94, 217.21, 190.96, 227.35, 120…
+$ LivingArea &lt;dbl&gt; 1966, 3840, 4246, 2295, 1197, 1859, 2925, 2904, 892, 1916, …
+$ Style      &lt;chr&gt; "Conventional", "Semi?Det", "Decker", "Row\xa0End", "Coloni…
+$ GROSS_AREA &lt;dbl&gt; 3111, 5603, 6010, 3482, 1785, 2198, 4341, 3892, 1658, 3318,…
+$ NUM_FLOORS &lt;dbl&gt; 2.0, 3.0, 3.0, 3.0, 2.0, 1.5, 3.0, 3.0, 2.0, 2.0, 1.5, 2.0,…
+$ R_BDRMS    &lt;dbl&gt; 4, 8, 9, 6, 2, 3, 8, 6, 2, 2, 4, 3, 3, 3, 6, 8, 4, 4, 3, 2,…
+$ R_FULL_BTH &lt;dbl&gt; 2, 3, 3, 3, 1, 3, 3, 3, 1, 2, 2, 3, 1, 1, 3, 3, 2, 3, 1, 2,…
+$ R_HALF_BTH &lt;dbl&gt; 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0,…
+$ R_KITCH    &lt;dbl&gt; 2, 3, 3, 3, 1, 2, 3, 3, 1, 2, 2, 3, 1, 1, 3, 3, 2, 3, 2, 2,…
+$ R_AC       &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N",…
+$ R_FPLACE   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+$ LU         &lt;chr&gt; "R2", "R3", "R3", "R3", "R1", "R2", "R3", "E", "R1", "R2", …
+$ OWN_OCC    &lt;chr&gt; "Y", "N", "Y", "N", "N", "N", "N", "N", "N", "Y", "N", "N",…
+$ R_BLDG_STY &lt;chr&gt; "CV", "SD", "DK", "RE", "CL", "CV", "DK", "DK", "RE", "TF",…
+$ R_ROOF_TYP &lt;chr&gt; "H", "F", "F", "F", "F", "G", "F", "F", "G", "F", "G", "F",…
+$ R_EXT_FIN  &lt;chr&gt; "M", "B", "M", "M", "P", "M", "M", "A", "A", "M", "W", "W",…
+$ R_TOTAL_RM &lt;dbl&gt; 10, 17, 20, 14, 5, 8, 14, 14, 4, 9, 7, 7, 5, 5, 15, 14, 11,…
+$ R_HEAT_TYP &lt;chr&gt; "W", "W", "W", "W", "E", "E", "W", "W", "W", "W", "W", "W",…
+$ YR_BUILT   &lt;dbl&gt; 1900, 1910, 1910, 1905, 1860, 1905, 1900, 1890, 1900, 1900,…
+$ Latitude   &lt;dbl&gt; 42.37963, 42.37877, 42.37940, 42.38014, 42.37967, 42.37953,…
+$ Longitude  &lt;dbl&gt; -71.03076, -71.02943, -71.02846, -71.02859, -71.02903, -71.…</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = SalePrice ~ LivingArea, data = boston)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-855962 -219491  -68291   55248 9296561 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 157968.32   35855.59   4.406 1.13e-05 ***
+LivingArea     216.54      14.47  14.969  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 563800 on 1483 degrees of freedom
+Multiple R-squared:  0.1313,    Adjusted R-squared:  0.1307 
+F-statistic: 224.1 on 1 and 1483 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Interpretation</p>
+<ul>
+<li><p>Intercept’s Estimate: Base Sale Price at 0 sq. ft. is ~$157,968.32. Not useful in practice.</p></li>
+<li><p>Living Area’s Estimate: Each additional square foot of Living Area adds ~$216 to Sale Price.</p></li>
+<li><p>Relationship is statistically significant (p &lt; 0.001). If p is small, reject the null hypothesis.</p></li>
+<li><p>R^2 is 0.13, so 13% of variation is explained by regression model output.</p>
+<ul>
+<li><p>Most of the 87% variation is unexplained, so what’s the problem?</p>
+<ul>
+<li><p>Limitations</p>
+<ul>
+<li><p>Ignores location (North End vs.&nbsp;Roxbury vs.&nbsp;Back Bay); proximity to downtown, waterfront, parks, etc.; nearby crime levels; school quality; neighborhood characteristics.</p></li>
+<li><p>Might fail because 1,000 sq ft in Back Bay is not equivalent to 1,000 sq ft in Roxbury; same house, different locations, means very different prices; location!</p></li>
+<li><p>Could improve by adding spatial features like crime and distance to amenities; control for neighborhood (fixed effects); include interactions (does size matter more in wealthy areas)?</p></li>
+<li><p>Just doing a linear regression is a limit, so that’s where spatial features come in.</p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = SalePrice ~ LivingArea + R_FULL_BTH, data = boston)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-783019 -230756  -65737   75367 9193133 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 107683.96   37340.88   2.884  0.00399 ** 
+LivingArea     145.68      21.33   6.828 1.25e-11 ***
+R_FULL_BTH  106978.13   23800.30   4.495 7.50e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 560200 on 1482 degrees of freedom
+Multiple R-squared:  0.1429,    Adjusted R-squared:  0.1418 
+F-statistic: 123.6 on 2 and 1482 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Baseline R²: 0.1312636 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>With bathrooms R²: 0.1429474 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 22 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 238643.6 ymin: 903246 xmax: 238833.2 ymax: 903399.5
+Projected CRS: NAD_1983_HARN_StatePlane_Massachusetts_Mainland_FIPS_2001
+# A tibble: 6 × 23
+   ...1 Parcel_No SalePrice PricePerSq LivingArea Style    GROSS_AREA NUM_FLOORS
+  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt;
+1     1 100032000    450000       229.       1966 "Conven…       3111        2  
+2     2 100058000    600000       164.       3840 "Semi?D…       5603        3  
+3     3 100073000    450000       106.       4246 "Decker"       6010        3  
+4     4 100112000    670000       292.       2295 "Row\xa…       3482        3  
+5     5 100137000    260000       217.       1197 "Coloni…       1785        2  
+6     6 100138000    355000       191.       1859 "Conven…       2198        1.5
+# ℹ 15 more variables: R_BDRMS &lt;dbl&gt;, R_FULL_BTH &lt;dbl&gt;, R_HALF_BTH &lt;dbl&gt;,
+#   R_KITCH &lt;dbl&gt;, R_AC &lt;chr&gt;, R_FPLACE &lt;dbl&gt;, LU &lt;chr&gt;, OWN_OCC &lt;chr&gt;,
+#   R_BLDG_STY &lt;chr&gt;, R_ROOF_TYP &lt;chr&gt;, R_EXT_FIN &lt;chr&gt;, R_TOTAL_RM &lt;dbl&gt;,
+#   R_HEAT_TYP &lt;chr&gt;, YR_BUILT &lt;dbl&gt;, geometry &lt;POINT [m]&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "sf"         "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 7 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 229049.1 ymin: 890856 xmax: 236590.9 ymax: 900302.5
+Projected CRS: NAD_1983_HARN_StatePlane_Massachusetts_Mainland_FIPS_2001
+# A tibble: 6 × 8
+  sqmiles name         neighborhood_id  acres SHAPE__Length objectid SHAPE__Area
+    &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;            &lt;dbl&gt;         &lt;dbl&gt;    &lt;int&gt;       &lt;dbl&gt;
+1    2.51 Roslindale   15              1606.         53564.       53   69938273.
+2    3.94 Jamaica Pla… 11              2519.         56350.       54  109737890.
+3    0.55 Mission Hill 13               351.         17919.       55   15283120.
+4    0.29 Longwood     28               189.         11909.       56    8215904.
+5    0.04 Bay Village  33                26.5         4651.       57    1156071.
+6    0.02 Leather Dis… 27                15.6         3237.       58     681272.
+# ℹ 1 more variable: geometry &lt;MULTIPOLYGON [m]&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 26</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19 × 2
+   name              n
+   &lt;chr&gt;         &lt;int&gt;
+ 1 Dorchester      344
+ 2 West Roxbury    242
+ 3 Hyde Park       152
+ 4 East Boston     149
+ 5 Roslindale      142
+ 6 Jamaica Plain   113
+ 7 South Boston     80
+ 8 Charlestown      65
+ 9 Mattapan         65
+10 Roxbury          63
+11 South End        20
+12 Beacon Hill      17
+13 Mission Hill     14
+14 Allston           6
+15 Brighton          6
+16 Back Bay          3
+17 Fenway            2
+18 Bay Village       1
+19 Downtown          1</code></pre>
+</div>
+</div>
+<ul>
+<li>Why do you think certain neighborhoods command higher prices? Proximity to downtown? Historical character? School quality? Safety? All of the above? This is why we need spatial features and neighborhood controls!</li>
+</ul>
+</section>
+<section id="part-1-expanding-toolkit" class="level3">
+<h3 class="anchored" data-anchor-id="part-1-expanding-toolkit">Part 1: Expanding Toolkit</h3>
+<section id="categorical-variables" class="level4">
+<h4 class="anchored" data-anchor-id="categorical-variables">Categorical Variables</h4>
+<ul>
+<li><p>Continuous Variables</p>
+<ul>
+<li><p>Square footage</p></li>
+<li><p>Age of house</p></li>
+<li><p>Income levels</p></li>
+<li><p>Distance to downtown</p></li>
+</ul></li>
+<li><p>Categorical Variables</p>
+<ul>
+<li><p>Neighborhood</p>
+<ul>
+<li><strong>n-1 Rule:</strong> One neighborhood is chosen as the reference category (omitted). R picks the first alphabetically unless specified otherwise.</li>
+</ul></li>
+<li><p>School district</p></li>
+<li><p>Building type</p></li>
+<li><p>Has garage</p></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Allston"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                    Estimate   Std. Error    t value      Pr(&gt;|t|)
+(Intercept)      704306.0751 9.022210e+04  7.8063584  1.112892e-14
+LivingArea          138.3206 6.468186e+00 21.3847638  1.605175e-88
+nameBack Bay    7525585.0560 1.533714e+05 49.0677253 1.522921e-311
+nameBay Village 1284057.5326 2.320256e+05  5.5341206  3.700442e-08
+nameBeacon Hill 1767805.2297 1.020211e+05 17.3278366  2.465874e-61
+nameBrighton    -168941.2113 1.239972e+05 -1.3624597  1.732623e-01
+nameCharlestown   -2556.8667 9.208989e+04 -0.0277649  9.778534e-01
+nameDorchester  -576819.4858 8.846990e+04 -6.5199517  9.653393e-11
+nameDowntown      58553.1237 2.322150e+05  0.2521505  8.009601e-01
+nameEast Boston -534060.4110 8.962950e+04 -5.9585340  3.182615e-09</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Interperetation</p>
+<ul>
+<li><p><strong>Reference Category:</strong> Allston was automatically chosen as the intercept because it’s the first alphabetically.</p></li>
+<li><p><strong>Structural Variables</strong></p>
+<ul>
+<li><p><strong>Living Area:</strong> Each additional sq. ft. adds this amount (same for all neighborhoods).</p></li>
+<li><p><strong>Bedrooms:</strong> Effect of one or more full bathroom (same for all neighborhoods).</p></li>
+</ul></li>
+<li><p><strong>Neighborhood Dummies</strong></p>
+<ul>
+<li><p><strong>Positive Coefficient:</strong> This neighborhood is <em>more</em> expensive than Allston.</p></li>
+<li><p><strong>Negative Coefficient:</strong> This neighborhood is <em>less</em> expensive than Allston.</p></li>
+<li><p>All other variables constant and held equal, same size and same bathrooms.</p>
+<ul>
+<li><p>House A in Back Bay</p>
+<ul>
+<li><p>Living Area: 1,500 sq. ft.</p></li>
+<li><p>Baths: 2</p></li>
+<li><p>Neighborhood: Back Bay</p></li>
+<li><p>Predicted Price: $8,458,873</p></li>
+</ul></li>
+<li><p>House B in Roxbury</p>
+<ul>
+<li><p>Living Area: 1,500 sq. ft.</p></li>
+<li><p>Baths: 2</p></li>
+<li><p>Neighborhood: Roxbury</p></li>
+<li><p>Predicted Price: $311,066</p></li>
+</ul></li>
+<li><p>Neighborhood Effect Price Difference: $8,127,807</p>
+<ul>
+<li><p>Same house, different location, but huge price difference. This is what neighborhood dummies capture.</p>
+<ul>
+<li>R automatically handles dummy variables as booleans, so 1 is true for Back Bay and 0 is false for Back Bay when creating neighborhood variables.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="interactions-when-relationships-depend" class="level4">
+<h4 class="anchored" data-anchor-id="interactions-when-relationships-depend">Interactions: When Relationships Depend</h4>
+<ul>
+<li><p><strong>The Question:</strong> Doess the effect of one variable <em>depend on</em> the level of another variable?</p>
+<ul>
+<li><p>Example Scenarios</p>
+<ul>
+<li><p><strong>Housing:</strong> Does square footage matter more in wealthy neighborhoods?</p></li>
+<li><p><strong>Education:</strong> Do tutoring effects vary by initial skill level?</p></li>
+<li><p><strong>Public Health:</strong> Do pollution effects differ by age?</p></li>
+</ul></li>
+<li><p><strong>Example for this study:</strong> Is the value of square footage the same across all Boston neighborhoods?</p>
+<ul>
+<li>SalePrice = β₀ + β₁(LivingArea) + β₂(WealthyNeighborhood) + β₃(LivingArea × WealthyNeighborhood) + ε</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Theory: Luxury Premium Hypothesis</strong></p>
+<ul>
+<li><p><strong>In Wealthy Neighborhoods (Back Bay, Beacon Hill, South End)</strong></p>
+<ul>
+<li><p>High-end buyers pay premium for space.</p></li>
+<li><p>Luxury finishes, location prestige.</p></li>
+<li><p>Each sq. ft. adds substantial value.</p></li>
+<li><p>Steep slope.</p></li>
+<li><p><strong>Hypothesis:</strong> $300+ per sq. ft.</p></li>
+</ul></li>
+<li><p><strong>In Working-Class Neighborhoods (Dorchester, Mattapan, East Boston)</strong></p>
+<ul>
+<li><p>Buyers value function over luxury.</p></li>
+<li><p>More price-sensitive market.</p></li>
+<li><p>Space matters, but less premium.</p></li>
+<li><p>Flatter slope.</p></li>
+<li><p><strong>Hypothesis:</strong> $100-150 per sq. ft.</p></li>
+</ul></li>
+<li><p><strong>Key Question:</strong> If we assume one slope for all neighborhoods, are we misunderstanding the market?</p></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  wealthy_neighborhood     n
+  &lt;fct&gt;                &lt;int&gt;
+1 Not Wealthy           1444
+2 Wealthy                 41</code></pre>
+</div>
+</div>
+<p>Model 1: No Interaction (Parallel Slopes)</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                                Estimate   Std. Error   t value      Pr(&gt;|t|)
+(Intercept)                  213842.7642 23893.619394  8.949785  1.039392e-18
+LivingArea                      160.2357     9.713346 16.496442  2.936087e-56
+wealthy_neighborhoodWealthy 2591012.0471 59958.794614 43.213211 1.103579e-264</code></pre>
+</div>
+</div>
+<ul>
+<li>Assumes living area has the same effect in all neighborhoods. Only the intercept differs (wealthy areas start higher). Parallel lines on a plot.</li>
+</ul>
+<p>Model 2: With Interaction (Different Slopes)</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                                            Estimate   Std. Error   t value
+(Intercept)                             358542.41696 1.863997e+04 19.235144
+LivingArea                                  95.63947 7.620382e+00 12.550483
+wealthy_neighborhoodWealthy            -377937.38372 1.005554e+05 -3.758498
+LivingArea:wealthy_neighborhoodWealthy     985.12500 2.975904e+01 33.103383
+                                            Pr(&gt;|t|)
+(Intercept)                             8.875710e-74
+LivingArea                              2.079700e-34
+wealthy_neighborhoodWealthy             1.775774e-04
+LivingArea:wealthy_neighborhoodWealthy 2.445570e-180</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Allows living are to have different effects in different neighborhoods. Both intercept <em>and</em> slope differ. Non-parallel lines on a plot.</p></li>
+<li><p>We get the un-intuitive negative premium here because that is an intercept adjustment (applies at 0 sqft). The slope difference (+985sq/ft) is huge - we can calculate when wealthy areas become more expensive at what sq. ft. = 384 (358,542 / 985).</p>
+<ul>
+<li><p>Not Wealthy Areas Equation: <span class="math inline">\(Price = 358,542 + 96 × LivingArea\)</span></p>
+<ul>
+<li>Interpretation is at base price $358,542, each sq. ft. adds $96.</li>
+</ul></li>
+<li><p>Wealthy Areas Equation: <span class="math inline">\(Price = -19,395 + 1,081 × LivingArea\)</span></p>
+<ul>
+<li>Interpretation is at base price -$19,395, each sq. ft. adds $1,081.</li>
+</ul></li>
+<li><p>The Interaction Effect. Wealthy areas value each sq ft $985 more than non-wealthy areas!</p></li>
+</ul></li>
+<li><p>Key Observation: The lines are NOT parallel when plotted - that’s the interaction!</p></li>
+</ul>
+<p>Comparing Model Performance</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Model WITHOUT interaction R²: 0.6156 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Model WITH interaction R²: 0.7791 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Improvement: 0.1635 </code></pre>
+</div>
+</div>
+<ul>
+<li><p>Model Improvement: Adding the interaction improves R² by 0.1635 (a 26.6% relative improvement)</p>
+<ul>
+<li>Interpretation: We explain 16.35% more variation in prices by allowing different slopes!</li>
+</ul></li>
+</ul>
+</section>
+<section id="polynomial-terms-non-linear-relationships-when-straight-lines-dont-fit" class="level4">
+<h4 class="anchored" data-anchor-id="polynomial-terms-non-linear-relationships-when-straight-lines-dont-fit">Polynomial Terms: Non-Linear Relationships When Straight Lines Don’t Fit</h4>
+<ul>
+<li><p>Signs of Non-Linearity:</p>
+<ul>
+<li><p>Curved residual plots.</p></li>
+<li><p>Diminishing returns.</p></li>
+<li><p>Accelerating effects.</p></li>
+<li><p>U-shaped or inverted-U patterns.</p></li>
+<li><p>Theoretical reasons.</p></li>
+</ul></li>
+<li><p>Examples:</p>
+<ul>
+<li><p>House Age: Depreciation, then vintage premium.</p></li>
+<li><p>Test Scores: Plateau after studying.</p></li>
+<li><p>Advertising: Diminishing returns.</p></li>
+<li><p>Crime Prevention: Early gains, then plateaus.</p></li>
+</ul></li>
+<li><p>Polynomial Regression</p>
+<ul>
+<li><p>SalePrice = β₀ + β₁(Age) + β₂(Age²) + ε</p>
+<ul>
+<li>Allows for <em>curved relationship</em>.</li>
+</ul></li>
+</ul></li>
+<li><p>Age’s Non-Linear Effect</p>
+<ul>
+<li><p>New Houses (0-20 Years)</p>
+<ul>
+<li><p>Modern amenities.</p></li>
+<li><p>Move-in ready.</p></li>
+<li><p>No repairs needed.</p></li>
+<li><p><strong>High value.</strong></p></li>
+<li><p>Steep depreciation initially.</p></li>
+</ul></li>
+<li><p>Middle-Aged (20-80 Years)</p>
+<ul>
+<li><p>Needs updates.</p></li>
+<li><p>Wear and tear.</p></li>
+<li><p>Not yet “historic”.</p></li>
+<li><p><strong>Lowest value.</strong></p></li>
+<li><p>Trough of the curve.</p></li>
+</ul></li>
+<li><p>Historic/Vintage (80+ Years)</p>
+<ul>
+<li><p>Architectural character.</p></li>
+<li><p>Historic districts.</p></li>
+<li><p>Prestige value.</p></li>
+<li><p><strong>Rising value.</strong></p></li>
+<li><p>“Vintage premium”.</p></li>
+</ul></li>
+</ul></li>
+<li><p>Boston’s Context: The city has LOTS of historic homes (Back Bay, Beacon Hill built 1850s-1900s). Does age create a U-shaped curve?</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   12.0    95.0   115.0   108.1   125.0   223.0 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-06-notes_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Linear Model (Baseline)</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                Estimate  Std. Error   t value     Pr(&gt;|t|)
+(Intercept) -120808.8738 57836.98918 -2.088782 3.689911e-02
+Age            2834.0198   497.72013  5.694003 1.496246e-08
+LivingArea      202.8312    15.10373 13.429214 7.228187e-39</code></pre>
+</div>
+</div>
+<ul>
+<li>Each additional year of age changes price by $2834.01 (assumed constant rate).</li>
+</ul>
+<p>Add Polynomial Term: Age Squared</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                Estimate   Std. Error   t value     Pr(&gt;|t|)
+(Intercept) 570397.14406 97894.237962  5.826667 6.938345e-09
+Age         -13007.51918  1896.446156 -6.858892 1.019524e-11
+I(Age^2)        80.88988     9.360652  8.641479 1.425208e-17
+LivingArea     203.75007    14.739041 13.823835 5.975020e-41</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Important: The I() Function Why I(Age^2) instead of just Age^2? In R formulas, ^ has special meaning. I() tells R: “interpret this literally, compute Age²” Without I(): R would interpret it differently in the formula.</p></li>
+<li><p>Model Equation: <span class="math inline">\(Price = 570,397 + - 13,008 × Age + 80 × Age² + 204 × LivingArea\)</span></p>
+<ul>
+<li>Warning: Can’t interpret coefficients directly. With Age², the effect of age is no longer constant. You need to calculate the marginal effect. Marginal effect of <span class="math inline">\(Age = β₁ + 2 × β₂ × Age\)</span> This means the effect changes at every age!</li>
+</ul></li>
+</ul>
+<p>Compare Models</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear model R²: 0.1549 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Quadratic model R²: 0.1959 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Improvement: 0.0409 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: SalePrice ~ Age + LivingArea
+Model 2: SalePrice ~ Age + I(Age^2) + LivingArea
+  Res.Df        RSS Df  Sum of Sq      F    Pr(&gt;F)    
+1   1469 4.5786e+14                                   
+2   1468 4.3569e+14  1 2.2163e+13 74.675 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Check Residual Plot</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-06-notes_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="part-2-why-space-matters" class="level3">
+<h3 class="anchored" data-anchor-id="part-2-why-space-matters">Part 2: Why Space Matters</h3>
+<section id="hedonic-model-framework" class="level4">
+<h4 class="anchored" data-anchor-id="hedonic-model-framework">Hedonic Model Framework</h4>
+</section>
+<section id="toblers-first-law" class="level4">
+<h4 class="anchored" data-anchor-id="toblers-first-law">Tobler’s First Law</h4>
+<p><em>“Everything is related to everything else, but near things are more related than distant things.”</em></p>
+<p><em>- Waldo Tobler, 1970</em></p>
+<ul>
+<li><p>For house prices, crime nearby matters more than crime across the city.</p></li>
+<li><p>Parks within walking distance affect value.</p></li>
+<li><p>Immediate neighborhood defines market.</p></li>
+</ul>
+</section>
+<section id="spatial-autocorrelation" class="level4">
+<h4 class="anchored" data-anchor-id="spatial-autocorrelation">Spatial Autocorrelation</h4>
+</section>
+</section>
+<section id="part-3-creating-spatial-features" class="level3">
+<h3 class="anchored" data-anchor-id="part-3-creating-spatial-features">Part 3: Creating Spatial Features</h3>
+<section id="buffer-aggregation" class="level4">
+<h4 class="anchored" data-anchor-id="buffer-aggregation">Buffer Aggregation</h4>
+<ul>
+<li><p><strong>Count or sum</strong> events within a defined distance.</p>
+<ul>
+<li>Example: Number of crimes within 500’.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `BPDA_Neighborhood_Boundaries' from data source 
+  `C:\Users\Tess\Documents\GitHub\portfolio-setup-TessaVu\weekly-notes\week-06\data\BPDA_Neighborhood_Boundaries.geojson' 
+  using driver `GeoJSON'
+Simple feature collection with 26 features and 7 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -71.19125 ymin: 42.22792 xmax: -70.92278 ymax: 42.39699
+Geodetic CRS:  WGS 84</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+Rows: 200977 Columns: 21
+── Column specification
+──────────────────────────────────────────────────────── Delimiter: "," chr
+(9): STREET, OFFENSE_DESCRIPTION, SHOOTING, DISTRICT, DAY_OF_WEEK, INC... dbl
+(11): ...1, OFFENSE_CODE, REPORTING_AREA, MONTH, HOUR, X_full_count, Lo... dttm
+(1): OCCURRED_ON_DATE
+ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+Specify the column types or set `show_col_types = FALSE` to quiet this message.
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in CPL_crs_from_input(x): GDAL Message 1: EPSG:102286 is not a valid
+CRS code, but ESRI:102286 is. Assuming ESRI:102286 was meant</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in CPL_crs_from_input(x): GDAL Message 1: CRS EPSG:102286 is
+deprecated. Its non-deprecated replacement EPSG:2805 will be used instead. To
+use the original CRS, set the OSR_USE_NON_DEPRECATED configuration option to
+NO.</code></pre>
+</div>
+</div>
+</section>
+<section id="k-nearest-neighbors" class="level4">
+<h4 class="anchored" data-anchor-id="k-nearest-neighbors">K-Nearest Neighbors</h4>
+<ul>
+<li><p>Average distance to k closest events.</p>
+<ul>
+<li>Example: <strong>Average distance</strong> to 3 nearest violent crimes.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   crime_nn1         crime_nn3         crime_nn5      
+ Min.   :  16.58   Min.   :  16.58   Min.   :  16.58  
+ 1st Qu.: 299.19   1st Qu.: 331.19   1st Qu.: 382.47  
+ Median : 585.10   Median : 611.03   Median : 679.62  
+ Mean   : 757.88   Mean   : 791.84   Mean   : 857.06  
+ 3rd Qu.:1043.77   3rd Qu.:1079.86   3rd Qu.:1174.81  
+ Max.   :3558.73   Max.   :3558.73   Max.   :3630.10  </code></pre>
+</div>
+</div>
+<ul>
+<li>crime_nn3 = 83.29 means the average distance to the 3 nearest crimes is 83.29 feet.</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>           SalePrice
+SalePrice 1.00000000
+crime_nn1 0.03267382
+crime_nn3 0.03117884
+crime_nn5 0.06963100</code></pre>
+</div>
+</div>
+<ul>
+<li>Finding the kNN feature with the strongest correlation tells us the relevant “zone of influence” for crime perception!</li>
+</ul>
+</section>
+<section id="distance-to-specific-points" class="level4">
+<h4 class="anchored" data-anchor-id="distance-to-specific-points">Distance to Specific Points</h4>
+<ul>
+<li><p><strong>Straight-line (Euclidian) distance</strong> to important locations.</p>
+<ul>
+<li>Example: Distance to downtown, nearest T-Station.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.05467 0.80476 1.37410 1.39107 1.93750 2.77678 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> crimes.Buffer    crimes_500ft     crime_nn3       dist_downtown_mi 
+ Min.   : 0.00   Min.   : 0.00   Min.   :  16.58   Min.   :0.05467  
+ 1st Qu.: 0.00   1st Qu.: 0.00   1st Qu.: 331.19   1st Qu.:0.80476  
+ Median : 3.00   Median : 0.00   Median : 611.03   Median :1.37410  
+ Mean   : 7.78   Mean   : 4.49   Mean   : 791.84   Mean   :1.39107  
+ 3rd Qu.: 9.00   3rd Qu.: 6.00   3rd Qu.:1079.86   3rd Qu.:1.93750  
+ Max.   :75.00   Max.   :63.00   Max.   :3558.73   Max.   :2.77678  </code></pre>
+</div>
+</div>
+<ul>
+<li><p>crimes.Buffer (660ft) is a buffer count measuring number of crimes near a house.</p></li>
+<li><p>crimes_500ft is a buffer county measuring crimes within 500ft.</p></li>
+<li><p>crime_nn3 is a kNN distance measuring average distance to 3 nearest crimes in feet.</p></li>
+<li><p>dist_downtown_mi is a point distance measuring miles from downtown boston.</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Structural R²: 0.2374 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>With spatial R²: 0.3644 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Improvement: 0.127 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="part-4-fixed-effects" class="level3">
+<h3 class="anchored" data-anchor-id="part-4-fixed-effects">Part 4: Fixed Effects</h3>
+<ul>
+<li><p>Categorical variables that capture all unmeasured characteristics of a group.</p></li>
+<li><p>In hedonic models:</p>
+<ul>
+<li><p>Each neighborhood gets its own dummy variable.</p></li>
+<li><p>Captures everything unique about that neighborhood we didn’t explicitly measure.</p>
+<ul>
+<li><p>Technically done when went over categorical data.</p></li>
+<li><p>What’s captured:</p>
+<ul>
+<li><p>School quality.</p></li>
+<li><p>Prestige or reputation.</p></li>
+<li><p>Walkability.</p></li>
+<li><p>Access to jobs.</p></li>
+<li><p>Cultural amenities.</p></li>
+<li><p><strong>Things we can’t easily measure.</strong></p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Each coefficient is equal to the price premium/discount for that neighborhood (holding all else constant).</p>
+<ul>
+<li><p>Why use fixed effects?</p>
+<ul>
+<li><p>Dramatically improves prediction.</p>
+<ul>
+<li>In current data it’s because neighborhoods bundle many unmeasured factors like school districts, job access, amenities, and “cool factor”.</li>
+</ul></li>
+<li><p>Coefficients change.</p>
+<ul>
+<li><p>Crime coefficient without FE: -$125/crime</p></li>
+<li><p>Crime coefficient with FE: -$85/crime</p>
+<ul>
+<li><p>Without FE: Captured confounders too.</p></li>
+<li><p>With FE: Neighborhoods “absorb” other differences.</p></li>
+<li><p>Now just the crime effect.</p></li>
+</ul></li>
+<li><p>Trade-Off: FEs are powerful, but they’re a <strong>black box</strong>, we don’t know <strong>why</strong> Back Bay commands a premium.</p></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Compare All Models</p>
+</section>
+<section id="part-5-cross-validation-with-categorical-variables" class="level3">
+<h3 class="anchored" data-anchor-id="part-5-cross-validation-with-categorical-variables">Part 5: Cross-Validation with Categorical Variables</h3>
+<section id="cv-recap-from-last-week" class="level4">
+<h4 class="anchored" data-anchor-id="cv-recap-from-last-week">CV Recap From Last Week</h4>
+<ul>
+<li><p>Three common validation approaches:</p>
+<ul>
+<li><p><strong>Train/Test Split:</strong> 80/20 training/testing split, simple but unstable.</p></li>
+<li><p><strong>k-Fold Cross-Validation:</strong> Split into k-folds, train on k-1, test on 1, repeat.</p></li>
+<li><p><strong>LOOCV:</strong> Leave one observation out at a time (special case of k-fold).</p></li>
+</ul></li>
+</ul>
+<p>Use k-fold CV to compare hedonic models.</p>
+<ul>
+<li><p>CV tells us how well model predicts new data.</p></li>
+<li><p>More honest than in-sample R^2.</p></li>
+<li><p>Helps detect overfitting.</p></li>
+</ul>
+<p><strong>Rule of Thumb:</strong> Categories with n &lt; 10 will likely cause CV problems.</p>
+<ul>
+<li><p>Solution: Group small neighborhoods.</p>
+<ul>
+<li>Trade-Off: Lose granularity for small neighborhoods, but avoid CV crashes.</li>
+</ul></li>
+<li><p>Alternative: Drop sparse categories.</p>
+<ul>
+<li>Warning: Consider carefully, which neighborhoods are you excluding? Often those with less data are marginalized communities. Document what you removed and why.</li>
+</ul></li>
+</ul>
+<p>RECOMMMENDED WORKFLOW</p>
+<ul>
+<li><p>Note: These values are kind of ginormous - remember RMSE squares big errors, so outliers can have a really large impact.</p></li>
+<li><p>Key Insight: Each layer improves out-of-sample prediction, with fixed effects providing the biggest boost.</p></li>
+<li><p>Why? Neighborhoods bundle many unmeasured factors (schools, amenities, prestige) that we can’t easily quantify individually.</p></li>
+<li><p>Look for: - Prices over $2-3 million (could be luxury condos or errors) - Prices near 0 (data errors) - Long right tail in histogram</p>
+<ul>
+<li><p>Log Transform the skewed dependent variable.</p>
+<ul>
+<li><p>Interpreting log models:</p>
+<ul>
+<li><p>RMSE is now in log-dollars (hard to interpret).</p></li>
+<li><p>To convert back: exp(predictions) gives actual dollars.</p></li>
+<li><p>Coefficients now represent percentage changes, not dollar changes.</p></li>
+<li><p>This is standard practice in hedonic modeling!</p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="coding-techniques" class="level2">
+<h2 class="anchored" data-anchor-id="coding-techniques">Coding Techniques</h2>
+<ul>
+<li><p>sum(is.na())</p></li>
+<li><p>glimpse()</p></li>
+<li><p>summary()</p></li>
+<li><p>st_drop_geometry()</p></li>
+</ul>
+</section>
+<section id="questions-challenges" class="level2">
+<h2 class="anchored" data-anchor-id="questions-challenges">Questions &amp; Challenges</h2>
+<ul>
+<li><p>Do <em>NOT</em> use interactions when:</p>
+<ul>
+<li><p>There are small samples, sufficient data is needed in each group.</p></li>
+<li><p>There are already too many interactions, it makes models unstable and causes overfitting.</p></li>
+</ul></li>
+<li><p>How do we quantify “nearness” in a way a regression model can use?</p>
+<ul>
+<li>Must creaate spaatial features that measure proximity to amenities/disamenities.</li>
+</ul></li>
+<li><p>When CV fails with categorical variables, the problem tends to be sparse categories.</p>
+<ul>
+<li><p>In example:</p>
+<ul>
+<li><p>Random split created 10 folds.</p></li>
+<li><p>All “West End” sales ended up in one fold, the test fold.</p></li>
+<li><p>Training folds never saw “West End”.</p></li>
+<li><p>Model can’t predict for a category it never learned.</p></li>
+</ul></li>
+<li><p>Issue: When neighborhoods have very few sales (&lt;10), random CV splits can put all instances in the saame fold, breaking the model.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="connections-to-policy" class="level2">
+<h2 class="anchored" data-anchor-id="connections-to-policy">Connections to Policy</h2>
+<ul>
+<li><p>Boston’s Housing Market</p>
+<ul>
+<li><p><strong>Market Segmentation:</strong> Boston operates as <em>two</em> distinct housing markets.</p>
+<ul>
+<li><p>Luxury Market: Every sq. ft. is premium at $1,081/sq. ft.</p></li>
+<li><p>Standard Market: Space is valued, but lower premium at $96 / sq. ft.</p></li>
+</ul></li>
+<li><p><strong>Affordability Crisis:</strong> The interaction amplifies inequality.</p>
+<ul>
+<li><p>Large homes in wealthy areas become exponentially more expensive.</p></li>
+<li><p>Creates barriers to mobility between neighborhoods.</p></li>
+</ul></li>
+<li><p><strong>Policy Design:</strong> One-size-fits-all policies likely will fail.</p>
+<ul>
+<li><p>Property tax assessments should account for neighborhood-specific valuation.</p></li>
+<li><p>Housing assistance needs vary dramatically by area.</p></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="reflection" class="level2">
+<h2 class="anchored" data-anchor-id="reflection">Reflection</h2>
+<p>Tips for Success:</p>
+<ul>
+<li><p>Do:</p>
+<ul>
+<li><p>Start simple, add complexity.</p></li>
+<li><p>Check for NAs: sum(is.na()).</p></li>
+<li><p>Test on small subset first.</p></li>
+<li><p>Commment code.</p></li>
+<li><p>Check coefficient signs.</p></li>
+<li><p>Use glimpse() and summary().</p></li>
+</ul></li>
+<li><p>Don’t:</p>
+<ul>
+<li><p>Add 50 variables at once.</p></li>
+<li><p>Ignore errors.</p></li>
+<li><p>Forget st_drop_geometry() for non-spatial operations.</p></li>
+<li><p>Skip sparse category check.</p></li>
+</ul></li>
+<li><p>Common Errors:</p>
+<ul>
+<li><p>“Factor has new levels” -&gt; Group sparse categories.</p></li>
+<li><p>“Computationally singular” -&gt; Remove collinear variables.</p></li>
+<li><p>“Very high RMSE” -&gt; Check outliers, scale.</p></li>
+<li><p>“CV takes forever” -&gt; Simplify model or reduce folds.</p></li>
+<li><p>“Negative R^2” -&gt; Model worse than mean, rethink variables.</p></li>
+</ul></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

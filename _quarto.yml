@@ -28,6 +28,8 @@ website:
           text: "WEEK 5: PREDICTIVE MODELING WITH LINEAR REGRESSION"
         - href: weekly-notes/week-05/week-05-class-lab.qmd
           text: "IN-CLASS LAB 5"
+        - href: weekly-notes/week-06/week-06-notes.qmd
+          text: "WEEK 6: SPATIAL MACHINE LEARNING & ADVANCED REGRESSION"
       - text: LABS
         menu:
         - href: labs.qmd
@@ -38,6 +40,12 @@ website:
           text: "LAB 1: CENSUS DATA"
         - href: labs/lab-2/Vu_Tessa_Assignment2.qmd
           text: "LAB 2: HEALTHCARE ACCESS AND EQUITY"
+      - text: MIDTERM PROJECT
+        menu: 
+          - href: midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Slides.qmd
+            text: "MIDTERM SLIDES"
+          - href: midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Appendix.qmd
+            text: "MIDTERM APPENDIX"
       - href: final-project.qmd
         text: FINAL PROJECT
 

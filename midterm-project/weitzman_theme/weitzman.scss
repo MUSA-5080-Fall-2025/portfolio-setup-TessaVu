@@ -1,0 +1,221 @@
+/*-- scss:uses --*/
+// Adjusted from Solarized revealjs theme.
+// IMPORTS
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+@import url("https://use.typekit.net/xnu3qey.css");
+@import "settings";
+@import "mixins";
+@import "exposer";
+@import "theme";
+
+/*-- scss:defaults --*/
+// Font & Color
+$font-family-heading: "Playfair Display", serif;
+$font-family-main: "aktiv-grotesk", "Aktiv Grotesk", sans-serif;
+$font-family-code: "Courier New", Courier, monospace;
+
+$font-size-main: 35px;
+$color-background: #f5f4f0;
+$color-text: #2d2a26;
+$color-heading: #ff4100;
+
+$color-link: #00a557;
+$color-link-dark: #c9c137;
+$color-link-hover: #f48f33;
+
+$color-selection-bg: #778ac5;
+$color-selection-fg: #f1e136;
+
+$progress-bg: rgba(0, 0, 0, 0.2);
+$progress-fg: $color-link;
+
+/*-- scss:rules --*/
+
+// Root
+:root {
+  --r-background-color: #{$color-background};
+  --r-main-color: #{$color-text};
+  --r-main-font: #{$font-family-main};
+  --r-heading-font: #{$font-family-heading};
+  --r-code-font: #{$font-family-code};
+
+  --r-link-color: #{$color-link};
+  --r-link-color-hover: #{$color-link-hover};
+  --r-link-color-dark: #{$color-link-dark};
+
+  --r-selection-background-color: #{$color-selection-bg};
+  --r-selection-color: #{$color-selection-fg};
+}
+
+// Base
+.reveal {
+  font-family: $font-family-main;
+  font-size: $font-size-main;
+  color: $color-text;
+  background-color: $color-background;
+
+  ::selection,
+  ::-moz-selection {
+    background: var(--r-selection-background-color) !important;
+    color: var(--r-selection-color) !important;
+    text-shadow: none;
+  }
+}
+
+// Headings
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  font-family: $font-family-heading;
+  color: $color-heading;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.75px;
+  line-height: 1.0;
+  margin-bottom: 0.5em;
+}
+
+.reveal h1 { font-size: 4.0em; }
+.reveal h2 { font-size: 3.5em; }
+.reveal h3 { font-size: 3.0em; }
+.reveal h4 { font-size: 2.5em; }
+.reveal h5 { font-size: 2.0em; }
+.reveal h6 { font-size: 1.5em; }
+
+// Body Text, Lists, and Tables
+.reveal p,
+.reveal ul,
+.reveal ol,
+.reveal li,
+.reveal table,
+.reveal blockquote {
+  font-family: $font-family-main;
+  line-height: 1.5;
+  margin: 0.5em 0;
+}
+
+.reveal strong,
+.reveal b {
+  font-weight: 700;
+}
+
+.reveal em {
+  font-style: italic;
+}
+
+.reveal small {
+  font-size: 0.5em;
+  line-height: 1.5;
+  display: inline-block;
+}
+
+// Code
+.reveal pre,
+.reveal code,
+.reveal pre code {
+  color: #2d2a26 !important;
+  font-family: $font-family-code;
+}
+
+.reveal code {
+  font-size: 1.0em;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.15em 0.3em;
+  border-radius: 3px;
+}
+
+.reveal pre {
+  width: 90%;
+  margin: 1em auto;
+  text-align: left;
+  font-size: 0.55em;
+  line-height: 1.3em;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
+  padding: 0.8em;
+}
+
+.reveal strong {
+  color: #778ac5;
+}
+
+// Links
+.reveal a {
+  font-family: $font-family-main;
+  color: $color-link;
+  text-decoration: none;
+  transition: color 0.15s ease;
+  font-weight: 700;
+
+  &:hover {
+    color: $color-link-hover;
+  }
+}
+
+// Media
+.reveal img,
+.reveal video,
+.reveal iframe {
+  max-width: 95%;
+  max-height: 95%;
+  margin: 0.5em 0;
+}
+
+.reveal blockquote {
+  display: block;
+  width: 70%;
+  margin: 1em auto;
+  padding: 5px;
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+// Progress
+.reveal .controls { color: $color-link; }
+.reveal .progress { background: $progress-bg; color: $progress-fg; }
+
+// Print
+@media print {
+  .backgrounds { background-color: $color-background; }
+}
+
+// Disable RevealJS absolute positioning on h3–h6 (which causes them to jump to top)
+.reveal .slides section h3,
+.reveal .slides section h4,
+.reveal .slides section h5,
+.reveal .slides section h6 {
+  position: static !important;
+  top: auto !important;
+  margin-top: 0.6em;
+  margin-bottom: 0.4em;
+  line-height: 1.3;
+}
+
+/*-- scss:mixins --*/
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Custom colors.
+$secondary:#778ac5;
+$primary:  #ff4100;
+$black:    #2d2a26;
+$quaker6:  #51534a;
+$quaker5:  #9b9e98;
+$quaker4:  #bcbcb4;
+$quaker3:  #d4d2cd;
+$quaker2:  #dedbd4;
+$quaker1:  #f5f4f0;
+$special6: #f6a2a7;
+$special5: #8bcef2;
+$special4: #f48f33;
+$special3: #f1e136;
+$special2: #c9c137;
+$special1: #00a557;

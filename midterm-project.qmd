@@ -1,0 +1,10 @@
+---
+title: "MIDTERM PROJECT"
+author: Ming Cao, Mark Deng, Jun Luu, Josh Rigsby, Alex Stauffer, Tess Vu
+---
+
+# HOUSE PRICE PREDICTIVE MODEL
+
+### [Slides]()
+
+### [Technical Appendix]()
