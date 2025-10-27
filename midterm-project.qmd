@@ -5,6 +5,6 @@ author: Ming Cao, Mark Deng, Jun Luu, Josh Rigsby, Alex Stauffer, Tess Vu
 
 # HOUSE PRICE PREDICTIVE MODEL
 
-### [Slides]()
+## [SLIDES](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Slides)
 
-### [Technical Appendix]()
+## [TECHNICAL APPENDIX](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Appendix)

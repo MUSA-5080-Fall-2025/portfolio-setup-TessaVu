@@ -42,6 +42,8 @@ website:
           text: "LAB 2: HEALTHCARE ACCESS AND EQUITY"
       - text: MIDTERM PROJECT
         menu: 
+          - href: midterm-project.qmd
+            text: MIDTERM PROJECT
           - href: midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Slides.qmd
             text: "MIDTERM SLIDES"
           - href: midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Appendix.qmd
