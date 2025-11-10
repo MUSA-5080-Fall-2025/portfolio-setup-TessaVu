@@ -31,7 +31,7 @@ theme_set(theme_minimal())
 
 # Load Georgia Department of Corrections recidivism data
 # Source: National Institute of Justice Recidivism Challenge
-recidivism_data <- read_csv(here("data/NIJ_s_Recidivism_Challenge_Full_Dataset_20240407.csv"))
+recidivism_data <- read_csv("data/NIJ_s_Recidivism_Challenge_Full_Dataset_20240407.csv")
 # Examine data structure
 glimpse(recidivism_data)
 
@@ -425,7 +425,12 @@ cat("1. MODEL PERFORMANCE:\n")
 cat("   - AUC:", round(auc(roc_obj), 3), "\n")
 cat("   - Overall accuracy at threshold=0.5:", 
     round(cm_50$overall["Accuracy"], 3), "\n")
-cat("   - Interpretation: [Your assessment here]\n\n")
+cat("   - Interpretation: 73.2% of the time the model correctly identifies a
+    reoffender as higher-risk than one who doesn't, but while this is acceptable,
+    it shouldn't be used in high-stakes situations. The 0.5 threshold with 68.7%
+    accuracy means the model captures around two-thirds of the cases, but misses
+    some real-world complexity and observations in behavioral or contextual
+    information.\n\n")
 
 cat("2. THRESHOLD TRADE-OFFS:\n")
 cat("   - Lower threshold (0.3): Higher sensitivity, more false positives\n")
@@ -433,16 +438,25 @@ cat("   - Higher threshold (0.7): Higher specificity, more false negatives\n")
 cat("   - Decision depends on: relative costs of each error type\n\n")
 
 cat("3. EQUITY CONCERNS:\n")
-cat("   - [Identify which groups face higher FPR or FNR]\n")
-cat("   - [Discuss potential causes: differential base rates, proxy variables]\n")
+cat("   - Black communities face higher FPRs and white communities face higher FNRs,
+    this may suggest models like this likely have biased proxies and may just
+    reproduce existing systemic biases rather than correcting them.\n")
+cat("   - Employment, prior arrests, gang affiliation, and other proxies have roots
+    in historical disinvestment and other aspects of structural inequality.\n")
 cat("   - [Consider impossibility of perfect fairness when base rates differ]\n\n")
 
 cat("4. DEPLOYMENT RECOMMENDATION:\n")
 cat("   Should this model be used for parole decisions?\n")
-cat("   - Technical readiness: [Your assessment]\n")
-cat("   - Ethical considerations: [Your analysis]\n")
-cat("   - Required safeguards: [Your recommendations]\n")
-cat("   - Alternatives: [Your suggestions]\n\n")
+cat("   - Technical readiness: Not ready, if anything the most is pilot testing with
+    heavy oversight.\n")
+cat("   - Ethical considerations: Could exacerbate disparities, negatively impacting
+    communities that are already over-policed, producing a positive feedback loop
+    rather than helping communities.\n")
+cat("   - Required safeguards: Heavy human oversight and review, especially
+    auditing FNR and FPR by groups.\n")
+cat("   - Alternatives: Group specific calibration or models focused and constrained
+    by fairness. Would rather use it to allocate rehabilitative resources rather
+    than police resources.\n\n")
 
 cat("=" %>% rep(80) %>% paste0(collapse = ""))
 
