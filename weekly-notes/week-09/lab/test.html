@@ -1,0 +1,2468 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="test_files/libs/clipboard/clipboard.min.js"></script>
+<script src="test_files/libs/quarto-html/tabby.min.js"></script>
+<script src="test_files/libs/quarto-html/popper.min.js"></script>
+<script src="test_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="test_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="test_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="test_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.42">
+
+  <meta name="author" content="Dr.&nbsp;Elizabeth Delmelle">
+  <meta name="dcterms.date" content="2025-11-03">
+  <title>Critical Perspectives on Predictive Policing</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="test_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="test_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="test_files/libs/revealjs/dist/theme/quarto-8f3eebe07241f08526c91a7e9cbef8fd.css">
+  <link href="test_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="test_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="test_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="test_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="test_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="test_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Critical Perspectives on Predictive Policing</h1>
+  <p class="subtitle">Week 9 MUSA 5080 Dirty Data, Bad Predictions, and the Ethics of Crime Forecasting</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Dr.&nbsp;Elizabeth Delmelle 
+</div>
+</div>
+</div>
+
+  <p class="date">2025-11-03</p>
+</section>
+<section class="slide level2">
+
+<p><strong>Modified Schedule - Dr.&nbsp;Delmelle at CPLN Virtual Open House until ~ 10:30AM</strong></p>
+<ul>
+<li><p>10:15 - 10:30AM (15 min) <strong>Watch Video for Introduction to Today’s Topic</strong> <a href="https://youtu.be/ZU_o87c08l4"></a></p></li>
+<li><p>10:30 - 11:15 <strong>Small Group Discussion (at tables)</strong>:</p></li>
+<li><p>The Richardson et al.&nbsp;paper (posted on canvas) describes ‘dirty data’ in 13 police departments that used predictive policing.</p></li>
+<li><p>The main points are summarized in these slides, but let’s make this learning more active.</p></li>
+</ul>
+<p><strong>At your table, discuss</strong>:</p>
+<ul>
+<li>What is ‘dirty data’ and how does it get created?</li>
+<li>Pick ONE of the city case studies (Chicago, New Orleans, Maricopa County..) and identify 2-3 key concerns - what went wrong?</li>
+<li>What is a consent decree in the context of predictive policing? Does it solve the problems?</li>
+</ul>
+</section>
+<section class="slide level2">
+
+</section>
+<section>
+<section id="opening-thought" class="title-slide slide level1 center">
+<h1>Opening Thought</h1>
+<p><strong>Before we discuss HOW to build predictive policing systems, we need to ask: SHOULD we?</strong></p>
+<p><em>“A statistically ‘good’ model can still be socially harmful.”</em></p>
+<ul>
+<li>Richardson, Schultz &amp; Crawford (2019)</li>
+</ul>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="todays-critical-questions" class="title-slide slide level1 center">
+<h1>Today’s Critical Questions</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Technical Questions:</strong></p>
+<ul>
+<li>How do we model crime counts?</li>
+<li>What spatial features predict crime?</li>
+<li>How do we validate predictions?</li>
+<li>Can we outperform baseline methods?</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Critical Questions:</strong></p>
+<ul>
+<li>Whose data? Whose crimes?</li>
+<li>What if the data is “dirty”?</li>
+<li>Who benefits? Who is harmed?</li>
+<li>What feedback loops are created?</li>
+<li>Can technical solutions fix social problems?</li>
+</ul>
+</div></div>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Today’s Approach</strong></p>
+</div>
+<div class="callout-content">
+<p>We will learn the technical methods AND critically interrogate their use. Both skills are essential for ethical data science.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="part-1-the-seductive-promise-of-predictive-policing" class="title-slide slide level1 center">
+<h1>Part 1: The Seductive Promise of Predictive Policing</h1>
+
+</section>
+<section id="the-sales-pitch" class="slide level2 scrollable">
+<h2>The Sales Pitch</h2>
+<p><strong>What vendors and police departments claim:</strong></p>
+<ul>
+<li><strong>Efficiency:</strong> “Deploy limited resources where they’re needed most”</li>
+<li><strong>Objectivity:</strong> “Remove human bias from decision-making”<br>
+</li>
+<li><strong>Proactivity:</strong> “Prevent crime before it happens”</li>
+<li><strong>Data-driven:</strong> “Let the data tell us where crime will occur”</li>
+</ul>
+<p><strong>Sounds great, right?</strong></p>
+<div class="fragment">
+<p><strong>But these claims rest on critical assumptions:</strong></p>
+<ol type="1">
+<li>That crime data accurately reflects crime (it doesn’t)</li>
+<li>That past patterns predict future crime (they might just predict policing)</li>
+<li>That we can separate “good” from “bad” data (we often can’t)</li>
+<li>That technical solutions can fix social problems (they can’t)</li>
+</ol>
+</div>
+</section>
+<section id="the-technical-evolution" class="slide level2">
+<h2>The Technical Evolution</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 20%">
+<col style="width: 27%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Generation</th>
+<th>Method</th>
+<th>Data Used</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1st:</strong> Hotspots</td>
+<td>Kernel Density</td>
+<td>Past crime locations</td>
+<td>KDE maps</td>
+</tr>
+<tr class="even">
+<td><strong>2nd:</strong> Risk Terrain</td>
+<td>Logistic Reg.</td>
+<td>Crime + features</td>
+<td>RTM software</td>
+</tr>
+<tr class="odd">
+<td><strong>3rd:</strong> ML</td>
+<td>Random Forest, Neural Nets</td>
+<td>Everything</td>
+<td>PredPol, Palantir</td>
+</tr>
+<tr class="even">
+<td><strong>4th:</strong> Person-Based</td>
+<td>Network analysis</td>
+<td>Social connections</td>
+<td>Strategic Subject List</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Each generation claims to be more “objective” and “accurate”</strong></p>
+<p>But what if they’re all built on the same flawed foundation?</p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="part-2-the-dirty-data-problem" class="title-slide slide level1 center">
+<h1>Part 2: The Dirty Data Problem</h1>
+
+</section>
+<section id="what-is-dirty-data" class="slide level2">
+<h2>What Is “Dirty Data”?</h2>
+<p><strong>Traditional definition</strong> (data mining):</p>
+<ul>
+<li>Missing data</li>
+<li>Incorrect data<br>
+</li>
+<li>Non-standardized formats</li>
+</ul>
+<p><strong>Extended definition</strong> (Richardson et al.&nbsp;2019):</p>
+<blockquote>
+<p>“Data derived from or influenced by <strong>corrupt, biased, and unlawful practices</strong>, including data that has been intentionally manipulated or ‘juked,’ as well as data that is distorted by individual and societal biases.”</p>
+</blockquote>
+</section>
+<section id="the-many-forms-of-dirty-data" class="slide level2">
+<h2>The Many Forms of Dirty Data</h2>
+<p><strong>1. Fabricated/Manipulated Data</strong></p>
+<ul>
+<li>False arrests (planted evidence)</li>
+<li>Downgraded crime classifications to “juke the stats”</li>
+<li>Pressuring victims not to file reports</li>
+</ul>
+<p><strong>2. Systematically Biased Data</strong></p>
+<ul>
+<li>Over-policing of certain communities → more recorded “crime”</li>
+<li>Under-policing of white-collar crime → appears less common</li>
+<li>Racial profiling → disproportionate stops/arrests</li>
+</ul>
+<p><strong>3. Missing/Incomplete Data</strong></p>
+<ul>
+<li>Unreported crimes (especially in over-policed areas with low police trust)</li>
+<li>Ignored complaints</li>
+<li>Incomplete records</li>
+</ul>
+<p><strong>4. Proxy Problems</strong></p>
+<ul>
+<li>Arrests ≠ crimes committed</li>
+<li>Calls for service ≠ actual need</li>
+<li>Gang database ≠ actual gang membership</li>
+</ul>
+</section>
+<section id="case-study-1-juking-the-stats---the-wire-and-baltimore" class="slide level2">
+<h2>Case Study 1: “Juking the Stats” - The Wire and Baltimore</h2>
+<p><strong>From TV to Reality:</strong></p>
+<p><em>The Wire</em> (2004): “If the crime rate doesn’t fall, you most certainly will”</p>
+<p><strong>Baltimore Reality (2008-2018):</strong></p>
+<ul>
+<li>14,000+ serious assaults misrecorded as minor offenses</li>
+<li>Extensive Gun Trace Task Force corruption</li>
+<li>Officers robbing residents, planting evidence</li>
+<li>False arrests, fabricated reports</li>
+<li>Data manipulation to show “success”</li>
+</ul>
+<p><strong>Result:</strong> 55+ potential lawsuits, thousands of convictions questioned</p>
+<p><strong>Question:</strong> What happens when this data trains a predictive algorithm?</p>
+</section>
+<section id="case-study-2-compstat-and-nypd" class="slide level2 scrollable">
+<h2>Case Study 2: CompStat and NYPD</h2>
+<p><strong>The Promise:</strong> Data-driven accountability, crime reduction</p>
+<p><strong>The Reality Revealed:</strong></p>
+<ul>
+<li>100+ retired NYPD captains surveyed: <strong>Intense pressure led to stat manipulation</strong></li>
+<li>Serious crimes downgraded to meet targets</li>
+<li>Officers planting drugs to meet arrest quotas</li>
+<li>Commanders persuading victims not to file reports</li>
+</ul>
+<p><strong>The Dual Strategy:</strong></p>
+<ol type="1">
+<li><strong>Downgrade serious crimes</strong> (reported to FBI) → claim success</li>
+<li><strong>Increase minor arrests</strong> (stops, summonses) → show “control”</li>
+</ol>
+<p><strong>2013: Independent audit confirmed systematic data problems</strong></p>
+</section>
+<section id="the-feedback-loop-diagram" class="slide level2">
+<h2>The Feedback Loop Diagram</h2>
+<p><strong>The Confirmation Bias Loop:</strong></p>
+<ul>
+<li>Algorithm learns: “Crime happens in neighborhood X”</li>
+<li>Police sent to neighborhood X</li>
+<li>More arrests in neighborhood X (regardless of actual crime)<br>
+</li>
+<li>Algorithm “confirmed”: “We were right about neighborhood X!”</li>
+<li>Cycle intensifies</li>
+</ul>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="part-3-technical-fixes-cant-solve-social-problems" class="title-slide slide level1 center">
+<h1>Part 3: Technical Fixes Can’t Solve Social Problems</h1>
+
+</section>
+<section id="vendor-claims-about-bias-mitigation" class="slide level2">
+<h2>Vendor Claims About Bias Mitigation</h2>
+<p><strong>PredPol claims:</strong></p>
+<blockquote>
+<p>“Uses ONLY 3 data points—crime type, crime location, and crime date/time”</p>
+</blockquote>
+<p><strong>HunchLab claims:</strong></p>
+<blockquote>
+<p>“We would not use data that relates people to predict places—no arrests, no social media, no gang status”</p>
+</blockquote>
+<p><strong>Both exclude:</strong> Arrest data, stop data, traffic stops</p>
+<p><strong>Both include:</strong> Crime reports, calls for service</p>
+</section>
+<section id="why-cleaning-the-data-isnt-enough" class="slide level2">
+<h2>Why “Cleaning” The Data Isn’t Enough</h2>
+<p><strong>Problem 1: Crime reports reflect police decisions</strong></p>
+<ul>
+<li>Officer decides what to investigate</li>
+<li>Officer decides what to classify as “crime”<br>
+</li>
+<li>Officer decides what to document</li>
+</ul>
+<p><strong>Problem 2: Calls for service reflect community bias</strong></p>
+<ul>
+<li>Neighbors calling police on Black people barbecuing</li>
+<li>“Suspicious activity” = person of color in “wrong” neighborhood</li>
+<li>Gentrification → increased 311 calls on existing residents</li>
+</ul>
+<p><strong>Problem 3: What counts as “clean” data?</strong></p>
+<ul>
+<li>If drug arrests are racially biased, exclude them ✓</li>
+<li>But isn’t burglary enforcement also biased? What about assault?</li>
+<li>Where do you draw the line?</li>
+</ul>
+</section>
+<section id="the-impossibility-of-neutral-crime-data" class="slide level2 scrollable">
+<h2>The Impossibility of Neutral Crime Data</h2>
+<p><strong>Crime data is ALWAYS:</strong></p>
+<ol type="1">
+<li><strong>Socially constructed</strong> - Societies define what counts as “crime”</li>
+<li><strong>Selectively enforced</strong> - More resources to some neighborhoods</li>
+<li><strong>Organizationally filtered</strong> - Police priorities, department culture</li>
+<li><strong>Politically shaped</strong> - “Tough on crime” eras, moral panics</li>
+<li><strong>Technically mediated</strong> - 911 systems, CAD software, databases</li>
+</ol>
+<p><strong>There is no “view from nowhere”</strong></p>
+<p>Crime data doesn’t reveal “crime” - it reveals <strong>policing patterns</strong></p>
+</section>
+<section id="comparison-what-gets-policed-vs.-what-gets-committed" class="slide level2">
+<h2>Comparison: What Gets Policed vs.&nbsp;What Gets Committed</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Frequency</th>
+<th>Policing Intensity</th>
+<th>In Predictive Models?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Violent Crime</strong></td>
+<td>Moderate</td>
+<td>High</td>
+<td>✓ Yes</td>
+</tr>
+<tr class="even">
+<td><strong>Property Crime</strong></td>
+<td>High</td>
+<td>High</td>
+<td>✓ Yes</td>
+</tr>
+<tr class="odd">
+<td><strong>Drug Offenses</strong></td>
+<td>Very High</td>
+<td>Racially Disparate</td>
+<td>Some exclude</td>
+</tr>
+<tr class="even">
+<td><strong>White-Collar Crime</strong></td>
+<td><strong>Very High</strong></td>
+<td><strong>Very Low</strong></td>
+<td>✗ Rarely</td>
+</tr>
+<tr class="odd">
+<td><strong>Wage Theft</strong></td>
+<td><strong>Exceeds all robbery</strong></td>
+<td><strong>Almost None</strong></td>
+<td>✗ Never</td>
+</tr>
+<tr class="even">
+<td><strong>Corporate Fraud</strong></td>
+<td><strong>$300B+ annually</strong></td>
+<td><strong>Minimal</strong></td>
+<td>✗ Never</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Question:</strong> What would predictive policing look like if we predicted white-collar crime with the same intensity?</p>
+<p>See: <a href="https://whitecollar.thenewinquiry.com/">White Collar Crime Risk Zones</a> - A satirical map</p>
+</section>
+<section id="the-missing-data-problem" class="slide level2">
+<h2>The “Missing” Data Problem</h2>
+<p><strong>What crime data DOESN’T capture:</strong></p>
+<ul>
+<li>Less than <strong>half</strong> of violent crimes reported to police (DOJ estimates)</li>
+<li>Even fewer property crimes reported</li>
+<li>Groups with less favorable views of police <strong>less likely to report</strong></li>
+<li>Crimes in areas with low police presence go unrecorded</li>
+</ul>
+<p><strong>Example - LAPD 2005-2012:</strong></p>
+<ul>
+<li><strong>14,000 serious assaults</strong> misclassified as minor offenses</li>
+<li>Error not discovered until 2015</li>
+<li>LAPD already working with PredPol by then</li>
+<li><strong>Was this data used?</strong> No evidence either way.</li>
+</ul>
+<p><strong>If you can’t trust the labels, you can’t trust the model.</strong></p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="part-4-consequences-and-harms" class="title-slide slide level1 center">
+<h1>Part 4: Consequences and Harms</h1>
+
+</section>
+<section id="who-bears-the-costs" class="slide level2">
+<h2>Who Bears the Costs?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>False Positives (Predicted High Risk, No Crime Occurs)</strong></p>
+<p><strong>Cost to individuals:</strong></p>
+<ul>
+<li>Increased police presence/harassment</li>
+<li>Stops, searches without cause</li>
+<li>Trauma, stress</li>
+<li>Missed opportunities (late to work, etc.)</li>
+<li>Normalized surveillance</li>
+</ul>
+<p><strong>Cost to communities:</strong></p>
+<ul>
+<li>Broken trust with police</li>
+<li>Reduced reporting of actual crimes</li>
+<li>Economic harm (businesses avoid area)</li>
+<li>Quality of life degradation</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>False Negatives (Predicted Low Risk, Crime Occurs)</strong></p>
+<p><strong>Cost to individuals:</strong></p>
+<ul>
+<li>Inadequate police response</li>
+<li>Victimization</li>
+<li>Property loss</li>
+<li>Safety concerns</li>
+</ul>
+<p><strong>Cost to communities:</strong></p>
+<ul>
+<li>Unequal protection</li>
+<li>Perception of being “written off”</li>
+<li>Actual under-policing</li>
+</ul>
+<p><strong>Who experiences each?</strong></p>
+<ul>
+<li>FP: Predominantly Black/Brown communities</li>
+<li>FN: Also often Black/Brown communities (just different ones)</li>
+</ul>
+</div></div>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="part-5-can-reform-work" class="title-slide slide level1 center">
+<h1>Part 5: Can Reform Work?</h1>
+
+</section>
+<section id="what-consent-decrees-cover-and-dont-cover" class="slide level2">
+<h2>What Consent Decrees Cover (And Don’t Cover)</h2>
+<p><strong>Typical Reforms Required:</strong></p>
+<ul>
+<li>Training on constitutional policing</li>
+<li>Early intervention systems for problem officers</li>
+<li>Revised use-of-force policies</li>
+<li>Community oversight</li>
+<li>Data collection improvements</li>
+</ul>
+<p><strong>What They DON’T Typically Address:</strong></p>
+<ul>
+<li><strong>Historical data</strong> generated during unconstitutional periods</li>
+<li><strong>Ongoing use</strong> of that data in algorithms</li>
+<li><strong>Data sharing</strong> with other jurisdictions</li>
+<li><strong>Vendor accountability</strong> for bias mitigation</li>
+<li><strong>Public transparency</strong> about predictive systems</li>
+</ul>
+</section>
+<section id="the-chicago-consent-decree-2019" class="slide level2">
+<h2>The Chicago Consent Decree (2019)</h2>
+<p><strong>What it includes:</strong></p>
+<ul>
+<li>CPD must collect better data</li>
+<li>Community oversight board</li>
+<li>Constitutional policing training</li>
+<li>Use of force reforms</li>
+</ul>
+<p><strong>What community organizations noted is MISSING:</strong></p>
+<ul>
+<li>No restrictions on use of SSL</li>
+<li>No prohibition on using data from 2011-2017 (period of documented violations)</li>
+<li>No requirements for predictive policing oversight</li>
+<li>Limited transparency about algorithms</li>
+</ul>
+<p><strong>In 2019:</strong> CPD contracted with UChicago Crime Lab to “update” predictive approaches</p>
+<p><strong>Question:</strong> Using which data?</p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="part-6-a-framework-for-critical-evaluation" class="title-slide slide level1 center">
+<h1>Part 6: A Framework for Critical Evaluation</h1>
+
+</section>
+<section id="questions-to-ask-about-any-predictive-policing-system" class="slide level2">
+<h2>Questions to Ask About Any Predictive Policing System</h2>
+<h3 id="data-provenance">1. <strong>Data Provenance</strong></h3>
+<ul>
+<li>What time period does training data cover?</li>
+<li>Were there civil rights investigations during that period?</li>
+<li>Were there documented cases of data manipulation?</li>
+<li>What evidence exists that data is accurate?</li>
+</ul>
+<h3 id="variable-selection">2. <strong>Variable Selection</strong></h3>
+<ul>
+<li>What specific variables are used?</li>
+<li>How might each variable embed bias?</li>
+<li>What’s excluded and why?</li>
+<li>Who made these choices?</li>
+</ul>
+</section>
+<section id="questions-continued" class="slide level2">
+<h2>Questions (Continued)</h2>
+<h3 id="validation">3. <strong>Validation</strong></h3>
+<ul>
+<li>How is accuracy measured?</li>
+<li>What counts as “success”?</li>
+<li>Are error rates reported by neighborhood?</li>
+<li>Who experiences false positives vs.&nbsp;false negatives?</li>
+</ul>
+<h3 id="deployment">4. <strong>Deployment</strong></h3>
+<ul>
+<li>How do predictions translate to action?</li>
+<li>What discretion do officers have?</li>
+<li>Are social services actually offered?</li>
+<li>What are the measurable outcomes?</li>
+</ul>
+</section>
+<section id="questions-continued-1" class="slide level2">
+<h2>Questions (Continued)</h2>
+<h3 id="transparency-accountability">5. <strong>Transparency &amp; Accountability</strong></h3>
+<ul>
+<li>Is the methodology public?</li>
+<li>Can community members access their own “risk scores”?</li>
+<li>Is there a process to challenge predictions?</li>
+<li>Who monitors for disparate impact?</li>
+</ul>
+<h3 id="alternatives">6. <strong>Alternatives</strong></h3>
+<ul>
+<li>What non-punitive interventions were considered?</li>
+<li>Could these resources address root causes instead?</li>
+<li>What would actual community safety investment look like?</li>
+</ul>
+</section>
+<section id="the-fundamental-question" class="slide level2">
+<h2>The Fundamental Question</h2>
+<div class="callout callout-important no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Before Asking “Does It Work?”, Ask:</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>“Should we be doing this at all?”</strong></p>
+<p>Consider:</p>
+<ul>
+<li>A system that accurately predicts where over-policing will occur is “accurate”</li>
+<li>A system that reinforces existing inequalities can be “validated”</li>
+<li>A system that efficiently targets marginalized communities is “effective”</li>
+</ul>
+<p><strong>But:</strong></p>
+<ul>
+<li>Is it just?</li>
+<li>Is it equitable?</li>
+<li>Does it make communities safer?</li>
+<li>Does it address root causes?</li>
+<li>Or does it just manage inequality more efficiently?</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="technical-foundations" class="title-slide slide level1 center">
+<h1>Technical Foundations</h1>
+<p><strong>Before we build the model, we need to understand the methods</strong></p>
+</section>
+<section id="modeling-workflow" class="slide level2 smaller">
+<h2>Modeling Workflow</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>1 Setup &amp; Data Preparation</strong></p>
+<ul>
+<li>Load burglaries (point data)</li>
+<li>Load abandoned cars (311 calls)</li>
+<li><strong>Create fishnet</strong> (500m × 500m grid)</li>
+<li>Aggregate burglaries to cells</li>
+</ul>
+<p><strong>2 Baseline Comparison</strong></p>
+<ul>
+<li><strong>Kernel Density Estimation (KDE)</strong></li>
+<li>Simple spatial smoothing</li>
+<li>What we need to beat!</li>
+</ul>
+<p><strong>3 Feature Engineering</strong></p>
+<p><strong>Using Abandoned Cars as “Disorder Indicator”:</strong></p>
+<ul>
+<li><strong>Count</strong> in each cell</li>
+<li><strong>k-Nearest Neighbors</strong> (mean distance to 3 nearest)</li>
+<li><strong>LISA</strong> (Local Moran’s I - identify hot spots)</li>
+<li><strong>Distance to hot spots</strong> (significant clusters)</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>4 Count Regression Models</strong></p>
+<ul>
+<li>Fit <strong>Poisson regression</strong></li>
+<li>Test for <strong>overdispersion</strong></li>
+<li>Fit <strong>Negative Binomial</strong> (if needed)</li>
+<li>Interpret coefficients</li>
+</ul>
+<p><strong>5 Spatial Cross-Validation</strong></p>
+<ul>
+<li><strong>Leave-One-Group-Out (LOGO)</strong></li>
+<li>Train on n-1 districts</li>
+<li>Test on held-out district</li>
+<li>Calculate MAE/RMSE</li>
+</ul>
+<p><strong>6 Model Comparison</strong></p>
+<ul>
+<li>Compare to KDE baseline</li>
+<li>Map predictions vs.&nbsp;actual</li>
+<li>Analyze errors spatially</li>
+</ul>
+</div></div>
+</section>
+<section id="the-core-logic-broken-windows-theory" class="slide level2 smaller">
+<h2>The Core Logic: “Broken Windows Theory”</h2>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Our Modeling Approach</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Hypothesis:</strong> Signs of disorder (abandoned cars) predict property crime (burglaries)</p>
+<p><strong>Why different spatial measures?</strong></p>
+<ul>
+<li><strong>Count</strong> → How much disorder is HERE?</li>
+<li><strong>k-NN Distance</strong> → How CLOSE are we to disorder?</li>
+<li><strong>Hot Spots (LISA)</strong> → Where does disorder CLUSTER?</li>
+<li><strong>Distance to Hot Spots</strong> → How close to concentrated disorder?</li>
+</ul>
+<p>Each captures a different aspect of <strong>spatial proximity</strong> to our indicator variable.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Does this actually predict crime? Or does it predict where certain communities call 311?</p>
+<p>What assumptions are embedded in using “disorder” as a predictor?</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="part-7a-understanding-local-spatial-autocorrelation" class="title-slide slide level1 center">
+<h1>Part 7A: Understanding Local Spatial Autocorrelation</h1>
+
+</section>
+<section id="global-vs.-local-spatial-autocorrelation" class="slide level2">
+<h2>Global vs.&nbsp;Local Spatial Autocorrelation</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="global-measures">Global Measures</h3>
+<p><strong>Moran’s I</strong> (one value for entire study area)</p>
+<p><strong>Question answered:</strong> “Is there spatial clustering overall?”</p>
+<p><strong>Range:</strong></p>
+<ul>
+<li>-1 to +1</li>
+<li>+1: Perfect positive clustering</li>
+<li>0: Random spatial pattern</li>
+<li>-1: Perfect dispersion</li>
+</ul>
+<p><strong>Limitation:</strong> Doesn’t tell us WHERE clusters are</p>
+<p><strong>Example:</strong> “Chicago burglaries show positive spatial autocorrelation (I = 0.65)”</p>
+</div><div class="column" style="width:50%;">
+<h3 id="local-measures">Local Measures</h3>
+<p><strong>Local Moran’s I</strong> (one value per location)</p>
+<p><strong>Question answered:</strong> “Where are the clusters? Which specific locations?”</p>
+<p><strong>For each location:</strong></p>
+<ul>
+<li>Is it part of a cluster?</li>
+<li>What type of cluster?</li>
+<li>Is it statistically significant?</li>
+</ul>
+<p><strong>Advantage:</strong> Maps showing WHERE patterns exist</p>
+<p><strong>Example:</strong> “South Side shows significant High-High clustering”</p>
+</div></div>
+</section>
+<section id="spatial-weights-matrix-the-foundation" class="slide level2 scrollable">
+<h2>Spatial Weights Matrix: The Foundation</h2>
+<p><strong>Before calculating spatial autocorrelation, we need to define “neighbors”</strong></p>
+<p><strong>Spatial weights matrix (W):</strong></p>
+<ul>
+<li><span class="math inline">\(w_{ij}\)</span> = weight between locations <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span></li>
+<li>If <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are neighbors: <span class="math inline">\(w_{ij} &gt; 0\)</span></li>
+<li>If not neighbors: <span class="math inline">\(w_{ij} = 0\)</span></li>
+</ul>
+<p><strong>Common approaches:</strong></p>
+<ol type="1">
+<li><strong>Contiguity:</strong> Share a border? (Queen vs.&nbsp;Rook)</li>
+<li><strong>Distance:</strong> Within threshold distance?</li>
+<li><strong>K-nearest neighbors:</strong> Closest k locations</li>
+</ol>
+</section>
+<section id="spatial-weights-contiguity" class="slide level2">
+<h2>Spatial Weights: Contiguity</h2>
+<p><strong>Queen Contiguity:</strong> Neighbors share edge OR vertex (corner)</p>
+<pre><code>[A][B][C]
+[D][E][F]
+[G][H][I]</code></pre>
+<p><strong>Cell E’s Queen neighbors:</strong> B, D, F, H (edges) + A, C, G, I (corners) = 8 neighbors</p>
+<p><strong>Rook Contiguity:</strong> Neighbors share only edges</p>
+<p><strong>Cell E’s Rook neighbors:</strong> B, D, F, H = 4 neighbors</p>
+<p><strong>Our fishnet grid uses Queen contiguity</strong> (most common for regular grids)</p>
+</section>
+<section id="spatial-weights-row-standardization" class="slide level2">
+<h2>Spatial Weights: Row Standardization</h2>
+<p><strong>Raw weights:</strong> Binary (0 or 1)</p>
+<p><strong>Problem:</strong> Corner cells have fewer neighbors than interior cells</p>
+<p><strong>Solution: Row standardization</strong> (“W” style)</p>
+<p><span class="math display">\[w^*_{ij} = \frac{w_{ij}}{\sum_j w_{ij}}\]</span></p>
+<p><strong>Effect:</strong> Each row sums to 1</p>
+<p><strong>Example:</strong></p>
+<ul>
+<li>Cell with 4 neighbors: each gets weight 0.25</li>
+<li>Cell with 8 neighbors: each gets weight 0.125</li>
+</ul>
+<p><strong>Why?</strong> Makes cells comparable regardless of number of neighbors</p>
+</section>
+<section id="global-morans-i-formula" class="slide level2">
+<h2>Global Moran’s I Formula</h2>
+<p><span class="math display">\[I = \frac{n}{\sum_i \sum_j w_{ij}} \cdot \frac{\sum_i \sum_j w_{ij}(Y_i - \bar{Y})(Y_j - \bar{Y})}{\sum_i (Y_i - \bar{Y})^2}\]</span></p>
+<p><strong>Where:</strong></p>
+<ul>
+<li><span class="math inline">\(n\)</span> = number of locations</li>
+<li><span class="math inline">\(Y_i\)</span> = value at location <span class="math inline">\(i\)</span> (e.g., burglary count)</li>
+<li><span class="math inline">\(\bar{Y}\)</span> = mean value</li>
+<li><span class="math inline">\(w_{ij}\)</span> = spatial weight between <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span></li>
+</ul>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li>Positive I: Similar values cluster (high near high, low near low)</li>
+<li>Negative I: Dissimilar values adjacent (high near low)</li>
+<li>Zero: Random spatial pattern</li>
+</ul>
+</section>
+<section id="local-morans-i-formula" class="slide level2">
+<h2>Local Moran’s I Formula</h2>
+<p><span class="math display">\[I_i = \frac{(Y_i - \bar{Y})}{\sum_j (Y_j - \bar{Y})^2 / n} \sum_j w_{ij}(Y_j - \bar{Y})\]</span></p>
+<p><strong>For each location <span class="math inline">\(i\)</span>:</strong></p>
+<p><strong>Numerator:</strong> How different is location <span class="math inline">\(i\)</span> from mean?</p>
+<p><strong>Denominator:</strong> Variance of all locations</p>
+<p><strong>Weight:</strong> How different are neighbors from mean?</p>
+<p><strong>Result:</strong> Local statistic for each location</p>
+<p><strong>Critical:</strong> Must test for statistical significance!</p>
+</section>
+<section id="the-moran-scatterplot" class="slide level2">
+<h2>The Moran Scatterplot</h2>
+<p><strong>Visualizes relationship between:</strong></p>
+<ul>
+<li><strong>X-axis:</strong> Standardized value at location <span class="math inline">\(i\)</span></li>
+<li><strong>Y-axis:</strong> Spatial lag (weighted average of neighbors)</li>
+</ul>
+<pre><code>Quadrant II         |    Quadrant I
+(Low-High)          |    (High-High)
+Outliers            |    HOTSPOTS
+                    |
+--------------------|--------------------
+                    |
+Quadrant III        |    Quadrant IV
+(Low-Low)           |    (High-Low)
+COLDSPOTS           |    Outliers</code></pre>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li><strong>Quadrant I (High-High):</strong> High crime surrounded by high crime → <strong>Hotspot</strong></li>
+<li><strong>Quadrant II (Low-High):</strong> Low crime in high crime area → Outlier</li>
+<li><strong>Quadrant III (Low-Low):</strong> Low crime surrounded by low crime → <strong>Coldspot</strong></li>
+<li><strong>Quadrant IV (High-Low):</strong> High crime in low crime area → Outlier</li>
+</ul>
+</section>
+<section class="slide level2">
+
+
+<img data-src="images/house.jpeg" class="r-stretch quarto-figure-center"><p class="caption">High-Low Cluster of Halloween Enthusiasm</p></section>
+<section id="statistical-significance-testing" class="slide level2 scrollable">
+<h2>Statistical Significance Testing</h2>
+<p><strong>Problem:</strong> Not all clusters are “real” - could be random chance</p>
+<p><strong>Solution: Permutation test</strong></p>
+<p><strong>Process:</strong></p>
+<ol type="1">
+<li>Calculate observed <span class="math inline">\(I_i\)</span> for location <span class="math inline">\(i\)</span></li>
+<li>Randomly shuffle values across locations (999 times)</li>
+<li>Recalculate <span class="math inline">\(I_i\)</span> for each permutation</li>
+<li>Compare observed vs.&nbsp;distribution of permuted values</li>
+<li>If observed is extreme → statistically significant (p &lt; 0.05)</li>
+</ol>
+<p><strong>Result:</strong> Only report clusters that are unlikely to occur by chance</p>
+</section>
+<section id="four-types-of-significant-clusters" class="slide level2">
+<h2>Four Types of Significant Clusters</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 14%">
+<col style="width: 25%">
+<col style="width: 26%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Z-score</th>
+<th>Location Value</th>
+<th>Neighbor Values</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>High-High</strong></td>
+<td>Positive</td>
+<td>Above mean</td>
+<td>Above mean</td>
+<td>Hotspot</td>
+</tr>
+<tr class="even">
+<td><strong>Low-Low</strong></td>
+<td>Positive</td>
+<td>Below mean</td>
+<td>Below mean</td>
+<td>Coldspot</td>
+</tr>
+<tr class="odd">
+<td><strong>High-Low</strong></td>
+<td>Negative</td>
+<td>Above mean</td>
+<td>Below mean</td>
+<td>Outlier (isolated high)</td>
+</tr>
+<tr class="even">
+<td><strong>Low-High</strong></td>
+<td>Negative</td>
+<td>Below mean</td>
+<td>Above mean</td>
+<td>Outlier (isolated low)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="local-morans-i-in-r-step-by-step" class="slide level2">
+<h2>Local Moran’s I in R: Step by Step</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">library</span>(spdep)</span>
+<span id="cb3-2"><a href=""></a></span>
+<span id="cb3-3"><a href=""></a><span class="co"># Step 1: Create spatial object</span></span>
+<span id="cb3-4"><a href=""></a>fishnet_sp <span class="ot">&lt;-</span> <span class="fu">as_Spatial</span>(fishnet)</span>
+<span id="cb3-5"><a href=""></a></span>
+<span id="cb3-6"><a href=""></a><span class="co"># Step 2: Define neighbors (Queen contiguity)</span></span>
+<span id="cb3-7"><a href=""></a>neighbors <span class="ot">&lt;-</span> <span class="fu">poly2nb</span>(fishnet_sp, <span class="at">queen =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-8"><a href=""></a></span>
+<span id="cb3-9"><a href=""></a><span class="co"># Step 3: Create spatial weights (row-standardized)</span></span>
+<span id="cb3-10"><a href=""></a>weights <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(neighbors, <span class="at">style =</span> <span class="st">"W"</span>, <span class="at">zero.policy =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-11"><a href=""></a></span>
+<span id="cb3-12"><a href=""></a><span class="co"># Step 4: Calculate Local Moran's I</span></span>
+<span id="cb3-13"><a href=""></a>local_moran <span class="ot">&lt;-</span> <span class="fu">localmoran</span>(</span>
+<span id="cb3-14"><a href=""></a>  fishnet<span class="sc">$</span>abandoned_cars,  <span class="co"># Variable of interest</span></span>
+<span id="cb3-15"><a href=""></a>  weights,                  <span class="co"># Spatial weights</span></span>
+<span id="cb3-16"><a href=""></a>  <span class="at">zero.policy =</span> <span class="cn">TRUE</span>       <span class="co"># Handle cells with no neighbors</span></span>
+<span id="cb3-17"><a href=""></a>)</span>
+<span id="cb3-18"><a href=""></a></span>
+<span id="cb3-19"><a href=""></a><span class="co"># Step 5: Extract components</span></span>
+<span id="cb3-20"><a href=""></a>fishnet<span class="sc">$</span>local_I <span class="ot">&lt;-</span> local_moran[, <span class="st">"Ii"</span>]      <span class="co"># Local I statistic</span></span>
+<span id="cb3-21"><a href=""></a>fishnet<span class="sc">$</span>p_value <span class="ot">&lt;-</span> local_moran[, <span class="st">"Pr(z != E(Ii))"</span>]  <span class="co"># P-value</span></span>
+<span id="cb3-22"><a href=""></a>fishnet<span class="sc">$</span>z_score <span class="ot">&lt;-</span> local_moran[, <span class="st">"Z.Ii"</span>]    <span class="co"># Z-score</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="identifying-high-high-clusters-hotspots" class="slide level2">
+<h2>Identifying High-High Clusters (Hotspots)</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="co"># Standardize the variable for quadrant classification</span></span>
+<span id="cb4-2"><a href=""></a>fishnet<span class="sc">$</span>standardized_value <span class="ot">&lt;-</span> <span class="fu">scale</span>(fishnet<span class="sc">$</span>abandoned_cars)</span>
+<span id="cb4-3"><a href=""></a></span>
+<span id="cb4-4"><a href=""></a><span class="co"># Calculate spatial lag (weighted mean of neighbors)</span></span>
+<span id="cb4-5"><a href=""></a>fishnet<span class="sc">$</span>spatial_lag <span class="ot">&lt;-</span> <span class="fu">lag.listw</span>(weights, fishnet<span class="sc">$</span>abandoned_cars)</span>
+<span id="cb4-6"><a href=""></a>fishnet<span class="sc">$</span>standardized_lag <span class="ot">&lt;-</span> <span class="fu">scale</span>(fishnet<span class="sc">$</span>spatial_lag)</span>
+<span id="cb4-7"><a href=""></a></span>
+<span id="cb4-8"><a href=""></a><span class="co"># Identify High-High clusters</span></span>
+<span id="cb4-9"><a href=""></a>fishnet<span class="sc">$</span>hotspot <span class="ot">&lt;-</span> <span class="dv">0</span>  <span class="co"># Default: not a hotspot</span></span>
+<span id="cb4-10"><a href=""></a></span>
+<span id="cb4-11"><a href=""></a><span class="co"># Criteria: </span></span>
+<span id="cb4-12"><a href=""></a><span class="co"># 1. Value above mean (standardized &gt; 0)</span></span>
+<span id="cb4-13"><a href=""></a><span class="co"># 2. Neighbors above mean (spatial lag &gt; 0)</span></span>
+<span id="cb4-14"><a href=""></a><span class="co"># 3. Statistically significant (p &lt; 0.05)</span></span>
+<span id="cb4-15"><a href=""></a></span>
+<span id="cb4-16"><a href=""></a>fishnet<span class="sc">$</span>hotspot[</span>
+<span id="cb4-17"><a href=""></a>  fishnet<span class="sc">$</span>standardized_value <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> </span>
+<span id="cb4-18"><a href=""></a>  fishnet<span class="sc">$</span>standardized_lag <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> </span>
+<span id="cb4-19"><a href=""></a>  fishnet<span class="sc">$</span>p_value <span class="sc">&lt;</span> <span class="fl">0.05</span></span>
+<span id="cb4-20"><a href=""></a>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb4-21"><a href=""></a></span>
+<span id="cb4-22"><a href=""></a><span class="co"># Count hotspots</span></span>
+<span id="cb4-23"><a href=""></a><span class="fu">sum</span>(fishnet<span class="sc">$</span>hotspot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="hotspot-map" class="title-slide slide level1 center">
+<h1>Hotspot Map</h1>
+
+<img data-src="images/LMI.png" class="r-stretch"></section>
+<section id="critical-interpretation-of-hotspots" class="slide level2 scrollable">
+<h2>Critical Interpretation of Hotspots</h2>
+<p><strong>What you’ve identified:</strong></p>
+<p>Statistically significant clusters of high abandoned car reports</p>
+<p><strong>What this MIGHT mean:</strong></p>
+<ol type="1">
+<li><strong>Actual concentrations</strong> of abandoned cars</li>
+<li><strong>Areas where residents report more</strong> (higher civic engagement?)</li>
+<li><strong>Areas with more 311 system awareness</strong></li>
+<li><strong>Areas with more code enforcement presence</strong></li>
+<li><strong>Gentrifying areas</strong> with new residents calling on existing conditions</li>
+</ol>
+<p><strong>Critical question:</strong></p>
+<p>Are these “high abandoned car” areas or “high reporting” areas?</p>
+<p><strong>For modeling:</strong></p>
+<p>We’re using this as a proxy for “disorder” but recognize it’s a flawed proxy</p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="part-7b-count-regression-fundamentals" class="title-slide slide level1 center">
+<h1>Part 7B: Count Regression Fundamentals</h1>
+
+</section>
+<section id="why-count-regression-the-problem-with-ols" class="slide level2 scrollable">
+<h2>Why Count Regression? The Problem with OLS</h2>
+<p><strong>Our outcome:</strong> Burglary counts per grid cell (0, 1, 2, 3, …)</p>
+<p><strong>Linear regression assumes:</strong></p>
+<p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \varepsilon_i\]</span></p>
+<p>where <span class="math inline">\(\varepsilon_i \sim N(0, \sigma^2)\)</span></p>
+<p><strong>Problems for counts:</strong></p>
+<ol type="1">
+<li>Can predict <strong>negative values</strong> (impossible for counts)</li>
+<li>Assumes <strong>constant variance</strong> (counts often have variance ≠ mean)</li>
+<li>Assumes <strong>continuous</strong> outcome (counts are discrete)</li>
+<li>Assumes <strong>normal errors</strong> (count data is skewed)</li>
+</ol>
+</section>
+<section id="distribution-of-crime-counts" class="slide level2">
+<h2>Distribution of Crime Counts</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># Typical pattern for crime data</span></span>
+<span id="cb5-2"><a href=""></a><span class="fu">ggplot</span>(fishnet, <span class="fu">aes</span>(<span class="at">x =</span> countBurglaries)) <span class="sc">+</span></span>
+<span id="cb5-3"><a href=""></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"#440154FF"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href=""></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-5"><a href=""></a>    <span class="at">title =</span> <span class="st">"Distribution of Burglary Counts"</span>,</span>
+<span id="cb5-6"><a href=""></a>    <span class="at">subtitle =</span> <span class="st">"Most cells have 0-2 burglaries, few have many"</span>,</span>
+<span id="cb5-7"><a href=""></a>    <span class="at">x =</span> <span class="st">"Burglaries per Cell"</span>,</span>
+<span id="cb5-8"><a href=""></a>    <span class="at">y =</span> <span class="st">"Number of Cells"</span></span>
+<span id="cb5-9"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb5-10"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li><strong>Right-skewed:</strong> Long tail to the right</li>
+<li><strong>Many zeros:</strong> Most cells have no burglaries</li>
+<li><strong>Discrete:</strong> Only integer values</li>
+<li><strong>Variance &gt; Mean:</strong> Overdispersion common</li>
+</ul>
+</section>
+<section id="the-poisson-distribution" class="slide level2">
+<h2>The Poisson Distribution</h2>
+<p><strong>Appropriate for count data:</strong></p>
+<p><span class="math display">\[P(Y = k) = \frac{\lambda^k e^{-\lambda}}{k!}\]</span></p>
+<p><strong>Where:</strong></p>
+<ul>
+<li><span class="math inline">\(Y\)</span> = count outcome (0, 1, 2, …)</li>
+<li><span class="math inline">\(\lambda\)</span> = expected count (mean = variance)</li>
+<li><span class="math inline">\(k\)</span> = observed count</li>
+</ul>
+<p><strong>Key property:</strong> Mean = Variance = <span class="math inline">\(\lambda\)</span></p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Number of crimes per week</li>
+<li>Number of 911 calls per hour</li>
+<li>Number of accidents per intersection</li>
+</ul>
+</section>
+<section id="poisson-regression-model" class="slide level2">
+<h2>Poisson Regression Model</h2>
+<p><strong>Link <span class="math inline">\(\lambda\)</span> to predictors via log link:</strong></p>
+<p><span class="math display">\[\log(\lambda_i) = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + ... + \beta_p X_{pi}\]</span></p>
+<p><strong>Equivalently:</strong></p>
+<p><span class="math display">\[\lambda_i = \exp(\beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + ... + \beta_p X_{pi})\]</span></p>
+<p><strong>Why log link?</strong></p>
+<ul>
+<li>Ensures <span class="math inline">\(\lambda_i &gt; 0\)</span> (counts can’t be negative)</li>
+<li>Linear relationship on log scale</li>
+<li>Multiplicative effects on count scale</li>
+</ul>
+</section>
+<section id="interpreting-poisson-coefficients" class="slide level2">
+<h2>Interpreting Poisson Coefficients</h2>
+<p><strong>On log scale:</strong></p>
+<p><span class="math inline">\(\beta_1\)</span> = change in log(expected count) per unit increase in <span class="math inline">\(X_1\)</span></p>
+<p><strong>On count scale (exponentiate):</strong></p>
+<p><span class="math inline">\(\exp(\beta_1)\)</span> = multiplicative effect on expected count</p>
+<p><strong>Examples:</strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(\beta\)</span></th>
+<th><span class="math inline">\(\exp(\beta)\)</span></th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.14</td>
+<td>1.15</td>
+<td>15% increase per unit of X</td>
+</tr>
+<tr class="even">
+<td>-0.22</td>
+<td>0.80</td>
+<td>20% decrease per unit of X</td>
+</tr>
+<tr class="odd">
+<td>0.00</td>
+<td>1.00</td>
+<td>No effect</td>
+</tr>
+<tr class="even">
+<td>0.69</td>
+<td>2.00</td>
+<td>Doubling per unit of X</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="poisson-regression-in-r" class="slide level2">
+<h2>Poisson Regression in R</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="co"># Fit Poisson model</span></span>
+<span id="cb6-2"><a href=""></a>model_poisson <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb6-3"><a href=""></a>  countBurglaries <span class="sc">~</span> Abandoned_Cars <span class="sc">+</span> Abandoned_Cars.nn <span class="sc">+</span> abandoned.isSig.dist,</span>
+<span id="cb6-4"><a href=""></a>  <span class="at">data =</span> fishnet,</span>
+<span id="cb6-5"><a href=""></a>  <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> <span class="st">"log"</span>)</span>
+<span id="cb6-6"><a href=""></a>)</span>
+<span id="cb6-7"><a href=""></a></span>
+<span id="cb6-8"><a href=""></a><span class="co"># View results</span></span>
+<span id="cb6-9"><a href=""></a><span class="fu">summary</span>(model_poisson)</span>
+<span id="cb6-10"><a href=""></a></span>
+<span id="cb6-11"><a href=""></a><span class="co"># Exponentiate coefficients for interpretation</span></span>
+<span id="cb6-12"><a href=""></a><span class="fu">exp</span>(<span class="fu">coef</span>(model_poisson))</span>
+<span id="cb6-13"><a href=""></a></span>
+<span id="cb6-14"><a href=""></a><span class="co"># Example output:</span></span>
+<span id="cb6-15"><a href=""></a><span class="co">#                        exp(coef)</span></span>
+<span id="cb6-16"><a href=""></a><span class="co"># (Intercept)            0.234</span></span>
+<span id="cb6-17"><a href=""></a><span class="co"># Abandoned_Cars         1.151</span></span>
+<span id="cb6-18"><a href=""></a><span class="co"># Abandoned_Cars.nn      0.998</span></span>
+<span id="cb6-19"><a href=""></a><span class="co"># abandoned.isSig.dist   0.999</span></span>
+<span id="cb6-20"><a href=""></a></span>
+<span id="cb6-21"><a href=""></a><span class="co"># Interpretation:</span></span>
+<span id="cb6-22"><a href=""></a><span class="co"># - Each additional abandoned car → 15.1% increase in expected burglaries</span></span>
+<span id="cb6-23"><a href=""></a><span class="co"># - Each meter from nearest abandoned car → 0.2% decrease in expected burglaries</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-overdispersion-problem" class="slide level2 scrollable">
+<h2>The Overdispersion Problem</h2>
+<p><strong>Poisson assumption:</strong> Variance = Mean</p>
+<p><strong>Reality with crime data:</strong> Variance &gt; Mean (often MUCH larger)</p>
+<p><strong>Why overdispersion occurs:</strong></p>
+<ol type="1">
+<li><strong>Unobserved heterogeneity:</strong> Some areas have unmeasured crime attractors</li>
+<li><strong>Contagion effects:</strong> One crime leads to others (not independent)</li>
+<li><strong>Measurement error:</strong> Counting issues, data quality</li>
+<li><strong>Model misspecification:</strong> Missing important variables</li>
+</ol>
+<p><strong>Check for overdispersion:</strong></p>
+<p><span class="math display">\[\text{Dispersion} = \frac{\text{Residual Deviance}}{\text{Degrees of Freedom}}\]</span></p>
+<ul>
+<li>If ≈ 1: Poisson is fine</li>
+<li>If &gt; 1: Overdispersion (common!)</li>
+<li>If &gt; 2-3: Serious overdispersion → Use Negative Binomial</li>
+</ul>
+</section>
+<section id="checking-overdispersion-in-r" class="slide level2">
+<h2>Checking Overdispersion in R</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Fit Poisson model</span></span>
+<span id="cb7-2"><a href=""></a>model_pois <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb7-3"><a href=""></a>  countBurglaries <span class="sc">~</span> Abandoned_Cars <span class="sc">+</span> Abandoned_Cars.nn <span class="sc">+</span> abandoned.isSig.dist,</span>
+<span id="cb7-4"><a href=""></a>  <span class="at">data =</span> fishnet,</span>
+<span id="cb7-5"><a href=""></a>  <span class="at">family =</span> poisson</span>
+<span id="cb7-6"><a href=""></a>)</span>
+<span id="cb7-7"><a href=""></a></span>
+<span id="cb7-8"><a href=""></a><span class="co"># Calculate dispersion parameter</span></span>
+<span id="cb7-9"><a href=""></a>dispersion <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(model_pois, <span class="at">type =</span> <span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> </span>
+<span id="cb7-10"><a href=""></a>               model_pois<span class="sc">$</span>df.residual</span>
+<span id="cb7-11"><a href=""></a></span>
+<span id="cb7-12"><a href=""></a><span class="fu">cat</span>(<span class="st">"Dispersion parameter:"</span>, <span class="fu">round</span>(dispersion, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb7-13"><a href=""></a></span>
+<span id="cb7-14"><a href=""></a><span class="co"># Rule of thumb:</span></span>
+<span id="cb7-15"><a href=""></a><span class="co"># &lt; 1.5: Poisson OK</span></span>
+<span id="cb7-16"><a href=""></a><span class="co"># 1.5 - 3: Mild overdispersion, NegBin recommended</span></span>
+<span id="cb7-17"><a href=""></a><span class="co"># &gt; 3: Serious overdispersion, NegBin essential</span></span>
+<span id="cb7-18"><a href=""></a></span>
+<span id="cb7-19"><a href=""></a><span class="co"># Example output:</span></span>
+<span id="cb7-20"><a href=""></a><span class="co"># Dispersion parameter: 4.523</span></span>
+<span id="cb7-21"><a href=""></a><span class="co"># Warning: Serious overdispersion detected!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="negative-binomial-regression" class="slide level2">
+<h2>Negative Binomial Regression</h2>
+<p><strong>Relaxes the variance = mean assumption</strong></p>
+<p><strong>Adds dispersion parameter (<span class="math inline">\(\alpha\)</span>):</strong></p>
+<p><span class="math display">\[\text{Var}(Y_i) = \mu_i + \alpha \mu_i^2\]</span></p>
+<p><strong>Where:</strong></p>
+<ul>
+<li><span class="math inline">\(\mu_i\)</span> = expected count (same as Poisson)</li>
+<li><span class="math inline">\(\alpha\)</span> = dispersion parameter</li>
+</ul>
+<p><strong>If <span class="math inline">\(\alpha = 0\)</span>:</strong> Reduces to Poisson</p>
+<p><strong>If <span class="math inline">\(\alpha &gt; 0\)</span>:</strong> Allows extra variance (overdispersion)</p>
+<p><strong>Interpretation:</strong> Coefficients interpreted same way as Poisson!</p>
+</section>
+<section id="negative-binomial-in-r" class="slide level2">
+<h2>Negative Binomial in R</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">library</span>(MASS)</span>
+<span id="cb8-2"><a href=""></a></span>
+<span id="cb8-3"><a href=""></a><span class="co"># Fit Negative Binomial model</span></span>
+<span id="cb8-4"><a href=""></a>model_nb <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(</span>
+<span id="cb8-5"><a href=""></a>  countBurglaries <span class="sc">~</span> Abandoned_Cars <span class="sc">+</span> Abandoned_Cars.nn <span class="sc">+</span> abandoned.isSig.dist,</span>
+<span id="cb8-6"><a href=""></a>  <span class="at">data =</span> fishnet</span>
+<span id="cb8-7"><a href=""></a>)</span>
+<span id="cb8-8"><a href=""></a></span>
+<span id="cb8-9"><a href=""></a><span class="co"># View results</span></span>
+<span id="cb8-10"><a href=""></a><span class="fu">summary</span>(model_nb)</span>
+<span id="cb8-11"><a href=""></a></span>
+<span id="cb8-12"><a href=""></a><span class="co"># Compare to Poisson</span></span>
+<span id="cb8-13"><a href=""></a><span class="fu">AIC</span>(model_pois)  <span class="co"># e.g., 8234.5</span></span>
+<span id="cb8-14"><a href=""></a><span class="fu">AIC</span>(model_nb)    <span class="co"># e.g., 6721.3</span></span>
+<span id="cb8-15"><a href=""></a></span>
+<span id="cb8-16"><a href=""></a><span class="co"># Lower AIC = better fit</span></span>
+<span id="cb8-17"><a href=""></a><span class="co"># If NegBin AIC much lower → use NegBin</span></span>
+<span id="cb8-18"><a href=""></a></span>
+<span id="cb8-19"><a href=""></a><span class="co"># Extract dispersion parameter (theta)</span></span>
+<span id="cb8-20"><a href=""></a>model_nb<span class="sc">$</span>theta  <span class="co"># e.g., 2.47</span></span>
+<span id="cb8-21"><a href=""></a></span>
+<span id="cb8-22"><a href=""></a><span class="co"># Interpretation: Significant overdispersion confirmed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="comparing-poisson-vs.-negative-binomial" class="slide level2">
+<h2>Comparing Poisson vs.&nbsp;Negative Binomial</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 25%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>Poisson</th>
+<th>Negative Binomial</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Variance assumption</strong></td>
+<td>Var = Mean</td>
+<td>Var = μ + αμ²</td>
+</tr>
+<tr class="even">
+<td><strong>Overdispersion</strong></td>
+<td>Cannot handle</td>
+<td>Accommodates</td>
+</tr>
+<tr class="odd">
+<td><strong>Standard errors</strong></td>
+<td>Underestimated if overdispersed</td>
+<td>Correctly estimated</td>
+</tr>
+<tr class="even">
+<td><strong>When to use</strong></td>
+<td>Count data, no overdispersion</td>
+<td>Count data with overdispersion</td>
+</tr>
+<tr class="odd">
+<td><strong>Crime data</strong></td>
+<td>Rarely appropriate</td>
+<td>Usually better</td>
+</tr>
+</tbody>
+</table>
+<p><strong>For today’s lab:</strong> We’ll fit both, compare, and use the better model</p>
+</section>
+<section id="model-diagnostics-for-count-models" class="slide level2 scrollable">
+<h2>Model Diagnostics for Count Models</h2>
+<p><strong>Unlike OLS, we don’t use residual plots the same way</strong></p>
+<p><strong>Key diagnostics:</strong></p>
+<ol type="1">
+<li><strong>Dispersion test</strong> (already covered)</li>
+<li><strong>Deviance residuals:</strong> Should be roughly normal</li>
+<li><strong>Pearson residuals:</strong> Check for outliers</li>
+<li><strong>Cook’s distance:</strong> Influential observations</li>
+<li><strong>Predicted vs.&nbsp;observed:</strong> Visual check</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># Deviance residuals</span></span>
+<span id="cb9-2"><a href=""></a><span class="fu">plot</span>(model_nb, <span class="at">which =</span> <span class="dv">1</span>)  <span class="co"># Residuals vs. Fitted</span></span>
+<span id="cb9-3"><a href=""></a></span>
+<span id="cb9-4"><a href=""></a><span class="co"># Identify outliers</span></span>
+<span id="cb9-5"><a href=""></a>outliers <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">abs</span>(<span class="fu">residuals</span>(model_nb, <span class="at">type =</span> <span class="st">"deviance"</span>)) <span class="sc">&gt;</span> <span class="dv">3</span>)</span>
+<span id="cb9-6"><a href=""></a></span>
+<span id="cb9-7"><a href=""></a><span class="co"># Influence</span></span>
+<span id="cb9-8"><a href=""></a>influence <span class="ot">&lt;-</span> <span class="fu">cooks.distance</span>(model_nb)</span>
+<span id="cb9-9"><a href=""></a>influential <span class="ot">&lt;-</span> <span class="fu">which</span>(influence <span class="sc">&gt;</span> <span class="dv">4</span><span class="sc">/</span><span class="fu">length</span>(influence))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="part-7c-spatial-features-for-predictive-modeling" class="title-slide slide level1 center">
+<h1>Part 7C: Spatial Features for Predictive Modeling</h1>
+
+</section>
+<section id="why-add-spatial-features" class="slide level2">
+<h2>Why Add Spatial Features?</h2>
+<p><strong>Basic model:</strong></p>
+<p><span class="math display">\[\log(\lambda_i) = \beta_0 + \beta_1 (\text{Abandoned Cars}_i)\]</span></p>
+<p><strong>Problem:</strong> Ignores spatial context</p>
+<p><strong>Enhanced model with spatial features:</strong></p>
+<p><span class="math display">\[\log(\lambda_i) = \beta_0 + \beta_1 (\text{Abandoned Cars}_i) + \beta_2 (\text{Distance to Nearest}_i) + \beta_3 (\text{Distance to Hotspot}_i)\]</span></p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Captures spillover effects</li>
+<li>Accounts for spatial dependence</li>
+<li>Improves predictions</li>
+<li>More realistic model of spatial crime processes</li>
+</ul>
+</section>
+<section id="distance-to-nearest-feature" class="slide level2 scrollable">
+<h2>Distance to Nearest Feature</h2>
+<p><strong>Concept:</strong> Proximity matters for risk</p>
+<p><strong>Implementation: k-Nearest Neighbors (k=1)</strong></p>
+<p><strong>For each grid cell:</strong></p>
+<ol type="1">
+<li>Find location of all abandoned cars</li>
+<li>Calculate distance to each</li>
+<li>Keep minimum distance</li>
+</ol>
+<p><strong>In R:</strong></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">library</span>(FNN)</span>
+<span id="cb10-2"><a href=""></a></span>
+<span id="cb10-3"><a href=""></a><span class="co"># Calculate distance to nearest abandoned car</span></span>
+<span id="cb10-4"><a href=""></a>nn_dist <span class="ot">&lt;-</span> <span class="fu">get.knnx</span>(</span>
+<span id="cb10-5"><a href=""></a>  <span class="at">data =</span> <span class="fu">st_coordinates</span>(abandoned_cars),      <span class="co"># "To" locations</span></span>
+<span id="cb10-6"><a href=""></a>  <span class="at">query =</span> <span class="fu">st_coordinates</span>(<span class="fu">st_centroid</span>(fishnet)), <span class="co"># "From" locations</span></span>
+<span id="cb10-7"><a href=""></a>  <span class="at">k =</span> <span class="dv">1</span>                                          <span class="co"># Nearest 1</span></span>
+<span id="cb10-8"><a href=""></a>)</span>
+<span id="cb10-9"><a href=""></a></span>
+<span id="cb10-10"><a href=""></a><span class="co"># Extract distances</span></span>
+<span id="cb10-11"><a href=""></a>fishnet<span class="sc">$</span>abandoned_car_nn <span class="ot">&lt;-</span> nn_dist<span class="sc">$</span>nn.dist[, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="distance-to-hotspot" class="slide level2">
+<h2>Distance to Hotspot</h2>
+<p><strong>Two-step process:</strong></p>
+<p><strong>Step 1:</strong> Identify hotspots (Local Moran’s I High-High clusters)</p>
+<p><strong>Step 2:</strong> Calculate distance from each cell to nearest hotspot</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># Step 1: Identify hotspots (we did this earlier)</span></span>
+<span id="cb11-2"><a href=""></a>hotspot_cells <span class="ot">&lt;-</span> <span class="fu">filter</span>(fishnet, hotspot <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb11-3"><a href=""></a></span>
+<span id="cb11-4"><a href=""></a><span class="co"># Step 2: Calculate distances</span></span>
+<span id="cb11-5"><a href=""></a>hotspot_dist <span class="ot">&lt;-</span> <span class="fu">get.knnx</span>(</span>
+<span id="cb11-6"><a href=""></a>  <span class="at">data =</span> <span class="fu">st_coordinates</span>(<span class="fu">st_centroid</span>(hotspot_cells)),</span>
+<span id="cb11-7"><a href=""></a>  <span class="at">query =</span> <span class="fu">st_coordinates</span>(<span class="fu">st_centroid</span>(fishnet)),</span>
+<span id="cb11-8"><a href=""></a>  <span class="at">k =</span> <span class="dv">1</span></span>
+<span id="cb11-9"><a href=""></a>)</span>
+<span id="cb11-10"><a href=""></a></span>
+<span id="cb11-11"><a href=""></a>fishnet<span class="sc">$</span>hotspot_nn <span class="ot">&lt;-</span> hotspot_dist<span class="sc">$</span>nn.dist[, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Why useful?</strong> Captures multi-scale spatial dependence:</p>
+<ul>
+<li>Local (within cell)</li>
+<li>Neighborhood (distance to nearest)</li>
+<li>Regional (distance to hotspot cluster)</li>
+</ul>
+</section>
+<section id="visualizing-distance-features" class="slide level2">
+<h2>Visualizing Distance Features</h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># Create comparison maps</span></span>
+<span id="cb12-2"><a href=""></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fishnet) <span class="sc">+</span></span>
+<span id="cb12-3"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> abandoned_car_nn), <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href=""></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">"Distance (m)"</span>, <span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
+<span id="cb12-5"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distance to Nearest Abandoned Car"</span>) <span class="sc">+</span></span>
+<span id="cb12-6"><a href=""></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb12-7"><a href=""></a></span>
+<span id="cb12-8"><a href=""></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fishnet) <span class="sc">+</span></span>
+<span id="cb12-9"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> hotspot_nn), <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb12-10"><a href=""></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">"Distance (m)"</span>, <span class="at">option =</span> <span class="st">"magma"</span>) <span class="sc">+</span></span>
+<span id="cb12-11"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distance to Nearest Hotspot"</span>) <span class="sc">+</span></span>
+<span id="cb12-12"><a href=""></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb12-13"><a href=""></a></span>
+<span id="cb12-14"><a href=""></a><span class="fu">grid.arrange</span>(p1, p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Look for:</strong> Concentric patterns around features/hotspots</p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="part-7d-the-fishnet-grid-approach" class="title-slide slide level1 center">
+<h1>Part 7D: The Fishnet Grid Approach</h1>
+
+</section>
+<section id="why-use-a-fishnet-grid" class="slide level2 scrollable">
+<h2>Why Use a Fishnet Grid?</h2>
+<p><strong>Problem:</strong> Crime is points, but we need areas for modeling</p>
+<p><strong>Options:</strong></p>
+<ol type="1">
+<li><strong>Existing boundaries</strong> (census tracts, neighborhoods)
+<ul>
+<li>Pro: Align with administrative data</li>
+<li>Con: Arbitrary, unequal sizes, Modifiable Areal Unit Problem</li>
+</ul></li>
+<li><strong>Fishnet grid</strong> (regular cells)
+<ul>
+<li>Pro: Consistent size, no boundary bias</li>
+<li>Con: Arbitrary, may split “natural” areas</li>
+</ul></li>
+</ol>
+<p><strong>We use fishnet because:</strong></p>
+<ul>
+<li>Standard approach in predictive policing</li>
+<li>Easier spatial operations</li>
+<li>Consistent unit of analysis</li>
+</ul>
+</section>
+<section id="creating-a-fishnet-grid" class="slide level2">
+<h2>Creating a Fishnet Grid</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">library</span>(sf)</span>
+<span id="cb13-2"><a href=""></a></span>
+<span id="cb13-3"><a href=""></a><span class="co"># Step 1: Define cell size (in map units - meters for our projection)</span></span>
+<span id="cb13-4"><a href=""></a>cell_size <span class="ot">&lt;-</span> <span class="dv">500</span>  <span class="co"># 500m x 500m cells</span></span>
+<span id="cb13-5"><a href=""></a></span>
+<span id="cb13-6"><a href=""></a><span class="co"># Step 2: Create grid over study area</span></span>
+<span id="cb13-7"><a href=""></a>fishnet <span class="ot">&lt;-</span> <span class="fu">st_make_grid</span>(</span>
+<span id="cb13-8"><a href=""></a>  chicago_boundary,</span>
+<span id="cb13-9"><a href=""></a>  <span class="at">cellsize =</span> cell_size,</span>
+<span id="cb13-10"><a href=""></a>  <span class="at">square =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb13-11"><a href=""></a>  <span class="at">what =</span> <span class="st">"polygons"</span> <span class="co">#you could change to hexagons if you wanted to be fancy.</span></span>
+<span id="cb13-12"><a href=""></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-13"><a href=""></a>  <span class="fu">st_sf</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-14"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">uniqueID =</span> <span class="fu">row_number</span>())</span>
+<span id="cb13-15"><a href=""></a></span>
+<span id="cb13-16"><a href=""></a><span class="co"># Step 3: Clip to study area (remove cells outside boundary)</span></span>
+<span id="cb13-17"><a href=""></a>fishnet <span class="ot">&lt;-</span> fishnet[chicago_boundary, ]</span>
+<span id="cb13-18"><a href=""></a></span>
+<span id="cb13-19"><a href=""></a><span class="co"># Check results</span></span>
+<span id="cb13-20"><a href=""></a><span class="fu">nrow</span>(fishnet)  <span class="co"># Number of cells</span></span>
+<span id="cb13-21"><a href=""></a><span class="fu">st_area</span>(fishnet[<span class="dv">1</span>, ])  <span class="co"># Area of one cell (should be 250,000 m²)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<img data-src="images/fishnet.png" class="r-stretch"></section>
+<section id="grid-cell-size-a-critical-choice" class="slide level2">
+<h2>Grid Cell Size: A Critical Choice</h2>
+<p><strong>Common sizes:</strong></p>
+<ul>
+<li><strong>250m × 250m:</strong> Fine-grained, many cells, computationally intensive</li>
+<li><strong>500m × 500m:</strong> Standard, balance detail and computation</li>
+<li><strong>1000m × 1000m:</strong> Coarse, faster, loses local detail</li>
+</ul>
+<p><strong>Smaller cells:</strong></p>
+<ul>
+<li>✓ More spatial detail</li>
+<li>✓ Better capture local patterns</li>
+<li>✗ More zeros (sparse data)</li>
+<li>✗ Computational cost</li>
+</ul>
+<p><strong>Larger cells:</strong></p>
+<ul>
+<li>✓ Fewer zeros</li>
+<li>✓ More stable estimates</li>
+<li>✗ Lose local variation</li>
+<li>✗ May obscure hotspots</li>
+</ul>
+<p><strong>Choice affects results!</strong> No “correct” answer.</p>
+</section>
+<section id="aggregating-points-to-grid" class="slide level2 scrollable">
+<h2>Aggregating Points to Grid</h2>
+<p><strong>Process:</strong></p>
+<ol type="1">
+<li>Spatial join between crimes (points) and fishnet (polygons)</li>
+<li>Count crimes per cell</li>
+<li>Handle cells with zero crimes</li>
+</ol>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># Count burglaries per cell</span></span>
+<span id="cb14-2"><a href=""></a>burglary_counts <span class="ot">&lt;-</span> <span class="fu">st_join</span>(burglaries, fishnet) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href=""></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href=""></a>  <span class="fu">group_by</span>(uniqueID) <span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href=""></a>  <span class="fu">summarize</span>(<span class="at">countBurglaries =</span> <span class="fu">n</span>())</span>
+<span id="cb14-6"><a href=""></a></span>
+<span id="cb14-7"><a href=""></a><span class="co"># Join back to fishnet</span></span>
+<span id="cb14-8"><a href=""></a>fishnet <span class="ot">&lt;-</span> fishnet <span class="sc">%&gt;%</span></span>
+<span id="cb14-9"><a href=""></a>  <span class="fu">left_join</span>(burglary_counts, <span class="at">by =</span> <span class="st">"uniqueID"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-10"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">countBurglaries =</span> <span class="fu">replace_na</span>(countBurglaries, <span class="dv">0</span>))</span>
+<span id="cb14-11"><a href=""></a></span>
+<span id="cb14-12"><a href=""></a><span class="co"># Summary</span></span>
+<span id="cb14-13"><a href=""></a><span class="fu">summary</span>(fishnet<span class="sc">$</span>countBurglaries)</span>
+<span id="cb14-14"><a href=""></a><span class="co">#   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span id="cb14-15"><a href=""></a><span class="co">#      0       0       1    2.3       3      47</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="handling-zeros-in-count-data" class="slide level2 scrollable">
+<h2>Handling Zeros in Count Data</h2>
+<p><strong>Crime data typically has MANY zeros</strong></p>
+<p><strong>Example distribution:</strong> - 40% of cells: 0 burglaries - 30% of cells: 1 burglary - 20% of cells: 2-3 burglaries - 10% of cells: 4+ burglaries</p>
+<p><strong>Implications:</strong></p>
+<ol type="1">
+<li><strong>Poisson handles zeros naturally</strong> (built into distribution)</li>
+<li><strong>Zero-inflation:</strong> If &gt;60% zeros, consider Zero-Inflated Poisson (ZIP)</li>
+<li><strong>For today:</strong> Standard Negative Binomial handles our zeros fine</li>
+</ol>
+<p><strong>Critical interpretation:</strong> Are zeros “true zeros” (no crime) or “missing data” (unreported)?</p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="part-7e-spatial-cross-validation" class="title-slide slide level1 center">
+<h1>Part 7E: Spatial Cross-Validation</h1>
+
+</section>
+<section id="why-standard-cross-validation-fails-for-spatial-data" class="slide level2 scrollable">
+<h2>Why Standard Cross-Validation Fails for Spatial Data</h2>
+<p><strong>Standard k-fold CV:</strong></p>
+<ol type="1">
+<li>Randomly split data into k folds</li>
+<li>Train on k-1 folds, test on 1</li>
+<li>Repeat k times</li>
+</ol>
+<p><strong>Problem with spatial data:</strong></p>
+<ul>
+<li>Nearby observations are correlated</li>
+<li>Training set includes cells adjacent to test cells</li>
+<li><strong>Spatial leakage:</strong> Model learns from neighbors of test set</li>
+<li>Overly optimistic performance estimates</li>
+</ul>
+<p><strong>Solution:</strong> Spatial cross-validation</p>
+</section>
+<section id="leave-one-group-out-cross-validation-logo-cv" class="slide level2 scrollable">
+<h2>Leave-One-Group-Out Cross-Validation (LOGO-CV)</h2>
+<p><strong>Principle:</strong> Hold out entire spatial groups, not individual cells</p>
+<p><strong>Process:</strong></p>
+<ol type="1">
+<li>Divide study area into groups (e.g., police districts)</li>
+<li>Hold out all cells in District 1</li>
+<li>Train model on Districts 2-N</li>
+<li>Predict for District 1</li>
+<li>Repeat for each district</li>
+</ol>
+<p><strong>Why better:</strong></p>
+<ul>
+<li>Tests generalization to truly new areas</li>
+<li>No spatial leakage between train/test</li>
+<li>More realistic deployment scenario</li>
+<li>Conservative performance estimates</li>
+</ul>
+</section>
+<section id="logo-cv-implementation" class="slide level2">
+<h2>LOGO-CV Implementation</h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="co"># Get unique districts</span></span>
+<span id="cb15-2"><a href=""></a>districts <span class="ot">&lt;-</span> <span class="fu">unique</span>(fishnet<span class="sc">$</span>District)</span>
+<span id="cb15-3"><a href=""></a></span>
+<span id="cb15-4"><a href=""></a><span class="co"># Initialize results</span></span>
+<span id="cb15-5"><a href=""></a>cv_results <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb15-6"><a href=""></a></span>
+<span id="cb15-7"><a href=""></a><span class="co"># Loop through districts</span></span>
+<span id="cb15-8"><a href=""></a><span class="cf">for</span> (dist <span class="cf">in</span> districts) {</span>
+<span id="cb15-9"><a href=""></a>  <span class="co"># Split data</span></span>
+<span id="cb15-10"><a href=""></a>  train_data <span class="ot">&lt;-</span> fishnet <span class="sc">%&gt;%</span> <span class="fu">filter</span>(District <span class="sc">!=</span> dist)</span>
+<span id="cb15-11"><a href=""></a>  test_data <span class="ot">&lt;-</span> fishnet <span class="sc">%&gt;%</span> <span class="fu">filter</span>(District <span class="sc">==</span> dist)</span>
+<span id="cb15-12"><a href=""></a>  </span>
+<span id="cb15-13"><a href=""></a>  <span class="co"># Fit model on training data</span></span>
+<span id="cb15-14"><a href=""></a>  model_cv <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(</span>
+<span id="cb15-15"><a href=""></a>    countBurglaries <span class="sc">~</span> Abandoned_Cars <span class="sc">+</span> Abandoned_Cars.nn <span class="sc">+</span> abandoned.isSig.dist,</span>
+<span id="cb15-16"><a href=""></a>    <span class="at">data =</span> train_data</span>
+<span id="cb15-17"><a href=""></a>  )</span>
+<span id="cb15-18"><a href=""></a>  </span>
+<span id="cb15-19"><a href=""></a>  <span class="co"># Predict on test data</span></span>
+<span id="cb15-20"><a href=""></a>  test_data<span class="sc">$</span>prediction <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_cv, test_data, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb15-21"><a href=""></a>  </span>
+<span id="cb15-22"><a href=""></a>  <span class="co"># Store results</span></span>
+<span id="cb15-23"><a href=""></a>  cv_results[[dist]] <span class="ot">&lt;-</span> test_data</span>
+<span id="cb15-24"><a href=""></a>}</span>
+<span id="cb15-25"><a href=""></a></span>
+<span id="cb15-26"><a href=""></a><span class="co"># Combine all predictions</span></span>
+<span id="cb15-27"><a href=""></a>all_predictions <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(cv_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="evaluating-cv-performance" class="slide level2">
+<h2>Evaluating CV Performance</h2>
+<p><strong>Common metrics for count models:</strong></p>
+<p><strong>Mean Absolute Error (MAE):</strong> <span class="math display">\[MAE = \frac{1}{n}\sum_i |y_i - \hat{y}_i|\]</span></p>
+<p><strong>Root Mean Squared Error (RMSE):</strong> <span class="math display">\[RMSE = \sqrt{\frac{1}{n}\sum_i (y_i - \hat{y}_i)^2}\]</span></p>
+<p><strong>Mean Error (Bias):</strong> <span class="math display">\[ME = \frac{1}{n}\sum_i (y_i - \hat{y}_i)\]</span></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="co"># Calculate metrics by district</span></span>
+<span id="cb16-2"><a href=""></a>cv_metrics <span class="ot">&lt;-</span> all_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href=""></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href=""></a>  <span class="fu">summarize</span>(</span>
+<span id="cb16-5"><a href=""></a>    <span class="at">MAE =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(countBurglaries <span class="sc">-</span> prediction)),</span>
+<span id="cb16-6"><a href=""></a>    <span class="at">RMSE =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((countBurglaries <span class="sc">-</span> prediction)<span class="sc">^</span><span class="dv">2</span>)),</span>
+<span id="cb16-7"><a href=""></a>    <span class="at">ME =</span> <span class="fu">mean</span>(countBurglaries <span class="sc">-</span> prediction)</span>
+<span id="cb16-8"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="interpreting-prediction-errors" class="slide level2">
+<h2>Interpreting Prediction Errors</h2>
+<p><strong>What do errors tell us?</strong></p>
+<p><strong>MAE = 1.5 burglaries per cell:</strong></p>
+<ul>
+<li>On average, we’re off by 1.5 burglaries</li>
+<li>Interpretable in original units</li>
+</ul>
+<p><strong>RMSE = 2.3 burglaries per cell:</strong></p>
+<ul>
+<li>Penalizes large errors more</li>
+<li>If RMSE &gt;&gt; MAE, we have some very bad predictions</li>
+</ul>
+<p><strong>ME = -0.3 burglaries per cell:</strong></p>
+<ul>
+<li>Negative: We tend to under-predict</li>
+<li>Positive: We tend to over-predict</li>
+<li>Close to zero: Unbiased predictions</li>
+</ul>
+<p><strong>Critical question:</strong> Are errors evenly distributed across neighborhoods?</p>
+</section>
+<section id="spatial-patterns-in-prediction-errors" class="slide level2">
+<h2>Spatial Patterns in Prediction Errors</h2>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="co"># Map prediction errors</span></span>
+<span id="cb17-2"><a href=""></a>all_predictions <span class="ot">&lt;-</span> all_predictions <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href=""></a>  <span class="fu">mutate</span>(</span>
+<span id="cb17-4"><a href=""></a>    <span class="at">error =</span> countBurglaries <span class="sc">-</span> prediction,</span>
+<span id="cb17-5"><a href=""></a>    <span class="at">abs_error =</span> <span class="fu">abs</span>(error),</span>
+<span id="cb17-6"><a href=""></a>    <span class="at">pct_error =</span> (prediction <span class="sc">-</span> countBurglaries) <span class="sc">/</span> (countBurglaries <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb17-7"><a href=""></a>  )</span>
+<span id="cb17-8"><a href=""></a></span>
+<span id="cb17-9"><a href=""></a><span class="co"># Visualize</span></span>
+<span id="cb17-10"><a href=""></a><span class="fu">ggplot</span>(all_predictions) <span class="sc">+</span></span>
+<span id="cb17-11"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> error), <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb17-12"><a href=""></a>  <span class="fu">scale_fill_gradient2</span>(</span>
+<span id="cb17-13"><a href=""></a>    <span class="at">low =</span> <span class="st">"blue"</span>, <span class="at">mid =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">"red"</span>,</span>
+<span id="cb17-14"><a href=""></a>    <span class="at">midpoint =</span> <span class="dv">0</span>,</span>
+<span id="cb17-15"><a href=""></a>    <span class="at">name =</span> <span class="st">"Error"</span></span>
+<span id="cb17-16"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb17-17"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Prediction Errors"</span>,</span>
+<span id="cb17-18"><a href=""></a>       <span class="at">subtitle =</span> <span class="st">"Red = Over-prediction, Blue = Under-prediction"</span>) <span class="sc">+</span></span>
+<span id="cb17-19"><a href=""></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Look for:</strong> Systematic patterns by neighborhood</p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="part-7f-comparison-to-baseline-kernel-density" class="title-slide slide level1 center">
+<h1>Part 7F: Comparison to Baseline (Kernel Density)</h1>
+
+</section>
+<section id="why-compare-to-kernel-density-estimation" class="slide level2 scrollable">
+<h2>Why Compare to Kernel Density Estimation?</h2>
+<p><strong>KDE is the simplest spatial prediction method:</strong></p>
+<ul>
+<li>Place smooth “bump” over each crime location</li>
+<li>Sum all bumps to create risk surface</li>
+<li>No predictors, no model, just past locations</li>
+</ul>
+<p><strong>Benefits of comparison:</strong></p>
+<ol type="1">
+<li><strong>Benchmark:</strong> Does our complex model beat a simple baseline?</li>
+<li><strong>Value added:</strong> What do spatial features contribute?</li>
+<li><strong>Practical:</strong> KDE is computationally simpler</li>
+<li><strong>Critical:</strong> Maybe spatial patterns alone explain everything?</li>
+</ol>
+<p><strong>If our model doesn’t beat KDE, we’re wasting complexity</strong></p>
+</section>
+<section id="kernel-density-estimation-explained" class="slide level2">
+<h2>Kernel Density Estimation Explained</h2>
+<p><strong>Conceptually:</strong></p>
+<p>Imagine placing a “hill” over each crime location:</p>
+<ul>
+<li>Peak at the crime location</li>
+<li>Height decreases with distance</li>
+<li>Controlled by <strong>bandwidth</strong> parameter</li>
+</ul>
+<p><strong>Mathematical:</strong></p>
+<p><span class="math display">\[\hat{f}(s) = \frac{1}{n\tau^2}\sum_{i=1}^n K\left(\frac{d(s, s_i)}{\tau}\right)\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(s\)</span> = location where we estimate density</li>
+<li><span class="math inline">\(s_i\)</span> = location of crime <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(\tau\)</span> = bandwidth (smoothing parameter)</li>
+<li><span class="math inline">\(K\)</span> = kernel function (usually Gaussian)</li>
+<li><span class="math inline">\(d(s, s_i)\)</span> = distance between <span class="math inline">\(s\)</span> and <span class="math inline">\(s_i\)</span></li>
+</ul>
+</section>
+<section id="bandwidth-selection-a-critical-choice" class="slide level2">
+<h2>Bandwidth Selection: A Critical Choice</h2>
+<p><strong>Small bandwidth (e.g., 250m):</strong></p>
+<ul>
+<li>Narrow bumps</li>
+<li>Preserves local detail</li>
+<li>Can be “noisy” (overfit to specific locations)</li>
+</ul>
+<p><strong>Large bandwidth (e.g., 2000m):</strong></p>
+<ul>
+<li>Wide bumps</li>
+<li>Smooth, generalized patterns</li>
+<li>May miss important local hotspots</li>
+</ul>
+<p><strong>Common choices for urban crime:</strong></p>
+<ul>
+<li>500m - 1000m (balance local and regional)</li>
+</ul>
+<p><strong>Our approach:</strong></p>
+<ul>
+<li>Use 1000m (1 km) bandwidth</li>
+<li>Standard in predictive policing literature</li>
+</ul>
+</section>
+<section id="calculating-kde-in-r" class="slide level2">
+<h2>Calculating KDE in R</h2>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="fu">library</span>(spatstat)</span>
+<span id="cb18-2"><a href=""></a></span>
+<span id="cb18-3"><a href=""></a><span class="co"># Step 1: Convert to point pattern (ppp) object</span></span>
+<span id="cb18-4"><a href=""></a>burglary_ppp <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(</span>
+<span id="cb18-5"><a href=""></a>  <span class="at">X =</span> <span class="fu">st_coordinates</span>(burglaries),</span>
+<span id="cb18-6"><a href=""></a>  <span class="at">W =</span> <span class="fu">as.owin</span>(<span class="fu">st_bbox</span>(chicago_boundary))</span>
+<span id="cb18-7"><a href=""></a>)</span>
+<span id="cb18-8"><a href=""></a></span>
+<span id="cb18-9"><a href=""></a><span class="co"># Step 2: Calculate KDE</span></span>
+<span id="cb18-10"><a href=""></a>kde_surface <span class="ot">&lt;-</span> <span class="fu">density.ppp</span>(</span>
+<span id="cb18-11"><a href=""></a>  burglary_ppp,</span>
+<span id="cb18-12"><a href=""></a>  <span class="at">sigma =</span> <span class="dv">1000</span>,  <span class="co"># Bandwidth in meters</span></span>
+<span id="cb18-13"><a href=""></a>  <span class="at">edge =</span> <span class="cn">TRUE</span>    <span class="co"># Edge correction</span></span>
+<span id="cb18-14"><a href=""></a>)</span>
+<span id="cb18-15"><a href=""></a></span>
+<span id="cb18-16"><a href=""></a><span class="co"># Step 3: Extract values to fishnet cells</span></span>
+<span id="cb18-17"><a href=""></a>fishnet<span class="sc">$</span>kde_risk <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(</span>
+<span id="cb18-18"><a href=""></a>  <span class="fu">raster</span>(kde_surface),</span>
+<span id="cb18-19"><a href=""></a>  <span class="fu">st_centroid</span>(fishnet)</span>
+<span id="cb18-20"><a href=""></a>)</span>
+<span id="cb18-21"><a href=""></a></span>
+<span id="cb18-22"><a href=""></a><span class="co"># Standardize to 0-1 scale for comparison</span></span>
+<span id="cb18-23"><a href=""></a>fishnet<span class="sc">$</span>kde_risk <span class="ot">&lt;-</span> (fishnet<span class="sc">$</span>kde_risk <span class="sc">-</span> <span class="fu">min</span>(fishnet<span class="sc">$</span>kde_risk, <span class="at">na.rm=</span>T)) <span class="sc">/</span> </span>
+<span id="cb18-24"><a href=""></a>                     (<span class="fu">max</span>(fishnet<span class="sc">$</span>kde_risk, <span class="at">na.rm=</span>T) <span class="sc">-</span> <span class="fu">min</span>(fishnet<span class="sc">$</span>kde_risk, <span class="at">na.rm=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="creating-risk-categories" class="slide level2">
+<h2>Creating Risk Categories</h2>
+<p><strong>Both KDE and our model produce continuous risk scores</strong></p>
+<p><strong>For evaluation, convert to categories:</strong></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># Create quintiles (5 equal groups)</span></span>
+<span id="cb19-2"><a href=""></a>fishnet<span class="sc">$</span>model_risk_category <span class="ot">&lt;-</span> <span class="fu">cut</span>(</span>
+<span id="cb19-3"><a href=""></a>  fishnet<span class="sc">$</span>prediction,</span>
+<span id="cb19-4"><a href=""></a>  <span class="at">breaks =</span> <span class="fu">quantile</span>(fishnet<span class="sc">$</span>prediction, <span class="at">probs =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>)),</span>
+<span id="cb19-5"><a href=""></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1st (Lowest)"</span>, <span class="st">"2nd"</span>, <span class="st">"3rd"</span>, <span class="st">"4th"</span>, <span class="st">"5th (Highest)"</span>),</span>
+<span id="cb19-6"><a href=""></a>  <span class="at">include.lowest =</span> <span class="cn">TRUE</span></span>
+<span id="cb19-7"><a href=""></a>)</span>
+<span id="cb19-8"><a href=""></a></span>
+<span id="cb19-9"><a href=""></a>fishnet<span class="sc">$</span>kde_risk_category <span class="ot">&lt;-</span> <span class="fu">cut</span>(</span>
+<span id="cb19-10"><a href=""></a>  fishnet<span class="sc">$</span>kde_risk,</span>
+<span id="cb19-11"><a href=""></a>  <span class="at">breaks =</span> <span class="fu">quantile</span>(fishnet<span class="sc">$</span>kde_risk, <span class="at">probs =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>)),</span>
+<span id="cb19-12"><a href=""></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1st (Lowest)"</span>, <span class="st">"2nd"</span>, <span class="st">"3rd"</span>, <span class="st">"4th"</span>, <span class="st">"5th (Highest)"</span>),</span>
+<span id="cb19-13"><a href=""></a>  <span class="at">include.lowest =</span> <span class="cn">TRUE</span></span>
+<span id="cb19-14"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Each category contains 20% of cells</strong></p>
+</section>
+<section id="testing-on-hold-out-data-2018-burglaries" class="slide level2 scrollable">
+<h2>Testing on Hold-Out Data (2018 Burglaries)</h2>
+<p><strong>Critical:</strong> Test on data the model has NEVER seen</p>
+<p><strong>Process:</strong></p>
+<ol type="1">
+<li>Train model on 2017 data</li>
+<li>Create risk predictions for all cells</li>
+<li>Load 2018 burglaries (new data)</li>
+<li>Count how many 2018 burglaries fall in each risk category</li>
+<li>Compare model vs.&nbsp;KDE</li>
+</ol>
+<p><strong>Question:</strong> Which method captures more crimes in high-risk areas?</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="co"># Spatial join: 2018 burglaries to fishnet with risk categories</span></span>
+<span id="cb20-2"><a href=""></a>results_2018 <span class="ot">&lt;-</span> <span class="fu">st_join</span>(fishnet, burglaries_2018) <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href=""></a>  <span class="fu">group_by</span>(model_risk_category) <span class="sc">%&gt;%</span></span>
+<span id="cb20-4"><a href=""></a>  <span class="fu">summarize</span>(<span class="at">burglaries_2018 =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb20-5"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">pct_of_total =</span> <span class="dv">100</span> <span class="sc">*</span> burglaries_2018 <span class="sc">/</span> <span class="fu">sum</span>(burglaries_2018))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-hit-rate-evaluation" class="slide level2">
+<h2>The Hit Rate Evaluation</h2>
+<p><strong>Goal:</strong> Capture maximum crimes with minimum resources</p>
+<p><strong>Ideal result:</strong></p>
+<p>If we patrol the <strong>highest-risk 20% of cells</strong> (Category 5):</p>
+<ul>
+<li><strong>Model:</strong> Captures 55% of 2018 burglaries</li>
+<li><strong>KDE:</strong> Captures 48% of 2018 burglaries</li>
+</ul>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li>Model is better (55% &gt; 48%)</li>
+<li>But still imperfect (missing 45% of burglaries)</li>
+<li>Spatial features add value over location alone</li>
+</ul>
+<p><strong>Random patrol:</strong> Would capture ~20% (by chance)</p>
+</section>
+<section id="critical-interpretation-of-performance" class="slide level2 scrollable">
+<h2>Critical Interpretation of Performance</h2>
+<p><strong>Statistical Success:</strong></p>
+<p>✓ Model beats KDE<br>
+✓ Better than random<br>
+✓ Statistically significant difference</p>
+<p><strong>But ask:</strong></p>
+<ol type="1">
+<li><strong>Which neighborhoods</strong> are classified as “highest risk”?</li>
+<li><strong>What happens</strong> when police patrol those areas?</li>
+<li><strong>Who experiences</strong> increased surveillance?</li>
+<li><strong>Are we predicting crime or policing patterns?</strong></li>
+<li><strong>Does “better prediction” = “better public safety”?</strong></li>
+</ol>
+<p><strong>A technically superior model can still be ethically problematic</strong></p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="part-7g-putting-it-all-together" class="title-slide slide level1 center">
+<h1>Part 7G: Putting It All Together</h1>
+
+</section>
+<section id="the-complete-modeling-workflow" class="slide level2">
+<h2>The Complete Modeling Workflow</h2>
+<p><strong>Step 1: Data Preparation</strong></p>
+<ul>
+<li>Create fishnet grid</li>
+<li>Aggregate crimes to cells</li>
+<li>Calculate spatial features (Local Moran’s I, distances)</li>
+</ul>
+<p><strong>Step 2: Exploratory Analysis</strong></p>
+<ul>
+<li>Visualize crime patterns</li>
+<li>Check for spatial autocorrelation</li>
+<li>Identify hotspots</li>
+</ul>
+<p><strong>Step 3: Model Fitting</strong></p>
+<ul>
+<li>Fit Poisson (check overdispersion)</li>
+<li>Fit Negative Binomial (if overdispersed)</li>
+<li>Interpret coefficients</li>
+</ul>
+</section>
+<section id="workflow-continued" class="slide level2">
+<h2>Workflow (Continued)</h2>
+<p><strong>Step 4: Validation</strong></p>
+<ul>
+<li>Spatial cross-validation (LOGO-CV)</li>
+<li>Calculate error metrics</li>
+<li>Map prediction errors</li>
+</ul>
+<p><strong>Step 5: Comparison</strong></p>
+<ul>
+<li>Calculate KDE baseline</li>
+<li>Test both on hold-out data (2018)</li>
+<li>Compare hit rates by risk category</li>
+</ul>
+<p><strong>Step 6: Critical Analysis</strong></p>
+<ul>
+<li>Interrogate data sources</li>
+<li>Identify potential biases</li>
+<li>Assess harms and benefits</li>
+<li>Propose alternatives</li>
+</ul>
+</section>
+<section id="what-if-we-predicted-differently" class="slide level2">
+<h2>What If We Predicted Differently?</h2>
+<p><strong>Instead of:</strong></p>
+<ul>
+<li>Where will crimes occur? → Deploy police</li>
+</ul>
+<p><strong>Consider:</strong></p>
+<ul>
+<li>Where is social services need highest? → Deploy resources</li>
+<li>Where is community trust lowest? → Invest in legitimacy</li>
+<li>Where is opportunity lowest? → Economic development</li>
+<li>Where is housing instability highest? → Stabilize residents</li>
+</ul>
+<p><strong>Same technical methods, different normative goal</strong></p>
+</section>
+<section id="predictive-models-for-justice-not-policing" class="slide level2 scrollable">
+<h2>Predictive Models for Justice, Not Policing</h2>
+<p><strong>Examples:</strong></p>
+<ol type="1">
+<li><strong>Predict eviction risk</strong> → Provide legal aid proactively</li>
+<li><strong>Predict health crisis</strong> → Deploy community health workers</li>
+<li><strong>Predict school dropout</strong> → Intensive support services</li>
+<li><strong>Predict food insecurity</strong> → Expand access programs</li>
+</ol>
+<p><strong>Key differences:</strong></p>
+<ul>
+<li>Predictions lead to <strong>help</strong>, not punishment</li>
+<li>False positives = extra support (relatively low harm)</li>
+<li>Builds trust instead of eroding it</li>
+<li>Addresses root causes</li>
+</ul>
+</section>
+<section id="key-takeaways" class="slide level2 scrollable">
+<h2>Key Takeaways</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Remember:</strong></p>
+</div>
+<div class="callout-content">
+<ol type="1">
+<li><strong>All crime data is socially constructed</strong> - It reflects policing, not just crime</li>
+<li><strong>Historical harms persist in data</strong> - Dirty data trains biased systems</li>
+<li><strong>Vendors are not accountable</strong> - Black boxes prevent oversight</li>
+<li><strong>Feedback loops amplify inequality</strong> - Predictions become self-fulfilling</li>
+<li><strong>Technical accuracy ≠ social justice</strong> - A “good” model can be ethically terrible</li>
+<li><strong>Alternatives exist</strong> - We could predict need instead of threat</li>
+<li><strong>Your choices matter</strong> - How you build models has real consequences</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="test_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="test_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="test_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="test_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="test_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="test_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="test_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="test_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="test_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="test_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="test_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': true,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>

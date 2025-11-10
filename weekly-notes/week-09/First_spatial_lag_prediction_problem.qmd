@@ -1,0 +1,426 @@
+---
+title: "Why Spatial Lag Models Don't Work for Prediction"
+subtitle: "Do Not Use AI without Critical Thinking!"
+author: "Dr. Elizabeth Delmelle"
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    transition: fade
+    code-fold: false
+    incremental: false
+---
+
+## Quick Clarification {.center}
+
+**Some midterm teams suggested:**
+
+> "To improve predictions, implement a spatial lag model (SAR) or spatial error model (SEM)"
+
+**Let's revisit why this doesn't work for prediction**
+
+::: {.fragment}
+*(And what you should recommend instead)*
+:::
+
+---
+
+## First: What IS a Spatial Lag Model? {.smaller}
+
+**Standard regression:**
+$$\text{Price}_i = \beta_0 + \beta_1(\text{Sqft}) + \beta_2(\text{Beds}) + \varepsilon$$
+
+**Spatial lag regression:**
+$$\text{Price}_i = \beta_0 + \rho \times \color{red}{\text{Avg(Neighbor Prices)}} + \beta_1(\text{Sqft}) + \beta_2(\text{Beds}) + \varepsilon$$
+
+::: {.fragment}
+**Key difference:** Your price depends on your **neighbors' actual prices**
+
+**Question:** "Do nearby house prices affect each other?" (spillover effects)
+
+**Used for:** Understanding spatial processes, causal inference about neighborhood effects
+:::
+
+---
+
+## The Problem for Prediction {.center}
+
+Let's work through **two concrete scenarios** where this breaks down:
+
+1. **Temporal:** Training on 2024, predicting 2025
+2. **Transfer:** Philadelphia model → Orlando
+
+---
+
+# Scenario 1: The Temporal Problem {.center background-color="#2C3E50"}
+
+Training on 2024 data, predicting 2025 sales
+
+---
+
+## Step 1: Estimate Model on 2024 Data {.smaller}
+
+You fit this spatial lag model on 2024 Philadelphia sales:
+
+```r
+# Your estimated model from 2024
+model_2024 <- spatialreg::lagsarlm(
+  log(price) ~ sqft + bedrooms + bathrooms,
+  data = sales_2024,
+  listw = neighbors_weights
+)
+```
+
+**Results:**
+```
+Spatial lag coefficient (ρ) = 0.65
+β_sqft = 0.00015
+β_beds = 0.12
+```
+
+::: {.fragment}
+**Interpretation:** A 1% increase in neighbors' prices → 0.65% increase in my price
+
+**This works for 2024** because all prices are known!
+:::
+
+---
+
+## Step 2: Three Houses List in January 2025 {.smaller}
+
+**Your prediction task:**
+
+| House | Sqft | Beds | Baths | 5 Nearest Neighbors |
+|-------|------|------|-------|---------------------|
+| A | 1,500 | 3 | 2 | B, C, D, E, F |
+| B | 1,800 | 3 | 2 | A, C, G, H, I |
+| C | 2,000 | 4 | 3 | A, B, J, K, L |
+
+::: {.fragment}
+**What you know:**
+
+- ✓ Sqft, beds, baths for A, B, C
+- ✓ Locations of A, B, C
+- ✗ **What A, B, C will actually sell for**
+:::
+
+---
+
+## Step 3: Try to Predict House A {.smaller}
+
+**Your model equation:**
+$$\text{Price}_A = \beta_0 + 0.65 \times \color{red}{\text{Avg}(\text{Price}_B, \text{Price}_C, ...)} + 0.00015 \times 1500 + 0.12 \times 3$$
+
+::: {.fragment}
+**Problem:** You need Price~B~ and Price~C~ to predict Price~A~
+:::
+
+::: {.fragment}
+**But wait...** Price~B~ and Price~C~ haven't happened yet! They're listed, not sold.
+:::
+
+---
+
+## Step 4: Realize the Circular Dependency {.smaller}
+
+**Try to predict House B:**
+$$\text{Price}_B = \beta_0 + 0.65 \times \color{red}{\text{Avg}(\text{Price}_A, \text{Price}_C, ...)} + ...$$
+
+**Try to predict House C:**
+$$\text{Price}_C = \beta_0 + 0.65 \times \color{red}{\text{Avg}(\text{Price}_A, \text{Price}_B, ...)} + ...$$
+
+::: {.fragment}
+```
+Price_A needs Price_B and Price_C
+Price_B needs Price_A and Price_C  
+Price_C needs Price_A and Price_B
+```
+
+**You're stuck in a circular dependency!**
+:::
+
+---
+
+## Visual: The Circular Dependency {.center}
+
+```{mermaid}
+%%| fig-width: 8
+graph TD
+    A[House A<br/>Need to predict] -->|needs price of| B[House B<br/>Need to predict]
+    B -->|needs price of| C[House C<br/>Need to predict]
+    C -->|needs price of| A
+    
+    style A fill:#e74c3c,stroke:#c0392b,color:#fff
+    style B fill:#e74c3c,stroke:#c0392b,color:#fff
+    style C fill:#e74c3c,stroke:#c0392b,color:#fff
+```
+
+**All the unknowns depend on each other!**
+
+---
+
+## "But Can't I Use Recent Sales?" {.smaller}
+
+**You might think:** "I'll use recent sales from December 2024 as the spatial lag"
+
+::: {.incremental}
+- **Problem 1:** House A's neighbors (B, C) haven't sold - they're ALSO new listings
+- **Problem 2:** If you use OLD sales (from months ago), you're predicting based on **stale prices** in a changing market
+- **Problem 3:** What if it's a new development? No recent sales exist nearby
+- **Problem 4:** Your spatial lag coefficient (ρ = 0.65) was estimated assuming SIMULTANEOUS prices, not lagged prices
+:::
+
+::: {.fragment}
+**Bottom line:** Spatial lag models assume all observations exist simultaneously. Prediction is inherently sequential.
+:::
+
+---
+
+# Scenario 2: The Transfer Problem {.center background-color="#16A085"}
+
+Selling your Philadelphia model to Orlando
+
+---
+
+## Your Sales Pitch to Orlando {.smaller}
+
+**You:** "We built an amazing spatial lag model for Philadelphia! R² = 0.85!"
+
+**Orlando Chief Data Officer:** "Great! We have 5,000 active listings. Can you predict their prices?"
+
+::: {.fragment}
+**You:** "Sure! Just send me the data..."
+
+*(You open the file)*
+
+```r
+orlando_listings <- read_csv("orlando_new_listings.csv")
+# Variables: address, sqft, beds, baths, lat, lon
+# Missing: SALE_PRICE (that's what we're predicting!)
+```
+:::
+
+::: {.fragment}
+**You realize:** "Wait... I need neighbors' prices to predict each price..."
+
+**Orlando:** "That's why we hired you - these HAVEN'T sold yet!"
+:::
+
+---
+
+## The Parameter Transfer Problem {.smaller}
+
+**Even if** you had some recent Orlando sales to use:
+
+**Your Philadelphia model:**
+$$\text{Price}_i = \beta_0 + \color{red}{0.65} \times \text{Avg}(\text{Neighbor Prices}) + \beta_1(\text{Sqft}) + ...$$
+
+::: {.fragment}
+**Questions:**
+
+1. Was ρ = 0.65 estimated on Philadelphia's price distribution (avg $350k)
+2. Orlando's average is $280k - different scale
+3. Orlando is sprawling suburbs vs. Philadelphia's dense rowhouses
+4. Does ρ = 0.65 even mean the same thing in Orlando?
+:::
+
+::: {.fragment}
+**Answer:** No! You'd have to **re-estimate the entire model** on Orlando data.
+
+**So your "model" isn't actually transferable.**
+:::
+
+---
+
+## Contrast: Spatial Features Transfer {.smaller}
+
+**If you had built with spatial FEATURES:**
+
+```r
+# Philadelphia model
+model <- lm(log(price) ~ sqft + bedrooms + 
+              dist_to_transit + parks_500ft + 
+              median_income_tract,
+            data = philly)
+```
+
+::: {.fragment}
+**To use in Orlando:**
+
+```r
+# Get Orlando's spatial context (all observable!)
+orlando$dist_to_transit <- get_transit_distance(orlando)
+orlando$parks_500ft <- count_parks_buffer(orlando, 500)
+orlando$median_income_tract <- get_census_data(orlando)
+
+# Apply Philadelphia coefficients
+orlando$predicted_price <- predict(model, newdata = orlando)
+```
+
+**This works because features are CONTEXT, not outcomes!**
+:::
+
+---
+
+## Visual Comparison {.smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+**Spatial Lag (Fails)**
+
+```{mermaid}
+%%| fig-width: 4
+graph TD
+    A[Predict<br/>House A] -->|needs| B[Price of B<br/>UNKNOWN]
+    A -->|needs| C[Price of C<br/>UNKNOWN]
+    
+    style A fill:#e74c3c
+    style B fill:#e74c3c
+    style C fill:#e74c3c
+```
+
+**Circular dependency**
+:::
+
+::: {.column width="50%"}
+**Spatial Features (Works)**
+
+```{mermaid}
+%%| fig-width: 4
+graph TD
+    T[Transit: 0.3mi<br/>KNOWN] --> A[Predict<br/>House A]
+    P[Parks: 2<br/>KNOWN] --> A
+    I[Income: 65k<br/>KNOWN] --> A
+    
+    style A fill:#27ae60
+    style T fill:#3498db
+    style P fill:#3498db
+    style I fill:#3498db
+```
+
+**All inputs observable**
+:::
+:::
+
+---
+
+## So When ARE Spatial Lag Models Useful? {.smaller}
+
+**Spatial lag models are GREAT for:**
+
+::: {.incremental}
+1. **Understanding spillover effects:** "Does gentrification in one neighborhood cause price increases in adjacent neighborhoods?"
+
+2. **Causal inference:** "Do nearby foreclosures depress my home value?"
+
+3. **Policy simulation:** "If we build a park here, how will it affect the surrounding area?"
+
+4. **Cross-sectional analysis:** Looking at ONE point in time where all prices exist
+:::
+
+::: {.fragment}
+**But NOT for:**
+
+- Predicting future sales
+- Transferring models between cities
+- Real-time valuation systems
+- Out-of-sample forecasting
+:::
+
+---
+
+## What High Moran's I Actually Tells You {.center}
+
+If your model errors have **Moran's I = 0.58** (high spatial clustering):
+
+::: {.fragment}
+❌ **Wrong response:** "Switch to spatial lag model"
+
+✓ **Right response:** "Add better spatial features!"
+:::
+
+---
+
+## Instead of:** "Implement a spatial lag model" {.smaller}
+
+**Say this:**
+
+> "The high Moran's I (0.58) indicates spatial clustering in errors, suggesting our model is missing important location-based predictors. **Recommendations:**
+>
+> 1. **Vary buffer distances** - Currently using 500ft; try 250ft, 1000ft, 1500ft
+> 2. **Add more amenities** - Coffee shops, grocery stores, restaurants, crime incidents
+> 3. **Richer census data** - Use block group instead of tract; add commute time variables
+> 4. **Neighborhood interactions** - sqft × neighborhood, age × distance_downtown
+> 5. **Time-varying features** - Recent building permits, development activity
+> 6. **More granular fixed effects** - Census block group FE instead of neighborhood FE"
+
+---
+
+## The Key Distinction {.center .smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+**SPATIAL FEATURES**
+(What you observe about a location)
+
+- Distance to transit
+- Parks within buffer
+- Median income
+- Crime rate
+- School quality
+- Walkability score
+
+**For prediction:** ✓ Always observable
+:::
+
+::: {.column width="50%"}
+**SPATIAL LAG**
+(What neighbors' outcomes are)
+
+- Average neighbor price
+- Neighbor sale date
+- Neighbor appreciation rate
+
+**For prediction:** ✗ Creates circular dependency
+:::
+:::
+
+::: {.fragment}
+**Fix spatial autocorrelation by improving FEATURES, not by changing model structure**
+:::
+
+---
+
+## Machine Learning Doesn't Fix This {.smaller}
+
+**Some might think:** "I'll use a Random Forest with neighbors' prices as a feature!"
+
+::: {.fragment}
+```r
+# This STILL doesn't work for prediction
+rf_model <- randomForest(
+  price ~ sqft + bedrooms + avg_neighbor_price, # ⚠️ 
+  data = train_2024
+)
+
+# Try to predict 2025
+predictions_2025 <- predict(rf_model, newdata = new_listings)
+#                                      ↑
+#                               avg_neighbor_price is MISSING!
+```
+:::
+
+::: {.fragment}
+**The problem isn't the model TYPE, it's the LOGIC:**
+
+If a feature requires knowing other predictions first, it's not a valid predictor.
+:::
+
+---
+
+## Final Thought {.center}
+
+**Always understand what a method is designed for before recommending it.**
+
+---
+
