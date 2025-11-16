@@ -1,8 +1,22 @@
 ---
-title: "FINAL PROJECT"
+title: FINAL PROJECT
+subtitle: CAPSTONE MODELING CHALLENGE
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format:
+  html:
+    title-block-style: default
 ---
-
-*Capstone modeling challenge.*
 
 ## FINAL PROJECT
 TBA

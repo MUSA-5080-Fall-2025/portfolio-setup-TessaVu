@@ -1,23 +1,19 @@
 ---
 title: "Assignment 4: Spatial Predictive Analysis"
 subtitle: "311 Service Requests: Street Lights - One Out"
-author: "Tessa Vu"
+author: Tess Vu
 date: 2025-11-17
 format: 
   html:
-    code-fold: false
+    code-fold: show
     toc: true
     toc-location: left
     toc-expand: true
-    theme: lux
+    smooth-scroll: true
     embed-resources: true
 execute:
   warning: false
   message: false
-editor: 
-  markdown: 
-    wrap: 72
-code-fold: show
 ---
 
 # GOAL

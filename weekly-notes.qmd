@@ -1,8 +1,22 @@
 ---
-title: "WEEKLY NOTES"
+title: WEEKLY NOTES
+subtitle: Learning Reflections and Key Concepts
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format:
+  html:
+    title-block-style: default
 ---
-
-*Learning reflections and key concepts.*
 
 ## WEEK 1: COURSE INTRODUCTION
 [09-08-2025 Notes: Course Introduction](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/weekly-notes/week-01/week-01-notes)
@@ -18,3 +32,18 @@ title: "WEEKLY NOTES"
 
 ## WEEK 5: PREDICTIVE MODELING WITH LINEAR REGRESSION
 [10/06/2025 Notes: Predictive Modeling with Linear Regression](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/weekly-notes/week-05/week-05-notes)
+
+## WEEK 6: SPATIAL MACHINE LEARNING & ADVANCED REGRESSION
+[10/13/2025 Notes: Spatial Machine Learning & Advanced Regression](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/weekly-notes/week-06/week-06-notes)
+
+## WEEK 7: MODEL DIAGNOSTICS & SPATIAL AUTOCORRELATION
+[10/20/2025 Notes: Model Diagnostics & Spatial Autocorrelation](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/weekly-notes/week-07/week-07-notes)
+
+## WEEK 8: MIDTERM PROJECT
+[10/27/2025: Midterm Project](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/midterm-project)
+
+## WEEK 9: CRITICAL PERSPECTIVES ON PREDICTIVE POLICING
+[11/03/2025 Notes: Critical Perspectives on Predictive Policing](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/weekly-notes/week-09/week-09-notes)
+
+## WEEK 10: LOGISTIC REGRESSION FOR BINARY OUTCOMES
+[11/10/2025 Notes: Logistic Regression for Binary Outcomes](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/weekly-notes/week-10/week-10-notes)

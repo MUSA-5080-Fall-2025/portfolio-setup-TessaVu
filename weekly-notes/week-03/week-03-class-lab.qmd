@@ -1,19 +1,31 @@
 ---
-title: "WEEK 3 IN-CLASS LAB: EXPLORATORY DATA VISUALIZATION (EDA) & VISUALIZATION"
-author: "Elizabeth Delmelle"
+title: "EXPLORATORY DATA VISUALIZATION (EDA) & VISUALIZATION"
+subtitle: WEEK 3 IN-CLASS LAB
 date: 2025-09-22
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
 format: 
   html:
-    code-fold: false
+    code-fold: show
     toc: true
     toc-location: left
-    theme: lux
+    toc-expand: true
+    smooth-scroll: true
+    embed-resources: true
+    title-block-style: default
 execute:
   warning: false
   message: false
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## Setup and Data Loading
@@ -157,7 +169,7 @@ head(education_vars, 5)
 ```{r}
 # Open the full variable list in RStudio viewer
 # This opens a searchable data table
-View(acs_vars_2022)
+#View(acs_vars_2022)
 
 # Pro tip: You can also search specific table groups
 # B01 = Age and Sex

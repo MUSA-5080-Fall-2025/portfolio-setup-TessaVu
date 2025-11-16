@@ -1,6 +1,31 @@
 ---
-title: "WEEK 2 NOTES - DYPLR BASICS AND CENSUS DATA"
-date: "2025-09-15"
+title: DYPLR BASICS AND CENSUS DATA
+subtitle: WEEK 2 NOTES
+date: 2025-09-15
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format: 
+  html:
+    code-fold: show
+    toc: true
+    toc-location: left
+    toc-expand: true
+    smooth-scroll: true
+    embed-resources: true
+    title-block-style: default
+execute:
+  warning: false
+  message: false
 ---
 
 ## KEY CONCEPTS LEARNED

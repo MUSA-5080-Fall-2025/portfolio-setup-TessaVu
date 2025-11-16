@@ -1,0 +1,1444 @@
+---
+title: "Assignment 2: Spatial Analysis and Visualization"
+subtitle: Healthcare Access and Equity in Pennsylvania
+author: Tess Vu
+date: 2025-10-14
+format: 
+  html:
+    code-fold: false
+    toc: true
+    toc-location: left
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Assignment Overview
+
+**Learning Objectives:**
+
+-   Apply spatial operations to answer policy-relevant research
+    questions
+
+-   Integrate census demographic data with spatial analysis
+
+-   Create publication-quality visualizations and maps
+
+-   Work with spatial data from multiple sources
+
+-   Communicate findings effectively for policy audiences
+
+------------------------------------------------------------------------
+
+## Part 1: Healthcare Access for Vulnerable Populations
+
+### Research Question
+
+**Which Pennsylvania counties have the highest proportion of vulnerable
+populations (elderly + low-income) living far from hospitals?**
+
+Your analysis should identify counties that should be priorities for
+healthcare investment and policy intervention.
+
+### Required Analysis Steps
+
+Complete the following analysis, documenting each step with code and
+brief explanations:
+
+#### Step 1: Data Collection (5 points)
+
+Load the required spatial data:
+
+-   Pennsylvania county boundaries
+
+-   Pennsylvania hospitals (from lecture data)
+
+-   Pennsylvania census tracts
+
+**Your Task:**
+
+```{r}
+#| message: false
+#| include: false
+# Load required packages
+library(broom)
+library(dplyr)
+library(kableExtra)
+library(knitr)
+library(patchwork)
+library(purrr)
+library(scales)
+library(sf)
+library(tibble)
+library(tidycensus)
+library(tidyr)
+library(tidyverse)
+library(tigris)
+library(units)
+
+# Set Census API key
+census_api_key("3aaee31789e10b674a531e9f236c35d5394b19ed")
+
+# Load spatial data
+pa_counties <- st_read("data/pa_county_boundaries/pa_county_boundaries.shp")
+pa_tracts <- tracts(state = "PA", cb = TRUE)
+pa_hospitals <- st_read("data/hospitals.geojson")
+
+# Check that all data loaded correctly
+#glimpse(pa_counties)
+#glimpse(pa_tracts)
+#glimpse(pa_hospitals)
+```
+
+**Questions to answer:**
+
+-   How many hospitals are in your dataset?
+
+    -   223 hospitals.
+
+-   How many census tracts?
+
+    -   3,445 census tracts.
+
+-   What coordinate reference system is each dataset in?
+
+    -   PA county boundaries CRS: GCS WGS 84 (Pseudo-Mercator) / EPSG
+
+        4326. 
+
+    -   PA census tracts CRS: PCS NAD 83 / EPSG 4269.
+
+    -   PA hospitals CRS: GCS WGS 84 (Pseudo-Mercator) / EPSG 4326.
+
+------------------------------------------------------------------------
+
+#### Step 2: Get Demographic Data
+
+Use `tidycensus` to download tract-level demographic data for
+Pennsylvania.
+
+**Required variables:**
+
+-   Total population
+
+-   Median household income
+
+-   Population 65 years and over (you may need to sum multiple age
+    categories)
+
+**Your Task:**
+
+```{r}
+#| message: false
+# Get age demographic data from ACS.
+tract_ages <- get_acs(
+  geography = "tract",
+  variables = c(
+    "B01001_020E", "B01001_021E", "B01001_022E",
+    "B01001_023E", "B01001_024E", "B01001_025E",
+    "B01001_044E", "B01001_045E", "B01001_046E",
+    "B01001_047E", "B01001_048E", "B01001_049E"
+  ),
+  state = "PA",
+  year = 2020,
+  output = "wide"
+)
+ # Get population and income data from ACS.
+tract_demographics <- get_acs(
+  geography = "tract",
+  variables = c(
+    total_pop = "B01003_001",
+    median_income = "B19013_001"
+  ),
+  state = "PA",
+  year = 2020,
+  output = "wide"
+)
+
+# Combine 65+ age estimates.
+tract_demographics$age_65_overE <-
+  tract_ages$B01001_020E + tract_ages$B01001_021E + tract_ages$B01001_022E +
+  tract_ages$B01001_023E + tract_ages$B01001_024E + tract_ages$B01001_025E +
+  tract_ages$B01001_044E + tract_ages$B01001_045E + tract_ages$B01001_046E +
+  tract_ages$B01001_047E + tract_ages$B01001_048E + tract_ages$B01001_049E
+
+# Combine 65+ age MOEs.
+tract_demographics$age_65_overM <-
+  tract_ages$B01001_020M + tract_ages$B01001_021M + tract_ages$B01001_022M +
+  tract_ages$B01001_023M + tract_ages$B01001_024M + tract_ages$B01001_025M +
+  tract_ages$B01001_044M + tract_ages$B01001_045M + tract_ages$B01001_046M +
+  tract_ages$B01001_047M + tract_ages$B01001_048M + tract_ages$B01001_049M
+
+# Remove unneeded column.
+tract_demographics$TRACT <- NULL
+
+# Rename tract column.
+tract_demographics <- rename(tract_demographics, TRACT = NAME)
+
+# Join to tract boundaries
+pa_tracts <- left_join(pa_tracts, tract_demographics, by = "GEOID")
+
+# Summary statistics for reference.
+#summary(pa_tracts[c("total_popE", "total_popM",
+#                    "median_incomeE", "median_incomeM",
+#                    "age_65_overE", "age_65_overM")])
+```
+
+**Questions to answer:**
+
+-   What year of ACS data are you using?
+
+    -   2020 ACS data.
+
+-   How many tracts have missing income data?
+
+    -   64 tracts are missing income estimates and 68 tracts are missing
+        income MOEs.
+
+-   What is the median income across all PA census tracts?
+
+    -   \$61,691.
+
+------------------------------------------------------------------------
+
+#### Step 3: Define Vulnerable Populations
+
+Identify census tracts with vulnerable populations based on TWO
+criteria:
+
+1.  Low median household income (choose an appropriate threshold)
+
+2.  Significant elderly population (choose an appropriate threshold)
+
+**Your Task:**
+
+```{r}
+# Filter for vulnerable tracts.
+# Normalize elderly population.
+pa_tracts$pct_elderly <- (pa_tracts$age_65_overE / pa_tracts$total_popE) * 100
+
+# Get 3rd quantile of percent elderly.
+elderly_q3 <- quantile(pa_tracts$pct_elderly, probs = 0.75, na.rm = TRUE)
+# Get 1st quantile of income estimates.
+income_q1 <- quantile(pa_tracts$median_incomeE, probs = 0.25, na.rm = TRUE)
+
+# Determine criteria for vulnerable tracts.
+pa_tracts <- pa_tracts %>%
+  mutate(
+    # Low income for individuals equal or below the 1st quartile.
+    low_income = case_when(median_incomeE <= income_q1 ~ TRUE,
+                           median_incomeE > income_q1 ~ FALSE),
+    # High elderly percent when tracts are equal or above the 3rd quartile.
+    high_elderly = case_when(pct_elderly >= elderly_q3 ~ TRUE,
+                             pct_elderly < elderly_q3 ~ FALSE),
+    # Considered vulnerable when both of the above cases are true.
+    vulnerable = case_when(low_income == TRUE & high_elderly == TRUE ~ TRUE,
+                           low_income == FALSE & high_elderly == FALSE ~ FALSE,
+                           low_income == TRUE & high_elderly == FALSE ~ FALSE,
+                           low_income == FALSE & high_elderly == TRUE ~ FALSE,)
+  )
+
+# Create a summary for personal reference on vulnerable statistics.
+vulnerable_summary <- pa_tracts %>%
+  group_by(vulnerable) %>%
+  summarize(
+    "Number of Tracts" = n(),
+    "Median Income" = median(median_incomeE, na.rm = TRUE),
+    "Percent Elderly" = median(pct_elderly, na.rm = TRUE),
+    "Percent Vulnerable" = (n() / 3445) * 100
+  )
+
+# Remove geometry column for kable table.
+vulnerable_summary$geometry <- NULL
+
+# Create professional table.
+kable(
+  vulnerable_summary,
+  col.names = c("Vulnerable", "Number of Tracts", "Median Income", "Percent Elderly", "Percent Tracts"),
+  digit = 2,
+  caption = "<b>PENNSYLVANIA: VULNERABLE TRACTS</b>",
+  format.args = list(big.mark = ",")
+) %>%
+  kable_styling(latex_options = "striped") %>%
+  column_spec(1, bold = TRUE) %>%
+  row_spec(0, color = "white", background = "black")
+```
+
+**Questions to answer:**
+
+-   What income threshold did you choose and why?
+
+    -   \The income threshold I chose was for the amount equal to or below 25%, or first quartile of the median income data. I believe it's pertinent because many other factors come into play with income and affordability, especially when it comes to older populations, who have different forms of income that contribute to their day-to-day livelihoods. In addition, many elderly may have significant debts like those related to medical expenses that put them in more financial risk, so the 25% is a broader net that's an attempt to capture the idiosyncracies of affordability and economic struggles in the US.
+
+-   What elderly population threshold did you choose and why?
+
+    -   I used the third quantile for the elderly population percentage in PA, this means I'm targetting tracts with a larger proportion of older individuals that paint a picture of an aging populace in the areas. With an aging population, and younger populations generally moving to other regions with economic opportunity, elderly tracts' public services may take a hit with out-migrating young workers and be more susceptible to physical and other health-related vulnerabilities.
+
+-   How many tracts meet your vulnerability criteria?
+
+    -   172 tracts meet the vulnerability criteria.
+
+-   What percentage of PA census tracts are considered vulnerable by
+    your definition?
+
+    -   Approximately 4.99% of PA's census tracts are considered
+        vulnerable.
+
+------------------------------------------------------------------------
+
+#### Step 4: Calculate Distance to Hospitals
+
+For each vulnerable tract, calculate the distance to the nearest
+hospital.
+
+**Your Task:**
+
+```{r}
+#| warning: false
+# Filter PA tracts by vulnerability.
+vulnerable_tracts <- pa_tracts %>%
+  filter(vulnerable == TRUE)
+
+# Transform to appropriate projected CRS.
+vulnerable_tracts <- st_transform(vulnerable_tracts, crs = 5070)
+pa_tracts <- st_transform(pa_tracts, crs = 5070)
+pa_hospitals <- st_as_sf(pa_hospitals,
+                         coords = c("longitude", "latitude"),
+                         crs = 4326)
+pa_hospitals <- st_transform(pa_hospitals, 5070)
+
+# Calculate distance from each tract centroid to nearest hospital.
+# Create vulnerable tract centroids.
+vulnerable_centroids <- st_centroid(vulnerable_tracts)
+
+# Create a list of indexes of hospitals closest to vulnerable centroids
+nearest_hospital_index <- st_nearest_feature(vulnerable_centroids, pa_hospitals)
+
+# Create points from the hospital index.
+nearest_hospital_point <- pa_hospitals[nearest_hospital_index,]
+
+# Calculate distance between centroid and nearest hospital.
+hospital_distance <- st_distance(vulnerable_centroids, nearest_hospital_point, by_element = TRUE)
+
+# Set miles units.
+vulnerable_tracts$nearest_hospital_mi <- as.numeric(set_units(hospital_distance, "mi"))
+
+# Summary statistics for reference.
+#summary(vulnerable_tracts[c("total_popE", "total_popM",
+#                            "median_incomeE", "median_incomeM",
+#                            "age_65_overE", "age_65_overM",
+#                            "pct_elderly", "low_income",
+#                            "high_elderly", "vulnerable")])
+
+# Determine how many tracts have hospitals more than 15 miles away.
+underserved_number <- sum(vulnerable_tracts$nearest_hospital_mi > 15)
+
+print(paste0("There are ", underserved_number, " census tracts that are underserved."))
+```
+
+**Requirements:**
+
+-   Use an appropriate projected coordinate system for Pennsylvania
+
+-   Calculate distances in miles
+
+-   Explain why you chose your projection
+
+    -   I chose Albers Equal Area because it was appropriate when
+        calculating hospital distances all over the state, if I'd chosen
+        a PCS that was more localized like State Planes, then depending
+        whichever cardinal direction I selected (i.e. North or South
+        Pennsylvania), it'd have some distortion in other regions of
+        Pennsylvania.
+
+**Questions to answer:**
+
+-   What is the average distance to the nearest hospital for vulnerable
+    tracts?
+
+    -   4.78 miles.
+
+-   What is the maximum distance?
+
+    -   27.76 miles.
+
+-   How many vulnerable tracts are more than 15 miles from the nearest
+    hospital?
+
+    -   11 census tracts of the 172 total vulnerable tracts are more
+        than 15 miles from the nearest hospital.
+
+------------------------------------------------------------------------
+
+#### Step 5: Identify Underserved Areas
+
+Define "underserved" as vulnerable tracts that are more than 15 miles
+from the nearest hospital.
+
+**Your Task:**
+
+```{r}
+# Filter tracts with hospitals more than 15 miles away.
+underserved_tracts <- vulnerable_tracts %>%
+  filter(nearest_hospital_mi > 15)
+
+# Create underserved column when hospitals are more than 15 miles away.
+vulnerable_tracts <- vulnerable_tracts %>% mutate(
+  underserved = case_when(
+    vulnerable_tracts$nearest_hospital_mi > 15 ~ TRUE,
+    TRUE ~ FALSE))
+
+# Calculate percent of underserved tracts by dividing it with vulnerable tracts.
+underserved_percent <- (nrow(underserved_tracts) / nrow(vulnerable_tracts)) * 100
+
+print(sprintf("%.2f%% of vulnerable census tracts are underserved.", underserved_percent))
+```
+
+**Questions to answer:**
+
+-   How many tracts are underserved?
+
+    -   11 census tracts are underserved.
+
+-   What percentage of vulnerable tracts are underserved?
+
+    -   6.4% of vulnerable census tracts are underserved.
+
+-   Does this surprise you? Why or why not?
+
+    -   Not quite. I'm from Utah and the disparity with hospital access
+        is expected, especially since it's twice the size of
+        Pennsylvania. I know in the US' East Coast I expect that the
+        states have better hospital coverage given that they were also
+        established as states over a century earlier than Utah, so
+        they've had that time to construct more expansive infrastructure
+        compared. That being said, it's still important to address the
+        lacking access of those who are underserved, even if it seems
+        like a small percent of the population.
+
+------------------------------------------------------------------------
+
+#### Step 6: Aggregate to County Level
+
+Use spatial joins and aggregation to calculate county-level statistics
+about vulnerable populations and hospital access.
+
+**Your Task:**
+
+```{r}
+# Spatial join tracts to counties.
+# Remove the " County" substring from the NAMELSADCO column values.
+vulnerable_tracts <- vulnerable_tracts %>%
+  mutate(NAMELSADCO = str_remove_all(NAMELSADCO, " County"))
+
+# Change the values in NAMELSADCO to all capitalized for later joining.
+vulnerable_tracts$NAMELSADCO <- toupper(vulnerable_tracts$NAMELSADCO)
+
+# Align CRS of both data before spatial join.
+vulnerable_tracts <- st_transform(vulnerable_tracts, crs = 4326)
+pa_counties <- st_transform(pa_counties, crs = 4326)
+
+# Spatial left join.
+county_tracts <- st_join(vulnerable_tracts, pa_counties, left = TRUE)
+
+# Aggregate statistics by county
+aggregate_summary <- county_tracts %>%
+  st_drop_geometry() %>% # Drop the geometry.
+  group_by(NAMELSADCO) %>% # Group by county.
+  summarize(
+    # Summarize the number of vulnerable and underserved people.
+    number_vulnerable = sum(vulnerable),
+    number_underserved = sum(underserved),
+    # Summarize the percent of underserved people.
+    percent_underserved = (number_underserved / number_vulnerable) * 100,
+    # Summarize the average distance to the nearest hospital.
+    avg_nearby_hospital_dist = mean(nearest_hospital_mi, na.rm = TRUE),
+    # Summarize the total estimated population.
+    total_vulnerable_pop = sum(total_popE)
+  ) %>%
+  # Rename the NAMELSADCO column to county.
+  rename(
+    county = NAMELSADCO
+  )
+
+# Change COUNTY_NAM to county.
+pa_counties <- rename(pa_counties, county = COUNTY_NAM)
+
+# Conduct a left join.
+pa_mapping <- left_join(pa_counties, aggregate_summary, by = "county")
+```
+
+```{r}
+# Plot map of percent underserved by Pennsylvania counties.
+ggplot(pa_mapping) +
+  geom_sf(aes(fill = percent_underserved), color = "white", size = 0.5) +
+  scale_fill_viridis_c(
+    name = "Percent Underserved",
+    option = "magma",
+    # Format to show percent sign on color bar.
+    labels = function(x) paste0(x, "%")
+  ) +
+  labs(
+    title = "Most Underserved Counties",
+    subtitle = "Pennsylvania, United States",
+    caption = "Source: ACS 2019–2023"
+  ) +
+  theme_void()
+```
+
+**Required county-level statistics:**
+
+-   Number of vulnerable tracts
+
+-   Number of underserved tracts
+
+-   Percentage of vulnerable tracts that are underserved
+
+-   Average distance to nearest hospital for vulnerable tracts
+
+-   Total vulnerable population
+
+**Questions to answer:**
+
+-   Which 5 counties have the highest percentage of underserved
+    vulnerable tracts?
+
+    -   Sullivan, Cameron, Forest, Clearfield, and Juniata at 100% for the first three counties then 82.22% and 71.43% for the latter two counties.
+
+-   Which counties have the most vulnerable people living far from
+    hospitals?
+
+    -   Counties with an average hospital distance of more than 15 miles and with the most vulnerable people in that group are Bradford, Potter, Sullivan, Cameron, and Juniata that have average hospital distances more than 15 miles. Bradford consists of 1 census tract and has the least number of vulnerable people at 2,833 and Cameron consists of 7 census tracts and has the most at 17,052 vulnerable people. Other counties fall between the two ranges, but below 10,000 for the vulnerable population, so Cameron is a significant outlier.
+
+-   Are there any patterns in where underserved counties are located?
+
+    -   It looks like more of the underserved counties are in the
+        northern portion of Pennsylvania, and seemingly clustered toward
+        the middle in addition. I also know those areas are peppered
+        with several forested regions like national and state forests.
+        Development may be much more restricted due to that. There are also underserved counties at the fringes of Pennsylvania, and several counties noted as NA due to the fact that the census tracts within them were part of the 64 NA tracts.
+
+------------------------------------------------------------------------
+
+#### Step 7: Create Summary Table
+
+Create a professional table showing the top 10 priority counties for
+healthcare investment.
+
+**Your Task:**
+
+```{r}
+# Create and format priority counties table.
+kable_table <- pa_mapping[, c("county", "number_vulnerable",
+                                "number_underserved", "percent_underserved",
+                                "avg_nearby_hospital_dist", "total_vulnerable_pop")]
+
+# Drop geometry and rename the columns.
+kable_table <- kable_table %>%
+  st_drop_geometry() %>%
+  rename(
+    "County" = county,
+    "Number of Vulnerable Tracts" = number_vulnerable,
+    "Number of Underserved Tracts" = number_underserved,
+    "Percent Underserved" = percent_underserved,
+    "Average Mile(s) to Nearest Hospital" = avg_nearby_hospital_dist,
+    "Total Vulnerable People" = total_vulnerable_pop
+  )
+
+# Filter and arrage the top 10 underserved counties by percent.
+kable_table <- kable_table %>%
+  arrange(desc(`Percent Underserved`)) %>%
+  slice(1:10)
+
+# Format percent column to have % sign.
+kable_table <- kable_table %>%
+  mutate(
+    # Format so percent and distance values have units.
+    `Percent Underserved` = paste0(round(`Percent Underserved`, 2), "%"),
+    `Average Mile(s) to Nearest Hospital` = paste0(round(`Average Mile(s) to Nearest Hospital`, 2), " mi")
+  )
+
+# Create kable.
+kable(
+  kable_table,
+  # Center align.
+  align = "c",
+  # Limit percents to two decimal places.
+  digit = 2,
+  # Make sure numbers are separated by thousands places.
+  format.args = list(big.mark = ","),
+  caption = "<b>TOP 10 UNDERSERVED PA COUNTIES: For Priority Healthcare Investment</b>"
+) %>%
+  # Shade every other row for ease of reading.
+  kable_styling(bootstrap_options = "striped") %>%
+  column_spec(1, bold = TRUE) %>%
+  row_spec(0, color = "mistyrose", background = "red3")
+```
+
+**Requirements:**
+
+-   Use `knitr::kable()` or similar for formatting
+
+-   Include descriptive column names
+
+-   Format numbers appropriately (commas for population, percentages,
+    etc.)
+
+-   Add an informative caption
+
+-   Sort by priority (you decide the metric)
+
+------------------------------------------------------------------------
+
+## Part 2: Comprehensive Visualization
+
+Using the skills from Week 3 (Data Visualization), create
+publication-quality maps and charts.
+
+### Map 1: County-Level Choropleth
+
+Create a choropleth map showing healthcare access challenges at the
+county level.
+
+**Your Task:**
+
+```{r, fig.width = 8, fig.height = 6, dpi = 300}
+# Create county-level access map.
+# Align CRS.
+pa_hospitals <- st_transform(pa_hospitals, crs = 4326)
+pa_mapping <- st_transform(pa_mapping, crs = 4326)
+
+# Choropleth map of PA counties.
+choropleth_pa <- ggplot(pa_mapping) +
+  geom_sf(
+    # Color by underserved percentage.
+    aes(fill = percent_underserved),
+    color = "white",
+    linewidth = 0.25
+  ) +
+  scale_fill_viridis_c(
+    # Color bar customization.
+    name = "Percent Underserved",
+    option = "viridis",
+    # Format to show percent sign in color bar.
+    labels = function(x) paste0(x, "%")
+  ) +
+  geom_point(
+    data = pa_hospitals,
+    aes(x = LONGITUDE, y = LATITUDE, color = "Hospitals"),
+    alpha = 0.75, inherit.aes = FALSE
+  ) +
+  scale_color_manual(
+    name = "Hospitals",
+    values = c("Hospitals" = "red")
+  ) +
+  labs(
+    title = "UNDERSERVED COUNTIES & HOSPITAL LOCATIONS",
+    subtitle = "Pennsylvania, United States",
+    caption = "Source: 5-Year American Community Survey (ACS) 2019–2023",
+  ) +
+  theme_void()
+
+choropleth_pa + theme(
+  legend.box.margin = margin(l = 10, unit = "pt"),
+  legend.title = element_text(face = "bold"),
+  legend.text = element_text(family = "mono"),
+  plot.title = element_text(face = "bold"),
+  plot.subtitle = element_text(margin = margin(b = 10, t = 5, unit = "pt")),
+  plot.caption = element_text(margin = margin(t = 10, unit = "pt"), face = "italic", family = "mono")
+)
+```
+
+**Requirements:**
+
+-   Fill counties by percentage of vulnerable tracts that are
+    underserved
+
+-   Include hospital locations as points
+
+-   Use an appropriate color scheme
+
+-   Include clear title, subtitle, and caption
+
+-   Use `theme_void()` or similar clean theme
+
+-   Add a legend with formatted labels
+
+------------------------------------------------------------------------
+
+### Map 2: Detailed Vulnerability Map
+
+Create a map highlighting underserved vulnerable tracts.
+
+**Your Task:**
+
+```{r, fig.width = 8, fig.height = 6, dpi = 300}
+# Create detailed tract-level map.
+# Align CRS.
+vulnerable_tracts <- st_transform(vulnerable_tracts, crs = 4326)
+pa_tracts <- st_transform(pa_tracts, crs = 4326)
+
+# Filter by underserved tracts.
+vulnerable_tracts <- vulnerable_tracts %>%
+  rename("Underserved Tracts" = underserved)
+
+# Choropleth map of PA census tracts colored by vulnerable and underserved.
+choropleth_map <- ggplot(vulnerable_tracts) +
+  geom_sf(
+    aes(fill = `Underserved Tracts`),
+  ) +
+  geom_sf(
+    data = pa_tracts, fill = NA,
+    color = "midnightblue", linewidth = 0.25
+  ) +
+  geom_sf(
+    data = pa_counties, fill = NA,
+    color = "midnightblue", linewidth = 0.5
+  ) +
+  geom_point(
+    data = pa_hospitals,
+    aes(x = LONGITUDE, y = LATITUDE, color = "Hospitals"),
+    alpha = 0.75, inherit.aes = FALSE
+  ) +
+  scale_fill_manual(
+    # Custom color bar.
+    name = "Tracts",
+    values = c("TRUE" = "gold2", "FALSE" = "lemonchiffon2"),
+    labels = c("TRUE" = "Underserved", "FALSE" = "Vulnerable"),
+    # Reorder so that underserved is placed above vulnerable in the legend.
+    breaks = c(TRUE, FALSE)
+  ) +
+  scale_color_manual(
+    # Custom point addition to legend.
+    name = "Hospitals",
+    values = c("Hospitals" = "red2")
+  ) +
+  labs(
+    title = "UNDERSERVED AND VULNERABLE CENSUS TRACTS",
+    subtitle = "With Hospital Locations in Pennsylvania, United States",
+    caption = "Source: 5-Year American Community Survey (ACS) 2019–2023",
+  ) +
+  theme_void()
+
+choropleth_map + theme(
+  panel.background = element_rect(fill = "azure3", size = 0.75),
+  legend.box.margin = margin(l = 10, unit = "pt"),
+  legend.title = element_text(face = "bold"),
+  legend.text = element_text(family = "mono"),
+  plot.title = element_text(face = "bold"),
+  plot.subtitle = element_text(margin = margin(b = 10, t = 5, unit = "pt")),
+  plot.caption = element_text(margin = margin(t = 10, unit = "pt"), face = "italic", family = "mono")
+)
+```
+
+**Requirements:**
+
+-   Show underserved vulnerable tracts in a contrasting color
+
+-   Include county boundaries for context
+
+-   Show hospital locations
+
+-   Use appropriate visual hierarchy (what should stand out?)
+
+-   Include informative title and subtitle
+
+------------------------------------------------------------------------
+
+### Chart: Distribution Analysis
+
+Create a visualization showing the distribution of distances to
+hospitals for vulnerable populations.
+
+**Your Task:**
+
+```{r}
+# Create distribution visualization.
+# Make histogram of distance to nearest hospital.
+histogram_hospital <- ggplot(vulnerable_tracts, aes(x = nearest_hospital_mi)) +
+  geom_histogram(
+    color = "black",
+    fill = "mistyrose2"
+  ) +
+  labs(
+    title = "DISTANCE TO NEAREST HOSPITAL",
+    subtitle = "Histogram",
+    x = "Distance to Nearest Hospital (mi)",
+    y = "Count") +
+  theme_minimal() +
+  scale_x_continuous(labels = scales::label_number(suffix = " mi")) + # Format so tick numbers have miles at end.
+  theme(aspect.ratio = 1/3) # Maintain aspect ratio.
+
+# Make histogram of elderly population.
+histogram_elderly <- ggplot(vulnerable_tracts, aes(x = age_65_overE)) +
+  geom_histogram(
+    color = "black",
+    fill = "mistyrose2"
+  ) +
+  # Thousand separator.
+  scale_x_continuous(labels = comma) +
+  labs(
+    title = "VULNERABLE POPULATION OF AGES 65+",
+    subtitle = "Histogram",
+    x = "Population of Ages 65+",
+    y = "Count") +
+  theme_minimal() +
+  theme(aspect.ratio = 1/3) # Maintain aspect ratio.
+
+# Create faceted plot of all three charts above in one column and three rows.
+faceted_plot <-
+  (histogram_hospital + theme(
+    # Customize margins and text.
+    plot.title = element_text(margin = margin(b = 10, unit = "pt"), face = "bold"),
+    axis.title.x = element_text(margin = margin(t = 10, unit = "pt")),
+    axis.title.y = element_text(margin = margin(r = 10, unit = "pt"))
+  )) /
+  (histogram_elderly + theme(
+    # Customize margins and text.
+    plot.title = element_text(margin = margin(t = 20, b = 10, unit = "pt"), face = "bold"),
+    axis.title.x = element_text(margin = margin(t = 10, unit = "pt")),
+    axis.title.y = element_text(margin = margin(r = 10, unit = "pt"))
+  ))
+
+# Display faceted plot.
+faceted_plot
+```
+
+**Suggested chart types:**
+
+-   Histogram or density plot of distances
+
+-   Box plot comparing distances across regions
+
+-   Bar chart of underserved tracts by county
+
+-   Scatter plot of distance vs. vulnerable population size
+
+**Requirements:**
+
+-   Clear axes labels with units
+
+-   Appropriate title
+
+-   Professional formatting
+
+-   Brief interpretation (1-2 sentences as a caption or in text)
+
+    -   Of the vulnerable tracts, it looks like the distances to the nearest hospitals are generally less than 5 miles and the histogram is skewed right. From this visual distribution, it looks like there's accessibility with vulnerable populations and drivable distance to the nearest hospital. The elderly population also look like they cluster around the 500 estimate, also skewing to the right significantly once the estimate reachs 1,000 or more.
+
+------------------------------------------------------------------------
+
+## Part 3: Bring Your Own Data Analysis
+
+Choose your own additional spatial dataset and conduct a supplementary
+analysis.
+
+### Your Analysis
+
+**Your Task:**
+
+1.  **Find and load additional data**
+    -   Document your data source
+    -   Check and standardize the CRS
+    -   Provide basic summary statistics
+
+```{r}
+#| message: false
+#| include: false
+# All data from OpenDataPhilly.
+
+# Drug-related point data.
+# No creation date, GitHub indicates data was posted 2 years ago.
+sharps_boxes <- st_read("data/sharps_drop_boxes/sharps_drop_boxes.shp")
+# Created December 1, 2022.
+treatment_facilities <- st_read("data/treatment_facilities/treatment_facilities.shp")
+
+# Food point data.
+# No creation date, GitHub indicates data was posted 11 months ago.
+free_meal_sites <- st_read("data/free_meal_sites/free_meal_sites.shp")
+
+# Crime point data.
+# 2024 crime statistics to have more temporal alignment with other data sets.
+crime_2024 <- read.csv("data/crime_2024.csv")
+
+# Boundary data filtered to Philadelphia.
+philly_county <- pa_counties %>%
+  filter(`county` == "PHILADELPHIA")
+philly_tracts <- pa_tracts %>%
+  filter(`NAMELSADCO` == "Philadelphia County")
+```
+
+```{r}
+# CRS checks and transformations.
+
+# WGS84 / Pseudo-Mercator (EPSG 3857).
+#st_crs(sharps_boxes)
+
+# WGS84 / World Geodetic System 1984 (EPSG 4326).
+#st_crs(treatment_facilities)
+
+# WGS84 / Pseudo-Mercator (EPSG 3857).
+#st_crs(free_meal_sites)
+
+# No CRS. Not a geodataframe. Data has latitude and longitude.
+#st_crs(crime_2024)
+
+# WGS84 / World Geodetic System 1984 (EPSG 4326).
+#st_crs(philly_county)
+
+# WGS84 / World Geodetic System 1984 (EPSG 4326).
+#st_crs(philly_tracts)
+
+# Change data CRS to Pennsylvania South (EPSG 3365) for calculations.
+sharps_boxes <- sharps_boxes %>%
+  st_transform(crs = 3365)
+treatment_facilities <- treatment_facilities %>%
+  st_transform(crs = 3365)
+free_meal_sites <- free_meal_sites %>%
+  st_transform(crs = 3365)
+philly_county <- philly_county %>%
+  st_transform(crs = 3365)
+philly_tracts <- philly_tracts %>%
+  st_transform(crs = 3365)
+
+# Check CRS changes.
+#st_crs(sharps_boxes)
+#st_crs(treatment_facilities)
+#st_crs(free_meal_sites)
+#st_crs(philly_county)
+#st_crs(philly_tracts)
+
+crime_2024 <- crime_2024 %>%
+  # Remove points where latitude and longitude are NA or empty.
+  .[!(is.na(.$lng) | .$lng == "" | is.na(.$lat) | .$lat == ""),] %>%
+  # Change to spatial dataframe and set CRS to 4326 because of coordinate data.
+  st_as_sf(., coords = c("lng", "lat"), crs = 4326) %>%
+  # Change to needed CRS for calculations.
+  st_transform(crs = 3365)
+
+# Check CRS change.
+#st_crs(crime_2024)
+
+# Filter 2024 crime data by drug-related crimes.
+drugs_2024 <- crime_2024 %>%
+  filter(`text_general_code` == "Narcotic / Drug Law Violations")
+```
+
+```{r}
+# Clean data, filter, and remove unneeded columns.
+
+sharps_boxes[, c("OBJECTID", "OBJECTID_1", "SITE_NAME", "SUB_NAME", "STATE")] <- list(NULL)
+
+# Filter to Philadelphia
+treatment_facilities <- treatment_facilities %>%
+  filter(`COUNTY` == "PHILADELPHIA")
+treatment_facilities[, c("OBJECTID", "FACILITY_I", "GEOCODING_", "STREET_2", "CITY", "STATE", "TELEPHONE_")] <- list(NULL)
+
+# Filter to active sites.
+free_meal_sites <- free_meal_sites %>%
+  filter(`status` == "Active")
+free_meal_sites[, c("objectid", "phone_numb", "temporary_", "site_key", "website", "hours_mon_", "hours_tues", "hours_wed_", "hours_thur", "hours_fri_", "hours_sat_", "hours_sa_1", "hours_sa_2", "hours_sun_", "email", "seasonally")] <- list(NULL)
+
+drugs_2024[, c("the_geom", "cartodb_id", "the_geom_webmercator", "objectid", "dc_dist", "psa", "dispatch_date_time", "dispatch_date", "dispatch_time", "hour", "dc_key", "ucr_general")] <- list(NULL)
+
+philly_tracts[, c("STATEFP", "COUNTYFP", "GEOIDFQ", "NAME", "NAMELSAD", "STUSPS", "TRACTCE", "STATE_NAME", "LSAD", "TRACT")] <- list(NULL)
+colnames(philly_tracts)[2] <- "county"
+```
+
+**Questions to answer:**
+
+-   What dataset did you choose and why?
+
+    -   Aside from ACS data for PA's counties and census tracts, I chose
+        OpenDataPhilly's [crime incidence
+        data](https://opendataphilly.org/datasets/crime-incidents/),
+        [sharps drop boxes
+        data](https://opendataphilly.org/datasets/sharps-drop-boxes/),
+        [drug and alcohol treatment
+        facilities](https://opendataphilly.org/datasets/pa-drug-alcohol-treatment-facilities/),
+        and [free food program site
+        data](https://opendataphilly.org/datasets/free-food-sites/).
+        This is because I want to investigate the spatial overlap and
+        relationships with drug incidences and resources.
+
+-   What is the data source and date?
+
+    -   The crime data is from 2024, free meal sites from end of last
+        year, and facilities and sharps bins data are from end of
+        year 2023. All of these data had no official creation dates on
+        their pages, but the aforementioned years were observed from the
+        public GitHub repository. All data were extracted from
+        OpenDataPhilly's website.
+
+-   How many features does it contain?
+
+    -   The crime data has 160,388 features, free meals site data has
+        304 features, treatment facilities data has 965 features, and
+        sharps box data has 27 features.
+
+-   What CRS is it in? Did you need to transform it?
+
+    -   The crime data has no CRS but data having coordinates indicates
+        WGS84, free meals site data is in WGS84 / Pseudo-Mercator (EPSG
+        3857), treatment facilities is in WGS84 / World Geodetic System
+        1984 (EPSG 4326), and sharps box data is in WGS84 /
+        Pseudo-Mercator (EPSG 3857). Both the Philadelphia tract and
+        county data are in WGS84 / World Geodetic System 1984 (EPSG
+        4326). I made sure to transform all data to Pennsylvania South
+        (EPSG 3365) for calculations. For the crime data without the
+        CRS, I had to turn it into a geodataframe and change the CRS to
+        WGS84 first for that function, and then transform the CRS again
+        to Pennsylvania South.
+
+------------------------------------------------------------------------
+
+2.  **Pose a research question**
+
+Write a clear research statement that your analysis will answer.
+
+-   Do tracts with high drug-related instances have adequate access to
+    treatment facilities, sharps bins, and free meal programs?
+
+------------------------------------------------------------------------
+
+3.  **Conduct spatial analysis**
+
+Use at least TWO spatial operations to answer your research question.
+
+**Required operations (choose 2+):**
+
+-   Buffers
+
+-   Spatial joins\*
+
+-   Spatial filtering with predicates\*
+
+-   Distance calculations\*
+
+-   Intersections or unions\*
+
+-   Point-in-polygon aggregation\*
+
+**Your Task:**
+
+```{r}
+# Aggregate and count drug offenses in Philadelphia census tracts.
+# Use pipe to input st_intersects return values into lengths() function.
+philly_tracts$drug_offense <- st_intersects(philly_tracts, drugs_2024) |> lengths()
+
+# Normalize drug offense data by population total.
+philly_tracts <- philly_tracts %>%
+  mutate(pct_drug_offense = case_when(
+    # Calculate as 0 when both values are 0.
+    total_popE == 0 & drug_offense == 0 ~ 0,
+    # Calculate as NA with numeric type rather than NA with logical type to avoid type mismatch.
+    total_popE == 0 ~ NA_real_,
+    # Otherwise, calculate normally.
+    TRUE ~ (drug_offense / total_popE) * 100
+  ))
+
+# Determine high drug offense tracts as above 50% of bell curve.
+philly_tracts <- philly_tracts %>%
+  mutate("high_drug_offense" = case_when(
+    .$pct_drug_offense > 0.20539 ~ TRUE,
+    TRUE ~ FALSE
+  ))
+
+# Filter tracts with drug offenses above the median.
+drug_tracts <- philly_tracts %>%
+  filter(.$high_drug_offense == TRUE)
+```
+
+```{r}
+#| warning: false
+# Create census tract centroids for drug_tracts.
+drug_centroids <- st_centroid(drug_tracts)
+
+# Calculate distances between centroids and food accessibility.
+nearest_meal_index <- st_nearest_feature(drug_centroids, free_meal_sites)
+
+nearest_meal_point <- free_meal_sites[nearest_meal_index,]
+
+meal_distance <- st_distance(drug_centroids, nearest_meal_point, by_element = TRUE)
+
+drug_tracts$nearest_meal_mi <- set_units(meal_distance, "mi")
+
+# Calculate distances between centroids and treatment facilities.
+nearest_facility_index <- st_nearest_feature(drug_centroids, treatment_facilities)
+
+nearest_facility_point <- treatment_facilities[nearest_facility_index,]
+
+facility_distance <- st_distance(drug_centroids, nearest_facility_point, by_element = TRUE)
+
+drug_tracts$nearest_facility_mi <- set_units(facility_distance, "mi")
+
+# Calculate distances between centroids and sharps bins.
+nearest_sharps_index <- st_nearest_feature(drug_centroids, sharps_boxes)
+
+nearest_sharps_point <- sharps_boxes[nearest_sharps_index,]
+
+sharps_distance <- st_distance(drug_centroids, nearest_sharps_point, by_element = TRUE)
+
+drug_tracts$nearest_sharps_mi <- set_units(sharps_distance, "mi")
+
+# Determine how many tracts' nearest free meal program is more than 0.5 mi. away.
+tracts_lacking_meals <- sum(drug_tracts$nearest_meal_mi > set_units(0.5, "mi"))
+# Determine how many tracts' nearest treatment facility is more than 0.5 mi. away.
+tracts_lacking_facilities <- sum(drug_tracts$nearest_facility_mi > set_units(0.5, "mi"))
+# Determine how many tracts' nearest sharps bin is more than 0.5 mi. away.
+tracts_lacking_sharps <- sum(drug_tracts$nearest_sharps_mi > set_units(0.5, "mi"))
+
+print(paste0("There are ", tracts_lacking_meals, " census tracts that don't have active free meal programs within 0.5 mi. walking distance."))
+print(paste0("There are ", tracts_lacking_facilities, " census tracts that don't have drug alcohol treatment facilities within 0.5 mi. walking distance."))
+print(paste0("There are ", tracts_lacking_sharps, " census tracts that don't have disposable sharps bins within 0.5 mi. walking distance."))
+```
+
+```{r fig.height = 6, fig.width = 6, dpi = 300}
+#| warning: false
+# Map tracts more than 0.5 mile walking distance from free food programs.
+far_from_meals_tracts <- drug_tracts %>%
+  mutate(nearest_meal_mi = drop_units(nearest_meal_mi)) %>%
+  filter(nearest_meal_mi > 0.5)
+
+# Transform geography data back to WGS84 for web mapping.
+far_from_meals_tracts <- far_from_meals_tracts %>%
+  st_transform(crs = 4326)
+
+# Choropleth map colored by drug offenses with treatment facility points.
+far_from_meals_choropleth <- ggplot(far_from_meals_tracts) +
+  geom_sf(
+    aes(fill = `pct_drug_offense`),
+  ) +
+  geom_sf(
+    data = philly_tracts, fill = NA,
+    color = "black", linewidth = 0.25,
+    alpha = 0.5
+  ) +
+  geom_point(
+    data = free_meal_sites,
+    aes(x = x, y = y, color = "Free Meals"),
+    alpha = 0.75, inherit.aes = FALSE
+  ) +
+  scale_fill_viridis_c(
+    name = "Percent Drug Events",
+    labels = function(x) paste0(x, "%")
+  ) +
+  scale_color_manual(
+    name = "Free Meals",
+    values = c("Free Meals" = "red2")
+  ) +
+  labs(
+    title = "HIGH DRUG EVENTS IN PHILADELPHIA, PA",
+    subtitle = "More than 0.5 mi from Free Meals",
+    caption = "Sources: 5-Year ACS 2023, OpenDataPhilly 2023–2025",
+  ) +
+  theme_void()
+
+far_from_meals_choropleth + theme(
+  panel.background = element_rect(fill = "azure2", size = 0.75),
+  legend.box.margin = margin(l = 10, unit = "pt"),
+  legend.title = element_text(face = "bold"),
+  legend.text = element_text(face = "italic"),
+  plot.title = element_text(face = "bold"),
+  plot.subtitle = element_text(margin = margin(b = 10, t = 5, unit = "pt")),
+  plot.caption = element_text(margin = margin(t = 10, unit = "pt"), face = "italic", family = "mono")
+)
+```
+
+```{r, fig.width = 6, fig.height = 6, dpi = 300}
+# Map tracts more than 0.5 mile walking distance from treatment facilities.
+far_from_facilities_tracts <- drug_tracts %>%
+  mutate(nearest_facility_mi = drop_units(nearest_facility_mi)) %>%
+  filter(nearest_facility_mi > 0.5)
+
+# Transform geography data back to WGS84 for web mapping.
+far_from_facilities_tracts <- far_from_facilities_tracts %>%
+  st_transform(crs = 4326)
+
+# Choropleth map colored by drug offenses with treatment facility points.
+far_from_facilities_choropleth <- ggplot(far_from_facilities_tracts) +
+  geom_sf(
+    aes(fill = `pct_drug_offense`),
+  ) +
+  geom_sf(
+    data = philly_tracts, fill = NA,
+    color = "black", linewidth = 0.25,
+    alpha = 0.5
+  ) +
+  geom_point(
+    data = treatment_facilities,
+    aes(x = LONGITUDE, y = LATITUDE, color = "Treatment Facilities"),
+    alpha = 0.75, inherit.aes = FALSE
+  ) +
+  scale_fill_viridis_c(
+    name = "Percent Drug Events",
+    labels = function(x) paste0(x, "%")
+  ) +
+  scale_color_manual(
+    name = "Treatment Facilities",
+    values = c("Treatment Facilities" = "red2")
+  ) +
+  labs(
+    title = "HIGH DRUG EVENTS IN PHILADELPHIA, PA",
+    subtitle = "More than 0.5 mi from Treatment Facilities",
+    caption = "Sources: 5-Year ACS 2023, OpenDataPhilly 2023–2025",
+  ) +
+  theme_void()
+
+far_from_facilities_choropleth + theme(
+  panel.background = element_rect(fill = "azure2", size = 0.75),
+  legend.box.margin = margin(l = 10, unit = "pt"),
+  legend.title = element_text(face = "bold"),
+  legend.text = element_text(face = "italic"),
+  plot.title = element_text(face = "bold"),
+  plot.subtitle = element_text(margin = margin(b = 10, t = 5, unit = "pt")),
+  plot.caption = element_text(margin = margin(t = 10, unit = "pt"), face = "italic", family = "mono")
+)
+```
+
+```{r, fig.width = 6, fig.height = 6, dpi = 300}
+# Map tracts more than 0.5 mile walking distance from sharps bins.
+far_from_sharps_tracts <- drug_tracts %>%
+  mutate(nearest_sharps_mi = drop_units(nearest_sharps_mi)) %>%
+  filter(nearest_sharps_mi > 0.5)
+
+# Align CRS.
+far_from_sharps_tracts <- st_transform(far_from_sharps_tracts, 4326)
+sharps_boxes <- st_transform(sharps_boxes, 4326)
+
+# Extract coordinates from geometry to new columns for plotting.
+sharps_boxes <- sharps_boxes %>%
+  mutate(
+    lon = st_coordinates(geometry)[, 1],
+    lat = st_coordinates(geometry)[, 2]
+  )
+
+# Choropleth map colored by drug offenses with sharps bin points.
+sharps_choropleth <- ggplot(far_from_sharps_tracts) +
+  geom_sf(
+    aes(fill = `pct_drug_offense`),
+  ) +
+  geom_sf(
+    data = philly_tracts, fill = NA,
+    color = "black", linewidth = 0.25,
+    alpha = 0.5
+  ) +
+  geom_point(
+    data = sharps_boxes,
+    aes(x = lon, y = lat, color = "Sharps Bins"),
+    alpha = 0.75, inherit.aes = FALSE
+  ) +
+  scale_fill_viridis_c(
+    name = "Percent Drug Events",
+    labels = function(x) paste0(x, "%")
+  ) +
+  scale_color_manual(
+    name = "Sharps Bins",
+    values = c("Sharps Bins" = "red2")
+  ) +
+  labs(
+    title = "HIGH DRUG EVENTS IN PHILADELPHIA, PA",
+    subtitle = "More than 0.5 mi from Sharps Bins",
+    caption = "Sources: 5-Year ACS 2023, OpenDataPhilly 2023–2025",
+  ) +
+  theme_void()
+
+sharps_choropleth + theme(
+  panel.background = element_rect(fill = "azure2", size = 0.75),
+  legend.box.margin = margin(l = 10, unit = "pt"),
+  legend.title = element_text(face = "bold"),
+  legend.text = element_text(face = "italic"),
+  plot.title = element_text(face = "bold"),
+  plot.subtitle = element_text(margin = margin(b = 10, t = 5, unit = "pt")),
+  plot.caption = element_text(margin = margin(t = 10, unit = "pt"), face = "italic", family = "mono")
+)
+```
+
+```{r, fig.width = 6, fig.height = 6, dpi = 300}
+# Align CRS.
+drug_tracts <- st_transform(drug_tracts, 4326)
+
+# Choropleth map colored by drug offenses with sharps bin points and treatment facilities.
+all_choropleth <- ggplot(drug_tracts) +
+  geom_sf(
+    aes(fill = `pct_drug_offense`),
+  ) +
+  geom_sf(
+    data = philly_tracts, fill = NA,
+    color = "azure2", linewidth = 0.25,
+    alpha = 0.5
+  ) +
+  geom_point(
+    data = treatment_facilities,
+    aes(x = LONGITUDE, y = LATITUDE, color = "Treatment Facilities"),
+    alpha = 0.8, inherit.aes = FALSE
+  ) +
+  geom_point(
+    data = sharps_boxes,
+    aes(x = lon, y = lat, color = "Sharps Bins"),
+    alpha = 0.8, inherit.aes = FALSE
+  ) +
+  scale_fill_viridis_c(
+    name = "Percent Drug Events",
+    labels = function(x) paste0(x, "%")
+  ) +
+  scale_color_manual(
+    name = "Harm Reduction",
+    values = c("Treatment Facilities" = "orange","Sharps Bins" = "red2")
+  ) +
+  labs(
+    title = "HIGH DRUG EVENTS IN PHILADELPHIA, PA",
+    subtitle = "With Sharps Bins and Treatment Facilities",
+    caption = "Sources: 5-Year ACS 2023, OpenDataPhilly 2023–2025",
+  ) +
+  theme_void()
+
+all_choropleth + theme(
+  panel.background = element_rect(fill = "azure4", size = 0.75),
+  legend.box.margin = margin(l = 10, unit = "pt"),
+  legend.title = element_text(face = "bold"),
+  legend.text = element_text(face = "italic"),
+  plot.title = element_text(face = "bold"),
+  plot.subtitle = element_text(margin = margin(b = 10, t = 5, unit = "pt")),
+  plot.caption = element_text(margin = margin(t = 10, unit = "pt"), face = "italic", family = "mono")
+)
+```
+
+```{r}
+# Summary statistics of data used.
+
+data_used <- drug_tracts %>%
+  transmute(
+  "GEOID" = GEOID,
+  "Population Estimate" = total_popE,
+  "Population MOE" = total_popM,
+  "Drug Incidence" = drug_offense,
+  "Percent Drug Incidence" = pct_drug_offense,
+  "Nearest Meal (mi)" = nearest_meal_mi,
+  "Nearest Facility (mi)" = nearest_facility_mi,
+  "Nearest Sharps (mi)" = nearest_sharps_mi
+)
+
+# Align CRS.
+data_used <- st_transform(data_used, 4326)
+free_meal_sites <- st_transform(free_meal_sites, 4326)
+sharps_boxes <- st_transform(sharps_boxes, 4326)
+treatment_facilities <- st_transform(treatment_facilities, 4326)
+
+# Only get geometry of point data.
+selected_meals <- free_meal_sites %>%
+  transmute(geometry)
+
+selected_sharps <- sharps_boxes %>%
+  select(geometry)
+
+selected_facilities <- treatment_facilities %>%
+  select(geometry)
+
+# Task is repetitive, so create a function to help with counting all the meal, facility, and sharps bin point data for each tract.
+count_points <- function(point_data, tract_data, id = "GEOID", name = "Count"){
+  result <- point_data %>%
+    # Join using within predicate.
+    st_join(tract_data, join = st_within) %>%
+    # Drop point geometry to avoid duplication when joining back with tracts later.
+    st_drop_geometry() %>%
+    # Group by census tract GEOID.
+    group_by(.data[[id]]) %>%
+    # Count instances of points in each GEOID.
+    summarize(Count = n())
+  
+  # Change column name to user input name.
+  names(result)[names(result) == "Count"] <- name
+  
+  # Return the result.
+  result
+}
+
+# Use function on all point datasets.
+number_meals <- count_points(free_meal_sites, data_used, "GEOID", "Number of Meals")
+number_sharps <- count_points(sharps_boxes, data_used, "GEOID", "Number of Sharps")
+number_facilities <- count_points(treatment_facilities, data_used, "GEOID", "Number of Facilities")
+
+# Add counts back into tract data using left join.
+data_used <- data_used %>%
+  left_join(number_meals, by = "GEOID") %>%
+  left_join(number_sharps, by = "GEOID") %>%
+  left_join(number_facilities, by = "GEOID") %>%
+  mutate(
+    # Fill empty cells with 0.
+    `Number of Meals` = replace_na(`Number of Meals`, 0),
+    `Number of Sharps` = replace_na(`Number of Sharps`, 0),
+    `Number of Facilities` = replace_na(`Number of Facilities`, 0)
+  )
+
+# Create dataframe from geodataframe for all data used.
+data_used_df <- data_used %>%
+  st_drop_geometry() %>%
+  mutate(
+    GEOID = NULL
+  )
+```
+
+```{r}
+#| warning: false
+# No scientific notation.
+options(scipen = 999)
+
+# Tidy summary statistics for kable.
+summary_stats <- data_used_df %>%
+  # Use map function to use summary function on each column,
+  # generating descriptive statistics for the values and storing in a dataframe.
+  map(summary) %>%
+  # Convert output list to tibble, tidying and stacking rows.
+  map_df(tidy) %>%
+  # Use original column names as variable values and place "variable" as the first column.
+  mutate(variable = names(data_used_df), .before = 1)
+```
+
+```{r}
+# Kable of summary statistics.
+kable(
+  as.data.frame(summary_stats),
+  align = "c",
+  digit = 2,
+  format.args = list(big.mark = ","),
+  col.names = c("VARIABLE", "MIN", "Q1", "MEDIAN", "MEAN", "Q3", "MAX"),
+  caption = "<b>DRUG-RELATED DATA IN PHILADELPHIA, PA: Summary Statistics</b>"
+) %>%
+  # Shade every other row for ease of reading.
+  kable_styling(bootstrap_options = "striped") %>%
+  column_spec(1, bold = TRUE) %>%
+  row_spec(0, color = "white", background = "black")
+```
+
+**Analysis requirements:**
+
+-   Clear code comments explaining each step
+
+-   Appropriate CRS transformations
+
+-   Summary statistics or counts
+
+-   At least one map showing your findings
+
+-   Brief interpretation of results (3-5 sentences)
+
+**Your interpretation:**
+
+Many census tracts with higher percents of drug-related incidents lie in North Philly, Near-Northeast Philly, and West Philly primarily above Market Street. It seems like Philadelphia is taking the drug-related concerns seriously, the drug-alcohol treatment facilities and active free meal programs are peppered all around the county and have good coverage over tracts with higher drug-related events.
+
+It also looks like most meals and facilities are within walking distance. However, sharps bins don't have too much spatial overlap and are lacking statistically, with average distances beyond a mile. It may be worth implementing more sharps bin sites around tracts with more drug-use events.
+
+While facilities may have disposals, many drug-users range from recreational to addicted and might fear arrest at facilities and even at sharps bins themselves, so it's important to address the issue without any demonizing, dehumanizing, and criminalizing.
+
+This quick look at resource distribution has policy relevance to community investment, harm reduction, siting, food programming, and quality of life for everyone, not just those directly affected by drug-use.
+
+## Finally - A few comments about your incorporation of feedback!
+
+- I removed a lot of the extra instruction text in this write-up to make the report more concise and straightforward.
+- Any printouts and summaries created outside of kable were commented out or removed to give the report more clarity and not fill it with extra text or numbers.
+- I broke up long paragraphs when making any comments or analyses and shortened figure titles for readability.

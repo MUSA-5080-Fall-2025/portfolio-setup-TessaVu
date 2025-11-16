@@ -1,17 +1,31 @@
 ---
-title: "Model Diagnostics & Spatial Autocorrelation"
-subtitle: "Week 7: MUSA 5080"
-author: "Dr. Elizabeth Delmelle"
-date: "October 21, 2025"
-format: 
-  revealjs:
-    theme: simple
-    slide-number: true
-    chalkboard: true
-    code-line-numbers: true
-    incremental: false
-    smaller: true
-    scrollable: true
+title: "MODEL DIAGNOSTICS & SPATIAL AUTOCORRELATION"
+subtitle: WEEK 7 IN-CLASS LAB
+date: 2025-10-21
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format:
+  html:
+    code-fold: show
+    toc: true
+    toc-location: left
+    toc-expand: true
+    smooth-scroll: true
+    embed-resources: true
+    title-block-style: default
+execute:
+  warning: false
+  message: false
 ---
 
 # Homework Feedback & Tips

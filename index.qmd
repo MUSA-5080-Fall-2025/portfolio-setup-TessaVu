@@ -1,5 +1,21 @@
 ---
-title: "MUSA 5080 PORTFOLIO"
+title: MUSA 5080 PORTFOLIO
+subtitle: PUBLIC POLICY ANALYTICS
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format:
+  html:
+    title-block-style: default
 ---
 
 # PORTFOLIO
@@ -21,5 +37,6 @@ As a result of my education and work history I have a deep interest in urban pro
 This course will allow me to refine my existing technical skillset and challenge me to apply them to urban and social predicaments that plague us—cities, municipalities, communities, the environment, *people*. What's important to me is that this class focuses on *not* becoming lost in the STEM aesthetics at the cost of humanitarian rights, educating future graduates about the damage that predictive analytics has wrought, especially in policing and how many tools wielded can disproportionately affect minoritized identities and peripheral communities.
 
 ## CONTACT
-- Email: tessavu@upenn.edu
-- GitHub: [@TessaVu](https://github.com/TessaVu)
+- Personal Email: tessavu@proton.me
+- Student Email: tessavu@upenn.edu
+- GitHub: [@tess-vu](https://github.com/tess-vu)

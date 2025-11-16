@@ -1,6 +1,21 @@
 ---
-title: "30-DAY MAP CHALLENGE"
-author: Tess Vu
+title: 30-DAY MAP CHALLENGE
+subtitle: Belatedly Periodic Updates
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format:
+  html:
+    title-block-style: default
 ---
 
 # [2025 30-DAY MAP CHALLENGE](https://30daymapchallenge.com/)

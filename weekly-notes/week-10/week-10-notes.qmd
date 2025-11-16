@@ -1,0 +1,37 @@
+---
+title: LOGISTIC REGRESSION FOR BINARY OUTCOMES
+subtitle: WEEK 10 NOTES
+date: 2025-11-10
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format:
+  html:
+    code-fold: show
+    toc: true
+    toc-location: left
+    toc-expand: true
+    smooth-scroll: true
+    embed-resources: true
+    title-block-style: default
+execute:
+  warning: false
+  message: false
+---
+
+## Key Concepts Learned
+
+## Coding Techniques
+
+## Questions & Challenges
+
+## Reflection

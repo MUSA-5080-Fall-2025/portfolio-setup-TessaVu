@@ -30,13 +30,27 @@ website:
           text: "IN-CLASS LAB 5"
         - href: weekly-notes/week-06/week-06-notes.qmd
           text: "WEEK 6: SPATIAL MACHINE LEARNING & ADVANCED REGRESSION"
+        - href: weekly-notes/week-06/week-06-class-lab.qmd
+          text: "IN-CLASS LAB 6"
+        - href: weekly-notes/week-07/week-07-notes.qmd
+          text: "WEEK 7: MODEL DIAGNOSTICS & SPATIAL AUTOCORRELATION"
+        - href: weekly-notes/week-07/week-07-class-lab.qmd
+          text: "IN-CLASS LAB 7"
+        - href: midterm-project.qmd
+          text: "WEEK 8: MIDTERM PROJECT"
+        - href: weekly-notes/week-09/week-09-notes.qmd
+          text: "WEEK 9: CRITICAL PERSPECTIVES ON PREDICTIVE POLICING"
+        - href: weekly-notes/week-09/week-09-class-lab.qmd
+          text: "IN-CLASS LAB 9"
+        - href: weekly-notes/week-10/week-10-notes.qmd
+          text: "WEEK 10: SPATIAL MACHINE LEARNING & ADVANCED REGRESSION"
+        - href: weekly-notes/week-10/week-10-class-lab.qmd
+          text: "IN-CLASS LAB 10"
       - text: LABS
         menu:
         - href: labs.qmd
           text: ALL LABS
-        - href: labs/lab-0/lab-0.qmd
-          text: "IN-CLASS LAB 0: DPLYR BASICS"
-        - href: labs/lab-1/lab-1.qmd
+        - href: labs/lab-1/Vu_Tessa_Assignment1.qmd
           text: "LAB 1: CENSUS DATA"
         - href: labs/lab-2/Vu_Tessa_Assignment2.qmd
           text: "LAB 2: HEALTHCARE ACCESS AND EQUITY"

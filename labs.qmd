@@ -1,14 +1,31 @@
 ---
-title: "LABS"
+title: LABS
+subtitle: Completed Assignments and Analyses
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format:
+  html:
+    title-block-style: default
 ---
-
-*Completed assignments and analyses.*
-
-## LAB 0: DPLYR BASICS
-[09-15-2025 Lab: dplyr Basics](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-0/lab-0)
 
 ## LAB 1: CENSUS DATA
 [09-15-2025 Lab: Census Data](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-1/lab-1)
 
 ## LAB 2: HEALTHCARE ACCESS AND EQUITY IN PENNSYLVANIA
 [10-06-2025 Lab: Healthcare Access and Equity in Pennsylvania](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-2/Vu_Tessa_Assignment2)
+
+## LAB 3: MIDTERM PROJECT
+[10-27-2025 Lab: Midterm Project](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/midterm-project)
+
+## LAB 4: 
+[11-17-2025 Lab: ](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-2/Vu_Tessa_Assignment4)

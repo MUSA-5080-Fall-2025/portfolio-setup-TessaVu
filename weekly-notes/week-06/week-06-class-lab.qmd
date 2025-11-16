@@ -1,20 +1,31 @@
 ---
-title: "Spatial Machine Learning & Advanced Regression"
-subtitle: "Week 6: MUSA 5080"
-author: "Dr. Elizabeth Delmelle"
-date: "October 14, 2025"
-format: 
-  revealjs:
-    theme: simple
-    slide-number: true
-    chalkboard: true
-    code-line-numbers: true
-    incremental: false
-    smaller: true
-    scrollable: true
-editor: 
-  markdown: 
-    wrap: 72
+title: "SPATIAL MACHINE LEARNING & ADVANCED REGRESSION"
+subtitle: WEEK 6 IN-CLASS LAB
+date: 2025-10-13
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format:
+  html:
+    code-fold: show
+    toc: true
+    toc-location: left
+    toc-expand: true
+    smooth-scroll: true
+    embed-resources: true
+    title-block-style: default
+execute:
+  warning: false
+  message: false
 ---
 
 # Today's Journey
@@ -53,14 +64,11 @@ editor:
 
 **Part 4: Fixed Effects**
 
-------------------------------------------------------------------------
-
 # Warm-Up: Build a Baseline Model
 
 ## Let's Build Something Simple Together
 
-We'll start by creating a basic model using **only structural
-features** - this will be our baseline to improve upon today.
+We'll start by creating a basic model using **only structural features** - this will be our baseline to improve upon today.
 
 ```{r}
 #| eval: true
@@ -81,8 +89,6 @@ glimpse(boston)
 baseline_model <- lm(SalePrice ~ LivingArea, data = boston)
 summary(baseline_model)
 ```
-
-------------------------------------------------------------------------
 
 ## What Does This Model Tell Us?
 
@@ -106,8 +112,6 @@ ggplot(boston, aes(x = LivingArea, y = SalePrice)) +
   scale_y_continuous(labels = scales::dollar) +
   theme_minimal()
 ```
-
-------------------------------------------------------------------------
 
 ## Interpreting Our Baseline
 
@@ -133,8 +137,6 @@ ggplot(boston, aes(x = LivingArea, y = SalePrice)) +
 What are we missing? 🤔
 :::
 
-------------------------------------------------------------------------
-
 ## Limitations of This Model
 
 ::: callout-warning
@@ -158,8 +160,6 @@ What are we missing? 🤔
 
 **This is exactly where spatial features come in!**
 
-------------------------------------------------------------------------
-
 ## Let's Add One More Feature
 
 ```{r}
@@ -180,13 +180,9 @@ cat("With bathrooms R²:", summary(better_model)$r.squared, "\n")
 ::: callout-note
 ## Today's Goal
 
-By the end of class, you'll build models that: - Incorporate spatial
-relationships - Account for neighborhood effects\
-- Achieve much better prediction accuracy - Help you understand what
-drives housing prices
+By the end of class, you'll build models that: - Incorporate spatial relationships - Account for neighborhood effects\
+- Achieve much better prediction accuracy - Help you understand what drives housing prices
 :::
-
-------------------------------------------------------------------------
 
 ## Converting to Spatial Data
 
@@ -212,11 +208,8 @@ class(boston.sf)  # Should show "sf" and "data.frame"
 ### Why transform CRS?
 
 -   **4326** = WGS84 (lat/lon in degrees) - fine for display
--   **ESRI:102286** = MA State Plane (feet) - good for distance
-    calculations
+-   **ESRI:102286** = MA State Plane (feet) - good for distance calculations
 :::
-
-------------------------------------------------------------------------
 
 ## Step 2: Spatial Join with Neighborhoods
 
@@ -248,8 +241,6 @@ boston.sf %>%
 
 `st_join()` found which neighborhood polygon contains each house point!
 :::
-
-------------------------------------------------------------------------
 
 ## Visualize: Prices by Neighborhood
 
@@ -302,8 +293,6 @@ ggplot() +
   )
 ```
 
-------------------------------------------------------------------------
-
 ## The Spatial Pattern is Clear!
 
 ```{r}
@@ -324,18 +313,12 @@ price_by_nhood %>%
 ::: callout-note
 ## Discussion Question
 
-Why do you think certain neighborhoods command higher prices? -
-Proximity to downtown? - Historical character? - School quality? -
-Safety? - All of the above?
+Why do you think certain neighborhoods command higher prices? - Proximity to downtown? - Historical character? - School quality? - Safety? - All of the above?
 
 **This is why we need spatial features and neighborhood controls!**
 :::
 
-------------------------------------------------------------------------
-
 # Part 1: Expanding Your Regression Toolkit {background-color="#667eea"}
-
-------------------------------------------------------------------------
 
 ## Beyond Continuous Variables
 
@@ -359,8 +342,6 @@ Safety? - All of the above?
 :::
 :::::
 
-------------------------------------------------------------------------
-
 ## Dummy Variables
 
 ### Our Boston Data: `name` variable from spatial join
@@ -381,8 +362,7 @@ boston.sf %>%
 
 **How R Handles This**
 
-When you include `name` in a model, R automatically creates binary
-indicators:
+When you include `name` in a model, R automatically creates binary indicators:
 
 -   **Back_Bay:** 1 if Back Bay, 0 otherwise
 -   **Beacon_Hill:** 1 if Beacon Hill, 0 otherwise
@@ -392,13 +372,10 @@ indicators:
 ::: callout-warning
 ### ⚠️ The (n-1) Rule
 
-One neighborhood is automatically chosen as the **reference category**
-(omitted)!
+One neighborhood is automatically chosen as the **reference category** (omitted)!
 
 R picks the first alphabetically unless you specify otherwise.
 :::
-
-------------------------------------------------------------------------
 
 ## Add Dummy (Categorical) Variables to the Model
 
@@ -458,8 +435,6 @@ coef_table <- tidy(model_with_neighborhoods) %>%
   select(Variable = term, Coefficient = estimate, `p-value` = p_value)
 ```
 
-------------------------------------------------------------------------
-
 ## Interpreting Neighborhood Dummy Variables
 
 ```{r}
@@ -472,30 +447,22 @@ knitr::kable(coef_table, align = c('l', 'r', 'r'))
 
 ### How to Read This Table
 
-**Reference Category:** Allston (automatically chosen - alphabetically
-first)
+**Reference Category:** Allston (automatically chosen - alphabetically first)
 
 **Structural Variables:**
 
--   **Living Area:** Each additional sq ft adds this amount (same for
-    all neighborhoods)
--   **Bedrooms:** Effect of one more full bathroom (same for all
-    neighborhoods)
+-   **Living Area:** Each additional sq ft adds this amount (same for all neighborhoods)
+-   **Bedrooms:** Effect of one more full bathroom (same for all neighborhoods)
 
 **Neighborhood Dummies:**
 
--   **Positive coefficient** = This neighborhood is MORE expensive than
-    `r ref_neighborhood`
--   **Negative coefficient** = This neighborhood is LESS expensive than
-    `r ref_neighborhood`
+-   **Positive coefficient** = This neighborhood is MORE expensive than `r ref_neighborhood`
+-   **Negative coefficient** = This neighborhood is LESS expensive than `r ref_neighborhood`
 -   All else equal (same size, same bathrooms)
-
-------------------------------------------------------------------------
 
 ## Concrete Example: Comparing Two Houses
 
-Using our model, let's compare identical houses in different
-neighborhoods:
+Using our model, let's compare identical houses in different neighborhoods:
 
 ::::: columns
 ::: {.column width="50%"}
@@ -606,37 +573,28 @@ price_roxbury <- predict(model_with_neighborhoods,
 scales::dollar(price_backbay - price_roxbury)
 ```
 
-Same house, different location = huge price difference! This is what the
-neighborhood dummies capture.
+Same house, different location = huge price difference! This is what the neighborhood dummies capture.
 :::
-
-------------------------------------------------------------------------
 
 ## Interaction Effects: When Relationships Depend
 
 ### The Question
 
-Does the effect of one variable **depend on** the level of another
-variable?
+Does the effect of one variable **depend on** the level of another variable?
 
 ### Example Scenarios
 
--   **Housing:** Does square footage matter more in wealthy
-    neighborhoods?
+-   **Housing:** Does square footage matter more in wealthy neighborhoods?
 -   **Education:** Do tutoring effects vary by initial skill level?
 -   **Public Health:** Do pollution effects differ by age?
 
 ::: callout-important
 ### Mathematical Form
 
-SalePrice = β₀ + β₁(LivingArea) + β₂(WealthyNeighborhood) +
-**β₃(LivingArea × WealthyNeighborhood)** + ε
+SalePrice = β₀ + β₁(LivingArea) + β₂(WealthyNeighborhood) + **β₃(LivingArea × WealthyNeighborhood)** + ε
 :::
 
-**Today's example:** Is the value of square footage the same across all
-Boston neighborhoods?
-
-------------------------------------------------------------------------
+**Today's example:** Is the value of square footage the same across all Boston neighborhoods?
 
 ## Theory: Luxury Premium Hypothesis
 
@@ -671,11 +629,8 @@ Boston neighborhoods?
 ::: callout-note
 ### The Key Question
 
-If we assume one slope for all neighborhoods, are we misunderstanding
-the market?
+If we assume one slope for all neighborhoods, are we misunderstanding the market?
 :::
-
-------------------------------------------------------------------------
 
 ## Create the Neighborhood Categories
 
@@ -699,8 +654,6 @@ boston.sf %>%
   count(wealthy_neighborhood)
 ```
 
-------------------------------------------------------------------------
-
 ## Model 1: No Interaction (Parallel Slopes)
 
 ```{r}
@@ -717,11 +670,8 @@ summary(model_no_interact)$coef
 ::: callout-warning
 What This Assumes
 
-Living area has the same effect in all neighborhoods Only the intercept
-differs (wealthy areas start higher) Parallel lines on a plot
+Living area has the same effect in all neighborhoods Only the intercept differs (wealthy areas start higher) Parallel lines on a plot
 :::
-
-------------------------------------------------------------------------
 
 ## Model 2: With Interaction (Different Slopes)
 
@@ -739,11 +689,8 @@ summary(model_interact)$coef
 ::: callout-important
 What This Allows
 
-Living area can have different effects in different neighborhoods Both
-intercept AND slope differ Non-parallel lines on a plot
+Living area can have different effects in different neighborhoods Both intercept AND slope differ Non-parallel lines on a plot
 :::
-
-------------------------------------------------------------------------
 
 ## Interpreting the Interaction Coefficients
 
@@ -776,12 +723,7 @@ interact_results <- tidy(model_interact) %>%
 knitr::kable(interact_results, digits = 3, align = c('l', 'r', 'r', 'r', 'c'))
 ```
 
-*We get the un-intuitive negative premium here because that is an
-intercept adjustment (applies at 0 sqft). The slope difference
-(+985sq/ft) is huge - we can calculate when wealthy areas become more
-expensive (at what sq ft) = 384.*
-
-------------------------------------------------------------------------
+*We get the un-intuitive negative premium here because that is an intercept adjustment (applies at 0 sqft). The slope difference (+985sq/ft) is huge - we can calculate when wealthy areas become more expensive (at what sq ft) = 384.*
 
 ## Breaking Down the Coefficients
 
@@ -803,33 +745,21 @@ wealthy_slope <- base_slope + wealthy_slope_add
 
 ::::: columns
 ::: {.column width="50%"}
-🏘️ Not Wealthy Areas Equation: Price =
-`r scales::dollar(base_intercept, accuracy = 1)` +
-`r scales::dollar(base_slope, accuracy = 1)` × LivingArea
-Interpretation:
+🏘️ Not Wealthy Areas Equation: Price = `r scales::dollar(base_intercept, accuracy = 1)` + `r scales::dollar(base_slope, accuracy = 1)` × LivingArea Interpretation:
 
-Base price: `r scales::dollar(base_intercept, accuracy = 1)` Each sq ft
-adds: `r scales::dollar(base_slope, accuracy = 1)`
+Base price: `r scales::dollar(base_intercept, accuracy = 1)` Each sq ft adds: `r scales::dollar(base_slope, accuracy = 1)`
 :::
 
 ::: {.column width="50%"}
-🏛️ Wealthy Areas Equation: Price =
-`r scales::dollar(wealthy_intercept, accuracy = 1)` +
-`r scales::dollar(wealthy_slope, accuracy = 1)` × LivingArea
-Interpretation:
+🏛️ Wealthy Areas Equation: Price = `r scales::dollar(wealthy_intercept, accuracy = 1)` + `r scales::dollar(wealthy_slope, accuracy = 1)` × LivingArea Interpretation:
 
-Base price: `r scales::dollar(wealthy_intercept, accuracy = 1)` Each sq
-ft adds: `r scales::dollar(wealthy_slope, accuracy = 1)`
+Base price: `r scales::dollar(wealthy_intercept, accuracy = 1)` Each sq ft adds: `r scales::dollar(wealthy_slope, accuracy = 1)`
 :::
 :::::
 
 ::: callout-important
-The Interaction Effect Wealthy areas value each sq ft
-`r scales::dollar(wealthy_slope_add, accuracy = 1)` more than
-non-wealthy areas!
+The Interaction Effect Wealthy areas value each sq ft `r scales::dollar(wealthy_slope_add, accuracy = 1)` more than non-wealthy areas!
 :::
-
-------------------------------------------------------------------------
 
 ## Visualizing the Interaction Effect
 
@@ -867,8 +797,6 @@ ggplot(boston.sf, aes(x = LivingArea, y = SalePrice,
 
 Key Observation: The lines are NOT parallel - that's the interaction!
 
-------------------------------------------------------------------------
-
 ## Compare Model Performance
 
 ```{r}
@@ -891,15 +819,10 @@ r2_pct_improvement <- (r2_improvement / summary(model_no_interact)$r.squared) * 
 ```
 
 ::: callout-important
-Model Improvement Adding the interaction improves R² by
-`r round(r2_improvement, 4)` (a `r round(r2_pct_improvement, 1)`%
-relative improvement)
+Model Improvement Adding the interaction improves R² by `r round(r2_improvement, 4)` (a `r round(r2_pct_improvement, 1)`% relative improvement)
 
-Interpretation: We explain `r round(r2_improvement * 100, 2)`% more
-variation in prices by allowing different slopes!
+Interpretation: We explain `r round(r2_improvement * 100, 2)`% more variation in prices by allowing different slopes!
 :::
-
-------------------------------------------------------------------------
 
 ## Policy Implications
 
@@ -908,10 +831,8 @@ variation in prices by allowing different slopes!
 
 1.  Market Segmentation: Boston operates as TWO distinct housing markets
 
--   Luxury market: Every sq ft is premium
-    (\$`r round(wealthy_slope, 0)`/sq ft)
--   Standard market: Space valued, but lower premium
-    (\$`r round(base_slope, 0)`/sq ft)
+-   Luxury market: Every sq ft is premium (\$`r round(wealthy_slope, 0)`/sq ft)
+-   Standard market: Space valued, but lower premium (\$`r round(base_slope, 0)`/sq ft)
 
 2.  Affordability Crisis: The interaction amplifies inequality
 
@@ -920,12 +841,9 @@ variation in prices by allowing different slopes!
 
 3.  Policy Design: One-size-fits-all policies may fail
 
--   Property tax assessments should account for neighborhood-specific
-    valuation
+-   Property tax assessments should account for neighborhood-specific valuation
 -   Housing assistance needs vary dramatically by area
 :::
-
-------------------------------------------------------------------------
 
 ## When Not To Use Interactions
 
@@ -935,8 +853,6 @@ When NOT to Use Interactions:
 -   Small samples: Need sufficient data in each group
 -   Overfitting: Too many interactions make models unstable
 :::
-
-------------------------------------------------------------------------
 
 ## Polynomial Terms: Non-Linear Relationships
 
@@ -970,9 +886,6 @@ SalePrice = β₀ + β₁(Age) + β₂(Age²) + ε
 
 This allows for a **curved relationship**
 :::
-
-------------------------------------------------------------------------
-
 ## Theory: The U-Shaped Age Effect
 
 ### Why Would Age Have a Non-Linear Effect?
@@ -1018,8 +931,7 @@ This allows for a **curved relationship**
 ::: callout-note
 ### Boston Context
 
-Boston has LOTS of historic homes (Back Bay, Beacon Hill built
-1850s-1900s). Does age create a U-shaped curve?
+Boston has LOTS of historic homes (Back Bay, Beacon Hill built 1850s-1900s). Does age create a U-shaped curve?
 :::
 
 ## Create Age Variable
@@ -1045,8 +957,6 @@ ggplot(boston.sf, aes(x = Age)) +
   theme_minimal()
 ```
 
-------------------------------------------------------------------------
-
 ## First: Linear Model (Baseline)
 
 ```{r}
@@ -1059,10 +969,7 @@ model_age_linear <- lm(SalePrice ~ Age + LivingArea, data = boston.sf)
 summary(model_age_linear)$coef
 ```
 
-Interpretation: Each additional year of age changes price by \$2834.01
-(assumed constant rate)
-
-------------------------------------------------------------------------
+Interpretation: Each additional year of age changes price by \$2834.01 (assumed constant rate)
 
 ## Visualize: Is the relationship Linear?
 
@@ -1087,8 +994,6 @@ ggplot(boston.sf, aes(x = Age, y = SalePrice)) +
   theme_minimal()
 ```
 
-------------------------------------------------------------------------
-
 ## Add Polynomial Term: Age Squared
 
 ```{r}
@@ -1102,12 +1007,8 @@ summary(model_age_quad)$coef
 ```
 
 ::: callout-important
-The I() Function Why I(Age\^2) instead of just Age\^2? In R formulas, \^
-has special meaning. I() tells R: "interpret this literally, compute
-Age²" Without I(): R would interpret it differently in the formula
+The I() Function Why I(Age\^2) instead of just Age\^2? In R formulas, \^ has special meaning. I() tells R: "interpret this literally, compute Age²" Without I(): R would interpret it differently in the formula
 :::
-
-------------------------------------------------------------------------
 
 ## Interpreting Polynomial Coefficients
 
@@ -1121,21 +1022,13 @@ beta_age <- coefs_quad["Age"]
 beta_age2 <- coefs_quad["I(Age^2)"]
 ```
 
-Model equation: Price =
-`r scales::dollar(coefs_quad[1], accuracy = 1)` +
-`r scales::dollar(beta_age, accuracy = 1)`×Age +
-`r scales::dollar(beta_age2, accuracy = 2)`×Age² +
-`r scales::dollar(coefs_quad["LivingArea"], accuracy = 1)`×LivingArea
+Model equation: Price = `r scales::dollar(coefs_quad[1], accuracy = 1)` + `r scales::dollar(beta_age, accuracy = 1)`×Age + `r scales::dollar(beta_age2, accuracy = 2)`×Age² + `r scales::dollar(coefs_quad["LivingArea"], accuracy = 1)`×LivingArea
 
 ::: callout-warning
 ⚠️ Can't Interpret Coefficients Directly!
 
-With Age², the effect of age is no longer constant. You need to
-calculate the marginal effect. Marginal effect of Age = β₁ + 2×β₂×Age
-This means the effect changes at every age!
+With Age², the effect of age is no longer constant. You need to calculate the marginal effect. Marginal effect of Age = β₁ + 2×β₂×Age This means the effect changes at every age!
 :::
-
-------------------------------------------------------------------------
 
 ## Compare Model Performance
 
@@ -1154,8 +1047,6 @@ cat("Improvement:", round(r2_quad - r2_linear, 4), "\n\n")
 # F-test: Is the Age² term significant?
 anova(model_age_linear, model_age_quad)
 ```
-
-------------------------------------------------------------------------
 
 ## Check Residual Plot
 
@@ -1181,11 +1072,7 @@ plot(fitted(model_age_quad), residuals(model_age_quad),
 abline(h = 0, col = "red", lty = 2)
 ```
 
-------------------------------------------------------------------------
-
 # Part 3: Creating Spatial Features {background-color="#667eea"}
-
-------------------------------------------------------------------------
 
 ## Why Space Matters for Housing Prices
 
@@ -1208,11 +1095,8 @@ abline(h = 0, col = "red", lty = 2)
 
 How do we quantify "nearbyness" in a way our regression model can use?
 
-**Answer:** Create spatial features that measure proximity to
-amenities/disamenities
+**Answer:** Create spatial features that measure proximity to amenities/disamenities
 :::
-
-------------------------------------------------------------------------
 
 ## Three Approaches to Spatial Features
 
@@ -1237,8 +1121,6 @@ amenities/disamenities
 ::: callout-tip
 **Today:** We'll create all three types using Boston crime data!
 :::
-
-------------------------------------------------------------------------
 
 ## Load and Prepare Crime Data
 
@@ -1289,8 +1171,6 @@ violent_crimes %>%
   head(10)
 ```
 
-------------------------------------------------------------------------
-
 ## Visaulize: Crime Locations
 
 ```{r}
@@ -1312,8 +1192,6 @@ ggplot() +
   ) +
   theme_void()
 ```
-
-------------------------------------------------------------------------
 
 ## Approach 1: Buffer Aggregation
 
@@ -1348,8 +1226,6 @@ ggplot(boston.sf, aes(x = crimes.Buffer)) +
   theme_minimal()
 ```
 
-------------------------------------------------------------------------
-
 ## Approach 2: k-Nearest Neighborhoods Method
 
 ```{r}
@@ -1380,11 +1256,8 @@ summary(boston.sf %>% st_drop_geometry() %>% select(starts_with("crime_nn")))
 ```
 
 ::: callout-note
-Interpretation: crime_nn3 = 83.29 means the average distance to the 3
-nearest crimes is 83.29 feet
+Interpretation: crime_nn3 = 83.29 means the average distance to the 3 nearest crimes is 83.29 feet
 :::
-
-------------------------------------------------------------------------
 
 ## Which k value correlates most with price?
 
@@ -1402,11 +1275,8 @@ boston.sf %>%
 ```
 
 ::: callout-tip
-Finding: The kNN feature with the strongest correlation tells us the
-relevant "zone of influence" for crime perception!
+Finding: The kNN feature with the strongest correlation tells us the relevant "zone of influence" for crime perception!
 :::
-
-------------------------------------------------------------------------
 
 Approach 3: Distance to Downtown
 
@@ -1428,8 +1298,6 @@ boston.sf <- boston.sf %>%
 # Summary
 summary(boston.sf$dist_downtown_mi)
 ```
-
-------------------------------------------------------------------------
 
 ### All spatial features together
 
@@ -1462,8 +1330,6 @@ feature_summary <- tribble(
 knitr::kable(feature_summary, align = c('l', 'l', 'l'))
 ```
 
-------------------------------------------------------------------------
-
 ### Model Comparison: Adding Spatial Features
 
 ```{r}
@@ -1490,22 +1356,16 @@ cat("Improvement:", round(summary(model_spatial)$r.squared -
                           summary(model_structural)$r.squared, 4), "\n")
 ```
 
-------------------------------------------------------------------------
-
 # Part 3: Fixed Effects {background-color="#667eea"}
-
-------------------------------------------------------------------------
 
 ## What Are Fixed Effects?
 
-**Fixed Effects** = Categorical variables that capture **all unmeasured
-characteristics** of a group
+**Fixed Effects** = Categorical variables that capture **all unmeasured characteristics** of a group
 
 **In hedonic models:**
 
 -   Each neighborhood gets its own dummy variable
--   Captures everything unique about that neighborhood we didn't
-    explicitly measure
+-   Captures everything unique about that neighborhood we didn't explicitly measure
 
 *We technically already did this when I went over categorical data!*
 
@@ -1542,8 +1402,6 @@ R creates a dummy for each neighborhood automatically!
 :::
 :::::
 
-------------------------------------------------------------------------
-
 ## How Fixed Effects Work
 
 ```{r}
@@ -1568,10 +1426,7 @@ nameBeacon_Hill      125000   ← $125k premium
 nameAllston          -15000   ← $15k discount
 ```
 
-**Each coefficient = price premium/discount for that neighborhood**
-(holding all else constant)
-
-------------------------------------------------------------------------
+**Each coefficient = price premium/discount for that neighborhood** (holding all else constant)
 
 ## Why Use Fixed Effects?
 
@@ -1611,10 +1466,7 @@ Model Comparison (R²):
 :::
 :::::
 
-**Trade-off:** FE are powerful but they're a **black box** - we don't
-know WHY Back Bay commands a premium
-
-------------------------------------------------------------------------
+**Trade-off:** FE are powerful but they're a **black box** - we don't know WHY Back Bay commands a premium
 
 ## Let's Compare All Our Models
 
@@ -1646,21 +1498,15 @@ stargazer(reg3, reg4, reg5, type = "text")
 
 **But in-sample R² can be misleading! We need cross-validation...**
 
-------------------------------------------------------------------------
-
 # Part 5: Cross-Validation (with Categorical Variables) {background-color="#667eea"}
-
-------------------------------------------------------------------------
 
 ## CV Recap (From Last Week)
 
 **Three common validation approaches:**
 
 1.  **Train/Test Split** - 80/20 split, simple but unstable
-2.  **k-Fold Cross-Validation** - Split into k folds, train on k-1, test
-    on 1, repeat
-3.  **LOOCV** - Leave one observation out at a time (special case of
-    *k*-fold)
+2.  **k-Fold Cross-Validation** - Split into k folds, train on k-1, test on 1, repeat
+3.  **LOOCV** - Leave one observation out at a time (special case of *k*-fold)
 
 **Today we'll use k-fold CV** to compare our hedonic models
 
@@ -1694,8 +1540,6 @@ model_cv <- train(
 -   Helps detect overfitting
 :::
 :::::
-
-------------------------------------------------------------------------
 
 ## Comparing Models with CV
 
@@ -1732,8 +1576,6 @@ data.frame(
 )
 ```
 
-------------------------------------------------------------------------
-
 ## ⚠️ The Problem: Sparse Categories
 
 ### When CV Fails with Categorical Variables
@@ -1743,8 +1585,8 @@ data.frame(
 #| echo: true
 
 # You might see this error:
-Error in model.frame.default: 
-  factor 'name' has new level 'West End'
+#Error in model.frame.default: 
+#  factor 'name' has new level 'West End'
 ```
 
 **What happened?**
@@ -1757,11 +1599,10 @@ Error in model.frame.default:
 ::: callout-important
 ### The Issue
 
-When neighborhoods have **very few sales** (\<10), random CV splits can
-put all instances in the same fold, breaking the model.
+When neighborhoods have **very few sales** (\<10), random CV splits can put all instances in the same fold, breaking the model.
 :::
 
-------------------------------------------------------------------------
+
 
 ## Check Your Data First!
 
@@ -1770,7 +1611,7 @@ put all instances in the same fold, breaking the model.
 #| eval: false
 
 # ALWAYS run this before CV with categorical variables
-category_check %
+category_check %>%
   st_drop_geometry() %>%
   count(name) %>%
   arrange(n)
@@ -1790,11 +1631,8 @@ South Boston      112  ✓ Safe
 ```
 
 ::: callout-tip
-**Rule of Thumb:** Categories with **n \< 10** will likely cause CV
-problems
+**Rule of Thumb:** Categories with **n \< 10** will likely cause CV problems
 :::
-
-------------------------------------------------------------------------
 
 ## Solution: Group Small Neighborhoods
 
@@ -1829,10 +1667,7 @@ cv_model_fe <- train(
 )
 ```
 
-**Trade-off:** Lose granularity for small neighborhoods, but avoid CV
-crashes
-
-------------------------------------------------------------------------
+**Trade-off:** Lose granularity for small neighborhoods, but avoid CV crashes
 
 ## Alternative: Drop Sparse Categories
 
@@ -1843,27 +1678,23 @@ crashes
 #| eval: false
 
 # Remove neighborhoods with < 10 sales
-neighborhood_counts %
+neighborhood_counts %>%
   st_drop_geometry() %>%
   count(name)
 
-keep_neighborhoods %
+keep_neighborhoods %>%
   filter(n >= 10) %>%
   pull(name)
 
-boston_filtered %
+boston_filtered %>%
   filter(name %in% keep_neighborhoods)
 
 cat("Removed", nrow(boston.sf) - nrow(boston_filtered), "observations")
 ```
 
 ::: callout-warning
-**Consider carefully:** Which neighborhoods are you excluding? Often
-those with less data are marginalized communities. Document what you
-removed and why.
+**Consider carefully:** Which neighborhoods are you excluding? Often those with less data are marginalized communities. Document what you removed and why.
 :::
-
-------------------------------------------------------------------------
 
 ## My Recommended Workflow
 
@@ -1900,8 +1731,6 @@ model <- train(
 # 5. Report
 cat("10-fold CV RMSE:", round(model$results$RMSE, 0), "\n")
 ```
-
-------------------------------------------------------------------------
 
 ## Full Model Comparison with CV
 
@@ -1945,8 +1774,6 @@ data.frame(
 )
 ```
 
-------------------------------------------------------------------------
-
 ## Expected Results
 
 **Typical pattern:**
@@ -1958,16 +1785,11 @@ Structural        $533,330.60   Baseline - just house characteristics
 + Fixed Effects   $347,261.30   Neighborhoods capture a LOT
 ```
 
-*Note: these values are kind of ginormous - remember RMSE squares big
-errors, so outliers can have a really large impact*
+*Note: these values are kind of ginormous - remember RMSE squares big errors, so outliers can have a really large impact*
 
-**Key Insight:** Each layer improves **out-of-sample** prediction, with
-fixed effects providing the biggest boost
+**Key Insight:** Each layer improves **out-of-sample** prediction, with fixed effects providing the biggest boost
 
-**Why?** Neighborhoods bundle many unmeasured factors (schools,
-amenities, prestige) that we can't easily quantify individually
-
-------------------------------------------------------------------------
+**Why?** Neighborhoods bundle many unmeasured factors (schools, amenities, prestige) that we can't easily quantify individually
 
 ## Investigating those errors...
 
@@ -1994,10 +1816,7 @@ ggplot(boston.sf, aes(y = SalePrice)) +
 
 ```
 
-**Look for:** - Prices over \$2-3 million (could be luxury condos or
-errors) - Prices near \$0 (data errors) - Long right tail in histogram
-
-------------------------------------------------------------------------
+**Look for:** - Prices over \$2-3 million (could be luxury condos or errors) - Prices near \$0 (data errors) - Long right tail in histogram
 
 # What to Do?
 
@@ -2008,8 +1827,7 @@ errors) - Prices near \$0 (data errors) - Long right tail in histogram
 
 -   RMSE is now in **log-dollars** (hard to interpret)
 -   To convert back: `exp(predictions)` gives actual dollars
--   Coefficients now represent **percentage changes**, not dollar
-    changes
+-   Coefficients now represent **percentage changes**, not dollar changes
 -   This is standard practice in hedonic modeling!
 :::
 
@@ -2019,14 +1837,12 @@ errors) - Prices near \$0 (data errors) - Long right tail in histogram
 
 ## Team Exercise: Practice What We've Done and Build Your Best Model
 
-**Goal:** Create a comprehensive hedonic model using ALL concepts from
-today (and last week)
+**Goal:** Create a comprehensive hedonic model using ALL concepts from today (and last week)
 
 **Requirements:**
 
 1.  Structural variables (including categorical)
-2.  Spatial features (create your own -
-    nhttps://data.boston.gov/group/geospatial
+2.  Spatial features (create your own - nhttps://data.boston.gov/group/geospatial
 3.  At least one interaction term
 4.  One non-linear (polynomial term)
 5.  Neighborhood fixed effects (handle sparse categories!)
@@ -2047,16 +1863,13 @@ today (and last week)
     -   Interactions: \_\_\_\_\_\_\_\_\_\_\_\_
     -   Fixed Effects: Yes/No, how handled sparse categories?
 
-2.  **Final cross-validated RMSE:** \$\_\_\_\_\_\_\_\_\_\_\_\_ and
-    **MAE** \$\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+2.  **Final cross-validated RMSE:** \$\_\_\_\_\_\_\_\_\_\_\_\_ and **MAE** \$\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 3.  **One insight:**
 
     -   What made the biggest difference?
     -   Did anything surprise you?
     -   Which variables mattered most?
-
-------------------------------------------------------------------------
 
 ## Tips for Success
 
@@ -2093,5 +1906,3 @@ today (and last week)
 **Negative R²** → Model worse than mean, rethink variables
 :::
 :::::
-
-------------------------------------------------------------------------

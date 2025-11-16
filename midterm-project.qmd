@@ -1,6 +1,25 @@
 ---
-title: "MIDTERM PROJECT"
-author: Ming Cao, Mark Deng, Jun Luu, Josh Rigsby, Alex Stauffer, Tess Vu
+title: MIDTERM PROJECT
+subtitle: PHILADELPHIA PREDICTIVE HOUSING MODEL
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+  - name: Ming Cao
+  - name: Mark Deng
+  - name: Jun Luu
+  - name: Josh Rigsby
+  - name: Alex Stauffer
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format:
+  html:
+    title-block-style: default
 ---
 
 # HOUSE PRICE PREDICTIVE MODEL

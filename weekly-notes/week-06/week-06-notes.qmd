@@ -1,7 +1,31 @@
 ---
-title: "WEEK 6 NOTES: SPATIAL MACHINE LEARNING & ADVANCED REGRESSION"
-date: "2025-10-13"
-echo: FALSE
+title: "SPATIAL MACHINE LEARNING & ADVANCED REGRESSION"
+subtitle: WEEK 6 NOTES
+date: 2025-10-13
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format:
+  html:
+    code-fold: show
+    toc: true
+    toc-location: left
+    toc-expand: true
+    smooth-scroll: true
+    embed-resources: true
+    title-block-style: default
+execute:
+  warning: false
+  message: false
 ---
 
 ## Key Concepts Learned

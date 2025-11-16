@@ -1,66 +1,29 @@
 ---
 title: "Assignment 2: Spatial Analysis and Visualization"
-subtitle: "Healthcare Access and Equity in Pennsylvania"
-author: "Tessa Vu"
+subtitle: Healthcare Access and Equity in Pennsylvania
+author: Tess Vu
 date: 2025-10-14
 format: 
   html:
-    code-fold: false
+    code-fold: show
     toc: true
     toc-location: left
-    theme: lux
+    toc-expand: true
+    smooth-scroll: true
     embed-resources: true
 execute:
   warning: false
   message: false
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
-## Assignment Overview
+# Part 1: Healthcare Access for Vulnerable Populations
 
-**Learning Objectives:**
-
--   Apply spatial operations to answer policy-relevant research
-    questions
-
--   Integrate census demographic data with spatial analysis
-
--   Create publication-quality visualizations and maps
-
--   Work with spatial data from multiple sources
-
--   Communicate findings effectively for policy audiences
-
-------------------------------------------------------------------------
-
-## Part 1: Healthcare Access for Vulnerable Populations
-
-### Research Question
+## Research Question
 
 **Which Pennsylvania counties have the highest proportion of vulnerable
 populations (elderly + low-income) living far from hospitals?**
 
-Your analysis should identify counties that should be priorities for
-healthcare investment and policy intervention.
-
-### Required Analysis Steps
-
-Complete the following analysis, documenting each step with code and
-brief explanations:
-
-#### Step 1: Data Collection (5 points)
-
-Load the required spatial data:
-
--   Pennsylvania county boundaries
-
--   Pennsylvania hospitals (from lecture data)
-
--   Pennsylvania census tracts
-
-**Your Task:**
+### Step 1: Data Collection
 
 ```{r}
 #| message: false
@@ -95,9 +58,7 @@ pa_hospitals <- st_read("data/hospitals.geojson")
 #glimpse(pa_hospitals)
 ```
 
-**Questions to answer:**
-
--   How many hospitals are in your dataset?
+-   How many hospitals are in the dataset?
 
     -   223 hospitals.
 
@@ -115,23 +76,7 @@ pa_hospitals <- st_read("data/hospitals.geojson")
 
     -   PA hospitals CRS: GCS WGS 84 (Pseudo-Mercator) / EPSG 4326.
 
-------------------------------------------------------------------------
-
-#### Step 2: Get Demographic Data
-
-Use `tidycensus` to download tract-level demographic data for
-Pennsylvania.
-
-**Required variables:**
-
--   Total population
-
--   Median household income
-
--   Population 65 years and over (you may need to sum multiple age
-    categories)
-
-**Your Task:**
+### Step 2: Get Demographic Data
 
 ```{r}
 #| message: false
@@ -189,9 +134,7 @@ pa_tracts <- left_join(pa_tracts, tract_demographics, by = "GEOID")
 #                    "age_65_overE", "age_65_overM")])
 ```
 
-**Questions to answer:**
-
--   What year of ACS data are you using?
+-   What year of ACS data is being used?
 
     -   2020 ACS data.
 
@@ -204,18 +147,7 @@ pa_tracts <- left_join(pa_tracts, tract_demographics, by = "GEOID")
 
     -   \$61,691.
 
-------------------------------------------------------------------------
-
-#### Step 3: Define Vulnerable Populations
-
-Identify census tracts with vulnerable populations based on TWO
-criteria:
-
-1.  Low median household income (choose an appropriate threshold)
-
-2.  Significant elderly population (choose an appropriate threshold)
-
-**Your Task:**
+### Step 3: Define Vulnerable Populations
 
 ```{r}
 # Filter for vulnerable tracts.
@@ -269,17 +201,15 @@ kable(
   row_spec(0, color = "white", background = "black")
 ```
 
-**Questions to answer:**
-
--   What income threshold did you choose and why?
+-   What income threshold was chosen and why?
 
     -   \The income threshold I chose was for the amount equal to or below 25%, or first quartile of the median income data. I believe it's pertinent because many other factors come into play with income and affordability, especially when it comes to older populations, who have different forms of income that contribute to their day-to-day livelihoods. In addition, many elderly may have significant debts like those related to medical expenses that put them in more financial risk, so the 25% is a broader net that's an attempt to capture the idiosyncracies of affordability and economic struggles in the US.
 
--   What elderly population threshold did you choose and why?
+-   What elderly population threshold was chosen and why?
 
     -   I used the third quantile for the elderly population percentage in PA, this means I'm targetting tracts with a larger proportion of older individuals that paint a picture of an aging populace in the areas. With an aging population, and younger populations generally moving to other regions with economic opportunity, elderly tracts' public services may take a hit with out-migrating young workers and be more susceptible to physical and other health-related vulnerabilities.
 
--   How many tracts meet your vulnerability criteria?
+-   How many tracts meet the vulnerability criteria?
 
     -   172 tracts meet the vulnerability criteria.
 
@@ -289,14 +219,7 @@ kable(
     -   Approximately 4.99% of PA's census tracts are considered
         vulnerable.
 
-------------------------------------------------------------------------
-
-#### Step 4: Calculate Distance to Hospitals
-
-For each vulnerable tract, calculate the distance to the nearest
-hospital.
-
-**Your Task:**
+### Step 4: Calculate Distance to Hospitals
 
 ```{r}
 #| warning: false
@@ -340,23 +263,7 @@ underserved_number <- sum(vulnerable_tracts$nearest_hospital_mi > 15)
 
 print(paste0("There are ", underserved_number, " census tracts that are underserved."))
 ```
-
-**Requirements:**
-
--   Use an appropriate projected coordinate system for Pennsylvania
-
--   Calculate distances in miles
-
--   Explain why you chose your projection
-
-    -   I chose Albers Equal Area because it was appropriate when
-        calculating hospital distances all over the state, if I'd chosen
-        a PCS that was more localized like State Planes, then depending
-        whichever cardinal direction I selected (i.e. North or South
-        Pennsylvania), it'd have some distortion in other regions of
-        Pennsylvania.
-
-**Questions to answer:**
+I chose Albers Equal Area because it was appropriate when calculating hospital distances all over the state, if I'd chosen a PCS that was more localized like State Planes, then depending whichever cardinal direction I selected (i.e. North or South Pennsylvania), it'd have some distortion in other regions of Pennsylvania.
 
 -   What is the average distance to the nearest hospital for vulnerable
     tracts?
@@ -373,14 +280,7 @@ print(paste0("There are ", underserved_number, " census tracts that are underser
     -   11 census tracts of the 172 total vulnerable tracts are more
         than 15 miles from the nearest hospital.
 
-------------------------------------------------------------------------
-
-#### Step 5: Identify Underserved Areas
-
-Define "underserved" as vulnerable tracts that are more than 15 miles
-from the nearest hospital.
-
-**Your Task:**
+### Step 5: Identify Underserved Areas
 
 ```{r}
 # Filter tracts with hospitals more than 15 miles away.
@@ -399,8 +299,6 @@ underserved_percent <- (nrow(underserved_tracts) / nrow(vulnerable_tracts)) * 10
 print(sprintf("%.2f%% of vulnerable census tracts are underserved.", underserved_percent))
 ```
 
-**Questions to answer:**
-
 -   How many tracts are underserved?
 
     -   11 census tracts are underserved.
@@ -409,7 +307,7 @@ print(sprintf("%.2f%% of vulnerable census tracts are underserved.", underserved
 
     -   6.4% of vulnerable census tracts are underserved.
 
--   Does this surprise you? Why or why not?
+-   Is this surprising? Why or why not?
 
     -   Not quite. I'm from Utah and the disparity with hospital access
         is expected, especially since it's twice the size of
@@ -421,14 +319,7 @@ print(sprintf("%.2f%% of vulnerable census tracts are underserved.", underserved
         lacking access of those who are underserved, even if it seems
         like a small percent of the population.
 
-------------------------------------------------------------------------
-
-#### Step 6: Aggregate to County Level
-
-Use spatial joins and aggregation to calculate county-level statistics
-about vulnerable populations and hospital access.
-
-**Your Task:**
+### Step 6: Aggregate to County Level
 
 ```{r}
 # Spatial join tracts to counties.
@@ -491,20 +382,6 @@ ggplot(pa_mapping) +
   theme_void()
 ```
 
-**Required county-level statistics:**
-
--   Number of vulnerable tracts
-
--   Number of underserved tracts
-
--   Percentage of vulnerable tracts that are underserved
-
--   Average distance to nearest hospital for vulnerable tracts
-
--   Total vulnerable population
-
-**Questions to answer:**
-
 -   Which 5 counties have the highest percentage of underserved
     vulnerable tracts?
 
@@ -523,14 +400,7 @@ ggplot(pa_mapping) +
         with several forested regions like national and state forests.
         Development may be much more restricted due to that. There are also underserved counties at the fringes of Pennsylvania, and several counties noted as NA due to the fact that the census tracts within them were part of the 64 NA tracts.
 
-------------------------------------------------------------------------
-
-#### Step 7: Create Summary Table
-
-Create a professional table showing the top 10 priority counties for
-healthcare investment.
-
-**Your Task:**
+### Step 7: Create Summary Table
 
 ```{r}
 # Create and format priority counties table.
@@ -580,32 +450,9 @@ kable(
   row_spec(0, color = "mistyrose", background = "red3")
 ```
 
-**Requirements:**
+# Part 2: Comprehensive Visualization
 
--   Use `knitr::kable()` or similar for formatting
-
--   Include descriptive column names
-
--   Format numbers appropriately (commas for population, percentages,
-    etc.)
-
--   Add an informative caption
-
--   Sort by priority (you decide the metric)
-
-------------------------------------------------------------------------
-
-## Part 2: Comprehensive Visualization
-
-Using the skills from Week 3 (Data Visualization), create
-publication-quality maps and charts.
-
-### Map 1: County-Level Choropleth
-
-Create a choropleth map showing healthcare access challenges at the
-county level.
-
-**Your Task:**
+## Map 1: County-Level Choropleth
 
 ```{r, fig.width = 8, fig.height = 6, dpi = 300}
 # Create county-level access map.
@@ -654,28 +501,7 @@ choropleth_pa + theme(
 )
 ```
 
-**Requirements:**
-
--   Fill counties by percentage of vulnerable tracts that are
-    underserved
-
--   Include hospital locations as points
-
--   Use an appropriate color scheme
-
--   Include clear title, subtitle, and caption
-
--   Use `theme_void()` or similar clean theme
-
--   Add a legend with formatted labels
-
-------------------------------------------------------------------------
-
-### Map 2: Detailed Vulnerability Map
-
-Create a map highlighting underserved vulnerable tracts.
-
-**Your Task:**
+## Map 2: Detailed Vulnerability Map
 
 ```{r, fig.width = 8, fig.height = 6, dpi = 300}
 # Create detailed tract-level map.
@@ -736,26 +562,7 @@ choropleth_map + theme(
 )
 ```
 
-**Requirements:**
-
--   Show underserved vulnerable tracts in a contrasting color
-
--   Include county boundaries for context
-
--   Show hospital locations
-
--   Use appropriate visual hierarchy (what should stand out?)
-
--   Include informative title and subtitle
-
-------------------------------------------------------------------------
-
-### Chart: Distribution Analysis
-
-Create a visualization showing the distribution of distances to
-hospitals for vulnerable populations.
-
-**Your Task:**
+## Chart: Distribution Analysis
 
 ```{r}
 # Create distribution visualization.
@@ -809,43 +616,11 @@ faceted_plot <-
 faceted_plot
 ```
 
-**Suggested chart types:**
+Of the vulnerable tracts, it looks like the distances to the nearest hospitals are generally less than 5 miles and the histogram is skewed right. From this visual distribution, it looks like there's accessibility with vulnerable populations and drivable distance to the nearest hospital. The elderly population also look like they cluster around the 500 estimate, also skewing to the right significantly once the estimate reachs 1,000 or more.
 
--   Histogram or density plot of distances
+# Part 3: Bring Own Data Analysis
 
--   Box plot comparing distances across regions
-
--   Bar chart of underserved tracts by county
-
--   Scatter plot of distance vs. vulnerable population size
-
-**Requirements:**
-
--   Clear axes labels with units
-
--   Appropriate title
-
--   Professional formatting
-
--   Brief interpretation (1-2 sentences as a caption or in text)
-
-    -   Of the vulnerable tracts, it looks like the distances to the nearest hospitals are generally less than 5 miles and the histogram is skewed right. From this visual distribution, it looks like there's accessibility with vulnerable populations and drivable distance to the nearest hospital. The elderly population also look like they cluster around the 500 estimate, also skewing to the right significantly once the estimate reachs 1,000 or more.
-
-------------------------------------------------------------------------
-
-## Part 3: Bring Your Own Data Analysis
-
-Choose your own additional spatial dataset and conduct a supplementary
-analysis.
-
-### Your Analysis
-
-**Your Task:**
-
-1.  **Find and load additional data**
-    -   Document your data source
-    -   Check and standardize the CRS
-    -   Provide basic summary statistics
+## Analysis
 
 ```{r}
 #| message: false
@@ -950,9 +725,7 @@ philly_tracts[, c("STATEFP", "COUNTYFP", "GEOIDFQ", "NAME", "NAMELSAD", "STUSPS"
 colnames(philly_tracts)[2] <- "county"
 ```
 
-**Questions to answer:**
-
--   What dataset did you choose and why?
+-   What dataset was chosen and why?
 
     -   Aside from ACS data for PA's counties and census tracts, I chose
         OpenDataPhilly's [crime incidence
@@ -981,7 +754,7 @@ colnames(philly_tracts)[2] <- "county"
         304 features, treatment facilities data has 965 features, and
         sharps box data has 27 features.
 
--   What CRS is it in? Did you need to transform it?
+-   What CRS is it in? Was transforming needed?
 
     -   The crime data has no CRS but data having coordinates indicates
         WGS84, free meals site data is in WGS84 / Pseudo-Mercator (EPSG
@@ -995,36 +768,12 @@ colnames(philly_tracts)[2] <- "county"
         WGS84 first for that function, and then transform the CRS again
         to Pennsylvania South.
 
-------------------------------------------------------------------------
-
-2.  **Pose a research question**
-
-Write a clear research statement that your analysis will answer.
+2.  **Research Question**
 
 -   Do tracts with high drug-related instances have adequate access to
     treatment facilities, sharps bins, and free meal programs?
 
-------------------------------------------------------------------------
-
 3.  **Conduct spatial analysis**
-
-Use at least TWO spatial operations to answer your research question.
-
-**Required operations (choose 2+):**
-
--   Buffers
-
--   Spatial joins\*
-
--   Spatial filtering with predicates\*
-
--   Distance calculations\*
-
--   Intersections or unions\*
-
--   Point-in-polygon aggregation\*
-
-**Your Task:**
 
 ```{r}
 # Aggregate and count drug offenses in Philadelphia census tracts.
@@ -1416,20 +1165,6 @@ kable(
   row_spec(0, color = "white", background = "black")
 ```
 
-**Analysis requirements:**
-
--   Clear code comments explaining each step
-
--   Appropriate CRS transformations
-
--   Summary statistics or counts
-
--   At least one map showing your findings
-
--   Brief interpretation of results (3-5 sentences)
-
-**Your interpretation:**
-
 Many census tracts with higher percents of drug-related incidents lie in North Philly, Near-Northeast Philly, and West Philly primarily above Market Street. It seems like Philadelphia is taking the drug-related concerns seriously, the drug-alcohol treatment facilities and active free meal programs are peppered all around the county and have good coverage over tracts with higher drug-related events.
 
 It also looks like most meals and facilities are within walking distance. However, sharps bins don't have too much spatial overlap and are lacking statistically, with average distances beyond a mile. It may be worth implementing more sharps bin sites around tracts with more drug-use events.
@@ -1438,7 +1173,7 @@ While facilities may have disposals, many drug-users range from recreational to 
 
 This quick look at resource distribution has policy relevance to community investment, harm reduction, siting, food programming, and quality of life for everyone, not just those directly affected by drug-use.
 
-## Finally - A few comments about your incorporation of feedback!
+# Comments about incorporation of feedback.
 
 - I removed a lot of the extra instruction text in this write-up to make the report more concise and straightforward.
 - Any printouts and summaries created outside of kable were commented out or removed to give the report more clarity and not fill it with extra text or numbers.

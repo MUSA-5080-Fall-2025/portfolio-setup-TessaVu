@@ -1,18 +1,34 @@
 ---
-title: "WEEK 4 IN-CLASS LAB: SPATIAL DATA & GIS OPERATIONS IN R"
-subtitle: "Spatial Operations with Pennsylvania Data"
-author: "Tessa Vu"
+title: "SPATIAL DATA & GIS OPERATIONS IN R"
+subtitle: WEEK 4 IN-CLASS LAB
 date: 2025-09-29
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
 format: 
   html:
-    code-fold: false
+    code-fold: show
     toc: true
     toc-location: left
-    theme: lux
+    toc-expand: true
+    smooth-scroll: true
+    embed-resources: true
+    title-block-style: default
 execute:
   warning: false
   message: false
 ---
+
+# SPATIAL OPERATIONS WITH PENNSYLVANIA DATA
 
 ## Setup
 
@@ -28,9 +44,9 @@ library(here)
 census_api_key("3aaee31789e10b674a531e9f236c35d5394b19ed")
 
 # Load the data (same as lecture)
-pa_counties <- st_read(here("data/Pennsylvania_County_Boundaries.shp"))
-districts <- st_read(here("data/districts.geojson"))
-hospitals <- st_read(here("data/hospitals.geojson"))
+pa_counties <- st_read("data/Pennsylvania_County_Boundaries.shp")
+districts <- st_read("data/districts.geojson")
+hospitals <- st_read("data/hospitals.geojson")
 census_tracts <- tracts(state = "PA", cb = TRUE)
 metro_areas <- core_based_statistical_areas(cb = TRUE)
 
