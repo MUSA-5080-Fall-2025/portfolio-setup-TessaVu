@@ -1,2 +1,4 @@
 /.quarto/
 **/*.quarto_ipynb
+labs/lab-4/data/buildings_2017.geojson
+labs/lab-4/.RData

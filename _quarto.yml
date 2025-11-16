@@ -40,6 +40,10 @@ website:
           text: "LAB 1: CENSUS DATA"
         - href: labs/lab-2/Vu_Tessa_Assignment2.qmd
           text: "LAB 2: HEALTHCARE ACCESS AND EQUITY"
+        - href: midterm-project.qmd
+          text: "LAB 3: MIDTERM PROJECT"
+        - href: labs/lab-4/Vu_Tessa_Assignment4.qmd
+          text: "LAB 4: SPATIAL PREDICTIVE ANALYSIS"
       - text: MIDTERM PROJECT
         menu: 
           - href: midterm-project.qmd

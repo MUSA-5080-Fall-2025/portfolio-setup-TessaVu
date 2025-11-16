@@ -1,0 +1,2340 @@
+---
+title: "Assignment 4: Spatial Predictive Analysis"
+subtitle: "311 Service Requests: Street Lights - One Out"
+author: "Tessa Vu"
+date: 2025-11-17
+format: 
+  html:
+    code-fold: false
+    toc: true
+    toc-location: left
+    theme: lux
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+code-fold: show
+---
+
+## GOAL
+
+Apply spatial predictive modeling techniques using the "Street Lights -
+One Out" 311 service request type as the predictor variable as well as other built environment variables, avoiding any demographic predictors.
+
+The above 311 violation was selected over the others because this lab is focusing on trying to create the most "ethical" predictive model. The reason why a single street light out was determined as the most ethical is because it is the most balanced when it comes to the violations; all street lights being out or abandoned cars may likely skew toward underserved and disinvested areas.
+
+## DATASETS
+
+### 1. Chicago Boundaries and Built Environment
+
+[**City Limits
+Boundaries**](https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-City-Map/ewy2-6yfk)
+
+[**Neighborhood
+Boundaries**](https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Neighborhoods/bbvz-uum9)
+
+[**Police District
+Boundaries**](https://data.cityofchicago.org/Public-Safety/Boundaries-Police-Districts-current-/fthy-xz3r)
+
+[**Major
+Roads**](https://data.cityofchicago.org/Transportation/Major-Streets/ueqs-5wr6/about_data)
+
+### 2. 311 Service Requests (2017)
+
+[**2017 Chicago 311 Service Requests "Street Lights - One Out"
+Dataset**](https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Street-Lights-One-Out-Histori/3aav-uy2v/explore/query/SELECT%0A%20%20%60creation_date%60%2C%0A%20%20%60status%60%2C%0A%20%20%60completion_date%60%2C%0A%20%20%60service_request_number%60%2C%0A%20%20%60type_of_service_request%60%2C%0A%20%20%60street_address%60%2C%0A%20%20%60zip_code%60%2C%0A%20%20%60x_coordinate%60%2C%0A%20%20%60y_coordinate%60%2C%0A%20%20%60ward%60%2C%0A%20%20%60police_district%60%2C%0A%20%20%60community_area%60%2C%0A%20%20%60latitude%60%2C%0A%20%20%60longitude%60%2C%0A%20%20%60location%60%0AWHERE%0A%20%20%60creation_date%60%0A%20%20%20%20BETWEEN%20%222017-01-01T00%3A00%3A00%22%20%3A%3A%20floating_timestamp%0A%20%20%20%20AND%20%222017-12-31T23%3A59%3A59%22%20%3A%3A%20floating_timestamp/page/filter)
+
+### 3. Crimes (2017)
+
+[**2017 crimes filtered for forced entry
+burglaries**](https://data.cityofchicago.org/Public-Safety/Crimes-2017/d62x-nvdr/explore/query/SELECT%0A%20%20%60id%60%2C%0A%20%20%60case_number%60%2C%0A%20%20%60date%60%2C%0A%20%20%60block%60%2C%0A%20%20%60iucr%60%2C%0A%20%20%60primary_type%60%2C%0A%20%20%60description%60%2C%0A%20%20%60location_description%60%2C%0A%20%20%60arrest%60%2C%0A%20%20%60domestic%60%2C%0A%20%20%60beat%60%2C%0A%20%20%60district%60%2C%0A%20%20%60ward%60%2C%0A%20%20%60community_area%60%2C%0A%20%20%60fbi_code%60%2C%0A%20%20%60x_coordinate%60%2C%0A%20%20%60y_coordinate%60%2C%0A%20%20%60year%60%2C%0A%20%20%60updated_on%60%2C%0A%20%20%60latitude%60%2C%0A%20%20%60longitude%60%2C%0A%20%20%60location%60%0AWHERE%0A%20%20caseless_one_of%28%60primary_type%60%2C%20%22BURGLARY%22%29%0A%20%20AND%20caseless_one_of%28%60description%60%2C%20%22FORCIBLE%20ENTRY%22%29/page/filter)
+
+### 4. Vacant Buildings (2017)
+
+[**2017 Vacant Buildings
+Dataset**](https://data.cityofchicago.org/Buildings/Vacant-and-Abandoned-Buildings-Violations/kc9i-wq85/explore/query/SELECT%0A%20%20%60docket_number%60%2C%0A%20%20%60violation_number%60%2C%0A%20%20%60issued_date%60%2C%0A%20%20%60issuing_department%60%2C%0A%20%20%60last_hearing_date%60%2C%0A%20%20%60property_address%60%2C%0A%20%20%60violation_type%60%2C%0A%20%20%60entity_or_person_s_%60%2C%0A%20%20%60disposition_description%60%2C%0A%20%20%60total_fines%60%2C%0A%20%20%60total_administrative_costs%60%2C%0A%20%20%60interest_amount%60%2C%0A%20%20%60collection_costs_or_attorney_fees%60%2C%0A%20%20%60court_cost%60%2C%0A%20%20%60original_total_amount_due%60%2C%0A%20%20%60total_paid%60%2C%0A%20%20%60current_amount_due%60%2C%0A%20%20%60latitude%60%2C%0A%20%20%60longitude%60%2C%0A%20%20%60location%60/page/filter)
+
+### 5. Land-Use / Zoning
+
+[**Land-Use / Zoning
+Dataset**](https://data.cityofchicago.org/Community-Economic-Development/Boundaries-Zoning-Districts-current-Map/7cve-jgbp)
+filtered for (business/commercial, downtown, residential, industrial,
+and parks/open space)\[https://secondcityzoning.org/zones/\] filtered by
+creation date up to end of 2017.
+
+### 6. CTA L Stations
+
+[**CTA L Stations
+Dataset**](https://data.cityofchicago.org/Transportation/CTA-L-Rail-Stations/3tzw-cg4m/explore/query/SELECT%0A%20%20%60the_geom%60%2C%0A%20%20%60station_id%60%2C%0A%20%20%60longname%60%2C%0A%20%20%60lines%60%2C%0A%20%20%60address%60%2C%0A%20%20%60ada%60%2C%0A%20%20%60pknrd%60%2C%0A%20%20%60point_x%60%2C%0A%20%20%60point_y%60%2C%0A%20%20%60legend%60/page/filter)
+
+### 7. Buildings (2017)
+
+[**Buildings
+Dataset**](https://data.cityofchicago.org/Buildings/Building-Footprints/syp8-uezg/explore/query/SELECT%0A%20%20%60the_geom%60%2C%0A%20%20%60bldg_id%60%2C%0A%20%20%60cdb_city_i%60%2C%0A%20%20%60bldg_statu%60%2C%0A%20%20%60f_add1%60%2C%0A%20%20%60t_add1%60%2C%0A%20%20%60pre_dir1%60%2C%0A%20%20%60st_name1%60%2C%0A%20%20%60st_type1%60%2C%0A%20%20%60unit_name%60%2C%0A%20%20%60non_standa%60%2C%0A%20%20%60bldg_name1%60%2C%0A%20%20%60bldg_name2%60%2C%0A%20%20%60comments%60%2C%0A%20%20%60stories%60%2C%0A%20%20%60orig_bldg_%60%2C%0A%20%20%60footprint_%60%2C%0A%20%20%60create_use%60%2C%0A%20%20%60bldg_creat%60%2C%0A%20%20%60bldg_activ%60%2C%0A%20%20%60bldg_end_d%60%2C%0A%20%20%60demolished%60%2C%0A%20%20%60edit_date%60%2C%0A%20%20%60edit_useri%60%2C%0A%20%20%60edit_sourc%60%2C%0A%20%20%60qc_date%60%2C%0A%20%20%60qc_userid%60%2C%0A%20%20%60qc_source%60%2C%0A%20%20%60x_coord%60%2C%0A%20%20%60y_coord%60%2C%0A%20%20%60z_coord%60%2C%0A%20%20%60harris_str%60%2C%0A%20%20%60no_of_unit%60%2C%0A%20%20%60no_stories%60%2C%0A%20%20%60year_built%60%2C%0A%20%20%60bldg_sq_fo%60%2C%0A%20%20%60bldg_condi%60%2C%0A%20%20%60condition_%60%2C%0A%20%20%60vacancy_st%60%2C%0A%20%20%60label_hous%60%2C%0A%20%20%60suf_dir1%60%2C%0A%20%20%60shape_area%60%2C%0A%20%20%60shape_len%60%0AWHERE%0A%20%20%28%60bldg_activ%60%20%3C%3D%20%222017-12-31T17%3A59%3A59.000Z%22%20%3A%3A%20fixed_timestamp%0A%20%20%20%20%20AND%20%60year_built%60%20%3C%3D%202017%0A%20%20%20%20%20AND%20%60bldg_end_d%60%20IS%20NULL%29%0A%20%20%20%20OR%20%60bldg_end_d%60%20%3E%3D%20%222017-01-01T05%3A00%3A00.000Z%22%20%3A%3A%20fixed_timestamp/page/filter)
+
+### 8. Crimes for Temporal Validation (2018)
+
+[**2018 crimes filtered for forced entry
+burglaries**](https://data.cityofchicago.org/Public-Safety/Crimes-2018/3i3m-jwuy/explore/query/SELECT%0A%20%20%60id%60%2C%0A%20%20%60case_number%60%2C%0A%20%20%60date%60%2C%0A%20%20%60block%60%2C%0A%20%20%60iucr%60%2C%0A%20%20%60primary_type%60%2C%0A%20%20%60description%60%2C%0A%20%20%60location_description%60%2C%0A%20%20%60arrest%60%2C%0A%20%20%60domestic%60%2C%0A%20%20%60beat%60%2C%0A%20%20%60district%60%2C%0A%20%20%60ward%60%2C%0A%20%20%60community_area%60%2C%0A%20%20%60fbi_code%60%2C%0A%20%20%60x_coordinate%60%2C%0A%20%20%60y_coordinate%60%2C%0A%20%20%60year%60%2C%0A%20%20%60updated_on%60%2C%0A%20%20%60latitude%60%2C%0A%20%20%60longitude%60%2C%0A%20%20%60location%60%0AWHERE%0A%20%20caseless_one_of%28%60primary_type%60%2C%20%22BURGLARY%22%29%0A%20%20AND%20caseless_one_of%28%60description%60%2C%20%22FORCIBLE%20ENTRY%22%29/page/filter)
+to match 2017 data
+
+## ANALYSIS
+
+### PART I: Data Loading & Exploration
+
+#### 1. Setup
+
+```{r setup}
+#| message: false
+#| warning: false
+#| include: false
+
+# Load relevant packages.
+library(tidyverse)      # Data manipulation.
+library(dplyr)          # Data manipulation.
+library(stringr)        # Data manipulation.
+library(sf)             # Spatial operations.
+library(here)           # Relative file paths.
+library(viridis)        # Color scales.
+library(terra)          # Raster operations (replaces "raster").
+library(spdep)          # Spatial dependence.
+library(FNN)            # Fast nearest neighbors.
+library(MASS)           # Negative binomial regression.
+library(patchwork)      # Plot composition (replaces grid/gridExtra).
+library(knitr)          # Tables.
+library(kableExtra)     # Table formatting.
+library(classInt)       # Classification intervals.
+library(ggplot2)        # Plotting.
+library(kableExtra)     # Professional tables.
+library(car)            # Use VIF.
+library(httr)           # API querying.
+
+# Spatstat split into sub-packages.
+library(spatstat.geom)    # Spatial geometries.
+library(spatstat.explore) # Spatial exploration/KDE.
+
+# Set options.
+options(scipen = 999)  # No scientific notation.
+set.seed(5080)         # Reproducibility.
+
+# Create consistent themes for visualizations.
+theme_chi_map <- function(base_size = 11) {
+  theme_minimal(base_size = base_size) +
+    theme(
+      plot.title = element_text(face = "bold",
+                                size = base_size + 1,
+                                hjust = 0.5
+                                ),
+      plot.subtitle = element_text(face = "italic",
+                                   color = "gray30",
+                                   size = base_size - 1,
+                                   hjust = 0.5
+                                   ),
+      legend.position = "bottom",
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.text = element_blank(),
+      axis.title = element_blank(),
+      legend.title = element_text(face = "italic",
+                                  size = base_size - 1,
+                                  hjust = 0.5
+                                  ),
+      legend.title.position = "top",
+      legend.text = element_text(face = "italic",
+                                 size = base_size - 3,
+                                 hjust = 0.5
+                                 ),
+      legend.key.width = unit(2, "cm"),
+      legend.key.height = unit(0.5, "cm")
+    )
+}
+
+theme_chi_plot <- function(base_size = 11) {
+  theme_minimal(base_size = base_size) +
+    theme(
+      plot.title = element_text(face = "bold",
+                                size = base_size + 1,
+                                hjust = 0.5
+                                ),
+      plot.subtitle = element_text(face = "italic",
+                                   color = "gray30",
+                                   size = base_size - 1,
+                                   hjust = 0.5
+                                   ),
+      legend.position = "bottom",
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.text = element_text(face = "italic",
+                               size = base_size - 3,
+                               hjust = 0.5
+                               ),
+      axis.title = element_text(face = "italic",
+                                size = base_size - 3,
+                                hjust = 0.5
+                                ),
+      legend.title = element_text(face = "italic",
+                                  size = base_size - 1,
+                                  hjust = 0.5
+                                  ),
+      legend.title.position = "top",
+      legend.text = element_text(face = "italic",
+                                 size = base_size - 3,
+                                 hjust = 0.5
+                                 ),
+      legend.key.width = unit(2, "cm"),
+      legend.key.height = unit(0.5, "cm")
+    )
+}
+```
+
+#### 2. Load Chicago Spatial Data
+
+```{r load-chicago}
+#| message: false
+#| warning: false
+#| include: false
+
+# Load Chicago's boundaries.
+chicago_boundary <-
+  st_read("data/chicago_boundary.geojson") %>%
+  st_transform("ESRI:102271")
+
+# Load Chicago's police districts.
+police_districts <-
+  st_read("data/police_districts.geojson") %>%
+  st_transform("ESRI:102271")
+
+# Load Chicago's neighborhood boundaries.
+neighborhoods <-
+  st_read("data/neighborhoods.geojson") %>%
+  st_transform("ESRI:102271")
+
+# Load Chicago's major streets.
+streets <-
+  st_read("data/major_streets/major_streets.shp") %>%
+  st_transform("ESRI:102271")
+
+# Load building data.
+buildings <- st_read("data/buildings_2017.geojson") %>%
+  st_transform("ESRI:102271")
+```
+
+#### 3. Load Burglary Data
+
+```{r load-burglaries}
+#| message: false
+#| warning: false
+#| include: false
+
+# Load 2017 burglary data.
+burglaries <-
+  st_read("data/burglaries_2017.geojson") %>%
+  st_transform("ESRI:102271")
+
+# Load 2018 burglary data.
+burglaries_2018 <-
+  st_read("data/burglaries_2018.geojson") %>%
+  st_transform("ESRI:102271")
+```
+
+#### 4. Load 311 Data
+
+```{r load-311-requests}
+#| message: false
+#| warning: false
+#| include: false
+
+# Load 2017 311 data for single street light outage.
+light_outage <-
+  st_read("data/single_light_outage_2017.geojson") %>%
+  st_transform("ESRI:102271")
+```
+
+#### 5. Load Ancillary / Contextual Data
+
+```{r load-ancillary}
+#| message: false
+#| warning: false
+#| include: false
+
+# Load vacant buildings data.
+vacant <-
+  st_read("data/vacant_buildings.geojson") %>%
+  st_transform("ESRI:102271")
+
+# Load CTA L station data.
+station <-
+  st_read("data/L_stations.geojson") %>%
+  st_transform("ESRI:102271")
+
+# Load zoning data.
+zoning <-
+  st_read("data/zoning.geojson") %>%
+  st_transform("ESRI:102271")
+```
+
+##### i. Clean Zoning Data
+
+```{r clean-zoning}
+# Clean zoning data.
+# Put different zoning sub-classes into one overall class.
+zoning <- zoning %>%
+  mutate(type = case_when(
+    # Downtown
+    str_starts(zone_class, "D") ~ "Downtown",
+    
+    # Residential
+    str_starts(zone_class, "R")  ~ "Residential",
+    
+    # Business/Commercial
+    str_starts(zone_class, "B|C") ~ "Business/Commercial",
+    
+    # Industrial
+    str_starts(zone_class, "M") ~ "Industrial",
+    
+    # Park/Open Space
+    str_starts(zone_class, "POS") ~ "Park/Open Space"
+  )
+)
+```
+
+##### ii. Clean Major Streets Data
+
+```{r clean-streets}
+# Clean major streets data.
+# Merge all streets into one vector.
+streets <- st_union(streets)
+```
+
+##### iii. Clean Building Data
+
+```{r clean-buildings}
+# Clean building data.
+buildings <- buildings %>%
+  mutate(
+    # Make sure the years are numeric.
+    year_built = as.numeric(year_built),
+    
+    # Calculate Age for 2017.
+    building_age = 2017 - year_built,
+  )
+```
+
+It is to be noted that this lab also uses abandoned / vacant buildings as an additional contextual predictor, however, a clear distinction must be made that the dataset used is not the 311 unconfirmed complaints of vacant buildings that may be driven by emotional biases. Instead, the predictor is confirmed and issued vacant building violations. Other ancillary data include zoning, major roads, CTA's L stations, as well as buildings to derive spatial features from. Zoning types may encourage different types of behavior like residential vs. business/commercial, major roads and CTA's L stations create dense urban flow in some areas and provide those engaging in criminal behavior access to different areas, building density measures the urbanity of the areas and the higher the density the larger the number of potential targets, building age and its U-shape can attract burglars especially since its value alters.
+
+#### 6. Visualize Data
+
+![Chicago Neighborhoods (From Wikipedia)](data/chicago_neighborhoods.png)
+
+```{r visualize-burglaries}
+#| message: false
+#| warning: false
+#| fig-height: 8
+#| fig-width: 12
+#| fig-dpi: 300
+
+# Burglaries.
+# Point density map.
+burglary_point_density <- ggplot() + 
+  geom_sf(data = neighborhoods,
+          fill = "gray95",
+          color = "gray30"
+          ) +
+  geom_sf(data = burglaries,
+          color = "#ff4100",
+          size = 0.1,
+          alpha = 0.5
+          ) +
+  labs(
+    title = "Burglary Locations",
+    subtitle = paste0("Point Density | n = ", prettyNum(nrow(burglaries), big.mark = ","))
+    ) +
+  theme_chi_map()
+
+# Kernel density map.
+burglary_kernel_density <- ggplot() + 
+  geom_sf(data = neighborhoods,
+          fill = "gray95",
+          color = "gray30"
+          ) +
+  geom_density_2d_filled(
+    data = data.frame(st_coordinates(burglaries)),
+    aes(X, Y),
+    alpha = 0.6,
+    bins = 8
+    ) +
+  scale_fill_viridis_d(
+    option = "rocket",
+    direction = -1,
+    guide = "none"
+    ) +
+  labs(
+    title = "Surface Density",
+    subtitle = "Kernel Density | bins = 8"
+    ) +
+  theme_chi_map()
+
+# Hexbin map.
+burglary_hexbin <- ggplot() + 
+  geom_sf(data = neighborhoods,
+          fill = "gray95",
+          color = "gray30"
+          ) +
+  geom_hex(
+    data = data.frame(st_coordinates(burglaries)),
+    aes(X, Y),
+    binwidth = c(1000, 1000),
+    bins = 30,
+    alpha = 0.6
+    ) +
+  scale_fill_viridis_c(
+    option = "rocket",
+    direction = -1,
+    guide = "none"
+    ) +
+  labs(
+    title = "Hexbin Density",
+    subtitle = "Hexagonal Binning | bins = 30"
+    ) +
+  theme_chi_map()
+
+# Combine plots using patchwork.
+burglary_point_density + burglary_hexbin + burglary_kernel_density +
+  plot_annotation(
+    title = "Spatial Distribution of Burglaries",
+    subtitle = "Neighborhoods in Chicago, Illinois (2017)",
+    theme = theme(
+      plot.title = element_text(
+        size = 16, 
+        face = "bold",
+        hjust = 0.5
+        ),
+      plot.subtitle = element_text(
+        size = 14,
+        face = "italic",
+        hjust = 0.5,
+        color = "gray30"
+        )
+      )
+    )
+```
+
+```{r visualize-311-lights}
+#| message: false
+#| warning: false
+#| fig-height: 8
+#| fig-width: 12
+#| fig-dpi: 300
+
+# Street lights.
+# Point density map.
+light_point_density <- ggplot() + 
+  geom_sf(data = neighborhoods,
+          fill = "gray95",
+          color = "gray30"
+          ) +
+  geom_sf(data = light_outage,
+          color = "#ff4100",
+          size = 0.1,
+          alpha = 0.5
+          ) +
+  labs(
+    title = "Single Street Light Outage Locations",
+    subtitle = paste0("Point Density | n = ", prettyNum(nrow(light_outage), big.mark = ","))
+    ) +
+  theme_chi_map()
+
+# Kernel density map.
+light_kernel_density <- ggplot() + 
+  geom_sf(data = neighborhoods,
+          fill = "gray95",
+          color = "gray30"
+          ) +
+  geom_density_2d_filled(
+    data = data.frame(st_coordinates(light_outage)),
+    aes(X, Y),
+    alpha = 0.6,
+    bins = 8
+    ) +
+  scale_fill_viridis_d(
+    option = "rocket",
+    direction = -1,
+    guide = "none"
+    ) +
+  labs(
+    title = "Surface Density",
+    subtitle = "Kernel Density | bins = 8"
+    ) +
+  theme_chi_map()
+
+# Hexbin map.
+light_hexbin <- ggplot() + 
+  geom_sf(data = neighborhoods,
+          fill = "gray95",
+          color = "gray30"
+          ) +
+  geom_hex(
+    data = data.frame(st_coordinates(light_outage)),
+    aes(X, Y),
+    binwidth = c(1000, 1000), # Set proportionally equal hexagons.
+    bins = 30,
+    alpha = 0.6
+    ) +
+  scale_fill_viridis_c(
+    option = "rocket",
+    direction = -1,
+    guide = "none"
+    ) +
+  labs(
+    title = "Hexbin Density",
+    subtitle = "Hexagonal Binning | bins = 30"
+    ) +
+  theme_chi_map()
+
+# Combine plots using patchwork.
+light_point_density + light_hexbin + light_kernel_density +
+  plot_annotation(
+    title = "Spatial Distribution of 311 Requests: Single Street Light Outage",
+    subtitle = "Neighborhoods in Chicago, Illinois (2017)",
+    theme = theme(
+      plot.title = element_text(
+        size = 16, 
+        face = "bold",
+        hjust = 0.5
+        ),
+      plot.subtitle = element_text(
+        size = 14,
+        face = "italic",
+        hjust = 0.5,
+        color = "gray30"
+        )
+      )
+    )
+```
+
+```{r visualize-vacancies}
+#| message: false
+#| warning: false
+#| fig-height: 8
+#| fig-width: 12
+#| fig-dpi: 300
+
+# Vacancies.
+# Point density map.
+vacant_point_density <- ggplot() + 
+  geom_sf(data = neighborhoods,
+          fill = "gray95",
+          color = "gray30"
+          ) +
+  geom_sf(data = vacant,
+          color = "#ff4100",
+          size = 0.1,
+          alpha = 0.5
+          ) +
+  labs(
+    title = "Vacant Building Locations",
+    subtitle = paste0("Point Density | n = ", prettyNum(nrow(vacant), big.mark = ","))
+    ) +
+  theme_chi_map()
+
+# Kernel density map.
+vacant_kernel_density <- ggplot() + 
+  geom_sf(data = neighborhoods,
+          fill = "gray95",
+          color = "gray30"
+          ) +
+  geom_density_2d_filled(
+    data = data.frame(st_coordinates(vacant)),
+    aes(X, Y),
+    alpha = 0.6,
+    bins = 8
+    ) +
+  scale_fill_viridis_d(
+    option = "rocket",
+    direction = -1,
+    guide = "none"
+    ) +
+  labs(
+    title = "Surface Density",
+    subtitle = "Kernel Density | bins = 8"
+    ) +
+  theme_chi_map()
+
+# Hexbin map.
+vacant_hexbin <- ggplot() + 
+  geom_sf(data = neighborhoods,
+          fill = "gray95",
+          color = "gray30"
+          ) +
+  geom_hex(
+    data = data.frame(st_coordinates(vacant)),
+    aes(X, Y),
+    binwidth = c(1000, 1000), # Set proportionally equal hexagons.
+    bins = 30,
+    alpha = 0.6
+    ) +
+  scale_fill_viridis_c(
+    option = "rocket",
+    direction = -1,
+    guide = "none"
+    ) +
+  labs(
+    title = "Hexbin Density",
+    subtitle = "Hexagonal Binning | bins = 30"
+    ) +
+  theme_chi_map()
+
+# Combine plots using patchwork.
+vacant_point_density + vacant_hexbin + vacant_kernel_density +
+  plot_annotation(
+    title = "Spatial Distribution of Vacant Buildings",
+    subtitle = "Neighborhoods in Chicago, Illinois (2017)",
+    theme = theme(
+      plot.title = element_text(
+        size = 16, 
+        face = "bold",
+        hjust = 0.5
+        ),
+      plot.subtitle = element_text(
+        size = 14,
+        face = "italic",
+        hjust = 0.5,
+        color = "gray30"
+        )
+      )
+    )
+```
+
+```{r visualize-major-streets}
+#| message: false
+#| warning: false
+#| fig-height: 10
+#| fig-width: 12
+#| fig-dpi: 300
+
+# Major streets with neighborhoods.
+neighborhood_streets_map <- ggplot() +
+  geom_sf(data = neighborhoods,
+          fill = "gray95",
+          color = NA
+          ) +
+  geom_sf(data = streets,
+          color = "#F03E36",
+          linewidth = 0.4
+          ) +
+  geom_sf(data = neighborhoods,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75
+          ) +
+  labs(title = "With Neighborhoods") +
+  theme_chi_map()
+
+# Major streets with police districts.
+district_streets_map <- ggplot() +
+  geom_sf(data = police_districts,
+          fill = "gray95",
+          color = NA
+          ) +
+  geom_sf(data = streets,
+          color = "#F03E36",
+          linewidth = 0.4
+          ) +
+  geom_sf(data = police_districts,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75
+          ) +
+  labs(title = "With Police Districts") +
+  theme_chi_map()
+
+# Combine plots using patchwork.
+neighborhood_streets_map + district_streets_map +
+  plot_annotation(
+    title = "Major Streets Network",
+    subtitle = "Chicago, Illinois",
+    theme = theme(
+      plot.title = element_text(
+        size = 16, 
+        face = "bold",
+        hjust = 0.5
+        ),
+      plot.subtitle = element_text(
+        size = 14,
+        face = "italic",
+        hjust = 0.5,
+        color = "gray30"
+        )
+      )
+    )
+```
+
+#### 7. Section Analysis
+
+Part I goes over the initial setup for the entirety of the lab as well as the data cleaning process that involved categorizing the land-use and creating new variables like building age and unifying the street vector data, the latter of which was at first overlooked until it came time to spatially engineer the distances to major roads—computationally less heavy and more efficient to compute distances to a single vector rather than thousands of line segments across Chicago.
+
+When it came to zoning, land-use often has multiple sub-classes and varies by city, with Chicago possessing over fifty sub-classes, which were then categorized into a broader level that includes downtown, residential, industrial, parks, and businesses.
+
+The EDA portion in this section is especially important, providing a mid-depth understanding of the spatial distribution of different variables.
+
+Burglaries (7,509) had a lot of density in Chicago's central-north (regionally known as West Side), central-south (regionally known as Southwest Side), and southeastern (regionally known as South Side) areas. The neighborhoods at the darkest cores of the maps are West Town, Chicago Lawn, West Englewood, Woodlawn, Greater Grand Crossing, and South Shore.
+
+When taking a look at the single street light outage's (75,084) spatial distribution, it confirms the assumption that this specific 311 complaint would be the most "ethical" as the densities span a wider portion of Chicago.
+
+Vacant buildings (5,012) are more sparse with a lot of density in West Side's Humboldt Park and Southwest Side's New City, West Englewood, and Chicago Lawn.
+
+Major streets are mapped alongside one another with the neighborhood and police district boundaries overlaid. It's pretty clear from the street networks that they line up with CTA's transit lines and also show where the urban core is in Central's Loop neighborhood boundary.
+
+### PART II: Fishnet Grid Creation
+
+#### 1. Fishnet Grid Cells
+
+```{r create-fishnet}
+# Burglaries.
+# Create 500m x 500m grid.
+fishnet <- st_make_grid(
+  neighborhoods,
+  cellsize = 500,
+  square = TRUE
+) %>%
+  st_sf() %>%
+  mutate(uniqueID = row_number())
+
+# Keep only cells that intersect Chicago.
+fishnet <- fishnet[neighborhoods, ]
+```
+
+#### 2. Aggregate Datasets
+
+```{r aggregate-burglaries}
+# Spatial join.
+burglaries_fishnet <- st_join(burglaries, fishnet, join = st_within) %>%
+  st_drop_geometry() %>%
+  group_by(uniqueID) %>%
+  summarize(count_burglaries = n())
+
+# Join back to fishnet (cells with 0 requests will be NA).
+fishnet <- fishnet %>%
+  left_join(burglaries_fishnet, by = "uniqueID") %>%
+  mutate(count_burglaries = replace_na(count_burglaries, 0))
+
+# Spatial join.
+burglaries_2018_fishnet <- st_join(burglaries_2018, fishnet, join = st_within) %>%
+  st_drop_geometry() %>%
+  group_by(uniqueID) %>%
+  summarize(count_burglaries_2018 = n())
+
+# Join back to fishnet (cells with 0 requests will be NA).
+fishnet <- fishnet %>%
+  left_join(burglaries_2018_fishnet, by = "uniqueID") %>%
+  mutate(count_burglaries_2018 = replace_na(count_burglaries_2018, 0))
+```
+
+```{r aggregate-311-requests}
+# Spatial join.
+light_fishnet <- st_join(light_outage, fishnet, join = st_within) %>%
+  st_drop_geometry() %>%
+  group_by(uniqueID) %>%
+  summarize(count_outages = n())
+
+# Join back to fishnet (cells with 0 requests will be NA).
+fishnet <- fishnet %>%
+  left_join(light_fishnet, by = "uniqueID") %>%
+  mutate(count_outages = replace_na(count_outages, 0))
+```
+
+```{r aggregate-vacant-buildings}
+# Aggregate vacant buildings.
+# Spatial join.
+vacant_fishnet <- st_join(vacant, fishnet, join = st_within) %>%
+  st_drop_geometry() %>%
+  group_by(uniqueID) %>%
+  summarize(count_vacant = n())
+
+# Join back to fishnet (cells with 0 requests will be NA).
+fishnet <- fishnet %>%
+  left_join(vacant_fishnet, by = "uniqueID") %>%
+  mutate(count_vacant = replace_na(count_vacant, 0))
+```
+
+```{r aggregate-station}
+# Aggregate CTA L stations.
+# Spatial join.
+station_fishnet <- st_join(station, fishnet, join = st_within) %>%
+  st_drop_geometry() %>%
+  group_by(uniqueID) %>%
+  summarize(count_station = n())
+
+# Join back to fishnet (cells with 0 requests will be NA).
+fishnet <- fishnet %>%
+  left_join(station_fishnet, by = "uniqueID") %>%
+  mutate(count_station = replace_na(count_station, 0))
+```
+
+```{r aggregate-zoning}
+#| warning: false
+
+# Calculate zoning percentages.
+# Get the area of each fishnet cell.
+fishnet_zoning_area <- fishnet %>%
+  mutate(cell_area = st_area(.)) %>%
+  st_drop_geometry() %>%
+  dplyr::select(uniqueID, cell_area) # Conflict with another library's select function.
+
+# Intersect zoning and fishnet, calculate area, and group by the zoning "type".
+zoning_intersect <- st_intersection(fishnet, zoning) %>%
+  mutate(intersect_area = st_area(.)) %>%
+  st_drop_geometry() %>%
+  group_by(uniqueID, type) %>%
+  summarize(total_intersect_area = sum(intersect_area), .groups = "drop") %>%
+  left_join(fishnet_zoning_area, by = "uniqueID") %>%
+  mutate(percent_area_zoning = as.numeric(total_intersect_area / cell_area))
+
+# Pivot to get one row per grid cell and one column per "type".
+zoning_features <- zoning_intersect %>%
+  pivot_wider(
+    id_cols = uniqueID,
+    names_from = type,
+    values_from = percent_area_zoning,
+    values_fill = 0
+  )
+
+# Rename features because the slashes will error the regression.
+zoning_features <- zoning_features %>%
+  rename(
+    pct_Residential = Residential,
+    pct_Business_Commercial = `Business/Commercial`,
+    pct_Park_Open_Space = `Park/Open Space`,
+    pct_Industrial = Industrial,
+    pct_Downtown = Downtown
+  )
+
+# Join back to fishnet and replace all NAs with 0.
+fishnet <- fishnet %>%
+  left_join(zoning_features, by = "uniqueID") %>%
+  mutate(across(starts_with("pct_"), ~replace_na(., 0)))
+```
+
+```{r aggregate-streets}
+#| warning: false
+
+# Calculate distance from cell to streets.
+dist_matrix <- st_distance(fishnet, streets)
+
+# Join to fishnet.
+fishnet <- fishnet %>%
+  mutate(
+    dist_to_streets = as.numeric(dist_matrix[, 1])
+  )
+```
+
+```{r aggregate-buildings}
+#| warning: false
+
+# Calculate building percentages.
+# Get the area of each fishnet cell.
+fishnet_building_area <- fishnet %>%
+  mutate(cell_area = as.numeric(st_area(.))) %>%
+  st_drop_geometry() %>%
+  dplyr::select(uniqueID, cell_area) # Conflict with another library's select function.
+
+# Intersect buildings and fishnet and calculate area.
+building_features <- st_intersection(fishnet, buildings) %>%
+  mutate(intersect_area = as.numeric(st_area(.))) %>%
+  st_drop_geometry() %>%
+  group_by(uniqueID) %>%
+  summarize(
+    avg_building_age = mean(building_age),
+    total_building_area = sum(intersect_area),
+    avg_building_area = mean(intersect_area),
+    .groups = "drop"
+    )
+
+# Join back to fishnet and replace all NAs with 0.
+fishnet <- fishnet %>%
+  left_join(building_features, by = "uniqueID") %>%
+  left_join(fishnet_building_area, by = "uniqueID") %>%
+  mutate(
+    building_density = total_building_area / cell_area,
+    avg_building_age = replace_na(avg_building_age, 0),
+    building_density = replace_na(building_density, 0),
+    avg_building_area = replace_na(avg_building_area, 0)
+  )
+```
+
+#### 3. Visualize Spatial Distributions
+
+```{r visualize-fishnet-maps}
+#| message: false
+#| warning: false
+#| fig-height: 10
+#| fig-width: 12
+#| fig-dpi: 300
+
+# Burglaries.
+# Visualize aggregated counts.
+burglary_fishnet_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = count_burglaries),
+          color = NA
+          ) +
+  geom_sf(data = chicago_boundary,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75
+          ) +
+  scale_fill_viridis_c(
+    name = "Burglaries",
+    option = "rocket",
+    direction = -1,
+    trans = "sqrt",
+    breaks = c(0, 1, 2, 5, 10, 20, 35)
+    ) +
+  labs(
+    title = "Burglary Counts"
+    ) +
+  theme_chi_map()
+
+# Street lights.
+# Visualize aggregated counts.
+light_fishnet_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = count_outages),
+          color = NA
+          ) +
+  geom_sf(data = chicago_boundary,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75
+          ) +
+  scale_fill_viridis_c(
+    name = "Outages",
+    option = "rocket",
+    direction = -1,
+    trans = "sqrt",
+    breaks = c(0, 5, 20, 50, 100, 160, 255)
+    ) +
+  labs(
+    title = "Single Street Light Outages"
+    ) +
+  theme_chi_map()
+
+# Combine plots using patchwork.
+burglary_fishnet_map + light_fishnet_map +
+  plot_annotation(
+    title = "Spatial Distribution of Burglaries and 311 Requests",
+    subtitle = "500m x 500m Fishnet Grid Cells in Chicago, Illinois (2017)",
+    theme = theme(
+      plot.title = element_text(
+        size = 16, 
+        face = "bold",
+        hjust = 0.5
+        ),
+      plot.subtitle = element_text(
+        size = 14,
+        face = "italic",
+        hjust = 0.5,
+        color = "gray30"
+        )
+      )
+    )
+```
+
+```{r visualize-contextual-fishnet-maps}
+#| message: false
+#| warning: false
+#| fig-height: 10
+#| fig-width: 12
+#| fig-dpi: 300
+
+# Vacancies.
+# Visualize aggregated counts.
+vacant_fishnet_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = count_vacant),
+          color = NA
+          ) +
+  geom_sf(data = chicago_boundary,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75
+          ) +
+  scale_fill_viridis_c(
+    name = "Vacancies",
+    option = "rocket",
+    direction = -1,
+    trans = "sqrt",
+    breaks = c(0, 1, 5, 10, 25, 50, 83)
+    ) +
+  labs(
+    title = "Vacancy Counts"
+    ) +
+  theme_chi_map()
+
+# Stations.
+# Visualize aggregated counts.
+station_fishnet_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = count_station),
+          color = NA
+          ) +
+  geom_sf(data = chicago_boundary,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75
+          ) +
+  scale_fill_viridis_c(
+    name = "Stations",
+    option = "rocket",
+    direction = -1,
+    trans = "sqrt"
+    ) +
+  labs(
+    title = "CTA L Station Counts"
+    ) +
+  theme_chi_map()
+
+# Combine plots using patchwork.
+vacant_fishnet_map + station_fishnet_map +
+  plot_annotation(
+    title = "Spatial Distribution of Vacant Buildings and CTA L Stations",
+    subtitle = "500m x 500m Fishnet Grid Cells in Chicago, Illinois (2017)",
+    theme = theme(
+      plot.title = element_text(
+        size = 16, 
+        face = "bold",
+        hjust = 0.5
+        ),
+      plot.subtitle = element_text(
+        size = 14,
+        face = "italic",
+        hjust = 0.5,
+        color = "gray30"
+        )
+      )
+    )
+```
+
+```{r visualize-building-fishnet-maps}
+#| message: false
+#| warning: false
+#| fig-height: 10
+#| fig-width: 12
+#| fig-dpi: 300
+
+# Buildings.
+# Visualize average age.
+building_age_fishnet_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = avg_building_age),
+          color = NA
+          ) +
+  geom_sf(data = chicago_boundary,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75
+          ) +
+  scale_fill_viridis_c(
+    name = "Average Building Age (Years)",
+    option = "rocket",
+    direction = -1,
+    trans = "sqrt",
+    breaks = c(0, 25, 50, 75, 100, 125),
+    labels = function(x) paste0(x, "yrs")
+    ) +
+  labs(
+    title = "Average Building Age"
+    ) +
+  theme_chi_map()
+
+# Visualize density.
+building_density_fishnet_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = building_density),
+          color = NA
+          ) +
+  geom_sf(data = chicago_boundary,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75
+          ) +
+  scale_fill_viridis_c(
+    name = "Building Density (Percent %)",
+    option = "rocket",
+    direction = -1,
+    trans = "sqrt",
+    breaks = c(0, 0.05, 0.10, 0.20, 0.30, 0.50),
+    labels = scales::percent_format(accuracy = 1) # Conflict with another package.
+    ) +
+  labs(
+    title = "Building Density"
+    ) +
+  theme_chi_map()
+
+# Combine plots using patchwork.
+building_age_fishnet_map + building_density_fishnet_map +
+  plot_annotation(
+    title = "Spatial Distribution of Building Age and Density",
+    subtitle = "500m x 500m Fishnet Grid Cells in Chicago, Illinois (2017)",
+    theme = theme(
+      plot.title = element_text(
+        size = 16, 
+        face = "bold",
+        hjust = 0.5
+        ),
+      plot.subtitle = element_text(
+        size = 14,
+        face = "italic",
+        hjust = 0.5,
+        color = "gray30"
+        )
+      )
+    )
+```
+
+```{r create-zoning-fishnet-maps}
+#| message: false
+#| warning: false
+#| include: false
+
+# Create individual maps for each zoning type.
+residential_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = pct_Residential),
+          color = NA) +
+  geom_sf(data = chicago_boundary,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75) +
+  scale_fill_viridis_c(
+    name = "Percent (%)",
+    option = "rocket",
+    direction = -1,
+    labels = scales::percent,
+    limits = c(0, 1)
+  ) +
+  labs(title = "Residential") +
+  theme_chi_map()
+
+biz_com_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = pct_Business_Commercial),
+          color = NA) +
+  geom_sf(data = chicago_boundary,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75) +
+  scale_fill_viridis_c(
+    name = "Percent (%)",
+    option = "rocket",
+    direction = -1,
+    labels = scales::percent,
+    limits = c(0, 1)
+  ) +
+  labs(title = "Business/Commercial") +
+  theme_chi_map()
+
+park_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = pct_Park_Open_Space),
+          color = NA) +
+  geom_sf(data = chicago_boundary,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75) +
+  scale_fill_viridis_c(
+    name = "Percent (%)",
+    option = "rocket",
+    direction = -1,
+    labels = scales::percent,
+    limits = c(0, 1)
+  ) +
+  labs(title = "Park/Open Space") +
+  theme_chi_map()
+
+industrial_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = pct_Industrial),
+          color = NA) +
+  geom_sf(data = chicago_boundary,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75) +
+  scale_fill_viridis_c(
+    name = "Percent (%)",
+    option = "rocket",
+    direction = -1,
+    labels = scales::percent,
+    limits = c(0, 1)
+  ) +
+  labs(title = "Industrial") +
+  theme_chi_map()
+
+downtown_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = pct_Downtown),
+          color = NA) +
+  geom_sf(data = chicago_boundary,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75) +
+  scale_fill_viridis_c(
+    name = "Percent (%)",
+    option = "rocket",
+    direction = -1,
+    labels = scales::percent,
+    limits = c(0, 1)
+  ) +
+  labs(title = "Downtown") +
+  theme_chi_map()
+
+# Combine with patchwork.
+combined_map <- (residential_map + biz_com_map + park_map) /
+                (industrial_map + downtown_map) +
+  plot_annotation(
+    title = "Zoning Spatial Distribution by Type",
+    subtitle = "500m x 500m Fishnet Grid Cells in Chicago, Illinois (2017)",
+    theme = theme(
+      plot.title = element_text(
+        size = 16, 
+        face = "bold",
+        hjust = 0.5
+        ),
+      plot.subtitle = element_text(
+        size = 14,
+        face = "italic",
+        hjust = 0.5,
+        color = "gray30"
+        )
+      )
+    ) +
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+```
+
+```{r visualize-zoning-fishnet-maps}
+#| message: false
+#| warning: false
+#| fig-height: 14
+#| fig-width: 14
+#| fig-dpi: 300
+
+combined_map
+```
+
+#### 4. Kernel Density Estimation (KDE) Baseline
+
+```{r kde-burglary-baseline}
+#| message: false
+#| warning: false
+
+# Convert burglaries to ppp (point pattern) format for spatstat.
+burglaries_ppp <- as.ppp(
+  st_coordinates(burglaries),
+  W = as.owin(st_bbox(chicago_boundary))
+)
+
+# Calculate KDE with 1km bandwidth.
+kde_burglaries <- density.ppp(
+  burglaries_ppp,
+  sigma = 1000,  # 1km bandwidth.
+  edge = TRUE    # Edge correction.
+)
+
+# Convert to terra raster (modern approach, not raster::raster).
+kde_raster <- rast(kde_burglaries)
+
+# Extract KDE values to fishnet cells.
+fishnet <- fishnet %>%
+  mutate(
+    kde_value_burglaries = terra::extract(
+      kde_raster,
+      vect(fishnet),
+      fun = mean,
+      na.rm = TRUE
+    )[, 2]  # Extract just the values column.
+  )
+```
+
+```{r visualize-kde}
+#| message: false
+#| warning: false
+#| fig-height: 10
+#| fig-width: 8
+#| fig-dpi: 300
+
+# Burglaries.
+burglary_kde_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = kde_value_burglaries),
+          color = NA
+          ) +
+  geom_sf(data = chicago_boundary,
+          fill = NA,
+          color = "#21918c",
+          linewidth = 0.75
+          ) +
+  scale_fill_viridis_c(
+    name = "KDE Value (Burglaries per m²)",
+    option = "rocket",
+    direction = -1,
+    breaks = c(0, 0.00001, 0.00002, 0.00003, 0.000035),
+    labels = scales::label_number(accuracy = 0.000001) # Package conflict.
+    ) +
+  labs(
+    title = "Kernel Density Estimation (KDE): Burglary Locations",
+    subtitle = "Simple Spatial Smoothing | Chicago, Illinois (2017)"
+    ) +
+  theme_chi_map()
+
+burglary_kde_map
+```
+
+#### 5. Section Analysis
+
+Part II deals with the 500 meter by 500 meter fishnet grid creation to get a more uniform look at Chicago as opposed to block groups or census tracts, which have different areas and also very different urban and population characteristics.
+
+This makes raw counts like burglaries comparable to one another as opposed to comparing them over wildly different areas (e.g. 5 burglaries in the state of Utah vs. 5 burglaries in a city block, although rarely ever that intense) as with the well-known Modifiable Areal Unit Problem (MAUP).
+
+Burglary and light outage counts were created in this section along with calculating the distance from each cell to the nearest major street line, now unified from the previous section to easily compute it.
+
+The zoning portion was significantly more involved conceptually and technically, the process calculated how much each zoning type intersected with a cell. It was determined this would be better than counting, because a miniscule industrial corner being counted as 1 unit for a cell wasn't as conceptually sound as creating a percentage depending on the polygon overlap.
+
+The fishnet spatial distributions for burglaries, outages, and vacancies are largely similar to the previous section's maps when looking at the overall density, however, the fishnet maps are more coarse due to the resolution that was set.
+
+CTA's L stations will be single dots of course due to the nature of the dataset, but it does overlay with the major streets spatially.
+
+Looking at the building age, it's clear that Chicago is a very old city. The central Loop looks to have some spots of newer buildings likely due to the fact it's the urban core with business hubs that may have more demand for new infill buildings.
+
+Then there's a subtle but noticeable dark ring that surrounds the central Loop with buildings generally over 100 years old, and even further out toward the periphery are rings of buildings around perhaps 40 to 75 years old. Building density also spatially follows the same pattern being from the same dataset, but it does look like density diminishes going farther west and south of the center.
+
+The very light spot in the south is due to Big Marsh Park, which has a lot of greenery and a lake. Then there's the bright spot in the northwest, which is O'Hare International Airport.
+
+Lots of residential zoning outside the downtown zoning, and the business/commercial zones spatially overlap with the residential one. Note that there are indeed business/commercial and residential zoning in the city center, but that was alloted to the downtown zoning. Parks are spotted throughout Chicago. Industrial zones are more on the peripheral or spotty going inland.
+
+The KDE burglary map shows the value for burglaries per meter squared and has a similar spatial pattern in Part I's burglary EDA visuals.
+
+### PART III: Spatial Features
+
+#### 1. Nearest Neighbor: CTA L Stations
+
+```{r nn-feature-station}
+#| warning: false
+
+# Calculate mean distance to 3 nearest CTA L stations.
+
+# Get coordinates.
+fishnet_station_coords <- st_coordinates(st_centroid(fishnet))
+station_coords <- st_coordinates(station) %>%
+  na.omit(station_coords)
+
+# Calculate k nearest neighbors and distances.
+nn_station_result <- get.knnx(station_coords, fishnet_station_coords, k = 3)
+
+# Add to fishnet.
+fishnet <- fishnet %>%
+  mutate(
+    nn_station = rowMeans(nn_station_result$nn.dist)
+  )
+```
+
+#### 2. Hotspot Distance: Single Street Light Outages
+
+```{r local-morans-function}
+#| message: false
+#| warning: false
+
+# Function to calculate Local Moran's I.
+calculate_local_morans <- function(data, variable, k = 5) {
+  
+  # Create spatial weights.
+  coords <- st_coordinates(st_centroid(data))
+  neighbors <- knn2nb(knearneigh(coords, k = k))
+  weights <- nb2listw(neighbors, style = "W", zero.policy = TRUE)
+  
+  # Calculate Local Moran's I.
+  local_moran <- localmoran(data[[variable]], weights)
+  
+  # Classify clusters.
+  mean_val <- mean(data[[variable]], na.rm = TRUE)
+  
+  data %>%
+    mutate(
+      local_i = local_moran[, 1],
+      p_value = local_moran[, 5],
+      is_significant = p_value < 0.05,
+      
+      moran_class = case_when(
+        !is_significant ~ "Not Significant",
+        local_i > 0 & .data[[variable]] > mean_val ~ "High-High",
+        local_i > 0 & .data[[variable]] <= mean_val ~ "Low-Low",
+        local_i < 0 & .data[[variable]] > mean_val ~ "High-Low",
+        local_i < 0 & .data[[variable]] <= mean_val ~ "Low-High",
+        TRUE ~ "Not Significant"
+      )
+    )
+}
+```
+
+```{r morans-light}
+#| message: false
+#| warning: false
+# Apply to single street light outages.
+fishnet <- calculate_local_morans(fishnet, "count_outages", k = 5)
+
+fishnet <- fishnet %>%
+  rename(local_i_outages = local_i,
+         p_value_outages = p_value,
+         moran_outages = moran_class,
+         is_significant_outages = is_significant
+         )
+```
+
+```{r visualize-morans}
+#| message: false
+#| warning: false
+#| fig-height: 10
+#| fig-width: 8
+#| fig-dpi: 300
+
+# Street lights.
+# Visualize hot spots.
+light_lisa_map <- ggplot() +
+  geom_sf(
+    data = fishnet, 
+    aes(fill = moran_outages), 
+    color = NA
+    ) +
+  geom_sf(data = chicago_boundary,
+          fill = NA,
+          color = "gray60",
+          linewidth = 0.75
+          ) +
+  scale_fill_manual(
+    values = c(
+      "High-High" = "#d7191c",
+      "High-Low" = "#fdae61",
+      "Low-High" = "#abd9e9",
+      "Low-Low" = "#2c7bb6",
+      "Not Significant" = "gray90"
+      ),
+    name = "Cluster Type"
+    ) +
+  labs(
+    title = "Moran's I: Single Street Light Outage",
+    ) +
+  theme_chi_map() +
+  theme(
+    legend.position = "right",
+    legend.text = element_text(hjust = 0)
+    )
+
+light_lisa_map
+```
+
+```{r distance-to-hotspots-light}
+#| message: false
+#| warning: false
+
+# Street lights.
+# Get centroids of "High-High" cells (hot spots).
+outage_hotspots <- fishnet %>%
+  filter(moran_outages == "High-High") %>%
+  st_centroid()
+
+# Calculate distance from each cell to nearest hot spot.
+if (nrow(outage_hotspots) > 0) {
+  fishnet <- fishnet %>%
+    mutate(
+      dist_to_hotspot_outages = as.numeric(
+        st_distance(st_centroid(fishnet), outage_hotspots %>% st_union())
+      )
+    )
+} else {
+  fishnet <- fishnet %>%
+    mutate(dist_to_hotspot_outages = 0)
+  cat("\u26A0 No significant hot spots found.\n")
+}
+```
+
+#### 3. Join Block Groups for Cross-Validation
+
+```{r join-bgs}
+# Join district information to fishnet.
+fishnet <- st_join(
+  fishnet,
+  police_districts,
+  join = st_within,
+  left = TRUE
+) %>%
+  filter(!is.na(dist_label)) # Remove cells outside districts.
+
+# Join neighborhood information to fishnet.
+fishnet <- st_join(
+  fishnet,
+  neighborhoods,
+  join = st_within,
+  left = TRUE
+) %>%
+  filter(!is.na(community)) # Remove cells outside neighborhoods
+```
+
+#### 4. Section Analysis
+
+Part III is where the spatial features were engineered to produce predictor variables for the model. The spatial predictors are more sophisticated and complex in comparison to using counts of urban data. K-Nearest Neighbor feature was created from the stations with k = 3 for a good balance in a large city with a more robust and expansive public transit system compared to others. This is much more reflective of everyday life than distance to the nearest station as different stations may have differing routes for individuals.
+
+Hotspot distances were also calculated from the outages, this is also more reflective of everyday life because individuals may feel more unsafe in areas with more light outages, and burglars may find more opportunity in areas with more outages.
+
+The LISA map shows that there are only high-high and low-low clusters, and low-high outliers, but not high-low outliers. It looks like the hot clusters and sprinkled outliers are sprawled across Northwest Side, West Side, South Side, and Southwest Side. Cold clusters are in Far Southeast Side, in Big Marsh Park, and Far North Side, specifically the airport.
+
+This section also saw to it that the neighborhoods and police districts were joined into the fishnet variable. This is because the goal is to make this predictive model as "ethical" as possible. Even if testing folds is majorly for technical purposes, testing folds over police districts implies that the predictive model is being geared toward policing rather than neighborhoods, which has more implications for community-building and resource/service allocation.
+
+It can be argued that the goal may be inherently biased due to the fact it's predicting burglary numbers, but it can also be argued that the variables themselves are related to the built environment, so the tool can be used instead to take a deeper look into alternative, urban planning solutions to alleviate forced entry burglaries rather than sending police to intensely scrutinized communities.
+
+### PART IV: Count Regression Models
+
+#### 1. Poisson Regression
+
+```{r prepare-data}
+# Create clean modeling dataset.
+fishnet_model <- fishnet %>%
+  st_drop_geometry() %>%
+  dplyr::select(
+    uniqueID,
+    dist_label,
+    community,
+    count_burglaries,
+    count_vacant,
+    dist_to_hotspot_outages,
+    nn_station,
+    pct_Business_Commercial,
+    pct_Downtown,
+    pct_Industrial,
+    pct_Park_Open_Space,
+    pct_Residential,
+    dist_to_streets,
+    avg_building_age,
+    building_density
+  ) %>%
+  na.omit() # Remove any remaining NAs.
+```
+
+```{r final-summary-statistics}
+# Create summary statistics.
+summary_stats <- fishnet %>%
+  st_drop_geometry() %>%
+  dplyr::select(
+    count_burglaries, 
+    dist_to_hotspot_outages, 
+    count_vacant, 
+    nn_station, 
+    dist_to_streets, 
+    building_density, 
+    avg_building_age, 
+    pct_Business_Commercial, 
+    pct_Downtown, 
+    pct_Industrial, 
+    pct_Park_Open_Space
+  ) %>%
+  summarise(across(everything(), 
+                   list(
+                     Min = ~min(., na.rm = TRUE),
+                     Q1 = ~quantile(., 0.25, na.rm = TRUE),
+                     Median = ~median(., na.rm = TRUE),
+                     Mean = ~mean(., na.rm = TRUE),
+                     Q3 = ~quantile(., 0.75, na.rm = TRUE),
+                     Max = ~max(., na.rm = TRUE)
+                   ))) %>%
+  pivot_longer(
+    everything(), 
+    names_to = c("Variable", "Statistic"),
+    names_pattern = "(.*)_(Min|Q1|Median|Mean|Q3|Max)$" # Make the pattern permanent, or else it'll mix up the order.
+  ) %>%
+  pivot_wider(names_from = Statistic, values_from = value)
+
+# Rename to make the table more neat and professional. Mark percentages for nicer value labeling.
+summary_stats <- summary_stats %>%
+  mutate(
+    # Flag percent variables to format the values later.
+    is_percent = grepl("^pct_", Variable) | Variable == "building_density",
+    Variable = case_when(
+      Variable == "count_burglaries" ~ "Burglary Count",
+      Variable == "dist_to_hotspot_outages" ~ "Distance to Outage Hotspots (Meters)",
+      Variable == "count_vacant" ~ "Vacancy Count",
+      Variable == "nn_station" ~ "Distance to Nearest Station (Meters)",
+      Variable == "dist_to_streets" ~ "Distance to Major Street (Meters)",
+      Variable == "building_density" ~ "Building Density (Percent %)",
+      Variable == "avg_building_age" ~ "Average Building Age",
+      Variable == "pct_Business_Commercial" ~ "% Business/Commercial",
+      Variable == "pct_Downtown" ~ "% Downtown",
+      Variable == "pct_Industrial" ~ "% Industrial",
+      Variable == "pct_Park_Open_Space" ~ "% Park/Open Space",
+      TRUE ~ Variable
+    )
+  )
+
+# Format the values in the table.
+summary_stats <- summary_stats %>%
+  mutate(
+    is_distance = grepl("Distance", Variable),  # Flag distance variables
+    across(c(Min, Q1, Median, Mean, Q3, Max), 
+           ~case_when(
+             is_percent ~ paste0(format(round(. * 100, 2), big.mark = ","), "%"),
+             is_distance ~ paste0(format(round(., 2), big.mark = ","), "m"),
+             TRUE ~ format(round(., 2), big.mark = ",")
+           ))
+  ) %>%
+  dplyr::select(-is_percent, -is_distance) # Remove the flag columns so they don't show up in the Kable.
+
+# Create Kable.
+summary_stats %>%
+  mutate(Variable = cell_spec(Variable, bold = TRUE)) %>%
+  kable(
+    format = "html", # HTML formatting for visualization flexibility.
+    escape = FALSE,
+    caption = "Summary Statistics of Final Variables",
+    col.names = c("Variable", "Minimum", "1st Quartile", "Median", "Mean", "3rd Quartile", "Maximum"),
+    align = c("l", rep("c", 6)) # Left-align left column, repeat center-align for next 6 columns.
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"), # Make the large Kable visually compact.
+    full_width = FALSE,
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#21918c", align = "c")
+```
+
+```{r fit-poisson}
+# Fit Poisson regression.
+model_poisson <- glm(count_burglaries ~
+                       # 311 data.
+                       dist_to_hotspot_outages +
+                       # Contextual count data.
+                       count_vacant +
+                       # Contextual spatial features.
+                       nn_station +  dist_to_streets + building_density +
+                       # Age polynomial.
+                       avg_building_age + I(avg_building_age^2) +
+                       # Zoning. Leave residential out as reference.
+                       pct_Business_Commercial + pct_Downtown + pct_Industrial + pct_Park_Open_Space,
+                     data = fishnet_model,
+                     family = "poisson"
+                     )
+
+# Summary.
+summary(model_poisson)
+```
+
+#### 2. Check for Overdispersion
+
+```{r overdispersion}
+# Calculate dispersion parameter.
+dispersion <- sum(residuals(model_poisson, type = "pearson")^2) / 
+              model_poisson$df.residual
+```
+
+#### 3. Negative Binomial Distribution
+
+```{r fit-nb}
+# Fit Negative Binomial model
+model_nb <- glm.nb(count_burglaries ~
+                     # 311 data.
+                     dist_to_hotspot_outages +
+                     # Contextual count data.
+                     count_vacant +
+                     # Contextual spatial features.
+                     dist_to_streets + building_density +
+                     # Age polynomial.
+                     avg_building_age + I(avg_building_age^2) +
+                     # Zoning. Leave residential out as reference.
+                     pct_Business_Commercial + pct_Downtown + pct_Industrial + pct_Park_Open_Space,
+                     data = fishnet_model,
+                   )
+
+# Summary
+summary(model_nb)
+```
+
+```{r aic-comparison}
+# Create new dataframe for Kable.
+model_comparison_stats <- tibble(
+  Statistic = c(
+    "Poisson Model AIC",
+    "Negative Binomial AIC",
+    "Poisson Dispersion"
+  ),
+  Value = c(
+    round(AIC(model_poisson), 2),
+    round(AIC(model_nb), 2),
+    round(dispersion, 2)
+  )
+)
+
+# Format so that there are thousand separators.
+model_comparison_stats <- model_comparison_stats %>%
+  mutate(
+    Value = prettyNum(Value, big.mark = ",")
+  )
+
+# Create Kable for AIC comparison.
+model_comparison_stats %>%
+  mutate(
+    Statistic = cell_spec(Statistic, bold = TRUE)
+  ) %>%
+  kable(
+    format = "html", # HTML formatting for visualization flexibility.
+    escape = FALSE,
+    caption = "Akaike Information Criteria (AIC) and Dispersion",
+    align = c("l", "c"),
+    row.names = FALSE
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"), # Make the Kable visually compact.
+    full_width = FALSE,
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#21918c", align = "c") %>%
+  footnote(
+    general = "Dispersion > 1.5 suggests overdispersion.\nLower AIC is better.",
+    general_title = "Note:"
+  )
+```
+
+#### 4. VIF Test
+
+```{r vif-test}
+# VIF test for the Negative Binomial model.
+vif_results <- vif(model_nb)
+
+# VIF to a data frame.
+vif_table <- data.frame(
+  Variable = names(vif_results),
+  VIF = vif_results
+) %>%
+  arrange(desc(VIF)) %>% # Descending sort VIF values.
+  mutate(
+    Concern = case_when(
+      VIF > 10 ~ "High",
+      VIF > 5 ~ "Moderate",
+      TRUE ~ "Low"
+    )
+  )
+
+# Rename to make the table more neat and professional.
+vif_table <- vif_table %>%
+  mutate(Variable = case_when(
+    Variable == "count_vacant" ~ "Vacancy Count",
+    Variable == "dist_to_streets" ~ "Distance to Major Street",
+    Variable == "building_density" ~ "Building Density",
+    Variable == "I(avg_building_age^2)" ~ "Average Building Age²",
+    Variable == "avg_building_age" ~ "Average Building Age",
+    Variable == "pct_Business_Commercial" ~ "% Business/Commercial",
+    Variable == "pct_Downtown" ~ "% Downtown",
+    Variable == "pct_Industrial" ~ "% Industrial",
+    Variable == "pct_Park_Open_Space" ~ "% Park/Open Space",
+    Variable == "dist_to_hotspot_outages" ~ "Distance to Outage Hotspots",
+    TRUE ~ Variable
+    )
+  )
+
+# Create the Kable.
+vif_table %>%
+  mutate(Variable = cell_spec(Variable, bold = TRUE)) %>%
+  kable(
+    format = "html", # HTML formatting for visualization flexibility.
+    escape = FALSE,
+    digits = 2,
+    caption = "Variance Inflation Factors (VIF)",
+    col.names = c("Variable", "VIF", "Multicollinearity"),
+    align = c("l", "c", "c"),
+    row.names = FALSE
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"), # Make the large Kable visually compact.
+    full_width = FALSE,
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#21918c", align = "c") %>%
+  footnote(general = "VIF > 10 indicates high multicollinearity.\nVIF > 5 indicates moderate concern.\nAge polynomials are mathematically related and negligible.",
+           general_title = "Note:")
+```
+
+#### 5. Section Analysis
+
+Part IV built the statistical count models, Poisson and Negative Binomial, which are meant to handle response variables that are counts, like in this case. Poisson was the initial model crafted, and after seeing that dispersion was an issue, the Negative Binomial approach was pursued, much like determining spatial dependence with Moran's I on OLS regressions to pursue alternative spatial regressions.
+
+The first table exhibits the summary statistics of the final variables used for the regression models.
+
+However, the more important aspect of the section is the interpretation of the models. And the following discusses the Poisson output:
+
+- Being farther from an outage hotspot decreases burglaries.
+
+- More vacant buildings are associated with more burglaries.
+
+- Being nearby at least 3 stations is very insignificant, but is associated with an increase in burglaries.
+
+- Being near a major street is also associated with an increase in burglaries, significantly more than stations, but it might be because the major streets are already capturing what the stations are capturing when it comes to access and escape options for burglaries.
+
+- Higher building density is associated with more burglaries, and this is the most significant of all the predictors. This is likely due to the fact there are both more and a variety of potential burglary targets.
+
+- Building age is positive but the squared age is negative, so older buildings are high risk for burglary. Older buildings could have less security and structural damage that makes them easy to enter, but that is up to a certain point. Historical buildings may be less targeted due to the fact that they may be under preservation and under tourist scrutiny for example.
+
+- Industrial and park zonings are less of targets, which is unsurprising because they likely don't have anything of value to burglars, unlike residential, downtown, and business/commercial zonings.
+
+- Note that the intercept would be representing the residential zoning, so this means that residential areas are less likely to be burglary targets than business/commercial and downtown zoning, but more likely compared to parks and industrial zoning.
+
+However, dispersion was greater than 1.5, meaning that it violated a Poisson assumption and inflated p-value significance. So a negative binomial was pursued afterward, and because the nn_stations variable was so insignificant in the Poisson model, it was removed from the negative binomial.
+
+As for the negative binomial output, the relationship types remained the same and no signs flipped, so the general observations from the Poisson output above can be applied to the negative binomial output.
+
+In the end, the difference in AIC was over 700, indicating that the negative binomial fit vastly better than the Poisson.
+
+A VIF test was also conducted to look for multicollinearity, and there was none, reinforcing the predictor and coefficient reliability.
+
+### PART V: Spatial Cross-Validation (2017)
+
+#### 1. Leave-One-Group-Out (LOGO) Cross-Validation
+
+```{r spatial-cv-districts}
+# Get unique districts.
+districts_unique <- unique(fishnet_model$dist_label)
+cv_results_districts <- tibble()
+
+for (i in seq_along(districts_unique)) {
+  
+  test_districts <- districts_unique[i]
+  
+  # Split data.
+  train_data <- fishnet_model %>% filter(dist_label != test_districts)
+  test_data <- fishnet_model %>% filter(dist_label == test_districts)
+  
+  # Fit model on training data.
+  model_cv <- glm.nb(count_burglaries ~
+                       # 311 data.
+                       dist_to_hotspot_outages +
+                       # Contextual count data.
+                       count_vacant +
+                       # Contextual spatial features.
+                       nn_station +  dist_to_streets + building_density +
+                       # Age polynomial.
+                       avg_building_age + I(avg_building_age^2) +
+                       # Zoning. Leave residential out as reference.
+                       pct_Business_Commercial + pct_Downtown + pct_Industrial + pct_Park_Open_Space,
+                     data = train_data,
+                     )
+  
+  # Predict on test data.
+  test_data <- test_data %>%
+    mutate(
+      prediction = predict(model_cv, test_data, type = "response")
+    )
+  
+  # Calculate metrics.
+  mae <- mean(abs(test_data$count_burglaries - test_data$prediction))
+  rmse <- sqrt(mean((test_data$count_burglaries - test_data$prediction)^2))
+  
+  # Store results.
+  cv_results_districts <- bind_rows( # Bind function to "stack" tibble below.
+    cv_results_districts,
+    tibble(
+      test_district = test_districts,
+      mae = mae,
+      rmse = rmse
+    )
+  )
+}
+```
+
+```{r spatial-cv-neighborhoods}
+# Get unique neighborhoods
+neighborhoods_unique <- unique(fishnet_model$community)
+cv_results_neighborhoods <- tibble()
+
+for (i in seq_along(neighborhoods_unique)) {
+  
+  test_neighborhoods <- neighborhoods_unique[i]
+  
+  # Split data.
+  train_data <- fishnet_model %>% filter(community != test_neighborhoods)
+  test_data <- fishnet_model %>% filter(community == test_neighborhoods)
+  
+  # Fit model on training data.
+  model_cv <- glm.nb(count_burglaries ~
+                       # 311 data.
+                       dist_to_hotspot_outages +
+                       # Contextual count data.
+                       count_vacant +
+                       # Contextual spatial features.
+                       nn_station +  dist_to_streets + building_density +
+                       # Age polynomial.
+                       avg_building_age + I(avg_building_age^2) +
+                       # Zoning. Leave residential out as reference.
+                       pct_Business_Commercial + pct_Downtown + pct_Industrial + pct_Park_Open_Space,
+                     data = train_data,
+                     )
+  
+  # Predict on test data.
+  test_data <- test_data %>%
+    mutate(
+      prediction = predict(model_cv, test_data, type = "response")
+    )
+  
+  # Calculate metrics.
+  mae <- mean(abs(test_data$count_burglaries - test_data$prediction))
+  rmse <- sqrt(mean((test_data$count_burglaries - test_data$prediction)^2))
+  
+  # Store results.
+  cv_results_neighborhoods <- bind_rows(
+    cv_results_neighborhoods,
+    tibble(
+      test_neighborhood = test_neighborhoods,
+      mae = mae,
+      rmse = rmse
+    )
+  )
+}
+```
+
+#### 2. Cross-Validation Tables
+
+```{r cv-results-districts-table}
+# Scrollable Kable for districts.
+cv_results_districts %>%
+  mutate(
+    test_district = cell_spec(test_district, bold = TRUE),
+    mae = round(mae, 2),
+    rmse = round(rmse, 2)
+  ) %>%
+  kable(
+    format = "html", # HTML formatting for visualization flexibility.
+    escape = FALSE,
+    caption = "Cross-Validation Results by Police Districts",
+    col.names = c("Test District", "MAE", "RMSE"),
+    align = c("l", "c", "c"),
+    row.names = FALSE
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"), # Make the large Kable visually compact.
+    full_width = FALSE,
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#21918c", align = "c") %>%
+  scroll_box(height = "500px", width = "500px") %>%  # Make it scrollable.
+  footnote(
+    general = paste0("Mean MAE: ", round(mean(cv_results_districts$mae), 2),
+                    "\nMean RMSE: ", round(mean(cv_results_districts$rmse), 2)),
+    general_title = "Overall Performance:"
+  )
+```
+
+```{r cv-results-neighborhoods-table}
+# Scrollable Kable for neighborhoods
+cv_results_neighborhoods %>%
+  mutate(
+    test_neighborhood = cell_spec(test_neighborhood, bold = TRUE),
+    mae = round(mae, 2),
+    rmse = round(rmse, 2)
+  ) %>%
+  kable(
+    format = "html", # HTML formatting for visualization flexibility.
+    escape = FALSE,
+    caption = "Cross-Validation Results by Neighborhoods",
+    col.names = c("Neighborhood", "MAE", "RMSE"),
+    align = c("l", "c", "c"),
+    row.names = FALSE
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"), # Make the large Kable visually compact.
+    full_width = FALSE,
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#21918c", align = "c") %>%
+  scroll_box(height = "500px", width = "500px") %>%  # Make it scrollable.
+  footnote(
+    general = paste0("Mean MAE: ", round(mean(cv_results_neighborhoods$mae), 2),
+                    "\nMean RMSE: ", round(mean(cv_results_neighborhoods$rmse), 2)),
+    general_title = "Overall Performance:"
+  )
+```
+
+#### 3. Section Analysis
+
+##### i. What was done?
+
+##### ii. Why is it important?
+
+##### iii. What was found?
+
+### PART VI: Model Evaluation
+
+#### 1. Generate Final Predictions
+
+```{r final-predictions}
+# Fit final model on all data.
+final_model <- glm.nb(count_burglaries ~
+                        # 311 data.
+                        dist_to_hotspot_outages +
+                        # Contextual count data.
+                        count_vacant +
+                        # Contextual spatial features.
+                        nn_station +  dist_to_streets + building_density +
+                        # Age polynomial.
+                        avg_building_age + I(avg_building_age^2) +
+                        # Zoning. Leave residential out as reference.
+                        pct_Business_Commercial + pct_Downtown + pct_Industrial + pct_Park_Open_Space,
+                     data = fishnet_model
+                     )
+
+# Add predictions back to fishnet.
+fishnet <- fishnet %>%
+  mutate(
+    prediction_nb = predict(final_model, fishnet_model, type = "response")[match(uniqueID, fishnet_model$uniqueID)]
+  )
+
+# Also add KDE predictions (normalize to same scale as counts).
+kde_sum <- sum(fishnet$kde_value_burglaries, na.rm = TRUE)
+count_sum <- sum(fishnet$count_burglaries, na.rm = TRUE)
+fishnet <- fishnet %>%
+  mutate(
+    prediction_kde = (kde_value_burglaries / kde_sum) * count_sum
+  )
+```
+
+#### 2. Compare Model vs. KDE Baseline
+
+```{r compare-models}
+#| message: false
+#| warning: false
+#| fig-height: 8
+#| fig-width: 12
+#| fig-dpi: 300
+
+# Create three maps.
+actual_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = count_burglaries),
+          color = NA
+          ) +
+  scale_fill_viridis_c(name = "Actual and Predicted Count",
+                       option = "rocket",
+                       direction = -1,
+                       limits = c(0, 15)
+                       ) +
+  labs(title = "Actual Burglaries") +
+  theme_chi_map()
+
+model_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = prediction_nb),
+          color = NA
+          ) +
+  scale_fill_viridis_c(name = "Actual and Predicted Count",
+                       option = "rocket",
+                       direction = -1,
+                       limits = c(0, 15)
+                       ) +
+  labs(title = "Model Predictions (Negative Binomial)") +
+  theme_chi_map()
+
+kde_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = prediction_kde),
+          color = NA
+          ) +
+  scale_fill_viridis_c(name = "Actual and Predicted Count",
+                       option = "rocket",
+                       direction = -1,
+                       limits = c(0, 15)
+                       ) +
+  labs(title = "KDE Baseline Predictions") +
+  theme_chi_map()
+
+actual_map + model_map + kde_map +
+  plot_annotation(
+    title = "Actual vs. Predicted Burglaries",
+    subtitle = "Performance: Negative Binomial vs. Simple KDE",
+    theme = theme(
+      plot.title = element_text(
+        size = 16, 
+        face = "bold",
+        hjust = 0.5
+        ),
+      plot.subtitle = element_text(
+        size = 14,
+        face = "italic",
+        hjust = 0.5,
+        color = "gray30"
+        )
+      )
+  ) +
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+```
+
+```{r model-2017-comparison-metrics}
+# Calculate performance metrics.
+comparison_2017 <- fishnet %>%
+  st_drop_geometry() %>%
+  filter(!is.na(prediction_nb), !is.na(prediction_kde)) %>%
+  summarize(
+    NB_MAE = mean(abs(count_burglaries - prediction_nb)),
+    NB_RMSE = sqrt(mean((count_burglaries - prediction_nb)^2)),
+    KDE_MAE = mean(abs(count_burglaries - prediction_kde)),
+    KDE_RMSE = sqrt(mean((count_burglaries - prediction_kde)^2))
+  )
+
+# Create Kable.
+comparison_2017 %>%
+  pivot_longer(everything(), names_to = "Metric", values_to = "Value") %>%
+  separate(Metric, into = c("Approach", "Metric"), sep = "_") %>%
+  pivot_wider(names_from = Metric, values_from = Value) %>%
+  kable(
+    format = "html", # HTML formatting for visualization flexibility.
+    escape = FALSE,
+    digits = 2,
+    caption = "Model In-Sample Performance Comparison (2017)",
+    align = c("l", "c", "c"),
+    row.names = FALSE
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    position = "center"
+    ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#21918c", align = "c") %>%
+  column_spec(1, bold = TRUE) %>%
+  footnote(
+    general = "Lower values are better.",
+    general_title = "Note:"
+  )
+```
+
+```{r model-2018-comparison-metrics}
+# Calculate performance metrics.
+comparison_2018 <- fishnet %>%
+  st_drop_geometry() %>%
+  filter(!is.na(prediction_nb), !is.na(prediction_kde)) %>%
+  summarize(
+    NB_MAE = mean(abs(count_burglaries_2018 - prediction_nb)),
+    NB_RMSE = sqrt(mean((count_burglaries_2018 - prediction_nb)^2)),
+    KDE_MAE = mean(abs(count_burglaries_2018 - prediction_kde)),
+    KDE_RMSE = sqrt(mean((count_burglaries_2018 - prediction_kde)^2))
+  )
+
+# Create Kable.
+comparison_2018 %>%
+  pivot_longer(everything(), names_to = "Metric", values_to = "Value") %>%
+  separate(Metric, into = c("Approach", "Metric"), sep = "_") %>%
+  pivot_wider(names_from = Metric, values_from = Value) %>%
+  kable(
+    format = "html", # HTML formatting for visualization flexibility.
+    escape = FALSE,
+    digits = 2,
+    caption = "Model Out-of-Sample Performance Comparison (2018)",
+    align = c("l", "c", "c"),
+    row.names = FALSE
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    position = "center"
+    ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#21918c", align = "c") %>%
+  column_spec(1, bold = TRUE) %>%
+  footnote(
+    general = "Lower values are better.",
+    general_title = "Note:"
+  )
+```
+
+#### 3. Where Does the Model Work Well?
+
+```{r prediction-errors}
+# Calculate errors.
+fishnet <- fishnet %>%
+  mutate(
+    error_nb = count_burglaries - prediction_nb,
+    error_kde = count_burglaries - prediction_kde,
+    abs_error_nb = abs(error_nb),
+    abs_error_kde = abs(error_kde)
+  )
+```
+
+```{r visualize-errors}
+#| message: false
+#| warning: false
+#| fig-height: 12
+#| fig-width: 12
+#| fig-dpi: 300
+
+# NB map errors.
+nb_error_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = error_nb),
+          color = NA
+          ) +
+  scale_fill_gradient2(
+    name = "Error",
+    low = "#2166ac", mid = "white", high = "#b2182b",
+    midpoint = 0,
+    limits = c(-10, 10),
+    breaks = c(-10, -5, 0, 5, 10)
+    ) +
+  labs(title = "NB Model Errors (Actual – Predicted)") +
+  theme_chi_map()
+
+# NB map absolute errors.
+nb_abs_error_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = abs_error_nb),
+          color = NA
+          ) +
+  scale_fill_viridis_c(name = "NB Absolute Error",
+                       option = "rocket",
+                       direction = -1,
+                       breaks = c(0, 5, 10, 15, 20)
+                       ) +
+  labs(title = "NB Model Absolute Errors") +
+  theme_chi_map()
+
+# KDE map errors.
+kde_error_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = error_kde),
+          color = NA
+          ) +
+  scale_fill_gradient2(
+    name = "Error",
+    low = "#2166ac", mid = "white", high = "#b2182b",
+    midpoint = 0,
+    limits = c(-10, 10),
+    breaks = c(-10, -5, 0, 5, 10)
+    ) +
+  labs(title = "KDE Model Errors (Actual – Predicted)") +
+  theme_chi_map()
+
+# KDE map absolute errors.
+kde_abs_error_map <- ggplot() +
+  geom_sf(data = fishnet,
+          aes(fill = abs_error_kde),
+          color = NA
+          ) +
+  scale_fill_viridis_c(name = "KDE Absolute Error",
+                       option = "rocket",
+                       direction = -1,
+                       breaks = c(0, 5, 10, 15, 20)
+                       ) +
+  labs(title = "KDE Model Absolute Errors") +
+  theme_chi_map()
+
+(nb_error_map + nb_abs_error_map) / (kde_error_map + kde_abs_error_map) +
+  plot_annotation(
+    title = "Model Errors",
+    subtitle = "Negative Binomial (NB) vs. Kernel Density Estimation (KDE)",
+    theme = theme(
+      plot.title = element_text(
+        size = 16, 
+        face = "bold",
+        hjust = 0.5
+        ),
+      plot.subtitle = element_text(
+        size = 14,
+        face = "italic",
+        hjust = 0.5,
+        color = "gray30"
+        )
+      )
+    ) +
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+```
+
+#### 4. Model Summary Table
+
+```{r model-summary-table}
+# Create final summary table.
+model_summary <- broom::tidy(final_model, exponentiate = TRUE) %>%
+  mutate(
+    across(where(is.numeric), ~round(., 3))
+  )
+
+# Rename to make the table more neat and professional.
+model_summary <- model_summary %>%
+  mutate(term = case_when(
+    term == "(Intercept)" ~ "Intercept",
+    term == "I(avg_building_age^2)" ~ "Average Building Age²",
+    term == "count_vacant" ~ "Vacancy Count",
+    term == "nn_station" ~ "Distance to Nearest Station",
+    term == "dist_to_streets" ~ "Distance to Major Street",
+    term == "building_density" ~ "Building Density",
+    term == "I(avg_building_age^2)" ~ "Average Building Age²",
+    term == "avg_building_age" ~ "Average Building Age",
+    term == "pct_Business_Commercial" ~ "% Business/Commercial",
+    term == "pct_Downtown" ~ "% Downtown",
+    term == "pct_Industrial" ~ "% Industrial",
+    term == "pct_Park_Open_Space" ~ "% Park/Open Space",
+    term == "dist_to_hotspot_outages" ~ "Distance to Outage Hotspots",
+    TRUE ~ term
+    )
+  )
+
+model_summary %>%
+  kable(
+    format = "html", # HTML formatting for visualization flexibility.
+    escape = FALSE,
+    digits = 2,
+    caption = "Final Negative Binomial Model Coefficients (Exponentiated)",
+    col.names = c("Variable", "Rate Ratio", "Standard Error", "Z-Score", "P-Value"),
+    align = c("l", rep("c", 4)),
+    row.names = FALSE
+  ) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    position = "center"
+    ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#21918c", align = "c") %>%
+  column_spec(1, bold = TRUE) %>%
+  footnote(
+    general = "Rate Ratios > 1 have a positive association with burglary counts.",
+    general_title = "Note:"
+  )
+```
+
+#### 5. Section Analysis and Overall Discussion
+
+##### i. What was done?
+
+##### ii. Why is it important?
+
+##### iii. What was found?
+
+## SUBMISSION CHECKLIST
+
+### Required Components
+
+-   [ ] **Introduction**: Brief description of your chosen 311 violation
+    type and why you selected it
+-   [ ] **Data Exploration**: Maps and summary statistics of your
+    violation data
+-   [ ] **Fishnet Grid**: Successfully created and visualized grid with
+    aggregated counts
+-   [ ] **Spatial Features**: At least 2-3 spatial features calculated
+    (k-NN, distance measures, etc.)
+-   [ ] **Local Moran's I**: Spatial autocorrelation analysis with
+    interpretation
+-   [ ] **Count Regression**: Both Poisson and Negative Binomial models
+    with comparison
+-   [ ] **Spatial Cross-Validation**: LOGO CV implemented on 2017 data
+    with reported metrics
+-   [ ] **Temporal Validation**: 2018 data aggregated and tested with
+    2017 model(OPTIONAL.)
+-   [ ] **Validation Comparison**: Comparison of spatial vs. temporal
+    validation performance
+-   [ ] **Model Comparison**: Your model vs. KDE baseline for 2018
+    predictions
+-   [ ] **Error Analysis**: Maps and discussion of where model performs
+    well/poorly
+-   [ ] **Written Explanations**: Your own words explaining each step
