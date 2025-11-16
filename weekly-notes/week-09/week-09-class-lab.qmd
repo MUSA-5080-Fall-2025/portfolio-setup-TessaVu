@@ -951,4 +951,3 @@ You've successfully built a spatial predictive model for burglaries using:
 ✓ Comparison to baseline (KDE)
 :::
 
-::::::::::

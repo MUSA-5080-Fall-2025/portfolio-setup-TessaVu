@@ -1,119 +1,98 @@
 {
-  "index.qmd": {
-    "index.html": "7fecdbaa"
-  },
-  "weekly-notes/week-01-notes.qmd": {
-    "week-01-notes.html": "fefaee21"
-  },
-  "weekly-notes/weekly-notes.qmd": {
-    "weekly-notes.html": "d7f5e852"
-  },
-  "weekly-notes.qmd": {
-    "weekly-notes.html": "02e792a1"
-  },
-  "weekly-notes/week-02-notes.qmd": {
-    "week-02-notes.html": "794690f9"
-  },
-  "labs/labs.qmd": {
-    "labs.html": "334da831"
-  },
-  "final-project/final-project.qmd": {
-    "final-project.html": "b33f54bd"
-  },
   "final-project.qmd": {
-    "final-project.html": "ac7169f7"
+    "final-project.html": "dcb3a0ed"
   },
-  "labs.qmd": {
-    "labs.html": "1a93a5cd"
-  },
-  "labs/lab-0/lab-0.qmd": {
-    "lab-0.html": "d6d14b47"
-  },
-  "instructions_week1.md": {
-    "instructions_week1.html": "648dfa5b"
-  },
-  "labs/lab-1/lab-1.qmd": {
-    "lab-1.html": "5248f026"
-  },
-  "weekly-notes/week-03-notes.qmd": {
-    "week-03-notes.html": "400636a1"
-  },
-  "labs/lab-2/lab-2.qmd": {
-    "lab-2.html": "9a1115df"
-  },
-  "weekly-notes/week-01/week-01-notes.qmd": {
-    "week-01-notes.html": "ec16a6e5"
-  },
-  "weekly-notes/week-02/week-02-notes.qmd": {
-    "week-02-notes.html": "1a7a96a7"
-  },
-  "weekly-notes/week-03/week-03-class-lab.qmd": {
-    "week-03-class-lab.html": "c7fe489a"
-  },
-  "weekly-notes/week-03/week-03-notes.qmd": {
-    "week-03-notes.html": "32828df0"
-  },
-  "weekly-notes/week-04/week-04-class-lab.qmd": {
-    "week-04-class-lab.html": "da7e93da"
-  },
-  "weekly-notes/week-04/week-04-notes.qmd": {
-    "week-04-notes.html": "cf1831c4"
-  },
-  "weekly-notes/week-05/week-05-notes.qmd": {
-    "week-05-notes.html": "b14d4c3a"
-  },
-  "weekly-notes/week-05/week-05-class-lab.qmd": {
-    "week-05-class-lab.html": "0cd3eae8"
-  },
-  "labs/lab-2/Vu_Tessa_Assignment2.qmd": {
-    "Vu_Tessa_Assignment2.html": "afe169e1"
-  },
-  "midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Slides.qmd": {
-    "Cao_Deng_Luu_Rigsby_Stauffer_Vu_Slides.html": "272cc8a4"
-  },
-  "midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Appendix.qmd": {
-    "Cao_Deng_Luu_Rigsby_Stauffer_Vu_Appendix.html": "b88fa610"
-  },
-  "weekly-notes/week-06/week-06-class-lab.qmd": {
-    "week-06-class-lab.html": "e83886bf"
-  },
-  "weekly-notes/week-06/week-06-notes.qmd": {
-    "week-06-notes.html": "4b7b62f0"
-  },
-  "midterm-project.qmd": {
-    "midterm-project.html": "a0f4aa25"
-  },
-  "map-challenge.qmd": {
-    "map-challenge.html": "eb6451a6"
-  },
-  "labs/lab-4/Vu_Tessa_Assignment4.qmd": {
-    "Vu_Tessa_Assignment4.html": "0fc8da9d"
-  },
-  "labs/lab-4/Assignment4_Instructions.md": {
-    "Assignment4_Instructions.html": "a9f90ecb"
-  },
-  "weekly-notes/week-07/week-07-class-lab.qmd": {
-    "week-07-class-lab.html": "cff631f7"
-  },
-  "weekly-notes/week-09/First_spatial_lag_prediction_problem.qmd": {
-    "First_spatial_lag_prediction_problem.html": "fc8126a0"
-  },
-  "weekly-notes/week-09/lab/predictive_policing_exercise.qmd": {
-    "predictive_policing_exercise.html": "6173e92d"
-  },
-  "weekly-notes/week-09/lab/test.qmd": {
-    "test.html": "5527dad8"
-  },
-  "weekly-notes/week-09/lab/week9_test.qmd": {
-    "week9_test.html": "66cd5af6"
-  },
-  "weekly-notes/week-09/week-09-class-lab.qmd": {
-    "week-09-class-lab.html": "e2e4db74"
-  },
-  "weekly-notes/week-10/script/In_Class_Exercise_Instruction.md": {
-    "In_Class_Exercise_Instruction.html": "b5f7bbc4"
+  "index.qmd": {
+    "index.html": "b84eb34a"
   },
   "labs/lab-1/Vu_Tessa_Assignment1.qmd": {
-    "Vu_Tessa_Assignment1.html": "6d354a50"
+    "Vu_Tessa_Assignment1.html": "bb2201a6"
+  },
+  "labs/lab-2/Vu_Tessa_Assignment2.qmd": {
+    "Vu_Tessa_Assignment2.html": "9fc4c672"
+  },
+  "labs/lab-4/Vu_Tessa_Assignment4.qmd": {
+    "Vu_Tessa_Assignment4.html": "5b3fa044"
+  },
+  "labs.qmd": {
+    "labs.html": "d1348e9e"
+  },
+  "map-challenge.qmd": {
+    "map-challenge.html": "657ce4b8"
+  },
+  "midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Appendix.qmd": {
+    "Cao_Deng_Luu_Rigsby_Stauffer_Vu_Appendix.html": "84c30214"
+  },
+  "midterm-project/Cao_Deng_Luu_Rigsby_Stauffer_Vu_Slides.qmd": {
+    "Cao_Deng_Luu_Rigsby_Stauffer_Vu_Slides.html": "5e60fef6"
+  },
+  "midterm-project.qmd": {
+    "midterm-project.html": "cbe292e3"
+  },
+  "weekly-notes/week-01/week-01-notes.qmd": {
+    "week-01-notes.html": "199b5c37"
+  },
+  "weekly-notes/week-02/week-02-notes.qmd": {
+    "week-02-notes.html": "2e6d9998"
+  },
+  "weekly-notes/week-03/week-03-class-lab.qmd": {
+    "week-03-class-lab.html": "dd035b0d"
+  },
+  "weekly-notes/week-03/week-03-notes.qmd": {
+    "week-03-notes.html": "62b4c188"
+  },
+  "weekly-notes/week-04/week-04-class-lab.qmd": {
+    "week-04-class-lab.html": "42161f1b"
+  },
+  "weekly-notes/week-04/week-04-notes.qmd": {
+    "week-04-notes.html": "3b6eaed3"
+  },
+  "weekly-notes/week-05/week-05-class-lab.qmd": {
+    "week-05-class-lab.html": "66213040"
+  },
+  "weekly-notes/week-05/week-05-notes.qmd": {
+    "week-05-notes.html": "21b465a6"
+  },
+  "weekly-notes/week-06/week-06-class-lab.qmd": {
+    "week-06-class-lab.html": "135edbd0"
+  },
+  "weekly-notes/week-06/week-06-notes.qmd": {
+    "week-06-notes.html": "66bfc945"
+  },
+  "weekly-notes/week-07/week-07-class-lab.qmd": {
+    "week-07-class-lab.html": "c54c7749"
+  },
+  "weekly-notes/week-07/week-07-notes.qmd": {
+    "week-07-notes.html": "5a127c59"
+  },
+  "weekly-notes/week-09/week-09-class-lab.qmd": {
+    "week-09-class-lab.html": "c56b13eb"
+  },
+  "weekly-notes/week-09/week-09-notes.qmd": {
+    "week-09-notes.html": "862f2c28"
+  },
+  "weekly-notes/week-09/week-09-slides.qmd": {
+    "week-09-slides.html": "f3b3b8e0"
+  },
+  "weekly-notes/week-09/week-09-spatial-lag-problem.qmd": {
+    "week-09-spatial-lag-problem.html": "87f67caa"
+  },
+  "weekly-notes/week-10/In_Class_Exercise_Instruction.md": {
+    "In_Class_Exercise_Instruction.html": "3b7df101"
+  },
+  "weekly-notes/week-10/student_worksheet_classification_exercise.md": {
+    "student_worksheet_classification_exercise.html": "6e00b8bd"
+  },
+  "weekly-notes/week-10/week-10-class-lab.qmd": {
+    "week-10-class-lab.html": "d3425ed7"
+  },
+  "weekly-notes/week-10/week-10-notes.qmd": {
+    "week-10-notes.html": "132155c5"
+  },
+  "weekly-notes/week-10/week-10-slides.qmd": {
+    "week-10-slides.html": "de680e08"
+  },
+  "weekly-notes.qmd": {
+    "weekly-notes.html": "3e8f26cb"
   }
 }

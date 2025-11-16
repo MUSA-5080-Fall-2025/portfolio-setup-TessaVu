@@ -30,8 +30,6 @@ execute:
 
 # Dirty Data, Bad Predictions, and the Ethics of Crime Forecasting
 
----
-
 ## Opening Thought {.center}
 
 **Before we discuss HOW to build predictive policing systems, we need to ask: SHOULD we?**
@@ -40,11 +38,11 @@ execute:
 
 - Richardson, Schultz & Crawford (2019)
 
----
+
 
 # Today's Critical Questions
 
-:::: {.columns}
+::: columns
 ::: {.column width="50%"}
 **Technical Questions:**
 
@@ -63,18 +61,18 @@ execute:
 - What feedback loops are created?
 - Can technical solutions fix social problems?
 :::
-::::
+:::
 
 ::: {.callout-important}
 ## Today's Approach
 We will learn the technical methods AND critically interrogate their use. Both skills are essential for ethical data science.
 :::
 
----
+
 
 # Part 1: The Seductive Promise of Predictive Policing {.center}
 
----
+
 
 ## The Sales Pitch
 
@@ -96,12 +94,12 @@ We will learn the technical methods AND critically interrogate their use. Both s
 3. That we can separate "good" from "bad" data (we often can't)
 4. That technical solutions can fix social problems (they can't)
 
----
+
 
 ## The Technical Evolution
 
 | Generation | Method | Data Used | Example |
-|------------|--------|-----------|---------|
+||--|--||
 | **1st:** Hotspots | Kernel Density | Past crime locations | KDE maps |
 | **2nd:** Risk Terrain | Logistic Reg. | Crime + features | RTM software |
 | **3rd:** ML | Random Forest, Neural Nets | Everything | PredPol, Palantir |
@@ -111,11 +109,11 @@ We will learn the technical methods AND critically interrogate their use. Both s
 
 But what if they're all built on the same flawed foundation?
 
----
+
 
 # Part 2: The Dirty Data Problem {.center}
 
----
+
 
 ## What Is "Dirty Data"?
 
@@ -129,7 +127,7 @@ But what if they're all built on the same flawed foundation?
 
 > "Data derived from or influenced by **corrupt, biased, and unlawful practices**, including data that has been intentionally manipulated or 'juked,' as well as data that is distorted by individual and societal biases."
 
----
+
 
 ## The Many Forms of Dirty Data
 
@@ -157,7 +155,7 @@ But what if they're all built on the same flawed foundation?
 - Calls for service ≠ actual need
 - Gang database ≠ actual gang membership
 
----
+
 
 ## Case Study 1: "Juking the Stats" - The Wire and Baltimore
 
@@ -177,7 +175,7 @@ But what if they're all built on the same flawed foundation?
 
 **Question:** What happens when this data trains a predictive algorithm?
 
----
+
 
 ## Case Study 2: CompStat and NYPD
 
@@ -197,7 +195,7 @@ But what if they're all built on the same flawed foundation?
 
 **2013: Independent audit confirmed systematic data problems**
 
----
+
 
 ## The Feedback Loop Diagram
 
@@ -209,11 +207,11 @@ But what if they're all built on the same flawed foundation?
 - Algorithm "confirmed": "We were right about neighborhood X!"
 - Cycle intensifies
 
----
+
 
 # Part 3: Technical Fixes Can't Solve Social Problems {.center}
 
----
+
 
 ## Vendor Claims About Bias Mitigation
 
@@ -229,7 +227,7 @@ But what if they're all built on the same flawed foundation?
 
 **Both include:** Crime reports, calls for service
 
----
+
 
 ## Why "Cleaning" The Data Isn't Enough
 
@@ -251,7 +249,7 @@ But what if they're all built on the same flawed foundation?
 - But isn't burglary enforcement also biased? What about assault?
 - Where do you draw the line?
 
----
+
 
 ## The Impossibility of Neutral Crime Data
 
@@ -267,12 +265,12 @@ But what if they're all built on the same flawed foundation?
 
 Crime data doesn't reveal "crime" - it reveals **policing patterns**
 
----
+
 
 ## Comparison: What Gets Policed vs. What Gets Committed
 
 | Type | Frequency | Policing Intensity | In Predictive Models? |
-|------|-----------|-------------------|---------------------|
+||--|-||
 | **Violent Crime** | Moderate | High | ✓ Yes |
 | **Property Crime** | High | High | ✓ Yes |
 | **Drug Offenses** | Very High | Racially Disparate | Some exclude |
@@ -284,7 +282,7 @@ Crime data doesn't reveal "crime" - it reveals **policing patterns**
 
 See: [White Collar Crime Risk Zones](https://whitecollar.thenewinquiry.com/) - A satirical map
 
----
+
 
 ## The "Missing" Data Problem
 
@@ -304,11 +302,11 @@ See: [White Collar Crime Risk Zones](https://whitecollar.thenewinquiry.com/) - A
 
 **If you can't trust the labels, you can't trust the model.**
 
----
+
 
 # Part 4: Consequences and Harms {.center}
 
----
+
 
 ## Who Bears the Costs?
 
@@ -355,11 +353,11 @@ See: [White Collar Crime Risk Zones](https://whitecollar.thenewinquiry.com/) - A
 :::
 :::
 
----
+
 
 # Part 5: Can Reform Work? {.center}
 
----
+
 
 ## What Consent Decrees Cover (And Don't Cover)
 
@@ -379,7 +377,7 @@ See: [White Collar Crime Risk Zones](https://whitecollar.thenewinquiry.com/) - A
 - **Vendor accountability** for bias mitigation
 - **Public transparency** about predictive systems
 
----
+
 
 ## The Chicago Consent Decree (2019)
 
@@ -401,11 +399,11 @@ See: [White Collar Crime Risk Zones](https://whitecollar.thenewinquiry.com/) - A
 
 **Question:** Using which data?
 
----
+
 
 # Part 6: A Framework for Critical Evaluation {.center}
 
----
+
 
 ## Questions to Ask About Any Predictive Policing System
 
@@ -423,7 +421,7 @@ See: [White Collar Crime Risk Zones](https://whitecollar.thenewinquiry.com/) - A
 - What's excluded and why?
 - Who made these choices?
 
----
+
 
 ## Questions (Continued)
 
@@ -441,7 +439,7 @@ See: [White Collar Crime Risk Zones](https://whitecollar.thenewinquiry.com/) - A
 - Are social services actually offered?
 - What are the measurable outcomes?
 
----
+
 
 ## Questions (Continued)
 
@@ -458,7 +456,7 @@ See: [White Collar Crime Risk Zones](https://whitecollar.thenewinquiry.com/) - A
 - Could these resources address root causes instead?
 - What would actual community safety investment look like?
 
----
+
 
 ## The Fundamental Question
 
@@ -482,17 +480,17 @@ Consider:
 - Or does it just manage inequality more efficiently?
 :::
 
----
+
 
 # Technical Foundations {.center}
 
 **Before we build the model, we need to understand the methods**
 
----
+
 
 ## Modeling Workflow {.smaller}
 
-:::: {.columns}
+::: columns
 
 ::: {.column width="50%"}
 
@@ -545,9 +543,9 @@ Consider:
 
 :::
 
-::::
+:::
 
----
+
 
 ## The Core Logic: "Broken Windows Theory" {.smaller}
 
@@ -576,11 +574,11 @@ Does this actually predict crime? Or does it predict where certain communities c
 What assumptions are embedded in using "disorder" as a predictor?
 :::
 
----
+
 
 # Part 7A: Understanding Local Spatial Autocorrelation {.center}
 
----
+
 
 ## Global vs. Local Spatial Autocorrelation
 
@@ -629,7 +627,7 @@ Maps showing WHERE patterns exist
 :::
 :::
 
----
+
 
 ## Spatial Weights Matrix: The Foundation
 
@@ -647,7 +645,7 @@ Maps showing WHERE patterns exist
 2. **Distance:** Within threshold distance?
 3. **K-nearest neighbors:** Closest k locations
 
----
+
 
 ## Spatial Weights: Contiguity
 
@@ -667,7 +665,7 @@ Maps showing WHERE patterns exist
 
 **Our fishnet grid uses Queen contiguity** (most common for regular grids)
 
----
+
 
 ## Spatial Weights: Row Standardization
 
@@ -688,7 +686,7 @@ $$w^*_{ij} = \frac{w_{ij}}{\sum_j w_{ij}}$$
 
 **Why?** Makes cells comparable regardless of number of neighbors
 
----
+
 
 ## Global Moran's I Formula
 
@@ -707,7 +705,7 @@ $$I = \frac{n}{\sum_i \sum_j w_{ij}} \cdot \frac{\sum_i \sum_j w_{ij}(Y_i - \bar
 - Negative I: Dissimilar values adjacent (high near low)
 - Zero: Random spatial pattern
 
----
+
 
 ## Local Moran's I Formula
 
@@ -725,7 +723,7 @@ $$I_i = \frac{(Y_i - \bar{Y})}{\sum_j (Y_j - \bar{Y})^2 / n} \sum_j w_{ij}(Y_j -
 
 **Critical:** Must test for statistical significance!
 
----
+
 
 ## The Moran Scatterplot
 
@@ -739,7 +737,7 @@ Quadrant II         |    Quadrant I
 (Low-High)          |    (High-High)
 Outliers            |    HOTSPOTS
                     |
---------------------|--------------------
+--|--
                     |
 Quadrant III        |    Quadrant IV
 (Low-Low)           |    (High-Low)
@@ -753,11 +751,11 @@ COLDSPOTS           |    Outliers
 - **Quadrant III (Low-Low):** Low crime surrounded by low crime → **Coldspot**
 - **Quadrant IV (High-Low):** High crime in low crime area → Outlier
 
----
+
 
 ![High-Low Cluster of Halloween Enthusiasm](images/house.jpeg)
 
----
+
 
 ## Statistical Significance Testing
 
@@ -775,18 +773,18 @@ COLDSPOTS           |    Outliers
 
 **Result:** Only report clusters that are unlikely to occur by chance
 
----
+
 
 ## Four Types of Significant Clusters
 
 | Type | Z-score | Location Value | Neighbor Values | Interpretation |
-|------|---------|----------------|-----------------|----------------|
+|||-|--|-|
 | **High-High** | Positive | Above mean | Above mean | Hotspot |
 | **Low-Low** | Positive | Below mean | Below mean | Coldspot |
 | **High-Low** | Negative | Above mean | Below mean | Outlier (isolated high) |
 | **Low-High** | Negative | Below mean | Above mean | Outlier (isolated low) |
 
----
+
 
 
 ## Local Moran's I in R: Step by Step
@@ -816,7 +814,7 @@ fishnet$p_value <- local_moran[, "Pr(z != E(Ii))"]  # P-value
 fishnet$z_score <- local_moran[, "Z.Ii"]    # Z-score
 ```
 
----
+
 
 ## Identifying High-High Clusters (Hotspots)
 
@@ -846,13 +844,13 @@ fishnet$hotspot[
 sum(fishnet$hotspot)
 ```
 
----
+
 
 # Hotspot Map
 
 ![](images/LMI.png)
 
----
+
 
 ## Critical Interpretation of Hotspots
 
@@ -876,11 +874,11 @@ Are these "high abandoned car" areas or "high reporting" areas?
 
 We're using this as a proxy for "disorder" but recognize it's a flawed proxy
 
----
+
 
 # Part 7B: Count Regression Fundamentals {.center}
 
----
+
 
 ## Why Count Regression? The Problem with OLS
 
@@ -899,7 +897,7 @@ where $\varepsilon_i \sim N(0, \sigma^2)$
 3. Assumes **continuous** outcome (counts are discrete)
 4. Assumes **normal errors** (count data is skewed)
 
----
+
 
 ## Distribution of Crime Counts
 
@@ -926,7 +924,7 @@ ggplot(fishnet, aes(x = countBurglaries)) +
 - **Discrete:** Only integer values
 - **Variance > Mean:** Overdispersion common
 
----
+
 
 ## The Poisson Distribution
 
@@ -948,7 +946,7 @@ $$P(Y = k) = \frac{\lambda^k e^{-\lambda}}{k!}$$
 - Number of 911 calls per hour
 - Number of accidents per intersection
 
----
+
 
 ## Poisson Regression Model
 
@@ -966,7 +964,7 @@ $$\lambda_i = \exp(\beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + ... + \beta_p X_{
 - Linear relationship on log scale
 - Multiplicative effects on count scale
 
----
+
 
 ## Interpreting Poisson Coefficients
 
@@ -981,13 +979,13 @@ $\exp(\beta_1)$ = multiplicative effect on expected count
 **Examples:**
 
 | $\beta$ | $\exp(\beta)$ | Interpretation |
-|---------|---------------|----------------|
+|||-|
 | 0.14 | 1.15 | 15% increase per unit of X |
 | -0.22 | 0.80 | 20% decrease per unit of X |
 | 0.00 | 1.00 | No effect |
 | 0.69 | 2.00 | Doubling per unit of X |
 
----
+
 
 ## Poisson Regression in R
 
@@ -1017,7 +1015,7 @@ exp(coef(model_poisson))
 # - Each meter from nearest abandoned car → 0.2% decrease in expected burglaries
 ```
 
----
+
 
 ## The Overdispersion Problem
 
@@ -1040,7 +1038,7 @@ $$\text{Dispersion} = \frac{\text{Residual Deviance}}{\text{Degrees of Freedom}}
 - If > 1: Overdispersion (common!)
 - If > 2-3: Serious overdispersion → Use Negative Binomial
 
----
+
 
 ## Checking Overdispersion in R
 
@@ -1068,7 +1066,7 @@ cat("Dispersion parameter:", round(dispersion, 3), "\n")
 # Warning: Serious overdispersion detected!
 ```
 
----
+
 
 ## Negative Binomial Regression
 
@@ -1089,7 +1087,7 @@ $$\text{Var}(Y_i) = \mu_i + \alpha \mu_i^2$$
 
 **Interpretation:** Coefficients interpreted same way as Poisson!
 
----
+
 
 ## Negative Binomial in R
 
@@ -1118,12 +1116,12 @@ model_nb$theta  # e.g., 2.47
 # Interpretation: Significant overdispersion confirmed
 ```
 
----
+
 
 ## Comparing Poisson vs. Negative Binomial
 
 | Aspect | Poisson | Negative Binomial |
-|--------|---------|-------------------|
+|--||-|
 | **Variance assumption** | Var = Mean | Var = μ + αμ² |
 | **Overdispersion** | Cannot handle | Accommodates |
 | **Standard errors** | Underestimated if overdispersed | Correctly estimated |
@@ -1132,7 +1130,7 @@ model_nb$theta  # e.g., 2.47
 
 **For today's lab:** We'll fit both, compare, and use the better model
 
----
+
 
 ## Model Diagnostics for Count Models
 
@@ -1158,11 +1156,11 @@ influence <- cooks.distance(model_nb)
 influential <- which(influence > 4/length(influence))
 ```
 
----
+
 
 # Part 7C: Spatial Features for Predictive Modeling {.center}
 
----
+
 
 ## Why Add Spatial Features?
 
@@ -1183,7 +1181,7 @@ $$\log(\lambda_i) = \beta_0 + \beta_1 (\text{Abandoned Cars}_i) + \beta_2 (\text
 - Improves predictions
 - More realistic model of spatial crime processes
 
----
+
 
 ## Distance to Nearest Feature
 
@@ -1213,7 +1211,7 @@ nn_dist <- get.knnx(
 fishnet$abandoned_car_nn <- nn_dist$nn.dist[, 1]
 ```
 
----
+
 
 
 ## Distance to Hotspot
@@ -1244,7 +1242,7 @@ fishnet$hotspot_nn <- hotspot_dist$nn.dist[, 1]
 - Neighborhood (distance to nearest)
 - Regional (distance to hotspot cluster)
 
----
+
 
 ## Visualizing Distance Features
 
@@ -1267,11 +1265,11 @@ grid.arrange(p1, p2, ncol = 2)
 
 **Look for:** Concentric patterns around features/hotspots
 
----
+
 
 # Part 7D: The Fishnet Grid Approach {.center}
 
----
+
 
 ## Why Use a Fishnet Grid?
 
@@ -1293,7 +1291,7 @@ grid.arrange(p1, p2, ncol = 2)
 - Easier spatial operations
 - Consistent unit of analysis
 
----
+
 
 ## Creating a Fishnet Grid
 
@@ -1324,7 +1322,7 @@ st_area(fishnet[1, ])  # Area of one cell (should be 250,000 m²)
 ![](images/fishnet.png)
 
 
----
+
 
 ## Grid Cell Size: A Critical Choice
 
@@ -1350,7 +1348,7 @@ st_area(fishnet[1, ])  # Area of one cell (should be 250,000 m²)
 
 **Choice affects results!** No "correct" answer.
 
----
+
 
 ## Aggregating Points to Grid
 
@@ -1378,7 +1376,7 @@ summary(fishnet$countBurglaries)
 #      0       0       1    2.3       3      47
 ```
 
----
+
 
 ## Handling Zeros in Count Data
 
@@ -1398,11 +1396,11 @@ summary(fishnet$countBurglaries)
 
 **Critical interpretation:** Are zeros "true zeros" (no crime) or "missing data" (unreported)?
 
----
+
 
 # Part 7E: Spatial Cross-Validation {.center}
 
----
+
 
 ## Why Standard Cross-Validation Fails for Spatial Data
 
@@ -1421,7 +1419,7 @@ summary(fishnet$countBurglaries)
 
 **Solution:** Spatial cross-validation
 
----
+
 
 ## Leave-One-Group-Out Cross-Validation (LOGO-CV)
 
@@ -1442,7 +1440,7 @@ summary(fishnet$countBurglaries)
 - More realistic deployment scenario
 - Conservative performance estimates
 
----
+
 
 ## LOGO-CV Implementation
 
@@ -1476,7 +1474,7 @@ for (dist in districts) {
 all_predictions <- bind_rows(cv_results)
 ```
 
----
+
 
 ## Evaluating CV Performance
 
@@ -1502,7 +1500,7 @@ cv_metrics <- all_predictions %>%
   )
 ```
 
----
+
 
 ## Interpreting Prediction Errors
 
@@ -1526,7 +1524,7 @@ cv_metrics <- all_predictions %>%
 
 **Critical question:** Are errors evenly distributed across neighborhoods?
 
----
+
 
 ## Spatial Patterns in Prediction Errors
 
@@ -1554,11 +1552,11 @@ ggplot(all_predictions) +
 
 **Look for:** Systematic patterns by neighborhood
 
----
+
 
 # Part 7F: Comparison to Baseline (Kernel Density) {.center}
 
----
+
 
 ## Why Compare to Kernel Density Estimation?
 
@@ -1577,7 +1575,7 @@ ggplot(all_predictions) +
 
 **If our model doesn't beat KDE, we're wasting complexity**
 
----
+
 
 ## Kernel Density Estimation Explained
 
@@ -1601,7 +1599,7 @@ Where:
 - $K$ = kernel function (usually Gaussian)
 - $d(s, s_i)$ = distance between $s$ and $s_i$
 
----
+
 
 ## Bandwidth Selection: A Critical Choice
 
@@ -1626,11 +1624,11 @@ Where:
 - Use 1000m (1 km) bandwidth
 - Standard in predictive policing literature
 
----
+
 
 ![](images/kd.png)
 
----
+
 ## Calculating KDE in R
 
 ```r
@@ -1660,7 +1658,7 @@ fishnet$kde_risk <- (fishnet$kde_risk - min(fishnet$kde_risk, na.rm=T)) /
                      (max(fishnet$kde_risk, na.rm=T) - min(fishnet$kde_risk, na.rm=T))
 ```
 
----
+
 
 ## Creating Risk Categories
 
@@ -1687,7 +1685,7 @@ fishnet$kde_risk_category <- cut(
 
 **Each category contains 20% of cells**
 
----
+
 
 ## Testing on Hold-Out Data (2018 Burglaries)
 
@@ -1711,7 +1709,7 @@ results_2018 <- st_join(fishnet, burglaries_2018) %>%
   mutate(pct_of_total = 100 * burglaries_2018 / sum(burglaries_2018))
 ```
 
----
+
 
 ## The Hit Rate Evaluation
 
@@ -1732,14 +1730,14 @@ If we patrol the **highest-risk 20% of cells** (Category 5):
 
 **Random patrol:** Would capture ~20% (by chance)
 
----
+
 
 ## Visualizing Model vs. KDE Performance
 
 
 ![](images/model_compare.png)
 
----
+
 
 ## Critical Interpretation of Performance
 
@@ -1759,11 +1757,11 @@ If we patrol the **highest-risk 20% of cells** (Category 5):
 
 **A technically superior model can still be ethically problematic**
 
----
+
 
 # Part 7G: Putting It All Together {.center}
 
----
+
 
 ## The Complete Modeling Workflow
 
@@ -1785,7 +1783,7 @@ If we patrol the **highest-risk 20% of cells** (Category 5):
 - Fit Negative Binomial (if overdispersed)
 - Interpret coefficients
 
----
+
 
 ## Workflow (Continued)
 
@@ -1808,7 +1806,7 @@ If we patrol the **highest-risk 20% of cells** (Category 5):
 - Assess harms and benefits
 - Propose alternatives
 
----
+
 
 ## What If We Predicted Differently?
 
@@ -1825,7 +1823,7 @@ If we patrol the **highest-risk 20% of cells** (Category 5):
 
 **Same technical methods, different normative goal**
 
----
+
 
 ## Predictive Models for Justice, Not Policing
 
@@ -1843,7 +1841,7 @@ If we patrol the **highest-risk 20% of cells** (Category 5):
 - Builds trust instead of eroding it
 - Addresses root causes
 
----
+
 
 
 ## Key Takeaways
@@ -1860,5 +1858,5 @@ If we patrol the **highest-risk 20% of cells** (Category 5):
 7. **Your choices matter** - How you build models has real consequences
 :::
 
----
+
 
