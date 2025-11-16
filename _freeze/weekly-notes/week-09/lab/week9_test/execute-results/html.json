@@ -1,0 +1,17 @@
+{
+  "hash": "30b7ccab274a7185c51dee724cbd8dc8",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Critical Perspectives on Predictive Policing\"\nsubtitle: \"Week 9 MUSA 5080 Dirty Data, Bad Predictions, and the Ethics of Crime Forecasting\"\nauthor: \"Dr. Elizabeth Delmelle\"\ndate: \"November 3, 2025\"\nformat: \n  revealjs:\n    theme: simple\n    slide-number: true\n    chalkboard: true\n    code-line-numbers: true\n    incremental: false\n    smaller: true\n    scrollable: true\n---\n\n## Quarto\n\nQuarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.\n\n## Bullets\n\nWhen you click the **Render** button a document will be generated that includes:\n\n-   Content authored with markdown\n-   Output from executable code\n\n## Code\n\nWhen you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 2\n```\n\n\n:::\n:::\n\n",
+    "supporting": [
+      "week9_test_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

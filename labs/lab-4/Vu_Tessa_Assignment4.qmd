@@ -8,6 +8,7 @@ format:
     code-fold: false
     toc: true
     toc-location: left
+    toc-expand: true
     theme: lux
     embed-resources: true
 execute:
@@ -19,16 +20,16 @@ editor:
 code-fold: show
 ---
 
-## GOAL
+# GOAL
 
 Apply spatial predictive modeling techniques using the "Street Lights -
 One Out" 311 service request type as the predictor variable as well as other built environment variables, avoiding any demographic predictors.
 
 The above 311 violation was selected over the others because this lab is focusing on trying to create the most "ethical" predictive model. The reason why a single street light out was determined as the most ethical is because it is the most balanced when it comes to the violations; all street lights being out or abandoned cars may likely skew toward underserved and disinvested areas.
 
-## DATASETS
+# DATASETS
 
-### 1. Chicago Boundaries and Built Environment
+## 1. Chicago Boundaries and Built Environment
 
 [**City Limits
 Boundaries**](https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-City-Map/ewy2-6yfk)
@@ -42,55 +43,54 @@ Boundaries**](https://data.cityofchicago.org/Public-Safety/Boundaries-Police-Dis
 [**Major
 Roads**](https://data.cityofchicago.org/Transportation/Major-Streets/ueqs-5wr6/about_data)
 
-### 2. 311 Service Requests (2017)
+## 2. 311 Service Requests (2017)
 
 [**2017 Chicago 311 Service Requests "Street Lights - One Out"
 Dataset**](https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Street-Lights-One-Out-Histori/3aav-uy2v/explore/query/SELECT%0A%20%20%60creation_date%60%2C%0A%20%20%60status%60%2C%0A%20%20%60completion_date%60%2C%0A%20%20%60service_request_number%60%2C%0A%20%20%60type_of_service_request%60%2C%0A%20%20%60street_address%60%2C%0A%20%20%60zip_code%60%2C%0A%20%20%60x_coordinate%60%2C%0A%20%20%60y_coordinate%60%2C%0A%20%20%60ward%60%2C%0A%20%20%60police_district%60%2C%0A%20%20%60community_area%60%2C%0A%20%20%60latitude%60%2C%0A%20%20%60longitude%60%2C%0A%20%20%60location%60%0AWHERE%0A%20%20%60creation_date%60%0A%20%20%20%20BETWEEN%20%222017-01-01T00%3A00%3A00%22%20%3A%3A%20floating_timestamp%0A%20%20%20%20AND%20%222017-12-31T23%3A59%3A59%22%20%3A%3A%20floating_timestamp/page/filter)
 
-### 3. Crimes (2017)
+## 3. Crimes (2017)
 
 [**2017 crimes filtered for forced entry
 burglaries**](https://data.cityofchicago.org/Public-Safety/Crimes-2017/d62x-nvdr/explore/query/SELECT%0A%20%20%60id%60%2C%0A%20%20%60case_number%60%2C%0A%20%20%60date%60%2C%0A%20%20%60block%60%2C%0A%20%20%60iucr%60%2C%0A%20%20%60primary_type%60%2C%0A%20%20%60description%60%2C%0A%20%20%60location_description%60%2C%0A%20%20%60arrest%60%2C%0A%20%20%60domestic%60%2C%0A%20%20%60beat%60%2C%0A%20%20%60district%60%2C%0A%20%20%60ward%60%2C%0A%20%20%60community_area%60%2C%0A%20%20%60fbi_code%60%2C%0A%20%20%60x_coordinate%60%2C%0A%20%20%60y_coordinate%60%2C%0A%20%20%60year%60%2C%0A%20%20%60updated_on%60%2C%0A%20%20%60latitude%60%2C%0A%20%20%60longitude%60%2C%0A%20%20%60location%60%0AWHERE%0A%20%20caseless_one_of%28%60primary_type%60%2C%20%22BURGLARY%22%29%0A%20%20AND%20caseless_one_of%28%60description%60%2C%20%22FORCIBLE%20ENTRY%22%29/page/filter)
 
-### 4. Vacant Buildings (2017)
+## 4. Vacant Buildings (2017)
 
 [**2017 Vacant Buildings
 Dataset**](https://data.cityofchicago.org/Buildings/Vacant-and-Abandoned-Buildings-Violations/kc9i-wq85/explore/query/SELECT%0A%20%20%60docket_number%60%2C%0A%20%20%60violation_number%60%2C%0A%20%20%60issued_date%60%2C%0A%20%20%60issuing_department%60%2C%0A%20%20%60last_hearing_date%60%2C%0A%20%20%60property_address%60%2C%0A%20%20%60violation_type%60%2C%0A%20%20%60entity_or_person_s_%60%2C%0A%20%20%60disposition_description%60%2C%0A%20%20%60total_fines%60%2C%0A%20%20%60total_administrative_costs%60%2C%0A%20%20%60interest_amount%60%2C%0A%20%20%60collection_costs_or_attorney_fees%60%2C%0A%20%20%60court_cost%60%2C%0A%20%20%60original_total_amount_due%60%2C%0A%20%20%60total_paid%60%2C%0A%20%20%60current_amount_due%60%2C%0A%20%20%60latitude%60%2C%0A%20%20%60longitude%60%2C%0A%20%20%60location%60/page/filter)
 
-### 5. Land-Use / Zoning
+## 5. Land-Use / Zoning
 
 [**Land-Use / Zoning
 Dataset**](https://data.cityofchicago.org/Community-Economic-Development/Boundaries-Zoning-Districts-current-Map/7cve-jgbp)
-filtered for (business/commercial, downtown, residential, industrial,
-and parks/open space)\[https://secondcityzoning.org/zones/\] filtered by
+filtered for [business/commercial, downtown, residential, industrial,
+and parks/open space](https://secondcityzoning.org/zones/) filtered by
 creation date up to end of 2017.
 
-### 6. CTA L Stations
+## 6. CTA L Stations
 
 [**CTA L Stations
 Dataset**](https://data.cityofchicago.org/Transportation/CTA-L-Rail-Stations/3tzw-cg4m/explore/query/SELECT%0A%20%20%60the_geom%60%2C%0A%20%20%60station_id%60%2C%0A%20%20%60longname%60%2C%0A%20%20%60lines%60%2C%0A%20%20%60address%60%2C%0A%20%20%60ada%60%2C%0A%20%20%60pknrd%60%2C%0A%20%20%60point_x%60%2C%0A%20%20%60point_y%60%2C%0A%20%20%60legend%60/page/filter)
 
-### 7. Buildings (2017)
+## 7. Buildings (2017)
 
 [**Buildings
 Dataset**](https://data.cityofchicago.org/Buildings/Building-Footprints/syp8-uezg/explore/query/SELECT%0A%20%20%60the_geom%60%2C%0A%20%20%60bldg_id%60%2C%0A%20%20%60cdb_city_i%60%2C%0A%20%20%60bldg_statu%60%2C%0A%20%20%60f_add1%60%2C%0A%20%20%60t_add1%60%2C%0A%20%20%60pre_dir1%60%2C%0A%20%20%60st_name1%60%2C%0A%20%20%60st_type1%60%2C%0A%20%20%60unit_name%60%2C%0A%20%20%60non_standa%60%2C%0A%20%20%60bldg_name1%60%2C%0A%20%20%60bldg_name2%60%2C%0A%20%20%60comments%60%2C%0A%20%20%60stories%60%2C%0A%20%20%60orig_bldg_%60%2C%0A%20%20%60footprint_%60%2C%0A%20%20%60create_use%60%2C%0A%20%20%60bldg_creat%60%2C%0A%20%20%60bldg_activ%60%2C%0A%20%20%60bldg_end_d%60%2C%0A%20%20%60demolished%60%2C%0A%20%20%60edit_date%60%2C%0A%20%20%60edit_useri%60%2C%0A%20%20%60edit_sourc%60%2C%0A%20%20%60qc_date%60%2C%0A%20%20%60qc_userid%60%2C%0A%20%20%60qc_source%60%2C%0A%20%20%60x_coord%60%2C%0A%20%20%60y_coord%60%2C%0A%20%20%60z_coord%60%2C%0A%20%20%60harris_str%60%2C%0A%20%20%60no_of_unit%60%2C%0A%20%20%60no_stories%60%2C%0A%20%20%60year_built%60%2C%0A%20%20%60bldg_sq_fo%60%2C%0A%20%20%60bldg_condi%60%2C%0A%20%20%60condition_%60%2C%0A%20%20%60vacancy_st%60%2C%0A%20%20%60label_hous%60%2C%0A%20%20%60suf_dir1%60%2C%0A%20%20%60shape_area%60%2C%0A%20%20%60shape_len%60%0AWHERE%0A%20%20%28%60bldg_activ%60%20%3C%3D%20%222017-12-31T17%3A59%3A59.000Z%22%20%3A%3A%20fixed_timestamp%0A%20%20%20%20%20AND%20%60year_built%60%20%3C%3D%202017%0A%20%20%20%20%20AND%20%60bldg_end_d%60%20IS%20NULL%29%0A%20%20%20%20OR%20%60bldg_end_d%60%20%3E%3D%20%222017-01-01T05%3A00%3A00.000Z%22%20%3A%3A%20fixed_timestamp/page/filter)
 
-### 8. Crimes for Temporal Validation (2018)
+## 8. Crimes for Temporal Validation (2018)
 
 [**2018 crimes filtered for forced entry
 burglaries**](https://data.cityofchicago.org/Public-Safety/Crimes-2018/3i3m-jwuy/explore/query/SELECT%0A%20%20%60id%60%2C%0A%20%20%60case_number%60%2C%0A%20%20%60date%60%2C%0A%20%20%60block%60%2C%0A%20%20%60iucr%60%2C%0A%20%20%60primary_type%60%2C%0A%20%20%60description%60%2C%0A%20%20%60location_description%60%2C%0A%20%20%60arrest%60%2C%0A%20%20%60domestic%60%2C%0A%20%20%60beat%60%2C%0A%20%20%60district%60%2C%0A%20%20%60ward%60%2C%0A%20%20%60community_area%60%2C%0A%20%20%60fbi_code%60%2C%0A%20%20%60x_coordinate%60%2C%0A%20%20%60y_coordinate%60%2C%0A%20%20%60year%60%2C%0A%20%20%60updated_on%60%2C%0A%20%20%60latitude%60%2C%0A%20%20%60longitude%60%2C%0A%20%20%60location%60%0AWHERE%0A%20%20caseless_one_of%28%60primary_type%60%2C%20%22BURGLARY%22%29%0A%20%20AND%20caseless_one_of%28%60description%60%2C%20%22FORCIBLE%20ENTRY%22%29/page/filter)
 to match 2017 data
 
-## ANALYSIS
+# ANALYSIS
 
-### PART I: Data Loading & Exploration
+## PART I: Data Loading & Exploration
 
-#### 1. Setup
+### 1. Setup
 
 ```{r setup}
 #| message: false
 #| warning: false
-#| include: false
 
 # Load relevant packages.
 library(tidyverse)      # Data manipulation.
@@ -99,6 +99,7 @@ library(stringr)        # Data manipulation.
 library(sf)             # Spatial operations.
 library(here)           # Relative file paths.
 library(viridis)        # Color scales.
+library(RColorBrewer)    # Color palettes.
 library(terra)          # Raster operations (replaces "raster").
 library(spdep)          # Spatial dependence.
 library(FNN)            # Fast nearest neighbors.
@@ -151,132 +152,91 @@ theme_chi_map <- function(base_size = 11) {
       legend.key.height = unit(0.5, "cm")
     )
 }
-
-theme_chi_plot <- function(base_size = 11) {
-  theme_minimal(base_size = base_size) +
-    theme(
-      plot.title = element_text(face = "bold",
-                                size = base_size + 1,
-                                hjust = 0.5
-                                ),
-      plot.subtitle = element_text(face = "italic",
-                                   color = "gray30",
-                                   size = base_size - 1,
-                                   hjust = 0.5
-                                   ),
-      legend.position = "bottom",
-      panel.grid.major = element_blank(),
-      panel.grid.minor = element_blank(),
-      axis.text = element_text(face = "italic",
-                               size = base_size - 3,
-                               hjust = 0.5
-                               ),
-      axis.title = element_text(face = "italic",
-                                size = base_size - 3,
-                                hjust = 0.5
-                                ),
-      legend.title = element_text(face = "italic",
-                                  size = base_size - 1,
-                                  hjust = 0.5
-                                  ),
-      legend.title.position = "top",
-      legend.text = element_text(face = "italic",
-                                 size = base_size - 3,
-                                 hjust = 0.5
-                                 ),
-      legend.key.width = unit(2, "cm"),
-      legend.key.height = unit(0.5, "cm")
-    )
-}
 ```
 
-#### 2. Load Chicago Spatial Data
+### 2. Load Chicago Spatial Data
 
 ```{r load-chicago}
 #| message: false
 #| warning: false
-#| include: false
 
 # Load Chicago's boundaries.
 chicago_boundary <-
-  st_read("data/chicago_boundary.geojson") %>%
+  st_read("data/chicago_boundary.geojson", quiet = TRUE) %>%
   st_transform("ESRI:102271")
 
 # Load Chicago's police districts.
 police_districts <-
-  st_read("data/police_districts.geojson") %>%
+  st_read("data/police_districts.geojson", quiet = TRUE) %>%
   st_transform("ESRI:102271")
 
 # Load Chicago's neighborhood boundaries.
 neighborhoods <-
-  st_read("data/neighborhoods.geojson") %>%
+  st_read("data/neighborhoods.geojson", quiet = TRUE) %>%
   st_transform("ESRI:102271")
 
 # Load Chicago's major streets.
 streets <-
-  st_read("data/major_streets/major_streets.shp") %>%
+  st_read("data/major_streets/major_streets.shp", quiet = TRUE) %>%
   st_transform("ESRI:102271")
 
 # Load building data.
-buildings <- st_read("data/buildings_2017.geojson") %>%
+buildings <- st_read("data/buildings_2017.geojson", quiet = TRUE) %>%
   st_transform("ESRI:102271")
 ```
 
-#### 3. Load Burglary Data
+### 3. Load Burglary Data
 
 ```{r load-burglaries}
 #| message: false
 #| warning: false
-#| include: false
 
 # Load 2017 burglary data.
 burglaries <-
-  st_read("data/burglaries_2017.geojson") %>%
+  st_read("data/burglaries_2017.geojson", quiet = TRUE) %>%
   st_transform("ESRI:102271")
 
 # Load 2018 burglary data.
 burglaries_2018 <-
-  st_read("data/burglaries_2018.geojson") %>%
+  st_read("data/burglaries_2018.geojson", quiet = TRUE) %>%
   st_transform("ESRI:102271")
 ```
 
-#### 4. Load 311 Data
+### 4. Load 311 Data
 
 ```{r load-311-requests}
 #| message: false
 #| warning: false
-#| include: false
 
 # Load 2017 311 data for single street light outage.
 light_outage <-
-  st_read("data/single_light_outage_2017.geojson") %>%
+  st_read("data/single_light_outage_2017.geojson", quiet = TRUE) %>%
   st_transform("ESRI:102271")
 ```
 
-#### 5. Load Ancillary / Contextual Data
+### 5. Load Ancillary / Contextual Data
 
 ```{r load-ancillary}
 #| message: false
 #| warning: false
-#| include: false
 
 # Load vacant buildings data.
 vacant <-
-  st_read("data/vacant_buildings.geojson") %>%
+  st_read("data/vacant_buildings.geojson", quiet = TRUE) %>%
   st_transform("ESRI:102271")
 
 # Load CTA L station data.
 station <-
-  st_read("data/L_stations.geojson") %>%
+  st_read("data/L_stations.geojson", quiet = TRUE) %>%
   st_transform("ESRI:102271")
 
 # Load zoning data.
 zoning <-
-  st_read("data/zoning.geojson") %>%
+  st_read("data/zoning.geojson", quiet = TRUE) %>%
   st_transform("ESRI:102271")
 ```
 
-##### i. Clean Zoning Data
+#### i. Clean Zoning Data
 
 ```{r clean-zoning}
 # Clean zoning data.
@@ -301,7 +261,7 @@ zoning <- zoning %>%
 )
 ```
 
-##### ii. Clean Major Streets Data
+#### ii. Clean Major Streets Data
 
 ```{r clean-streets}
 # Clean major streets data.
@@ -309,7 +269,7 @@ zoning <- zoning %>%
 streets <- st_union(streets)
 ```
 
-##### iii. Clean Building Data
+#### iii. Clean Building Data
 
 ```{r clean-buildings}
 # Clean building data.
@@ -325,7 +285,7 @@ buildings <- buildings %>%
 
 It is to be noted that this lab also uses abandoned / vacant buildings as an additional contextual predictor, however, a clear distinction must be made that the dataset used is not the 311 unconfirmed complaints of vacant buildings that may be driven by emotional biases. Instead, the predictor is confirmed and issued vacant building violations. Other ancillary data include zoning, major roads, CTA's L stations, as well as buildings to derive spatial features from. Zoning types may encourage different types of behavior like residential vs. business/commercial, major roads and CTA's L stations create dense urban flow in some areas and provide those engaging in criminal behavior access to different areas, building density measures the urbanity of the areas and the higher the density the larger the number of potential targets, building age and its U-shape can attract burglars especially since its value alters.
 
-#### 6. Visualize Data
+### 6. Visualize Data
 
 ![Chicago Neighborhoods (From Wikipedia)](data/chicago_neighborhoods.png)
 
@@ -672,7 +632,7 @@ neighborhood_streets_map + district_streets_map +
     )
 ```
 
-#### 7. Section Analysis
+### 7. Section Analysis
 
 Part I goes over the initial setup for the entirety of the lab as well as the data cleaning process that involved categorizing the land-use and creating new variables like building age and unifying the street vector data, the latter of which was at first overlooked until it came time to spatially engineer the distances to major roads—computationally less heavy and more efficient to compute distances to a single vector rather than thousands of line segments across Chicago.
 
@@ -688,9 +648,9 @@ Vacant buildings (5,012) are more sparse with a lot of density in West Side's Hu
 
 Major streets are mapped alongside one another with the neighborhood and police district boundaries overlaid. It's pretty clear from the street networks that they line up with CTA's transit lines and also show where the urban core is in Central's Loop neighborhood boundary.
 
-### PART II: Fishnet Grid Creation
+## PART II: Fishnet Grid Creation
 
-#### 1. Fishnet Grid Cells
+### 1. Fishnet Grid Cells
 
 ```{r create-fishnet}
 # Burglaries.
@@ -707,7 +667,7 @@ fishnet <- st_make_grid(
 fishnet <- fishnet[neighborhoods, ]
 ```
 
-#### 2. Aggregate Datasets
+### 2. Aggregate Datasets
 
 ```{r aggregate-burglaries}
 # Spatial join.
@@ -865,7 +825,7 @@ fishnet <- fishnet %>%
   )
 ```
 
-#### 3. Visualize Spatial Distributions
+### 3. Visualize Spatial Distributions
 
 ```{r visualize-fishnet-maps}
 #| message: false
@@ -1098,7 +1058,6 @@ building_age_fishnet_map + building_density_fishnet_map +
 ```{r create-zoning-fishnet-maps}
 #| message: false
 #| warning: false
-#| include: false
 
 # Create individual maps for each zoning type.
 residential_map <- ggplot() +
@@ -1225,7 +1184,7 @@ combined_map <- (residential_map + biz_com_map + park_map) /
 combined_map
 ```
 
-#### 4. Kernel Density Estimation (KDE) Baseline
+### 4. Kernel Density Estimation (KDE) Baseline
 
 ```{r kde-burglary-baseline}
 #| message: false
@@ -1293,7 +1252,7 @@ burglary_kde_map <- ggplot() +
 burglary_kde_map
 ```
 
-#### 5. Section Analysis
+### 5. Section Analysis
 
 Part II deals with the 500 meter by 500 meter fishnet grid creation to get a more uniform look at Chicago as opposed to block groups or census tracts, which have different areas and also very different urban and population characteristics.
 
@@ -1317,9 +1276,9 @@ Lots of residential zoning outside the downtown zoning, and the business/commerc
 
 The KDE burglary map shows the value for burglaries per meter squared and has a similar spatial pattern in Part I's burglary EDA visuals.
 
-### PART III: Spatial Features
+## PART III: Spatial Features
 
-#### 1. Nearest Neighbor: CTA L Stations
+### 1. Nearest Neighbor: CTA L Stations
 
 ```{r nn-feature-station}
 #| warning: false
@@ -1341,7 +1300,7 @@ fishnet <- fishnet %>%
   )
 ```
 
-#### 2. Hotspot Distance: Single Street Light Outages
+### 2. Hotspot Distance: Single Street Light Outages
 
 ```{r local-morans-function}
 #| message: false
@@ -1460,7 +1419,7 @@ if (nrow(outage_hotspots) > 0) {
 }
 ```
 
-#### 3. Join Block Groups for Cross-Validation
+### 3. Join Block Groups for Cross-Validation
 
 ```{r join-bgs}
 # Join district information to fishnet.
@@ -1482,7 +1441,7 @@ fishnet <- st_join(
   filter(!is.na(community)) # Remove cells outside neighborhoods
 ```
 
-#### 4. Section Analysis
+### 4. Section Analysis
 
 Part III is where the spatial features were engineered to produce predictor variables for the model. The spatial predictors are more sophisticated and complex in comparison to using counts of urban data. K-Nearest Neighbor feature was created from the stations with k = 3 for a good balance in a large city with a more robust and expansive public transit system compared to others. This is much more reflective of everyday life than distance to the nearest station as different stations may have differing routes for individuals.
 
@@ -1490,13 +1449,11 @@ Hotspot distances were also calculated from the outages, this is also more refle
 
 The LISA map shows that there are only high-high and low-low clusters, and low-high outliers, but not high-low outliers. It looks like the hot clusters and sprinkled outliers are sprawled across Northwest Side, West Side, South Side, and Southwest Side. Cold clusters are in Far Southeast Side, in Big Marsh Park, and Far North Side, specifically the airport.
 
-This section also saw to it that the neighborhoods and police districts were joined into the fishnet variable. This is because the goal is to make this predictive model as "ethical" as possible. Even if testing folds is majorly for technical purposes, testing folds over police districts implies that the predictive model is being geared toward policing rather than neighborhoods, which has more implications for community-building and resource/service allocation.
+This section also saw to it that the neighborhoods and police districts were joined into the fishnet variable. The reasoning is explained in Part V-3.
 
-It can be argued that the goal may be inherently biased due to the fact it's predicting burglary numbers, but it can also be argued that the variables themselves are related to the built environment, so the tool can be used instead to take a deeper look into alternative, urban planning solutions to alleviate forced entry burglaries rather than sending police to intensely scrutinized communities.
+## PART IV: Count Regression Models
 
-### PART IV: Count Regression Models
-
-#### 1. Poisson Regression
+### 1. Poisson Regression
 
 ```{r prepare-data}
 # Create clean modeling dataset.
@@ -1628,7 +1585,7 @@ model_poisson <- glm(count_burglaries ~
 summary(model_poisson)
 ```
 
-#### 2. Check for Overdispersion
+### 2. Check for Overdispersion
 
 ```{r overdispersion}
 # Calculate dispersion parameter.
@@ -1636,7 +1593,7 @@ dispersion <- sum(residuals(model_poisson, type = "pearson")^2) /
               model_poisson$df.residual
 ```
 
-#### 3. Negative Binomial Distribution
+### 3. Negative Binomial Distribution
 
 ```{r fit-nb}
 # Fit Negative Binomial model
@@ -1703,7 +1660,7 @@ model_comparison_stats %>%
   )
 ```
 
-#### 4. VIF Test
+### 4. VIF Test
 
 ```{r vif-test}
 # VIF test for the Negative Binomial model.
@@ -1762,7 +1719,7 @@ vif_table %>%
            general_title = "Note:")
 ```
 
-#### 5. Section Analysis
+### 5. Section Analysis
 
 Part IV built the statistical count models, Poisson and Negative Binomial, which are meant to handle response variables that are counts, like in this case. Poisson was the initial model crafted, and after seeing that dispersion was an issue, the Negative Binomial approach was pursued, much like determining spatial dependence with Moran's I on OLS regressions to pursue alternative spatial regressions.
 
@@ -1794,9 +1751,9 @@ In the end, the difference in AIC was over 700, indicating that the negative bin
 
 A VIF test was also conducted to look for multicollinearity, and there was none, reinforcing the predictor and coefficient reliability.
 
-### PART V: Spatial Cross-Validation (2017)
+## PART V: Spatial Cross-Validation (2017)
 
-#### 1. Leave-One-Group-Out (LOGO) Cross-Validation
+### 1. Leave-One-Group-Out (LOGO) Cross-Validation
 
 ```{r spatial-cv-districts}
 # Get unique districts.
@@ -1818,7 +1775,7 @@ for (i in seq_along(districts_unique)) {
                        # Contextual count data.
                        count_vacant +
                        # Contextual spatial features.
-                       nn_station +  dist_to_streets + building_density +
+                       dist_to_streets + building_density +
                        # Age polynomial.
                        avg_building_age + I(avg_building_age^2) +
                        # Zoning. Leave residential out as reference.
@@ -1868,7 +1825,7 @@ for (i in seq_along(neighborhoods_unique)) {
                        # Contextual count data.
                        count_vacant +
                        # Contextual spatial features.
-                       nn_station +  dist_to_streets + building_density +
+                       dist_to_streets + building_density +
                        # Age polynomial.
                        avg_building_age + I(avg_building_age^2) +
                        # Zoning. Leave residential out as reference.
@@ -1898,11 +1855,12 @@ for (i in seq_along(neighborhoods_unique)) {
 }
 ```
 
-#### 2. Cross-Validation Tables
+### 2. Cross-Validation Tables
 
 ```{r cv-results-districts-table}
 # Scrollable Kable for districts.
 cv_results_districts %>%
+  arrange(desc(rmse)) %>%
   mutate(
     test_district = cell_spec(test_district, bold = TRUE),
     mae = round(mae, 2),
@@ -1933,6 +1891,7 @@ cv_results_districts %>%
 ```{r cv-results-neighborhoods-table}
 # Scrollable Kable for neighborhoods
 cv_results_neighborhoods %>%
+  arrange(desc(rmse)) %>%
   mutate(
     test_neighborhood = cell_spec(test_neighborhood, bold = TRUE),
     mae = round(mae, 2),
@@ -1960,17 +1919,148 @@ cv_results_neighborhoods %>%
   )
 ```
 
-#### 3. Section Analysis
+![Police Districts (From CPD)](data/police_districts.png)
 
-##### i. What was done?
+```{r rmse-maps}
+#| message: false
+#| warning: false
+#| fig-height: 10
+#| fig-width: 12
+#| fig-dpi: 300
 
-##### ii. Why is it important?
+# Join RMSE values to districts.
+districts_rmse <- police_districts %>%
+  left_join(cv_results_districts,
+            by = c("dist_label" = "test_district"))
 
-##### iii. What was found?
+# Join RMSE values to neighborhoods.
+neighborhoods_rmse <- neighborhoods %>%
+  left_join(cv_results_neighborhoods,
+            by = c("community" = "test_neighborhood"))
 
-### PART VI: Model Evaluation
+# Create custom color ramp.
+weitzman <- colorRampPalette(c("#778ac5", "#ff4100"))
 
-#### 1. Generate Final Predictions
+# District max and min RMSE for labeling.
+district_max <- districts_rmse %>%
+  slice_max(rmse, n = 1)
+district_min <- districts_rmse %>%
+  slice_min(rmse, n = 1)
+
+# Neighborhood max and min RMSE for labeling.
+neighborhood_max <- neighborhoods_rmse %>%
+  slice_max(rmse, n = 1)
+neighborhood_min <- neighborhoods_rmse %>%
+  slice_min(rmse, n = 1)
+
+# Police district RMSE.
+rmse_districts <- ggplot(districts_rmse) +
+  geom_sf(aes(fill = rmse),
+          color = "#f5f4f0",
+          linewidth = 0.75
+          ) +
+  scale_fill_gradientn(
+    colors = weitzman(256),
+    name = "Police District RMSE",
+    trans = "sqrt",
+    breaks = c(1.88, 2.79, 3.55, 3.98, 5.00, 6.99)
+    ) +
+  geom_sf_label(
+    data = district_max,
+    aes(label = paste0(dist_label, ": ", round(rmse, 2))),
+    fill = "#2d2a26", color = "#f5f4f0", size = 3, label.size = 0,
+    fontface = "bold"
+    ) +
+  geom_sf_label(
+    data = district_min,
+    aes(label = paste0(dist_label, ": ", round(rmse, 2))),
+    fill = "#2d2a26", color = "#f5f4f0", size = 3, label.size = 0,
+    fontface = "bold"
+    ) +
+  labs(
+    title = "Police Districts",
+    subtitle = "Chicago, Illinois | Min and Max Districts"
+    ) +
+  theme_chi_map() +
+  theme(
+    plot.background  = element_rect(fill = "#f5f4f0", color = NA),
+    panel.background = element_rect(fill = "#f5f4f0", color = NA)
+  )
+
+# Neighborhood RMSE.
+rmse_neighborhoods <- ggplot(neighborhoods_rmse) +
+  geom_sf(aes(fill = rmse),
+          color = "#f5f4f0",
+          linewidth = 0.75
+          ) +
+  scale_fill_gradientn(
+    colors = weitzman(256),
+    name = "Neighborhood RMSE",
+    trans = "sqrt",
+    breaks = c(0.13, 1.93, 2.86, 3.90, 6.00, 11.40)
+    ) +
+  geom_sf_label(
+    data = neighborhood_max,
+    aes(label = paste0(community, ": ", round(rmse, 2))),
+    fill = "#2d2a26", color = "#f5f4f0", size = 3, label.size = 0,
+    fontface = "bold"
+  ) +
+  geom_sf_label(
+    data = neighborhood_min,
+    aes(label = paste0(community, ": ", round(rmse, 2))),
+    fill = "#2d2a26", color = "#f5f4f0", size = 3, label.size = 0,
+    fontface = "bold"
+  ) +
+  labs(
+    title = "Neighborhoods",
+    subtitle = "Chicago, Illinois | Min and Max Neighborhoods"
+    ) +
+  theme_chi_map() +
+  theme(
+    plot.background  = element_rect(fill = "#f5f4f0", color = NA),
+    panel.background = element_rect(fill = "#f5f4f0", color = NA)
+  )
+
+# Combine plots using patchwork.
+rmse_districts + rmse_neighborhoods +
+  plot_annotation(
+    title = "Spatial Distribution of LOGO Cross-Validation",
+    subtitle = "Root Mean Squared Error (RMSE)",
+    theme = theme(
+      plot.title = element_text(
+        size = 16, 
+        face = "bold",
+        hjust = 0.5
+        ),
+      plot.subtitle = element_text(
+        size = 14,
+        face = "italic",
+        hjust = 0.5,
+        color = "gray30"
+        ),
+      plot.background  = element_rect(fill = "#f5f4f0", color = NA),
+      panel.background = element_rect(fill = "#f5f4f0", color = NA),
+      )
+    )
+```
+
+### 3. Section Analysis
+
+To explain Part III-4 why the police districts and neighborhoods were joined to the fishnet: The goal, again, is to make this predictive model as "ethical" as possible. Even if testing folds is majorly for technical purposes, testing folds over police districts implies that the predictive model is being geared toward policing rather than neighborhoods, which has more implications for community-building and resource/service allocation.
+
+The cross-validation with the 2017 data was used to evaluate how robust the model is using a Leave-One-Group-Out (LOGO) method instead of the classic k-fold cross-validation. The importance of this is to remove either a district or neighborhood out, train on the other districts, then predict that held-out district to determine the Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE).
+
+Also, according to the CV tables, the three highest RMSEs are districts 3, 1, and 12, and neighborhoods South Shore, Woodlawn, and West Town. The districts with the highest errors are in the Central, South Side, and West Sides, and the neighborhoods with the highest errors are within West Side and South Side. The biggest overlap is especially in South Side were the South Shore, Woodlawn, and 3rd District overlap around the waterfront area.
+
+On the other end of that spectrum, the districts with the lowest RMSEs are 16, 20, and 15, and neighborhoods with the lowest errors are O'Hare, Oakland, and West Garfield Park. These regions are in Far North Side where the airport is, which is expected, as well as West Side when looking at districts. However, looking at neighborhoods, the ones that performed the best are Oakland in South Side, West Garfield Park in West Side, and O'Hare in Far North Side, as previously explained.
+
+District-scale vs. neighborhood-scale differ, this particular model performs a lot better with the neighborhoods being typically 2 to 3 burglaries off when it comes to predicting, as opposed to the districts being typically 3 burglaries off.
+
+This could be due to a variety of factors, but the performance by differ due to the fact neighborhoods are more uniform when it comes to urban characteristics, which is exactly what the predictor variables are based on. It might have not performed as well for police districts because they tend to be delineated according to call volume and crime rates and how many resources police are able to dispatch to handle them (i.e. drawing police boundaries may not be as strongly influenced by urban form).
+
+## PART VI: Model Evaluation
+
+### 1. Generate Final Predictions
 
 ```{r final-predictions}
 # Fit final model on all data.
@@ -1980,7 +2070,7 @@ final_model <- glm.nb(count_burglaries ~
                         # Contextual count data.
                         count_vacant +
                         # Contextual spatial features.
-                        nn_station +  dist_to_streets + building_density +
+                        dist_to_streets + building_density +
                         # Age polynomial.
                         avg_building_age + I(avg_building_age^2) +
                         # Zoning. Leave residential out as reference.
@@ -2003,7 +2093,7 @@ fishnet <- fishnet %>%
   )
 ```
 
-#### 2. Compare Model vs. KDE Baseline
+### 2. Compare Model vs. KDE Baseline
 
 ```{r compare-models}
 #| message: false
@@ -2150,7 +2240,7 @@ comparison_2018 %>%
   )
 ```
 
-#### 3. Where Does the Model Work Well?
+### 3. Where Does the Model Work Well?
 
 ```{r prediction-errors}
 # Calculate errors.
@@ -2178,7 +2268,7 @@ nb_error_map <- ggplot() +
           ) +
   scale_fill_gradient2(
     name = "Error",
-    low = "#2166ac", mid = "white", high = "#b2182b",
+    low = "#011f5b", mid = "white", high = "#990000",
     midpoint = 0,
     limits = c(-10, 10),
     breaks = c(-10, -5, 0, 5, 10)
@@ -2208,7 +2298,7 @@ kde_error_map <- ggplot() +
           ) +
   scale_fill_gradient2(
     name = "Error",
-    low = "#2166ac", mid = "white", high = "#b2182b",
+    low = "#011f5b", mid = "white", high = "#990000",
     midpoint = 0,
     limits = c(-10, 10),
     breaks = c(-10, -5, 0, 5, 10)
@@ -2252,7 +2342,7 @@ kde_abs_error_map <- ggplot() +
   theme(legend.position = "bottom")
 ```
 
-#### 4. Model Summary Table
+### 4. Model Summary Table
 
 ```{r model-summary-table}
 # Create final summary table.
@@ -2267,7 +2357,6 @@ model_summary <- model_summary %>%
     term == "(Intercept)" ~ "Intercept",
     term == "I(avg_building_age^2)" ~ "Average Building Age²",
     term == "count_vacant" ~ "Vacancy Count",
-    term == "nn_station" ~ "Distance to Nearest Station",
     term == "dist_to_streets" ~ "Distance to Major Street",
     term == "building_density" ~ "Building Density",
     term == "I(avg_building_age^2)" ~ "Average Building Age²",
@@ -2303,38 +2392,12 @@ model_summary %>%
   )
 ```
 
-#### 5. Section Analysis and Overall Discussion
+### 5. Section Analysis and Overall Discussion
 
-##### i. What was done?
+Part VI evaluates the final model compared to the baseline KDE that was created earlier in Part II-4, the results are surprisingly closer than expected. Of course, it was expected that KDE would likely perform better with in-sampling due to more overfit compared to the final NB model, which ended up performing better out-of-sample compared to the KDE model.
 
-##### ii. Why is it important?
+The differences in MAE and RMSE are more prominent when looking at the in-sample table, and the out-of-sample table values have very marginal differences, but in the end the NB model does generalize better by a slim amount. This can be observed when looking at the faceted map and how they have, visually, extremely close spatial pattern overlap.
 
-##### iii. What was found?
+It is also crucial to address the practical use of this prediction model: *it has potential and can be useful under human supervision*, and this is of an opinion that is cemented, regardless of how well a model does. The oversight is needed even if it performs spatially and temporally well, because the model can be used to disperse resources to communities, but may over- or under-predict still; this means it can help detect hotspots, serving as an early warning for urban planners to consider Chicago's future form.
 
-## SUBMISSION CHECKLIST
-
-### Required Components
-
--   [ ] **Introduction**: Brief description of your chosen 311 violation
-    type and why you selected it
--   [ ] **Data Exploration**: Maps and summary statistics of your
-    violation data
--   [ ] **Fishnet Grid**: Successfully created and visualized grid with
-    aggregated counts
--   [ ] **Spatial Features**: At least 2-3 spatial features calculated
-    (k-NN, distance measures, etc.)
--   [ ] **Local Moran's I**: Spatial autocorrelation analysis with
-    interpretation
--   [ ] **Count Regression**: Both Poisson and Negative Binomial models
-    with comparison
--   [ ] **Spatial Cross-Validation**: LOGO CV implemented on 2017 data
-    with reported metrics
--   [ ] **Temporal Validation**: 2018 data aggregated and tested with
-    2017 model(OPTIONAL.)
--   [ ] **Validation Comparison**: Comparison of spatial vs. temporal
-    validation performance
--   [ ] **Model Comparison**: Your model vs. KDE baseline for 2018
-    predictions
--   [ ] **Error Analysis**: Maps and discussion of where model performs
-    well/poorly
--   [ ] **Written Explanations**: Your own words explaining each step
+It can be argued that this lab's goal striving for the least damage is contradicted by the simple fact that this is a burglary predictive model, but it can also be argued that the variables themselves are related to the built environment only. So, the tool can instead aid public servants to take a deeper look into alternative, urban planning or local, citizen-driven solutions to alleviate forced entry burglaries rather than sending police to communities that are already intensely scrutinized.
