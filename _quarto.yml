@@ -58,6 +58,8 @@ website:
           text: "LAB 3: MIDTERM PROJECT"
         - href: labs/lab-4/Vu_Tessa_Assignment4.qmd
           text: "LAB 4: SPATIAL PREDICTIVE ANALYSIS"
+        - href: labs/lab-5/Vu_Tessa_Assignment5.qmd
+          text: "LAB 5: SPACE-TIME PREDICTION OF BIKE SHARE DEMAND"
       - text: MIDTERM PROJECT
         menu: 
           - href: midterm-project.qmd

@@ -1,0 +1,167 @@
+---
+title: EAGLES PARADE
+subtitle: WEEK 11 NOTES
+date: 2025-11-17
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format:
+  html:
+    code-fold: show
+    toc: true
+    toc-location: left
+    toc-expand: true
+    smooth-scroll: true
+    embed-resources: true
+    title-block-style: default
+execute:
+  eval: false
+---
+
+```{r}
+# Libraries.
+library(dplyr)
+library(lubridate)
+library(tidyverse)
+
+set.seed(42)
+options(scipen = 999)
+```
+
+```{r}
+# Bike data.
+indego <- read.csv("data/indego-trips-2025-q1.csv", stringsAsFactors = FALSE)
+
+# Parse start_time with the correct format.
+indego <- indego %>%
+  mutate(
+    start_time = mdy_hm(start_time),# month/day/year hour:minute
+    interval60 = floor_date(start_time, "hour")
+  )
+
+# Aggregate to hourly counts per station.
+indego_hourly <- indego %>%
+  group_by(interval60, start_station) %>%
+  summarise(
+    Trip_Count = n(),
+    .groups = "drop"
+  )
+
+# Create train/test split.
+indego_hourly <- indego_hourly %>%
+  mutate(
+    week_num = week(interval60),
+    dotw_numeric = wday(interval60, label = FALSE),
+    dotw = wday(interval60, label = TRUE),
+    dotw_simple = ifelse(dotw %in% c("Sat", "Sun"), "Weekend", "Weekday")
+  )
+
+# Split into train (weeks 1-9) and test (weeks 10-13).
+train <- indego_hourly %>% 
+  filter(week_num <= 9)
+
+test <- indego_hourly %>% 
+  filter(week_num >= 10 & week_num <= 13)
+```
+
+# The Eagles Parade Problem: Temporal Validation vs. Rare Events
+
+## When Was the Parade?
+
+```{r}
+parade_date <- as.Date("2025-02-14")
+parade_week <- week(parade_date)
+
+cat("🦅 Eagles Super Bowl Parade:\n")
+cat("  Date: February 14, 2025\n")
+cat("  Week of year:", parade_week, "\n\n")
+
+cat("Our temporal split:\n")
+cat("  Training: weeks 1-9 (includes parade) ✓\n")
+cat("  Test: weeks 10-13 (NO parade) ✗\n\n")
+```
+
+## Parade Feature to Training Data
+
+```{r}
+# Create a date column from interval60.
+train <- train %>%
+  mutate(
+    date = as.Date(interval60),
+    eagles_parade = ifelse(date == parade_date, 1, 0),
+    hour = hour(interval60)
+  )
+
+test <- test %>%
+  mutate(
+    date = as.Date(interval60),
+    eagles_parade = 0, # No parade in test period.
+    hour = hour(interval60)
+  )
+
+cat("Parade indicator distribution:\n")
+cat("  Training set - parade day observations:", sum(train$eagles_parade), "\n")
+cat("  Test set - parade day observations:", sum(test$eagles_parade), "\n\n")
+```
+
+## Fit Model with Parade Feature
+
+```{r}
+# Baseline model.
+model1_baseline <- lm(
+  Trip_Count ~ as.factor(hour) + dotw_simple,
+  data = train
+)
+
+# Parade model.
+model1_parade <- lm(
+  Trip_Count ~ as.factor(hour) + dotw_simple + eagles_parade,
+  data = train
+)
+```
+
+## Show Coefficient
+
+```{r}
+parade_coef <- summary(model1_parade)$coefficients["eagles_parade", ]
+cat("Eagles Parade Coefficient (learned from training data):\n")
+cat("  Estimate:", round(parade_coef[1], 3), "trips per station-hour\n")
+cat("  p-value:", format.pval(parade_coef[4], digits = 3), "\n\n")
+```
+
+## The Problem
+
+```{r}
+cat("⚠️  THE PROBLEM:\n")
+cat("We learned a parade effect from training data, but we CAN'T measure\n")
+cat("whether it generalizes because there's no parade in our test period!\n\n")
+```
+
+## Test Set Performance Won't Change
+
+```{r}
+# Generate predictions from both models.
+test$pred1 <- predict(model1_baseline, newdata = test)  # Baseline (no parade)
+test$pred1_parade <- predict(model1_parade, newdata = test)  # With parade feature
+
+mae_original <- mean(abs(test$Trip_Count - test$pred1), na.rm = TRUE)
+mae_with_parade <- mean(abs(test$Trip_Count - test$pred1_parade), na.rm = TRUE)
+
+cat("Test set MAE:\n")
+cat("  Without parade feature:", round(mae_original, 3), "\n")
+cat("  With parade feature:", round(mae_with_parade, 3), "\n")
+cat("  Difference:", round(abs(mae_original - mae_with_parade), 4), 
+    "(essentially zero!)\n\n")
+
+cat("Why no difference? Because test set has eagles_parade = 0 for all observations!\n")
+cat("The parade coefficient is learned but never 'activated' in test predictions.\n")
+```

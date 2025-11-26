@@ -2,3 +2,6 @@
 **/*.quarto_ipynb
 labs/lab-4/data/buildings_2017.geojson
 labs/lab-4/.RData
+weekly-notes/week-11/indego_space_time_prediction_cache/html/model4_e8d005b6a5aebe1bbfe12ef58106e2c1.rdb
+weekly-notes/week-11/indego_space_time_prediction_cache/html/model5_cd8604d6c0c4d31ae85106e7aa78fa93.rdb
+labs/lab-5/data/indego_2024_2025.csv

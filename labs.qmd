@@ -27,5 +27,8 @@ format:
 ## LAB 3: MIDTERM PROJECT
 [10-27-2025 Lab: Midterm Project](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/midterm-project)
 
-## LAB 4: 
-[11-17-2025 Lab: ](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-2/Vu_Tessa_Assignment4)
+## LAB 4: SPATIAL PREDICTIVE ANALYSIS
+[11-17-2025 Lab: Spatial Predictive Analysis](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-4/Vu_Tessa_Assignment4)
+
+## LAB 5: SPACE-TIME PREDICTION OF BIKE SHARE DEMAND
+[12-01-2025 Lab: Space-Time Prediction of Bike Share Demand](https://musa-5080-fall-2025.github.io/portfolio-setup-TessaVu/labs/lab-5/Vu_Tessa_Assignment5)

@@ -1,0 +1,62 @@
+/* Custom styling for MUSA 5080 Week 11 slides */
+
+/* Make code blocks more readable */
+.reveal pre code {
+  font-size: 0.85em;
+  line-height: 1.4;
+}
+
+/* Fragment styling for better visibility */
+.reveal .fragment {
+  opacity: 0.4;
+}
+
+.reveal .fragment.visible {
+  opacity: 1;
+}
+
+/* Center class for slides */
+.center h1, .center h2 {
+  text-align: center;
+}
+
+/* Table styling */
+.reveal table {
+  font-size: 0.8em;
+}
+
+.reveal table th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+/* Callout boxes if needed */
+.callout {
+  padding: 1em;
+  margin: 1em 0;
+  border-left: 4px solid #007bff;
+  background-color: #f8f9fa;
+}
+
+/* Incremental lists spacing */
+.reveal ul, .reveal ol {
+  margin-bottom: 1em;
+}
+
+.reveal li {
+  margin-bottom: 0.5em;
+}
+
+/* Column spacing */
+.reveal .columns {
+  gap: 2em;
+}
+
+/* Smaller text class */
+.smaller {
+  font-size: 0.85em !important;
+}
+
+.smaller ul, .smaller ol {
+  font-size: 0.85em !important;
+}
