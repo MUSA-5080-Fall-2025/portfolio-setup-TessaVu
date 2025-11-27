@@ -1,24 +1,39 @@
 ---
 title: "Assignment 2: Spatial Analysis and Visualization"
 subtitle: Healthcare Access and Equity in Pennsylvania
-author: Tess Vu
 date: 2025-10-14
-format: 
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format:
   html:
     code-fold: show
     toc: true
-    toc-location: left
+    toc_float: true
     toc-expand: true
     smooth-scroll: true
     embed-resources: true
+    title-block-style: default
 execute:
   warning: false
   message: false
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
-# Part 1: Healthcare Access for Vulnerable Populations
+# PART I: HEALTHCARE ACCESS FOR VULNERABLE POPULATIONS
 
-## Research Question
+## A. Research Question
 
 **Which Pennsylvania counties have the highest proportion of vulnerable
 populations (elderly + low-income) living far from hospitals?**
@@ -45,17 +60,12 @@ library(tigris)
 library(units)
 
 # Set Census API key
-census_api_key("3aaee31789e10b674a531e9f236c35d5394b19ed")
+census_api_key <- Sys.getenv("CENSUS_API_KEY")
 
 # Load spatial data
 pa_counties <- st_read("data/pa_county_boundaries/pa_county_boundaries.shp")
 pa_tracts <- tracts(state = "PA", cb = TRUE)
 pa_hospitals <- st_read("data/hospitals.geojson")
-
-# Check that all data loaded correctly
-#glimpse(pa_counties)
-#glimpse(pa_tracts)
-#glimpse(pa_hospitals)
 ```
 
 -   How many hospitals are in the dataset?
@@ -450,7 +460,7 @@ kable(
   row_spec(0, color = "mistyrose", background = "red3")
 ```
 
-# Part 2: Comprehensive Visualization
+# PART II: COMPREHENSIVE VISUALIZATION
 
 ## Map 1: County-Level Choropleth
 
@@ -562,7 +572,7 @@ choropleth_map + theme(
 )
 ```
 
-## Chart: Distribution Analysis
+## Chart 1: Distribution Analysis
 
 ```{r}
 # Create distribution visualization.
@@ -618,16 +628,16 @@ faceted_plot
 
 Of the vulnerable tracts, it looks like the distances to the nearest hospitals are generally less than 5 miles and the histogram is skewed right. From this visual distribution, it looks like there's accessibility with vulnerable populations and drivable distance to the nearest hospital. The elderly population also look like they cluster around the 500 estimate, also skewing to the right significantly once the estimate reachs 1,000 or more.
 
-# Part 3: Bring Own Data Analysis
+# PART III: BYO DATA ANALYSIS
 
-## Analysis
+## Resource Allocation for Substance Use Analysis
 
 ```{r}
 #| message: false
 #| include: false
 # All data from OpenDataPhilly.
 
-# Drug-related point data.
+# Substance-related point data.
 # No creation date, GitHub indicates data was posted 2 years ago.
 sharps_boxes <- st_read("data/sharps_drop_boxes/sharps_drop_boxes.shp")
 # Created December 1, 2022.
@@ -651,24 +661,6 @@ philly_tracts <- pa_tracts %>%
 ```{r}
 # CRS checks and transformations.
 
-# WGS84 / Pseudo-Mercator (EPSG 3857).
-#st_crs(sharps_boxes)
-
-# WGS84 / World Geodetic System 1984 (EPSG 4326).
-#st_crs(treatment_facilities)
-
-# WGS84 / Pseudo-Mercator (EPSG 3857).
-#st_crs(free_meal_sites)
-
-# No CRS. Not a geodataframe. Data has latitude and longitude.
-#st_crs(crime_2024)
-
-# WGS84 / World Geodetic System 1984 (EPSG 4326).
-#st_crs(philly_county)
-
-# WGS84 / World Geodetic System 1984 (EPSG 4326).
-#st_crs(philly_tracts)
-
 # Change data CRS to Pennsylvania South (EPSG 3365) for calculations.
 sharps_boxes <- sharps_boxes %>%
   st_transform(crs = 3365)
@@ -681,13 +673,6 @@ philly_county <- philly_county %>%
 philly_tracts <- philly_tracts %>%
   st_transform(crs = 3365)
 
-# Check CRS changes.
-#st_crs(sharps_boxes)
-#st_crs(treatment_facilities)
-#st_crs(free_meal_sites)
-#st_crs(philly_county)
-#st_crs(philly_tracts)
-
 crime_2024 <- crime_2024 %>%
   # Remove points where latitude and longitude are NA or empty.
   .[!(is.na(.$lng) | .$lng == "" | is.na(.$lat) | .$lat == ""),] %>%
@@ -696,12 +681,9 @@ crime_2024 <- crime_2024 %>%
   # Change to needed CRS for calculations.
   st_transform(crs = 3365)
 
-# Check CRS change.
-#st_crs(crime_2024)
-
-# Filter 2024 crime data by drug-related crimes.
-drugs_2024 <- crime_2024 %>%
-  filter(`text_general_code` == "Narcotic / Drug Law Violations")
+# Filter 2024 crime data by substance-related uses.
+substances_2024 <- crime_2024 %>%
+  filter(text_general_code == "Narcotic / Drug Law Violations")
 ```
 
 ```{r}
@@ -719,7 +701,7 @@ free_meal_sites <- free_meal_sites %>%
   filter(`status` == "Active")
 free_meal_sites[, c("objectid", "phone_numb", "temporary_", "site_key", "website", "hours_mon_", "hours_tues", "hours_wed_", "hours_thur", "hours_fri_", "hours_sat_", "hours_sa_1", "hours_sa_2", "hours_sun_", "email", "seasonally")] <- list(NULL)
 
-drugs_2024[, c("the_geom", "cartodb_id", "the_geom_webmercator", "objectid", "dc_dist", "psa", "dispatch_date_time", "dispatch_date", "dispatch_time", "hour", "dc_key", "ucr_general")] <- list(NULL)
+substances_2024[, c("the_geom", "cartodb_id", "the_geom_webmercator", "objectid", "dc_dist", "psa", "dispatch_date_time", "dispatch_date", "dispatch_time", "hour", "dc_key", "ucr_general")] <- list(NULL)
 
 philly_tracts[, c("STATEFP", "COUNTYFP", "GEOIDFQ", "NAME", "NAMELSAD", "STUSPS", "TRACTCE", "STATE_NAME", "LSAD", "TRACT")] <- list(NULL)
 colnames(philly_tracts)[2] <- "county"
@@ -732,12 +714,12 @@ colnames(philly_tracts)[2] <- "county"
         data](https://opendataphilly.org/datasets/crime-incidents/),
         [sharps drop boxes
         data](https://opendataphilly.org/datasets/sharps-drop-boxes/),
-        [drug and alcohol treatment
-        facilities](https://opendataphilly.org/datasets/pa-drug-alcohol-treatment-facilities/),
+        [substance and alcohol treatment
+        facilities](https://opendataphilly.org/datasets/pa-substance-alcohol-treatment-facilities/),
         and [free food program site
         data](https://opendataphilly.org/datasets/free-food-sites/).
         This is because I want to investigate the spatial overlap and
-        relationships with drug incidences and resources.
+        relationships with substance incidences and resources.
 
 -   What is the data source and date?
 
@@ -770,87 +752,88 @@ colnames(philly_tracts)[2] <- "county"
 
 2.  **Research Question**
 
--   Do tracts with high drug-related instances have adequate access to
+-   Do tracts with high substance-related instances have adequate access to
     treatment facilities, sharps bins, and free meal programs?
 
 3.  **Conduct spatial analysis**
 
 ```{r}
-# Aggregate and count drug offenses in Philadelphia census tracts.
+# Aggregate and count substance use in Philadelphia census tracts.
 # Use pipe to input st_intersects return values into lengths() function.
-philly_tracts$drug_offense <- st_intersects(philly_tracts, drugs_2024) |> lengths()
+philly_tracts$substance_use <- st_intersects(philly_tracts, substances_2024) |> lengths()
 
-# Normalize drug offense data by population total.
+# Normalize substance use data by population total.
 philly_tracts <- philly_tracts %>%
-  mutate(pct_drug_offense = case_when(
+  mutate(pct_substance_use = case_when(
     # Calculate as 0 when both values are 0.
-    total_popE == 0 & drug_offense == 0 ~ 0,
+    total_popE == 0 & substance_use == 0 ~ 0,
     # Calculate as NA with numeric type rather than NA with logical type to avoid type mismatch.
     total_popE == 0 ~ NA_real_,
     # Otherwise, calculate normally.
-    TRUE ~ (drug_offense / total_popE) * 100
+    TRUE ~ (substance_use / total_popE) * 100
   ))
 
-# Determine high drug offense tracts as above 50% of bell curve.
+# Determine high substance use tracts as above 50% of bell curve.
 philly_tracts <- philly_tracts %>%
-  mutate("high_drug_offense" = case_when(
-    .$pct_drug_offense > 0.20539 ~ TRUE,
+  mutate("high_substance_use" = case_when(
+    .$pct_substance_use > 0.20539 ~ TRUE,
     TRUE ~ FALSE
   ))
 
-# Filter tracts with drug offenses above the median.
-drug_tracts <- philly_tracts %>%
-  filter(.$high_drug_offense == TRUE)
+# Filter tracts with substance uses above the median.
+substance_tracts <- philly_tracts %>%
+  filter(.$high_substance_use == TRUE)
 ```
 
 ```{r}
 #| warning: false
-# Create census tract centroids for drug_tracts.
-drug_centroids <- st_centroid(drug_tracts)
+
+# Create census tract centroids for substance_tracts.
+substance_centroids <- st_centroid(substance_tracts)
 
 # Calculate distances between centroids and food accessibility.
-nearest_meal_index <- st_nearest_feature(drug_centroids, free_meal_sites)
+nearest_meal_index <- st_nearest_feature(substance_centroids, free_meal_sites)
 
 nearest_meal_point <- free_meal_sites[nearest_meal_index,]
 
-meal_distance <- st_distance(drug_centroids, nearest_meal_point, by_element = TRUE)
+meal_distance <- st_distance(substance_centroids, nearest_meal_point, by_element = TRUE)
 
-drug_tracts$nearest_meal_mi <- set_units(meal_distance, "mi")
+substance_tracts$nearest_meal_mi <- set_units(meal_distance, "mi")
 
 # Calculate distances between centroids and treatment facilities.
-nearest_facility_index <- st_nearest_feature(drug_centroids, treatment_facilities)
+nearest_facility_index <- st_nearest_feature(substance_centroids, treatment_facilities)
 
 nearest_facility_point <- treatment_facilities[nearest_facility_index,]
 
-facility_distance <- st_distance(drug_centroids, nearest_facility_point, by_element = TRUE)
+facility_distance <- st_distance(substance_centroids, nearest_facility_point, by_element = TRUE)
 
-drug_tracts$nearest_facility_mi <- set_units(facility_distance, "mi")
+substance_tracts$nearest_facility_mi <- set_units(facility_distance, "mi")
 
 # Calculate distances between centroids and sharps bins.
-nearest_sharps_index <- st_nearest_feature(drug_centroids, sharps_boxes)
+nearest_sharps_index <- st_nearest_feature(substance_centroids, sharps_boxes)
 
 nearest_sharps_point <- sharps_boxes[nearest_sharps_index,]
 
-sharps_distance <- st_distance(drug_centroids, nearest_sharps_point, by_element = TRUE)
+sharps_distance <- st_distance(substance_centroids, nearest_sharps_point, by_element = TRUE)
 
-drug_tracts$nearest_sharps_mi <- set_units(sharps_distance, "mi")
+substance_tracts$nearest_sharps_mi <- set_units(sharps_distance, "mi")
 
 # Determine how many tracts' nearest free meal program is more than 0.5 mi. away.
-tracts_lacking_meals <- sum(drug_tracts$nearest_meal_mi > set_units(0.5, "mi"))
+tracts_lacking_meals <- sum(substance_tracts$nearest_meal_mi > set_units(0.5, "mi"))
 # Determine how many tracts' nearest treatment facility is more than 0.5 mi. away.
-tracts_lacking_facilities <- sum(drug_tracts$nearest_facility_mi > set_units(0.5, "mi"))
+tracts_lacking_facilities <- sum(substance_tracts$nearest_facility_mi > set_units(0.5, "mi"))
 # Determine how many tracts' nearest sharps bin is more than 0.5 mi. away.
-tracts_lacking_sharps <- sum(drug_tracts$nearest_sharps_mi > set_units(0.5, "mi"))
+tracts_lacking_sharps <- sum(substance_tracts$nearest_sharps_mi > set_units(0.5, "mi"))
 
 print(paste0("There are ", tracts_lacking_meals, " census tracts that don't have active free meal programs within 0.5 mi. walking distance."))
-print(paste0("There are ", tracts_lacking_facilities, " census tracts that don't have drug alcohol treatment facilities within 0.5 mi. walking distance."))
+print(paste0("There are ", tracts_lacking_facilities, " census tracts that don't have substance alcohol treatment facilities within 0.5 mi. walking distance."))
 print(paste0("There are ", tracts_lacking_sharps, " census tracts that don't have disposable sharps bins within 0.5 mi. walking distance."))
 ```
 
 ```{r fig.height = 6, fig.width = 6, dpi = 300}
 #| warning: false
 # Map tracts more than 0.5 mile walking distance from free food programs.
-far_from_meals_tracts <- drug_tracts %>%
+far_from_meals_tracts <- substance_tracts %>%
   mutate(nearest_meal_mi = drop_units(nearest_meal_mi)) %>%
   filter(nearest_meal_mi > 0.5)
 
@@ -858,10 +841,10 @@ far_from_meals_tracts <- drug_tracts %>%
 far_from_meals_tracts <- far_from_meals_tracts %>%
   st_transform(crs = 4326)
 
-# Choropleth map colored by drug offenses with treatment facility points.
+# Choropleth map colored by substance uses with treatment facility points.
 far_from_meals_choropleth <- ggplot(far_from_meals_tracts) +
   geom_sf(
-    aes(fill = `pct_drug_offense`),
+    aes(fill = `pct_substance_use`),
   ) +
   geom_sf(
     data = philly_tracts, fill = NA,
@@ -874,7 +857,7 @@ far_from_meals_choropleth <- ggplot(far_from_meals_tracts) +
     alpha = 0.75, inherit.aes = FALSE
   ) +
   scale_fill_viridis_c(
-    name = "Percent Drug Events",
+    name = "Percent Substance Events",
     labels = function(x) paste0(x, "%")
   ) +
   scale_color_manual(
@@ -901,7 +884,7 @@ far_from_meals_choropleth + theme(
 
 ```{r, fig.width = 6, fig.height = 6, dpi = 300}
 # Map tracts more than 0.5 mile walking distance from treatment facilities.
-far_from_facilities_tracts <- drug_tracts %>%
+far_from_facilities_tracts <- substance_tracts %>%
   mutate(nearest_facility_mi = drop_units(nearest_facility_mi)) %>%
   filter(nearest_facility_mi > 0.5)
 
@@ -909,10 +892,10 @@ far_from_facilities_tracts <- drug_tracts %>%
 far_from_facilities_tracts <- far_from_facilities_tracts %>%
   st_transform(crs = 4326)
 
-# Choropleth map colored by drug offenses with treatment facility points.
+# Choropleth map colored by substance uses with treatment facility points.
 far_from_facilities_choropleth <- ggplot(far_from_facilities_tracts) +
   geom_sf(
-    aes(fill = `pct_drug_offense`),
+    aes(fill = `pct_substance_use`),
   ) +
   geom_sf(
     data = philly_tracts, fill = NA,
@@ -925,7 +908,7 @@ far_from_facilities_choropleth <- ggplot(far_from_facilities_tracts) +
     alpha = 0.75, inherit.aes = FALSE
   ) +
   scale_fill_viridis_c(
-    name = "Percent Drug Events",
+    name = "Percent Substance Events",
     labels = function(x) paste0(x, "%")
   ) +
   scale_color_manual(
@@ -952,7 +935,7 @@ far_from_facilities_choropleth + theme(
 
 ```{r, fig.width = 6, fig.height = 6, dpi = 300}
 # Map tracts more than 0.5 mile walking distance from sharps bins.
-far_from_sharps_tracts <- drug_tracts %>%
+far_from_sharps_tracts <- substance_tracts %>%
   mutate(nearest_sharps_mi = drop_units(nearest_sharps_mi)) %>%
   filter(nearest_sharps_mi > 0.5)
 
@@ -967,10 +950,10 @@ sharps_boxes <- sharps_boxes %>%
     lat = st_coordinates(geometry)[, 2]
   )
 
-# Choropleth map colored by drug offenses with sharps bin points.
+# Choropleth map colored by substance uses with sharps bin points.
 sharps_choropleth <- ggplot(far_from_sharps_tracts) +
   geom_sf(
-    aes(fill = `pct_drug_offense`),
+    aes(fill = `pct_substance_use`),
   ) +
   geom_sf(
     data = philly_tracts, fill = NA,
@@ -983,7 +966,7 @@ sharps_choropleth <- ggplot(far_from_sharps_tracts) +
     alpha = 0.75, inherit.aes = FALSE
   ) +
   scale_fill_viridis_c(
-    name = "Percent Drug Events",
+    name = "Percent Substance Events",
     labels = function(x) paste0(x, "%")
   ) +
   scale_color_manual(
@@ -1010,12 +993,12 @@ sharps_choropleth + theme(
 
 ```{r, fig.width = 6, fig.height = 6, dpi = 300}
 # Align CRS.
-drug_tracts <- st_transform(drug_tracts, 4326)
+substance_tracts <- st_transform(substance_tracts, 4326)
 
-# Choropleth map colored by drug offenses with sharps bin points and treatment facilities.
-all_choropleth <- ggplot(drug_tracts) +
+# Choropleth map colored by substance uses with sharps bin points and treatment facilities.
+all_choropleth <- ggplot(substance_tracts) +
   geom_sf(
-    aes(fill = `pct_drug_offense`),
+    aes(fill = `pct_substance_use`),
   ) +
   geom_sf(
     data = philly_tracts, fill = NA,
@@ -1033,7 +1016,7 @@ all_choropleth <- ggplot(drug_tracts) +
     alpha = 0.8, inherit.aes = FALSE
   ) +
   scale_fill_viridis_c(
-    name = "Percent Drug Events",
+    name = "Percent Substance Events",
     labels = function(x) paste0(x, "%")
   ) +
   scale_color_manual(
@@ -1061,13 +1044,13 @@ all_choropleth + theme(
 ```{r}
 # Summary statistics of data used.
 
-data_used <- drug_tracts %>%
+data_used <- substance_tracts %>%
   transmute(
   "GEOID" = GEOID,
   "Population Estimate" = total_popE,
   "Population MOE" = total_popM,
-  "Drug Incidence" = drug_offense,
-  "Percent Drug Incidence" = pct_drug_offense,
+  "Substance Incidence" = substance_use,
+  "Percent Substance Incidence" = pct_substance_use,
   "Nearest Meal (mi)" = nearest_meal_mi,
   "Nearest Facility (mi)" = nearest_facility_mi,
   "Nearest Sharps (mi)" = nearest_sharps_mi
@@ -1165,16 +1148,24 @@ kable(
   row_spec(0, color = "white", background = "black")
 ```
 
-Many census tracts with higher percents of drug-related incidents lie in North Philly, Near-Northeast Philly, and West Philly primarily above Market Street. It seems like Philadelphia is taking the drug-related concerns seriously, the drug-alcohol treatment facilities and active free meal programs are peppered all around the county and have good coverage over tracts with higher drug-related events.
+Many census tracts with higher percents of substance-related incidents lie in North Philly, Near-Northeast Philly, and West Philly primarily above Market Street. It seems like Philadelphia is taking the substance-related concerns seriously, the substance-alcohol treatment facilities and active free meal programs are peppered all around the county and have good coverage over tracts with higher substance-related events.
 
-It also looks like most meals and facilities are within walking distance. However, sharps bins don't have too much spatial overlap and are lacking statistically, with average distances beyond a mile. It may be worth implementing more sharps bin sites around tracts with more drug-use events.
+It also looks like most meals and facilities are within walking distance. However, sharps bins don't have too much spatial overlap and are lacking statistically, with average distances beyond a mile. It may be worth implementing more sharps bin sites around tracts with more substance-use events.
 
-While facilities may have disposals, many drug-users range from recreational to addicted and might fear arrest at facilities and even at sharps bins themselves, so it's important to address the issue without any demonizing, dehumanizing, and criminalizing.
+While facilities may have disposals, many substance-users range from recreational to addicted and might fear arrest at facilities and even at sharps bins themselves, so it's important to address the issue without any demonizing, dehumanizing, and criminalizing.
 
-This quick look at resource distribution has policy relevance to community investment, harm reduction, siting, food programming, and quality of life for everyone, not just those directly affected by drug-use.
+This quick look at resource distribution has policy relevance to community investment, harm reduction, siting, food programming, and quality of life for everyone, not just those directly affected by substance-use.
 
-# Comments about incorporation of feedback.
+# Feedback Incorporation
 
 - I removed a lot of the extra instruction text in this write-up to make the report more concise and straightforward.
 - Any printouts and summaries created outside of kable were commented out or removed to give the report more clarity and not fill it with extra text or numbers.
 - I broke up long paragraphs when making any comments or analyses and shortened figure titles for readability.
+
+# NOTE: Credit and AI Usage
+
+**No AI usage.**
+
+Base code template provided by Dr. Delmelle with adjustments.
+
+Visuals taken from previous labs and lecture examples and modified.

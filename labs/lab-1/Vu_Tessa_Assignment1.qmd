@@ -1,22 +1,37 @@
 ---
 title: "Assignment 1: Census Data Quality for Policy Decisions"
 subtitle: Evaluating Data Reliability for Algorithmic Decision-Making
-author: Tessa Vu
 date: 2025-09-08
-format: 
+author:
+  - name: Tess Vu
+    email:
+      - tessavu@proton.me
+      - tessavu@upenn.edu
+    corresponding: TRUE
+affiliation:
+  - name: University of Pennsylvania
+    department: Urban Spatial Analytics (MUSA)
+    city: Philadelphia
+    state: PA
+    url: https://www.design.upenn.edu/urban-spatial-analytics
+format:
   html:
     code-fold: show
     toc: true
-    toc-location: left
+    toc_float: true
     toc-expand: true
     smooth-scroll: true
     embed-resources: true
+    title-block-style: default
 execute:
   warning: false
   message: false
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
-# Assignment Overview
+# OVERVIEW
 
 ## Scenario
 
@@ -24,30 +39,30 @@ I am a data analyst for the **Utah Department of Human Services**. The departmen
 
 Drawing on the Week 2 discussion of algorithmic bias, I need to assess not just what the data shows, but how reliable it is and what communities might be affected by data quality issues.
 
-# Part 1: Setup
+# PART I: SETUP
 
 ```{r setup}
-# Load required packages (hint: you need tidycensus, tidyverse, and knitr)
+# Load required packages
 library(tidycensus)
 library(tidyverse)
 library(knitr)
 library(kableExtra)
 
-# Set your Census API key
-census_api_key("3aaee31789e10b674a531e9f236c35d5394b19ed")
+# Set Census API key
+census_api_key <- Sys.getenv("CENSUS_API_KEY")
 
-# Choose your state for analysis - assign it to a variable called my_state
+# Choose state for analysis - assign it to a variable called my_state
 my_state = "Utah"
 ```
 
 **State Selection:** I've chosen **Utah** for this analysis because: It's my hometown and I grew up around Salt Lake valley area in different neighborhoods and would like to explore the data behind my memories and maybe how things have changed since I was last living there around 3 years ago.
 
-# Part 2: County-Level Resource Assessment
+# PART II: COUNTY-LEVEL RESOURCE ASSESSMENT
 
-## 2.1 Data Retrieval
+## i. Data Retrieval
 
 ```{r county-data}
-# Write your get_acs() code here
+# Write get_acs() code here
 utah_reliability <- get_acs(
   geography = "county",
   state = my_state,
@@ -66,7 +81,7 @@ utah_reliability <- mutate(utah_reliability, NAME = str_remove(NAME, " County, U
 glimpse(utah_reliability)
 ```
 
-## 2.2 Data Quality Assessment
+## ii Data Quality Assessment
 
 ```{r income-reliability}
 # Calculate MOE percentage and reliability categories using mutate()
@@ -91,7 +106,7 @@ count_summary <- utah_reliability %>%
 count_summary
 ```
 
-## 2.3 High Uncertainty Counties
+## iii High Uncertainty Counties
 
 ```{r high-uncertainty}
 # Create table of top 5 counties by MOE percentage
@@ -119,12 +134,12 @@ kable(
 
 The top five counties with the highest MOEs are rural—Piute, Wayne, Daggett, and Kane counties lack a major interstate highway in a state with cities that rely on car-transport within urban areas as well as within the vast swaths of undeveloped desert land. Beaver county at fifth does have the I-15 freeway. Another factor is the environmental topography that could influence towns' infrastructure expansion as well as travel, all five counties' are mountainous regions for the majority of their landscape, making it difficult and expensive to develop.
 
-# Part 3: Neighborhood-Level Analysis
+# PART III: NEIGHBORHOOD-LEVEL ANALYSIS
 
-## 3.1 Focus Area Selection
+## i. Focus Area Selection
 
 ```{r select-counties}
-# Use filter() to select 2-3 counties from your utah_reliability data
+# Use filter() to select 2-3 counties from utah_reliability data
 # Store the selected counties in a variable called selected_counties
 selected_counties <- utah_reliability %>%
   filter(NAME == "Salt Lake" | NAME == "Morgan" | NAME == "Piute") %>%
@@ -145,10 +160,10 @@ kable(
 
 **Comment on the output:** This table output shows Salt Lake, Morgan, and Piute counties, which have high, moderate, and low confidence, respectively. Salt Lake has a 1.17% MOE percentage and Morgan has a 7.78% MOE percentage, Piute has a significant jump from Morgan by 29.33% units at 37.11%. Salt Lake and Morgan are counties that are actually adjacent to one another, whereas Piute is in central, rural Utah.
 
-## 3.2 Tract-Level Demographics
+## ii. Tract-Level Demographics
 
 ```{r tract-demographics}
-# Define your race/ethnicity variables with descriptive names
+# Define race/ethnicity variables with descriptive names
 # Use get_acs() to retrieve tract-level data
 # Hint: You may need to specify county codes in the county parameter
 tract_level <- get_acs(
@@ -183,7 +198,7 @@ tract_level
   
 ```
 
-## 3.3 Demographic Analysis
+## iii. Demographic Analysis
 
 ```{r demographic-analysis}
 # Find the tract with the highest percentage of Hispanic/Latino residents
@@ -201,7 +216,7 @@ tract_level_summary <- tract_level %>%
             "Hispanic Average Percent" = mean(`Hispanic Percentage`, na.rm = TRUE)
             )
 
-# Create a nicely formatted table of your results using kable()
+# Create a nicely formatted table of results using kable()
 kable(
   tract_level_summary,
   caption = "<b>SELECTED UTAH COUNTIES: Average Racial Percents</b>"
@@ -211,9 +226,9 @@ kable(
   row_spec(0, color = "white", background = "black")
 ```
 
-# Part 4: Comprehensive Data Quality Evaluation
+# PART IV: COMPREHENSIVE DATA QUALITY EVALUATION
 
-## 4.1 MOE Analysis for Demographic Variables
+## i. MOE Analysis for Demographic Variables
 
 ```{r demographic-moe}
 # Calculate MOE percentages for white, Black, and Hispanic variables
@@ -252,7 +267,7 @@ data_quality_summary
 
 ```
 
-## 4.2 Pattern Analysis
+## ii. Pattern Analysis
 
 ```{r pattern-analysis}
 # Group tracts by whether they have high MOE issues
@@ -309,11 +324,12 @@ low_MOE_summary
 
 **Pattern Analysis:** All of the census tracts in Salt Lake, Morgan, and Piute counties had MOEs above 15%, and judging off of that it seems like the census had significant MOEs for the three races. However, when looking at the minimum MOE percentages, the white population's range starts at 6.31%, and Hispanic at 17.60% and Black at 54.39%, which are both substantial jumps from the white communities. Possible explanations might be due to redlining, and from anecdotal knowledge, the diversity in Salt Lake county tends to be clustered on the west side and periphery with higher Black, Hispanic, and Asian populations. Another explanation could be that the other counties are smaller and have a much larger white population.
 
-# Part 5: Policy Recommendations
+# PARTI V: POLICY RECOMMENDATIONS
 
-## 5.1 Analysis Integration and Professional Summary
+## i. Analysis Integration and Professional Summary
 
-**Executive Summary:**
+Here I address:
+
 1. **Overall Pattern Identification**: What are the systematic patterns across all my analyses?
 2. **Equity Assessment**: Which communities face the greatest risk of algorithmic bias based on my findings?
 3. **Root Cause Analysis**: What underlying factors drive both data quality issues and bias risk?
@@ -331,10 +347,10 @@ The Department of Health and Human Services could work with the Department of Co
 
 The margins-of-error that are higher in certain races in Utah could also be due to cultural differences, not a lot of immigrants, who make up the majority of BIPOC demographics, are able to read English well or they may be less likely to fill the census for a variety of reasons. In the 2020 ACS, only twelve languages were available to read the survey questions, and other languages outside the twelve require extra steps to receive translations; it could be worth pursuing creating a help center in public libraries as well for those who speak minority languages, but whether or not individuals come in for that public service is another thing entirely, so providing any online videos and glossaries in minority languages could be helpful, or allowing individuals to specify if they need a paper glossary with key translations mailed to them in their language.
 
-## 6.3 Specific Recommendations
+## ii. Specific Recommendations
 
 ```{r recommendations-data}
-# Create a summary table using your county reliability data
+# Create a summary table using county reliability data
 # Include: county name, median income, MOE percentage, reliability category
 summary_table <- utah_reliability %>%
   summarize(
@@ -377,7 +393,7 @@ kable(
 
 3. **Counties needing alternative approaches:** Beaver, Daggett, Garfield, Grand, Kane, Piute, Rich, San Juan, and Wayne counties have low confidence data. These counties also happen to be in the more rural parts of Utah, which tend to have harsher desert environments and with rougher terrain when travelling, they also encompass all of the Native American reservations in Utah. These counties also have much smaller populations and population densities that could make them worth manually reviewing and sending out additional surveys to make sure people send them in. While USPS mail delivery procedures are largely the same, mailing to reservations have an additional unique challenge other than remoteness, which is that many residences don't have address names, so making sure that rural areas and reservations receive the census by sending more surveys could be part of a solution. The Department could also introduce a pilot program to provide P.O. boxes for reservations if Indigenous peoples in the region are open to the idea, although it'll be many long years before seeing whether or not it made substantial improvements to census data accuracy and lowering MOEs over time.
 
-## Questions for Further Investigation
+# Questions for Further Investigation
 
 1. How would observations and interpretations change if other races were included, like Asians and Native Americans?
 
@@ -403,3 +419,11 @@ Because several values were zero, to get past the zero division hurdle the value
 
 **Limitations:**
 There were sample issues with tracts noting zero Black or Hispanic individuals, and dividing by zero created infinite values. This project selected Salt Lake, Morgan, and Piute counties, which have high, moderate, and low confidences, respectively. However, Morgan and Piute counties have very little census tracts at 4 and 5 compared to 200+ for Salt Lake. In addition, Utah was one of the 14 states in the recent 5-year census that over-counted its citizens by almost 3% with several individuals double-counted.
+
+# NOTE: Credit and AI Usage
+
+**No AI usage.**
+
+Base code template provided by Dr. Delmelle with adjustments.
+
+Some visuals taken from lecture examples and modified.

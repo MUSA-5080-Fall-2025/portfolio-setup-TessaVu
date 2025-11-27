@@ -2493,10 +2493,10 @@ Spatial proximity to bike lanes could also be helpful, although I am slightly sk
 
 I also was correct in assuming that making the temporal aspect more granular would improve prediction as well since a lot of events and work days can start at 30-minute marks. I am unsure of 15-minute granularity, but it couldn't hurt to see if there's improvement.
 
-### NOTE: Credit and AI Usage
+# NOTE: Credit and AI Usage
+
+**Free version of Claude Sonnet 4.5 used for debugging code, especially the final panel data portion.**
 
 Base code template provided by Dr. Delmelle with adjustments changing it from hourly analysis to 30-minute interval analysis.
-
-Free version of Claude Sonnet 4.5 used for debugging code, especially the final panel data portion.
 
 Visuals taken from previous labs and lecture examples and modified.

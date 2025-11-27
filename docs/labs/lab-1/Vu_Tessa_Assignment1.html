@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tessa Vu">
+<meta name="author" content="Tess Vu">
 <meta name="dcterms.date" content="2025-09-08">
 
 <title>Assignment 1: Census Data Quality for Policy Decisions – TESS VU - MUSA 5080 PORTFOLIO</title>
@@ -4094,7 +4094,7 @@ border: 0;
 
 </head>
 
-<body class="floating nav-fixed quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -4264,46 +4264,44 @@ border: 0;
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#assignment-overview" id="toc-assignment-overview" class="nav-link active" data-scroll-target="#assignment-overview">Assignment Overview</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">OVERVIEW</a>
   <ul class="collapse">
   <li><a href="#scenario" id="toc-scenario" class="nav-link" data-scroll-target="#scenario">Scenario</a></li>
   </ul></li>
-  <li><a href="#part-1-setup" id="toc-part-1-setup" class="nav-link" data-scroll-target="#part-1-setup">Part 1: Setup</a></li>
-  <li><a href="#part-2-county-level-resource-assessment" id="toc-part-2-county-level-resource-assessment" class="nav-link" data-scroll-target="#part-2-county-level-resource-assessment">Part 2: County-Level Resource Assessment</a>
+  <li><a href="#part-i-setup" id="toc-part-i-setup" class="nav-link" data-scroll-target="#part-i-setup">PART I: SETUP</a></li>
+  <li><a href="#part-ii-county-level-resource-assessment" id="toc-part-ii-county-level-resource-assessment" class="nav-link" data-scroll-target="#part-ii-county-level-resource-assessment">PART II: COUNTY-LEVEL RESOURCE ASSESSMENT</a>
   <ul class="collapse">
-  <li><a href="#data-retrieval" id="toc-data-retrieval" class="nav-link" data-scroll-target="#data-retrieval">2.1 Data Retrieval</a></li>
-  <li><a href="#data-quality-assessment" id="toc-data-quality-assessment" class="nav-link" data-scroll-target="#data-quality-assessment">2.2 Data Quality Assessment</a></li>
-  <li><a href="#high-uncertainty-counties" id="toc-high-uncertainty-counties" class="nav-link" data-scroll-target="#high-uncertainty-counties">2.3 High Uncertainty Counties</a></li>
+  <li><a href="#i.-data-retrieval" id="toc-i.-data-retrieval" class="nav-link" data-scroll-target="#i.-data-retrieval">i. Data Retrieval</a></li>
+  <li><a href="#ii-data-quality-assessment" id="toc-ii-data-quality-assessment" class="nav-link" data-scroll-target="#ii-data-quality-assessment">ii Data Quality Assessment</a></li>
+  <li><a href="#iii-high-uncertainty-counties" id="toc-iii-high-uncertainty-counties" class="nav-link" data-scroll-target="#iii-high-uncertainty-counties">iii High Uncertainty Counties</a></li>
   </ul></li>
-  <li><a href="#part-3-neighborhood-level-analysis" id="toc-part-3-neighborhood-level-analysis" class="nav-link" data-scroll-target="#part-3-neighborhood-level-analysis">Part 3: Neighborhood-Level Analysis</a>
+  <li><a href="#part-iii-neighborhood-level-analysis" id="toc-part-iii-neighborhood-level-analysis" class="nav-link" data-scroll-target="#part-iii-neighborhood-level-analysis">PART III: NEIGHBORHOOD-LEVEL ANALYSIS</a>
   <ul class="collapse">
-  <li><a href="#focus-area-selection" id="toc-focus-area-selection" class="nav-link" data-scroll-target="#focus-area-selection">3.1 Focus Area Selection</a></li>
-  <li><a href="#tract-level-demographics" id="toc-tract-level-demographics" class="nav-link" data-scroll-target="#tract-level-demographics">3.2 Tract-Level Demographics</a></li>
-  <li><a href="#demographic-analysis" id="toc-demographic-analysis" class="nav-link" data-scroll-target="#demographic-analysis">3.3 Demographic Analysis</a></li>
+  <li><a href="#i.-focus-area-selection" id="toc-i.-focus-area-selection" class="nav-link" data-scroll-target="#i.-focus-area-selection">i. Focus Area Selection</a></li>
+  <li><a href="#ii.-tract-level-demographics" id="toc-ii.-tract-level-demographics" class="nav-link" data-scroll-target="#ii.-tract-level-demographics">ii. Tract-Level Demographics</a></li>
+  <li><a href="#iii.-demographic-analysis" id="toc-iii.-demographic-analysis" class="nav-link" data-scroll-target="#iii.-demographic-analysis">iii. Demographic Analysis</a></li>
   </ul></li>
-  <li><a href="#part-4-comprehensive-data-quality-evaluation" id="toc-part-4-comprehensive-data-quality-evaluation" class="nav-link" data-scroll-target="#part-4-comprehensive-data-quality-evaluation">Part 4: Comprehensive Data Quality Evaluation</a>
+  <li><a href="#part-iv-comprehensive-data-quality-evaluation" id="toc-part-iv-comprehensive-data-quality-evaluation" class="nav-link" data-scroll-target="#part-iv-comprehensive-data-quality-evaluation">PART IV: COMPREHENSIVE DATA QUALITY EVALUATION</a>
   <ul class="collapse">
-  <li><a href="#moe-analysis-for-demographic-variables" id="toc-moe-analysis-for-demographic-variables" class="nav-link" data-scroll-target="#moe-analysis-for-demographic-variables">4.1 MOE Analysis for Demographic Variables</a></li>
-  <li><a href="#pattern-analysis" id="toc-pattern-analysis" class="nav-link" data-scroll-target="#pattern-analysis">4.2 Pattern Analysis</a></li>
+  <li><a href="#i.-moe-analysis-for-demographic-variables" id="toc-i.-moe-analysis-for-demographic-variables" class="nav-link" data-scroll-target="#i.-moe-analysis-for-demographic-variables">i. MOE Analysis for Demographic Variables</a></li>
+  <li><a href="#ii.-pattern-analysis" id="toc-ii.-pattern-analysis" class="nav-link" data-scroll-target="#ii.-pattern-analysis">ii. Pattern Analysis</a></li>
   </ul></li>
-  <li><a href="#part-5-policy-recommendations" id="toc-part-5-policy-recommendations" class="nav-link" data-scroll-target="#part-5-policy-recommendations">Part 5: Policy Recommendations</a>
+  <li><a href="#parti-v-policy-recommendations" id="toc-parti-v-policy-recommendations" class="nav-link" data-scroll-target="#parti-v-policy-recommendations">PARTI V: POLICY RECOMMENDATIONS</a>
   <ul class="collapse">
-  <li><a href="#analysis-integration-and-professional-summary" id="toc-analysis-integration-and-professional-summary" class="nav-link" data-scroll-target="#analysis-integration-and-professional-summary">5.1 Analysis Integration and Professional Summary</a></li>
-  <li><a href="#specific-recommendations" id="toc-specific-recommendations" class="nav-link" data-scroll-target="#specific-recommendations">6.3 Specific Recommendations</a></li>
+  <li><a href="#i.-analysis-integration-and-professional-summary" id="toc-i.-analysis-integration-and-professional-summary" class="nav-link" data-scroll-target="#i.-analysis-integration-and-professional-summary">i. Analysis Integration and Professional Summary</a></li>
+  <li><a href="#ii.-specific-recommendations" id="toc-ii.-specific-recommendations" class="nav-link" data-scroll-target="#ii.-specific-recommendations">ii. Specific Recommendations</a></li>
+  </ul></li>
   <li><a href="#questions-for-further-investigation" id="toc-questions-for-further-investigation" class="nav-link" data-scroll-target="#questions-for-further-investigation">Questions for Further Investigation</a></li>
-  </ul></li>
   <li><a href="#technical-notes" id="toc-technical-notes" class="nav-link" data-scroll-target="#technical-notes">Technical Notes</a></li>
+  <li><a href="#note-credit-and-ai-usage" id="toc-note-credit-and-ai-usage" class="nav-link" data-scroll-target="#note-credit-and-ai-usage">NOTE: Credit and AI Usage</a></li>
   </ul>
 </nav>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -4321,7 +4319,7 @@ border: 0;
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Tessa Vu </p>
+             <p>Tess Vu <a href="mailto:tessavu@proton.metessavu@upenn.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
           </div>
   </div>
     
@@ -4340,42 +4338,42 @@ border: 0;
 </header>
 
 
-<section id="assignment-overview" class="level1">
-<h1>Assignment Overview</h1>
+<section id="overview" class="level1">
+<h1>OVERVIEW</h1>
 <section id="scenario" class="level2">
 <h2 class="anchored" data-anchor-id="scenario">Scenario</h2>
 <p>I am a data analyst for the <strong>Utah Department of Human Services</strong>. The department is considering implementing an algorithmic system to identify communities that should receive priority for social service funding and outreach programs. My supervisor has asked me to evaluate the quality and reliability of available census data to inform this decision.</p>
 <p>Drawing on the Week 2 discussion of algorithmic bias, I need to assess not just what the data shows, but how reliable it is and what communities might be affected by data quality issues.</p>
 </section>
 </section>
-<section id="part-1-setup" class="level1">
-<h1>Part 1: Setup</h1>
+<section id="part-i-setup" class="level1">
+<h1>PART I: SETUP</h1>
 <div class="cell">
 <details open class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required packages (hint: you need tidycensus, tidyverse, and knitr)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidycensus)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set your Census API key</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">census_api_key</span>(<span class="st">&quot;3aaee31789e10b674a531e9f236c35d5394b19ed&quot;</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set Census API key</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>census_api_key <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">&quot;CENSUS_API_KEY&quot;</span>)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Choose your state for analysis - assign it to a variable called my_state</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Choose state for analysis - assign it to a variable called my_state</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>my_state <span class="ot">=</span> <span class="st">&quot;Utah&quot;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p><strong>State Selection:</strong> I’ve chosen <strong>Utah</strong> for this analysis because: It’s my hometown and I grew up around Salt Lake valley area in different neighborhoods and would like to explore the data behind my memories and maybe how things have changed since I was last living there around 3 years ago.</p>
 </section>
-<section id="part-2-county-level-resource-assessment" class="level1">
-<h1>Part 2: County-Level Resource Assessment</h1>
-<section id="data-retrieval" class="level2">
-<h2 class="anchored" data-anchor-id="data-retrieval">2.1 Data Retrieval</h2>
+<section id="part-ii-county-level-resource-assessment" class="level1">
+<h1>PART II: COUNTY-LEVEL RESOURCE ASSESSMENT</h1>
+<section id="i.-data-retrieval" class="level2">
+<h2 class="anchored" data-anchor-id="i.-data-retrieval">i. Data Retrieval</h2>
 <div class="cell">
 <details open class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Write your get_acs() code here</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Write get_acs() code here</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>utah_reliability <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">geography =</span> <span class="st">&quot;county&quot;</span>,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> my_state,</span>
@@ -4405,8 +4403,8 @@ $ total_popM  &lt;dbl&gt; NA, NA, NA, NA, 124, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 </div>
 </section>
-<section id="data-quality-assessment" class="level2">
-<h2 class="anchored" data-anchor-id="data-quality-assessment">2.2 Data Quality Assessment</h2>
+<section id="ii-data-quality-assessment" class="level2">
+<h2 class="anchored" data-anchor-id="ii-data-quality-assessment">ii Data Quality Assessment</h2>
 <div class="cell">
 <details open class="code-fold">
 <summary>Code</summary>
@@ -4441,8 +4439,8 @@ $ total_popM  &lt;dbl&gt; NA, NA, NA, NA, 124, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 </div>
 </section>
-<section id="high-uncertainty-counties" class="level2">
-<h2 class="anchored" data-anchor-id="high-uncertainty-counties">2.3 High Uncertainty Counties</h2>
+<section id="iii-high-uncertainty-counties" class="level2">
+<h2 class="anchored" data-anchor-id="iii-high-uncertainty-counties">iii High Uncertainty Counties</h2>
 <div class="cell">
 <details open class="code-fold">
 <summary>Code</summary>
@@ -4533,14 +4531,14 @@ $ total_popM  &lt;dbl&gt; NA, NA, NA, NA, 124, NA, NA, NA, NA, NA, NA, NA, NA, N
 <p>The top five counties with the highest MOEs are rural—Piute, Wayne, Daggett, and Kane counties lack a major interstate highway in a state with cities that rely on car-transport within urban areas as well as within the vast swaths of undeveloped desert land. Beaver county at fifth does have the I-15 freeway. Another factor is the environmental topography that could influence towns’ infrastructure expansion as well as travel, all five counties’ are mountainous regions for the majority of their landscape, making it difficult and expensive to develop.</p>
 </section>
 </section>
-<section id="part-3-neighborhood-level-analysis" class="level1">
-<h1>Part 3: Neighborhood-Level Analysis</h1>
-<section id="focus-area-selection" class="level2">
-<h2 class="anchored" data-anchor-id="focus-area-selection">3.1 Focus Area Selection</h2>
+<section id="part-iii-neighborhood-level-analysis" class="level1">
+<h1>PART III: NEIGHBORHOOD-LEVEL ANALYSIS</h1>
+<section id="i.-focus-area-selection" class="level2">
+<h2 class="anchored" data-anchor-id="i.-focus-area-selection">i. Focus Area Selection</h2>
 <div class="cell">
 <details open class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use filter() to select 2-3 counties from your utah_reliability data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use filter() to select 2-3 counties from utah_reliability data</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the selected counties in a variable called selected_counties</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>selected_counties <span class="ot">&lt;-</span> utah_reliability <span class="sc">%&gt;%</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NAME <span class="sc">==</span> <span class="st">&quot;Salt Lake&quot;</span> <span class="sc">|</span> NAME <span class="sc">==</span> <span class="st">&quot;Morgan&quot;</span> <span class="sc">|</span> NAME <span class="sc">==</span> <span class="st">&quot;Piute&quot;</span>) <span class="sc">%&gt;%</span></span>
@@ -4598,12 +4596,12 @@ $ total_popM  &lt;dbl&gt; NA, NA, NA, NA, 124, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 <p><strong>Comment on the output:</strong> This table output shows Salt Lake, Morgan, and Piute counties, which have high, moderate, and low confidence, respectively. Salt Lake has a 1.17% MOE percentage and Morgan has a 7.78% MOE percentage, Piute has a significant jump from Morgan by 29.33% units at 37.11%. Salt Lake and Morgan are counties that are actually adjacent to one another, whereas Piute is in central, rural Utah.</p>
 </section>
-<section id="tract-level-demographics" class="level2">
-<h2 class="anchored" data-anchor-id="tract-level-demographics">3.2 Tract-Level Demographics</h2>
+<section id="ii.-tract-level-demographics" class="level2">
+<h2 class="anchored" data-anchor-id="ii.-tract-level-demographics">ii. Tract-Level Demographics</h2>
 <div class="cell">
 <details open class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define your race/ethnicity variables with descriptive names</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define race/ethnicity variables with descriptive names</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Use get_acs() to retrieve tract-level data</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Hint: You may need to specify county codes in the county parameter</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>tract_level <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
@@ -4656,8 +4654,8 @@ $ total_popM  &lt;dbl&gt; NA, NA, NA, NA, 124, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 </div>
 </section>
-<section id="demographic-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="demographic-analysis">3.3 Demographic Analysis</h2>
+<section id="iii.-demographic-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="iii.-demographic-analysis">iii. Demographic Analysis</h2>
 <div class="cell">
 <details open class="code-fold">
 <summary>Code</summary>
@@ -4676,7 +4674,7 @@ $ total_popM  &lt;dbl&gt; NA, NA, NA, NA, 124, NA, NA, NA, NA, NA, NA, NA, NA, N
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Hispanic Average Percent&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">Hispanic Percentage</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>            )</span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a nicely formatted table of your results using kable()</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a nicely formatted table of results using kable()</span></span>
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  tract_level_summary,</span>
 <span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&quot;&lt;b&gt;SELECTED UTAH COUNTIES: Average Racial Percents&lt;/b&gt;&quot;</span></span>
@@ -4725,10 +4723,10 @@ $ total_popM  &lt;dbl&gt; NA, NA, NA, NA, 124, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 </section>
 </section>
-<section id="part-4-comprehensive-data-quality-evaluation" class="level1">
-<h1>Part 4: Comprehensive Data Quality Evaluation</h1>
-<section id="moe-analysis-for-demographic-variables" class="level2">
-<h2 class="anchored" data-anchor-id="moe-analysis-for-demographic-variables">4.1 MOE Analysis for Demographic Variables</h2>
+<section id="part-iv-comprehensive-data-quality-evaluation" class="level1">
+<h1>PART IV: COMPREHENSIVE DATA QUALITY EVALUATION</h1>
+<section id="i.-moe-analysis-for-demographic-variables" class="level2">
+<h2 class="anchored" data-anchor-id="i.-moe-analysis-for-demographic-variables">i. MOE Analysis for Demographic Variables</h2>
 <div class="cell">
 <details open class="code-fold">
 <summary>Code</summary>
@@ -4776,8 +4774,8 @@ $ total_popM  &lt;dbl&gt; NA, NA, NA, NA, 124, NA, NA, NA, NA, NA, NA, NA, NA, N
 </div>
 </div>
 </section>
-<section id="pattern-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="pattern-analysis">4.2 Pattern Analysis</h2>
+<section id="ii.-pattern-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="ii.-pattern-analysis">ii. Pattern Analysis</h2>
 <div class="cell">
 <details open class="code-fold">
 <summary>Code</summary>
@@ -4888,11 +4886,17 @@ $ total_popM  &lt;dbl&gt; NA, NA, NA, NA, 124, NA, NA, NA, NA, NA, NA, NA, NA, N
 <p><strong>Pattern Analysis:</strong> All of the census tracts in Salt Lake, Morgan, and Piute counties had MOEs above 15%, and judging off of that it seems like the census had significant MOEs for the three races. However, when looking at the minimum MOE percentages, the white population’s range starts at 6.31%, and Hispanic at 17.60% and Black at 54.39%, which are both substantial jumps from the white communities. Possible explanations might be due to redlining, and from anecdotal knowledge, the diversity in Salt Lake county tends to be clustered on the west side and periphery with higher Black, Hispanic, and Asian populations. Another explanation could be that the other counties are smaller and have a much larger white population.</p>
 </section>
 </section>
-<section id="part-5-policy-recommendations" class="level1">
-<h1>Part 5: Policy Recommendations</h1>
-<section id="analysis-integration-and-professional-summary" class="level2">
-<h2 class="anchored" data-anchor-id="analysis-integration-and-professional-summary">5.1 Analysis Integration and Professional Summary</h2>
-<p><strong>Executive Summary:</strong> 1. <strong>Overall Pattern Identification</strong>: What are the systematic patterns across all my analyses? 2. <strong>Equity Assessment</strong>: Which communities face the greatest risk of algorithmic bias based on my findings? 3. <strong>Root Cause Analysis</strong>: What underlying factors drive both data quality issues and bias risk? 4. <strong>Strategic Recommendations</strong>: What should the Department implement to address these systematic issues?</p>
+<section id="parti-v-policy-recommendations" class="level1">
+<h1>PARTI V: POLICY RECOMMENDATIONS</h1>
+<section id="i.-analysis-integration-and-professional-summary" class="level2">
+<h2 class="anchored" data-anchor-id="i.-analysis-integration-and-professional-summary">i. Analysis Integration and Professional Summary</h2>
+<p>Here I address:</p>
+<ol type="1">
+<li><strong>Overall Pattern Identification</strong>: What are the systematic patterns across all my analyses?</li>
+<li><strong>Equity Assessment</strong>: Which communities face the greatest risk of algorithmic bias based on my findings?</li>
+<li><strong>Root Cause Analysis</strong>: What underlying factors drive both data quality issues and bias risk?</li>
+<li><strong>Strategic Recommendations</strong>: What should the Department implement to address these systematic issues?</li>
+</ol>
 <p>Looking at the data without any geographic or chart visualization, it seems like many of the counties with high margins-of-error tend to be more rural, and a good number of these rural counties have as little as three census tracts compared to more urban counties that have nearly a hundred or more than two-hundred census tracts. Even counties marked with moderate confidence like Morgan, which is actually adjacent and northeast of Salt Lake county which has high confidence, have very little census tracts. When looking at the counties that have low confidence, it seems like the trend is that the confidence level has a positive relationship with income and population, and a negative relationship with margin-of-error as it rises. However, this trend seems to hold true for more densely populated counties, because Morgan county has a median income around 120,000 with moderate reliability and less than 12,000 residents, and Beaver county has a median income around 80,000 with low confidence and less than 8,000 residents. Income also has a strong relationship with race, so it can be inferred that Black and Hispanic communities may share similar relationship characteristics to the aforementioned statement, but this is in regards to more diverse, urban areas versus rural areas.</p>
 <p>Because of these observations, the communities at greatest risk of algorithmic bias would be Black, Hispanic, rural, and low-income populations, and potentially other unmentioned races like Native Americans. Most of the US’ diversity is a result from immigrants landing in coastal states and Black slaves who were very condensed in the South, and over the decades that diversity has moved to more inland states; Utah in particular had an overwhelming 98% white population in the entire state around the 1970s, and as of recently a little over five decades later, Utah is overall 90% white.</p>
 <p>In addition, Utah’s environment makes it particularly expensive to build in due to the desert and rocky environment that make construction difficult. It actually also makes it difficult to travel in as well, even with private vehicles due to the terrain. Much of Utah’s topography is mountainous and desert, and rural communities do not have access to broadband—this means that the digital gap could be an obstacle to rural individuals, who receive the census surveys through mail, and who may have difficult mailing routes for the US Postal Service to reach. Most rural areas or developing towns, if they do possess internet cables, tend to be older and much slow infrastructure like copper, coaxial, or even satellite. These telecommunications technologies are very outdated compared to the current fiber optic standard. So census by mail is the best way to reach rural and Native reservations, and mail is not as timely to collect because of the physical and long-distance aspects that are required.</p>
@@ -4900,12 +4904,12 @@ $ total_popM  &lt;dbl&gt; NA, NA, NA, NA, 124, NA, NA, NA, NA, NA, NA, NA, NA, N
 <p>The Department of Health and Human Services could work with the Department of Commerce, which oversees telecommunications, to develop a program that incentivizes or subsidizes telecommunications companies to build out fiber broadband networks with at least 250 to 300 Mbps. Because fiber is expensive to build out, companies can use older fiber cable technology to balance between the 500 Mbps to 1 GB commonly found in more urban regions. While rural areas receive the census by mail, the vast majority of ruralites own smartphones and do rely on their internet being reliable even if it’s not very fast. So they won’t have a lot of trouble navigating internet browsers, but filling out the census on mobile phone could be a potential hurdle, so local public facilities to them like libraries could facilitate in-person or virtual resources to fill out the census survey. The suggestion might result in a marginal change because most Americans use smartphones, but slow internet can often be a deterrent when filling out forms.</p>
 <p>The margins-of-error that are higher in certain races in Utah could also be due to cultural differences, not a lot of immigrants, who make up the majority of BIPOC demographics, are able to read English well or they may be less likely to fill the census for a variety of reasons. In the 2020 ACS, only twelve languages were available to read the survey questions, and other languages outside the twelve require extra steps to receive translations; it could be worth pursuing creating a help center in public libraries as well for those who speak minority languages, but whether or not individuals come in for that public service is another thing entirely, so providing any online videos and glossaries in minority languages could be helpful, or allowing individuals to specify if they need a paper glossary with key translations mailed to them in their language.</p>
 </section>
-<section id="specific-recommendations" class="level2">
-<h2 class="anchored" data-anchor-id="specific-recommendations">6.3 Specific Recommendations</h2>
+<section id="ii.-specific-recommendations" class="level2">
+<h2 class="anchored" data-anchor-id="ii.-specific-recommendations">ii. Specific Recommendations</h2>
 <div class="cell">
 <details open class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a summary table using your county reliability data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a summary table using county reliability data</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Include: county name, median income, MOE percentage, reliability category</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>summary_table <span class="ot">&lt;-</span> utah_reliability <span class="sc">%&gt;%</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
@@ -5165,8 +5169,9 @@ $ total_popM  &lt;dbl&gt; NA, NA, NA, NA, 124, NA, NA, NA, NA, NA, NA, NA, NA, N
 <li><p><strong>Counties needing alternative approaches:</strong> Beaver, Daggett, Garfield, Grand, Kane, Piute, Rich, San Juan, and Wayne counties have low confidence data. These counties also happen to be in the more rural parts of Utah, which tend to have harsher desert environments and with rougher terrain when travelling, they also encompass all of the Native American reservations in Utah. These counties also have much smaller populations and population densities that could make them worth manually reviewing and sending out additional surveys to make sure people send them in. While USPS mail delivery procedures are largely the same, mailing to reservations have an additional unique challenge other than remoteness, which is that many residences don’t have address names, so making sure that rural areas and reservations receive the census by sending more surveys could be part of a solution. The Department could also introduce a pilot program to provide P.O. boxes for reservations if Indigenous peoples in the region are open to the idea, although it’ll be many long years before seeing whether or not it made substantial improvements to census data accuracy and lowering MOEs over time.</p></li>
 </ol>
 </section>
-<section id="questions-for-further-investigation" class="level2">
-<h2 class="anchored" data-anchor-id="questions-for-further-investigation">Questions for Further Investigation</h2>
+</section>
+<section id="questions-for-further-investigation" class="level1">
+<h1>Questions for Further Investigation</h1>
 <ol type="1">
 <li><p>How would observations and interpretations change if other races were included, like Asians and Native Americans?</p></li>
 <li><p>Because the latest 5-year ACS for Utah had reported significant errors, how would that survey compare to previous surveys?</p></li>
@@ -5174,13 +5179,18 @@ $ total_popM  &lt;dbl&gt; NA, NA, NA, NA, 124, NA, NA, NA, NA, NA, NA, NA, NA, N
 <li><p>What is the margin-of-error’s relationship with population density and Utah’s topography, in addition to median income?</p></li>
 </ol>
 </section>
-</section>
 <section id="technical-notes" class="level1">
 <h1>Technical Notes</h1>
 <p><strong>Data Sources:</strong> - U.S. Census Bureau, American Community Survey 2018-2022 5-Year Estimates - Retrieved via tidycensus R package on 09/15/25.</p>
 <p><strong>Reproducibility:</strong> - All analysis conducted in R version 4.5.1. - Census API key required for replication. - Complete code and documentation available at: https://github.com/MUSA-5080-Fall-2025/portfolio-setup-TessaVu</p>
 <p><strong>Methodology Notes:</strong> Because several values were zero, to get past the zero division hurdle the values were mutated to a smaller value like 0.01, which calculated extreme MOEs like 17,000.</p>
 <p><strong>Limitations:</strong> There were sample issues with tracts noting zero Black or Hispanic individuals, and dividing by zero created infinite values. This project selected Salt Lake, Morgan, and Piute counties, which have high, moderate, and low confidences, respectively. However, Morgan and Piute counties have very little census tracts at 4 and 5 compared to 200+ for Salt Lake. In addition, Utah was one of the 14 states in the recent 5-year census that over-counted its citizens by almost 3% with several individuals double-counted.</p>
+</section>
+<section id="note-credit-and-ai-usage" class="level1">
+<h1>NOTE: Credit and AI Usage</h1>
+<p><strong>No AI usage.</strong></p>
+<p>Base code template provided by Dr. Delmelle with adjustments.</p>
+<p>Some visuals taken from lecture examples and modified.</p>
 
 
 </section>
